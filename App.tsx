@@ -1,18 +1,22 @@
+import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainPage from "./src/pages/mainPage/MainPage";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const Stack = createNativeStackNavigator();
+import TabNavigation from "./src/components/navBar/TabNavigation";
+
+type RootTabParamList = {
+  Library: undefined;
+  Search: undefined;
+  Challenge: undefined;
+  My: undefined;
+};
+
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName="main"
-      >
-        <Stack.Screen name="main" component={MainPage} />
-      </Stack.Navigator>
+      <TabNavigation />
     </NavigationContainer>
   );
 }
