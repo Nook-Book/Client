@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import LibraryPage from "../../pages/libraryPage/LibraryPage";
 import SearchPage from "../../pages/searchPage/SearchPage";
 import ChallengePage from "../../pages/challengePage/ChallengePage";
 import MyPage from "../../pages/myPage/MyPage";
@@ -10,6 +9,7 @@ import SearchIcon from "../../assets/images/icon/Search.svg";
 import ChallengeIcon from "../../assets/images/icon/Challenge.svg";
 import MyIcon from "../../assets/images/icon/MY.svg";
 import { Font, Color } from "../../styles/Theme";
+import LibraryStackScreen from "../../pages/libraryPage/LibraryStackScreen";
 
 type RootTabParamList = {
   서재: undefined;
@@ -72,7 +72,7 @@ export default function TabNavigation() {
         },
       })}
     >
-      <Tab.Screen name="서재" component={LibraryPage} />
+      <Tab.Screen name="서재" component={LibraryStackScreen} />
       <Tab.Screen name="검색" component={SearchPage} />
       <Tab.Screen name="챌린지" component={ChallengePage} />
       <Tab.Screen name="마이" component={MyPage} />
