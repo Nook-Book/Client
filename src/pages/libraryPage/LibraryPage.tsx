@@ -1,18 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Image } from "react-native";
+import { styles } from "./LibraryPageStyle";
 
 export default function LibraryPage() {
   return (
     <View style={styles.container}>
-      <Text>Library</Text>
+      <Text style={styles.text}>MainPage</Text>
+      <Image source={require("../../assets/icon.png")} style={styles.image} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
