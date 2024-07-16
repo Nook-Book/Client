@@ -1,5 +1,5 @@
 # Nook Book
-> 독서두기
+> **독서두기**
 <br>
 
 ## ⏳ 개발 기간
@@ -43,6 +43,7 @@
 
 ### Branch
 > **ex) feat/#3-login**
+<br>
 
 ## 🍀 Members
 | <a href="https://github.com/si14444"><img src="https://avatars.githubusercontent.com/u/75115874?v=4" width="100px" height="100px"></a> | <a href="https://github.com/rlotr02"><img src="https://avatars.githubusercontent.com/u/72345074?v=4" width="100px" height="100px"></a> |
