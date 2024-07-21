@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Color.Field.Primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    marginRight: 10,
+    marginHorizontal: 5,
   },
   inner: {
     flexDirection: "row",
@@ -27,7 +27,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 16,
     marginBottom: 16,
-    paddingHorizontal: 20,
   },
   subText: {
     ...Font.Label.SemiMedium,
