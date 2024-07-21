@@ -13,9 +13,10 @@ import { dummyList } from "../../assets/data/dummyBookCarouseList";
 import CarouselItem from "../../components/libary/CarouselItem";
 
 const LibraryPage = ({ navigation }: { navigation: any }) => {
+  const itemWidth = 338;
   const { width: windowWidth } = useWindowDimensions();
   const flatListRef = useRef<FlatList>(null);
-  const itemWidth = 338;
+  const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [snapToInterval, setSnapToInterval] = useState(0);
 
@@ -69,7 +70,9 @@ const LibraryPage = ({ navigation }: { navigation: any }) => {
       <Animated.FlatList
         ref={flatListRef}
         data={dummyList}
-        renderItem={CarouselItem}
+        renderItem={({ item, index }) => (
+          <CarouselItem item={item} index={index} scrollX={scrollX} />
+        )}
         keyExtractor={(item, index) => `${item.id}_${index}`}
         horizontal
         pagingEnabled
@@ -92,6 +95,10 @@ const LibraryPage = ({ navigation }: { navigation: any }) => {
             });
           });
         }}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: true }
+        )}
       />
     </View>
   );

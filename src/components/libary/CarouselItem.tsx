@@ -1,16 +1,32 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Dimensions, Animated } from "react-native";
 import { styles } from "../../pages/libraryPage/LibraryPageStyle";
 import { TBookCategory } from "../../types/book";
 import BookItem from "./BookItem";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";
 
+const { width: windowWidth } = Dimensions.get("window");
+
 const CarouselItem = ({
   item,
   index,
+  scrollX,
 }: {
   item: TBookCategory;
   index: number;
+  scrollX: Animated.Value;
 }) => {
+  const position = Animated.divide(scrollX, windowWidth);
+
+  const translateY = position.interpolate({
+    inputRange: [index - 1, index, index + 1],
+    outputRange: [
+      40,
+      index === 0 ? 0 : index === 1 ? -5 : index === 2 ? -10 : -18,
+      index === 0 ? 40 : index === 1 ? 45 : index === 2 ? 50 : 58,
+    ],
+    extrapolate: "clamp",
+  });
+
   const itemStyle = [
     styles.listWrap,
     index === 0 && { marginLeft: 0 },
@@ -18,7 +34,10 @@ const CarouselItem = ({
   ];
 
   return (
-    <View style={itemStyle} key={`${item.id}_${index}`}>
+    <Animated.View
+      style={[itemStyle, { transform: [{ translateY }] }]}
+      key={`${item.id}_${index}`}
+    >
       <View style={styles.inner}>
         <Text style={styles.subText}>{item.dummyBook.length}권</Text>
         <Text style={styles.mainText}>{item.title}</Text>
@@ -31,7 +50,7 @@ const CarouselItem = ({
         contentContainerStyle={styles.flatListContent}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Animated.View>
   );
 };
 
