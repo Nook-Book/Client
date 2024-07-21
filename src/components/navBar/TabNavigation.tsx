@@ -40,6 +40,7 @@ export default function TabNavigation() {
           shadowOpacity: 0.25,
           shadowRadius: 10,
           elevation: 10,
+          display: "flex",
         },
         tabBarIcon: ({ color }: { color: string }) => {
           let IconComponent: React.FC<SvgProps>;

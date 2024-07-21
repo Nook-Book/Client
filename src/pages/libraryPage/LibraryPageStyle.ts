@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
   },
   listWrap: {
     width: 338,
-    height: 658,
     backgroundColor: Color.Field.Primary,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
