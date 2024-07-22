@@ -1,6 +1,6 @@
 import { Image, Text, Pressable } from "react-native";
 import { TBook } from "../../types/book";
-import { styles } from "../../pages/libraryPage/LibraryPageStyle";
+import { styles } from "./BookItemStyle";
 
 const BookItem = ({ item, navigation }: { item: TBook; navigation: any }) => {
   return (

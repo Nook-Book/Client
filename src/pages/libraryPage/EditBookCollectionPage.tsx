@@ -1,9 +1,8 @@
-import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { styles } from "./EditBookCollectionPageStyle";
 import EditHeader from "../../components/header/EditHeader";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import MinusIcon from "../../assets/images/icon/Minus.svg";
-import { Color } from "../../styles/Theme";
 import {
   dummyList,
   dummyListAll,
@@ -11,6 +10,7 @@ import {
 import { TBookCategory } from "../../types/book";
 import { useState } from "react";
 import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
+import CollectionItem from "../../components/libary/CollectionItem";
 
 const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
   const [collection, setCollection] = useState<TBookCategory[]>(dummyList);
@@ -33,98 +33,6 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
     }
   };
 
-  const CollectionMinusItem = ({
-    item,
-    index,
-  }: {
-    item: TBookCategory;
-    index: number;
-  }) => {
-    return (
-      <View style={styles.collectionItem} key={index}>
-        <TouchableOpacity
-          style={styles.collectionImages}
-          onPress={() => handleRemoveItem(item.id)}
-          activeOpacity={1}
-        >
-          <View style={styles.collectionCover} />
-          <MinusIcon
-            style={styles.minusIcon}
-            color={Color.Secondary}
-            width={69.13}
-            height={69.13}
-          />
-          <View style={styles.imageGrid}>
-            {Array.from({ length: 4 }).map((_, idx) => {
-              const data = item.dummyBook[idx];
-              return data ? (
-                <Image
-                  key={idx}
-                  source={data.image}
-                  style={styles.collectionImage}
-                />
-              ) : (
-                <View key={idx} style={styles.collectionImage} />
-              );
-            })}
-          </View>
-        </TouchableOpacity>
-        <View style={styles.textWrap}>
-          <Text style={styles.collectionTitleText}>{item.title}</Text>
-          <Text style={styles.collectionNumText}>
-            {item.dummyBook.length}권
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  const CollectionPlusItem = ({
-    item,
-    index,
-  }: {
-    item: TBookCategory;
-    index: number;
-  }) => {
-    return (
-      <View style={styles.collectionPlusItem} key={index}>
-        <TouchableOpacity
-          style={styles.collectionImages}
-          onPress={() => handleAddItem(item.id)}
-          activeOpacity={1}
-        >
-          <View style={styles.collectionCover} />
-          <PlusIcon
-            style={styles.minusIcon}
-            color={Color.Secondary}
-            width={69.13}
-            height={69.13}
-          />
-          <View style={styles.imageGrid}>
-            {Array.from({ length: 4 }).map((_, idx) => {
-              const data = item.dummyBook[idx];
-              return data ? (
-                <Image
-                  key={idx}
-                  source={data.image}
-                  style={styles.collectionPlusImage}
-                />
-              ) : (
-                <View key={idx} style={styles.collectionPlusImage} />
-              );
-            })}
-          </View>
-        </TouchableOpacity>
-        <View style={styles.textWrap}>
-          <Text style={styles.collectionTitleText}>{item.title}</Text>
-          <Text style={styles.collectionNumText}>
-            {item.dummyBook.length}권
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <EditHeader
@@ -137,10 +45,16 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
           <Text style={styles.numText}>전체 {collection.length}개</Text>
         </View>
         <FlatList
-          style={styles.collectionWrap}
+          style={styles.collectionMinusWrap}
           data={collection}
           renderItem={({ item, index }) => (
-            <CollectionMinusItem item={item} index={index} />
+            <CollectionItem
+              item={item}
+              index={index}
+              isPlusItem={false}
+              onPress={() => handleRemoveItem(item.id)}
+              icon={MinusIcon}
+            />
           )}
           keyExtractor={(item, index) => index.toString()}
           horizontal
@@ -155,7 +69,13 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
             <FlatList
               data={dummyListAll}
               renderItem={({ item, index }) => (
-                <CollectionPlusItem item={item} index={index} />
+                <CollectionItem
+                  item={item}
+                  index={index}
+                  isPlusItem={true}
+                  onPress={() => handleAddItem(item.id)}
+                  icon={PlusIcon}
+                />
               )}
               keyExtractor={(item, index) => index.toString()}
               numColumns={2}

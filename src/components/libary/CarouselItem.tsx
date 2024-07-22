@@ -6,7 +6,7 @@ import {
   Animated,
   Pressable,
 } from "react-native";
-import { styles } from "../../pages/libraryPage/LibraryPageStyle";
+import { styles } from "./CarouselItemStyle";
 import { TBookCategory } from "../../types/book";
 import BookItem from "./BookItem";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { FlatList, useWindowDimensions, Animated } from "react-native";
 import { TBookCategory } from "../../types/book";
-import CarouselItem from "../../components/libary/CarouselItem";
+import CarouselItem from "./CarouselItem";
 
 const BookList = ({
   navigation,
