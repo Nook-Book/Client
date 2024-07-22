@@ -2,14 +2,20 @@ import React from "react";
 import { View, SafeAreaView, Text, TouchableOpacity } from "react-native";
 import { styles } from "./EditHeaderStyle";
 
-export default function EditHeader({ navigation }: { navigation: any }) {
+export default function EditHeader({
+  navigation,
+  onComplete,
+}: {
+  navigation: any;
+  onComplete: () => void;
+}) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate("Library")}>
           <Text style={styles.cancelText}>취소</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Library")}>
+        <TouchableOpacity onPress={onComplete}>
           <Text style={styles.completeText}>확인</Text>
         </TouchableOpacity>
       </View>
