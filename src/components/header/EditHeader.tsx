@@ -16,7 +16,7 @@ export default function EditHeader({
           <Text style={styles.cancelText}>취소</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onComplete}>
-          <Text style={styles.completeText}>확인</Text>
+          <Text style={styles.completeText}>완료</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
