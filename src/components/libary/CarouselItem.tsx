@@ -52,8 +52,9 @@ const CarouselItem = ({
       key={`${item.id}_${index}`}
     >
       <Pressable
-        onLongPress={() => navigation.navigate("EditBook")}
+        onLongPress={() => !editType && navigation.navigate("EditBook")}
         key={item.id}
+        style={{ height: "100%" }}
       >
         <View style={styles.inner}>
           <Text style={styles.subText}>{item.dummyBook.length}권</Text>
