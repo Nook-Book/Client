@@ -7,14 +7,6 @@ import OnboardingOverlay from "./src/pages/libraryPage/OnboardingScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
-  //폰트 시스템
-  const [fontsLoaded] = useFonts({
-    SCDream6: require("./src/assets/fonts/SCDream6.otf"),
-    SCDream5: require("./src/assets/fonts/SCDream5.otf"),
-    SCDream4: require("./src/assets/fonts/SCDream4.otf"),
-  });
-  if (!fontsLoaded) return null;
-
   //처음 방문 시 온보딩 화면 실행
   const [showOnboarding, setShowOnboarding] = React.useState(false);
 
@@ -33,6 +25,14 @@ export default function App() {
 
     checkFirstLaunch();
   }, []);
+
+  //폰트 시스템
+  const [fontsLoaded] = useFonts({
+    SCDream6: require("./src/assets/fonts/SCDream6.otf"),
+    SCDream5: require("./src/assets/fonts/SCDream5.otf"),
+    SCDream4: require("./src/assets/fonts/SCDream4.otf"),
+  });
+  if (!fontsLoaded) return null;
 
   return (
     <NavigationContainer>
