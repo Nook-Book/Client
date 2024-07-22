@@ -46,90 +46,111 @@ export const Color = {
 export const Font = {
   Heading: {
     XXXL: {
+      fontFamily: "SCDream6",
       fontSize: 50.52,
       lineHeight: 50.52 * 1.6,
     },
     XXL: {
+      fontFamily: "SCDream6",
       fontSize: 37.9,
       lineHeight: 37.9 * 1.6,
     },
     XL: {
+      fontFamily: "SCDream6",
       fontSize: 28.43,
       lineHeight: 28.43 * 1.6,
     },
     Large: {
+      fontFamily: "SCDream6",
       fontSize: 21.33,
       lineHeight: 21.33 * 1.6,
     },
     Medium: {
+      fontFamily: "SCDream6",
       fontSize: 16,
       lineHeight: 16 * 1.6,
     },
     Small: {
+      fontFamily: "SCDream6",
       fontSize: 8,
       lineHeight: 8 * 1.6,
     },
   },
   Label: {
     XXL: {
+      fontFamily: "SCDream5",
       fontSize: 37.9,
       lineHeight: 37.9 * 1.5,
     },
     XL: {
+      fontFamily: "SCDream5",
       fontSize: 28.43,
       lineHeight: 28.43 * 1.5,
     },
     Large: {
+      fontFamily: "SCDream5",
       fontSize: 21.33,
       lineHeight: 21.33 * 1.5,
     },
     Medium: {
+      fontFamily: "SCDream5",
       fontSize: 16,
       lineHeight: 16 * 1.5,
     },
     Small: {
+      fontFamily: "SCDream5",
       fontSize: 8,
       lineHeight: 8 * 1.5,
     },
     SemiMedium: {
+      fontFamily: "SCDream5",
       fontSize: 12,
       lineHeight: 12 * 1.5,
     },
     XMedium: {
+      fontFamily: "SCDream5",
       fontSize: 14,
       lineHeight: 14 * 1.5,
     },
   },
   Paragraph: {
     XS: {
+      fontFamily: "SCDream4",
       fontSize: 8,
       lineHeight: 8 * 1.6,
     },
     XL: {
+      fontFamily: "SCDream4",
       fontSize: 28.43,
       lineHeight: 28.43 * 1.6,
     },
     Large: {
+      fontFamily: "SCDream4",
       fontSize: 21.33,
       lineHeight: 21.33 * 1.6,
     },
     Medium: {
+      fontFamily: "SCDream4",
       fontSize: 16,
       lineHeight: 16 * 1.6,
     },
     Small: {
+      fontFamily: "SCDream4",
       fontSize: 8,
       lineHeight: 8 * 1.6,
     },
     SemiMedium: {
+      fontFamily: "SCDream4",
       fontSize: 12,
       lineHeight: 12 * 1.6,
     },
     XMedium: {
+      fontFamily: "SCDream4",
       fontSize: 10,
       lineHeight: 10 * 1.6,
     },
     LittleMedium: {
+      fontFamily: "SCDream4",
       fontSize: 14,
       lineHeight: 14 * 1.6,
     },
