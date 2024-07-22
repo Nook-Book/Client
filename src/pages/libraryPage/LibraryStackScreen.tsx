@@ -5,6 +5,7 @@ import LibraryPage from "./LibraryPage";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Color } from "../../styles/Theme";
 import EditBookPage from "./EditBookPage";
+import EditBookCollectionPage from "./EditBookCollectionPage";
 
 const LibraryStack = createNativeStackNavigator();
 
@@ -17,7 +18,11 @@ export default function LibraryStackScreen({
 }) {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "Alert" || routeName === "EditBook") {
+    if (
+      routeName === "Alert" ||
+      routeName === "EditBook" ||
+      routeName === "EditBookCollection"
+    ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
       });
@@ -56,6 +61,11 @@ export default function LibraryStackScreen({
       <LibraryStack.Screen
         name="EditBook"
         component={EditBookPage}
+        options={{ headerShown: false, animation: "fade" }}
+      />
+      <LibraryStack.Screen
+        name="EditBookCollection"
+        component={EditBookCollectionPage}
         options={{ headerShown: false, animation: "fade" }}
       />
     </LibraryStack.Navigator>

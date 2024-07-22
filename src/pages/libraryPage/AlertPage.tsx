@@ -27,7 +27,7 @@ export default function AlertPage() {
         renderItem={({ item, index }) => (
           <AlertItem item={item} index={index} />
         )}
-      ></FlatList>
+      />
     </View>
   );
 }

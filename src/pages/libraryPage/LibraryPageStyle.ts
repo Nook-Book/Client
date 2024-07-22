@@ -6,9 +6,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.Secondary,
   },
-  horizontalScrollView: {
-    paddingHorizontal: 10,
-  },
   wrap: {
     flex: 1,
     alignItems: "center",

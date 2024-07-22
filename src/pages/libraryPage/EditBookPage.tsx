@@ -6,6 +6,7 @@ import { dummyList } from "../../assets/data/dummyBookCarouseList";
 import { useState } from "react";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import EditModal from "../../components/modal/EditModal";
+import { Color } from "../../styles/Theme";
 
 const EditBookPage = ({ navigation }: { navigation: any }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -49,10 +50,10 @@ const EditBookPage = ({ navigation }: { navigation: any }) => {
       </View>
       <View style={styles.plusWrap}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Library")}
+          onPress={() => navigation.navigate("EditBookCollection")}
           style={styles.plusButton}
         >
-          <PlusIcon width={28.8} height={28.8} />
+          <PlusIcon width={28.8} height={28.8} color={Color.Contents.Icon} />
         </TouchableOpacity>
       </View>
       {isModalVisible && (
