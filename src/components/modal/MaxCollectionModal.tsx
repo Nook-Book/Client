@@ -1,14 +1,12 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./ModalStyle";
 
-const EditModal = ({
+const MaxCollectionModal = ({
   text,
   onClose,
-  onComplate,
 }: {
   text: string;
   onClose: () => void;
-  onComplate: () => void;
 }) => {
   return (
     <View style={styles.container}>
@@ -16,10 +14,7 @@ const EditModal = ({
         <Text style={styles.contentText}>{text}</Text>
         <View style={styles.buttonWrap}>
           <TouchableOpacity onPress={onClose}>
-            <Text style={styles.blueText}>돌아가기</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onComplate}>
-            <Text style={styles.grayText}>완료</Text>
+            <Text style={styles.blueText}>확인</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -27,4 +22,4 @@ const EditModal = ({
   );
 };
 
-export default EditModal;
+export default MaxCollectionModal;

@@ -33,11 +33,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
   },
-  cancelText: {
+  blueText: {
     ...Font.Paragraph.Medium,
     color: Color.Contents.Click,
   },
-  completeText: {
+  grayText: {
     ...Font.Paragraph.Medium,
     color: Color.Typo.Primary,
     marginLeft: 32,

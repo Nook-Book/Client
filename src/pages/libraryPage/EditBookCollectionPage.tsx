@@ -4,10 +4,35 @@ import EditHeader from "../../components/header/EditHeader";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import MinusIcon from "../../assets/images/icon/Minus.svg";
 import { Color } from "../../styles/Theme";
-import { dummyList } from "../../assets/data/dummyBookCarouseList";
+import {
+  dummyList,
+  dummyListAll,
+} from "../../assets/data/dummyBookCarouseList";
 import { TBookCategory } from "../../types/book";
+import { useState } from "react";
+import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
 
 const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
+  const [collection, setCollection] = useState<TBookCategory[]>(dummyList);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleRemoveItem = (itemId: number) => {
+    setCollection((prevCollection) =>
+      prevCollection.filter((item) => item.id !== itemId)
+    );
+  };
+
+  const handleAddItem = (itemId: number) => {
+    if (collection.length < 4) {
+      const itemToAdd = dummyListAll.find((item) => item.id === itemId);
+      if (itemToAdd && !collection.some((item) => item.id === itemId)) {
+        setCollection((prevCollection) => [...prevCollection, itemToAdd]);
+      }
+    } else {
+      setModalVisible(true);
+    }
+  };
+
   const CollectionMinusItem = ({
     item,
     index,
@@ -17,7 +42,11 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
   }) => {
     return (
       <View style={styles.collectionItem} key={index}>
-        <TouchableOpacity style={styles.collectionImages}>
+        <TouchableOpacity
+          style={styles.collectionImages}
+          onPress={() => handleRemoveItem(item.id)}
+          activeOpacity={1}
+        >
           <View style={styles.collectionCover} />
           <MinusIcon
             style={styles.minusIcon}
@@ -59,7 +88,11 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
   }) => {
     return (
       <View style={styles.collectionPlusItem} key={index}>
-        <TouchableOpacity style={styles.collectionImages}>
+        <TouchableOpacity
+          style={styles.collectionImages}
+          onPress={() => handleAddItem(item.id)}
+          activeOpacity={1}
+        >
           <View style={styles.collectionCover} />
           <PlusIcon
             style={styles.minusIcon}
@@ -101,11 +134,11 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
       <View>
         <View style={styles.titleWrap}>
           <Text style={styles.titleText}>현재 컬렉션</Text>
-          <Text style={styles.numText}>전체 {dummyList.length}개</Text>
+          <Text style={styles.numText}>전체 {collection.length}개</Text>
         </View>
         <FlatList
           style={styles.collectionWrap}
-          data={dummyList}
+          data={collection}
           renderItem={({ item, index }) => (
             <CollectionMinusItem item={item} index={index} />
           )}
@@ -116,11 +149,11 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
         <View style={styles.collectionList}>
           <View style={styles.titleWrap}>
             <Text style={styles.titleText}>전체 컬렉션</Text>
-            <Text style={styles.numText}>전체 {dummyList.length}개</Text>
+            <Text style={styles.numText}>전체 {dummyListAll.length}개</Text>
           </View>
           <View style={styles.collectionPlusWrap}>
             <FlatList
-              data={dummyList}
+              data={dummyListAll}
               renderItem={({ item, index }) => (
                 <CollectionPlusItem item={item} index={index} />
               )}
@@ -133,6 +166,12 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
           </View>
         </View>
       </View>
+      {modalVisible && (
+        <MaxCollectionModal
+          text={"최대 지정 가능한 컬렉션 수는\n4개입니다."}
+          onClose={() => setModalVisible(false)}
+        />
+      )}
     </View>
   );
 };
