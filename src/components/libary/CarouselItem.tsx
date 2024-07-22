@@ -1,4 +1,11 @@
-import { View, Text, FlatList, Dimensions, Animated } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Dimensions,
+  Animated,
+  Pressable,
+} from "react-native";
 import { styles } from "../../pages/libraryPage/LibraryPageStyle";
 import { TBookCategory } from "../../types/book";
 import BookItem from "./BookItem";
@@ -10,20 +17,26 @@ const CarouselItem = ({
   item,
   index,
   scrollX,
+  navigation,
+  editType,
 }: {
   item: TBookCategory;
   index: number;
   scrollX: Animated.Value;
+  navigation: any;
+  editType: boolean;
 }) => {
   const position = Animated.divide(scrollX, windowWidth);
 
   const translateY = position.interpolate({
     inputRange: [index - 1, index, index + 1],
-    outputRange: [
-      40,
-      index === 0 ? 0 : index === 1 ? -5 : index === 2 ? -10 : -18,
-      index === 0 ? 40 : index === 1 ? 45 : index === 2 ? 50 : 58,
-    ],
+    outputRange: editType
+      ? [0, 0, 0]
+      : [
+          40,
+          index === 0 ? 0 : index === 1 ? -5 : index === 2 ? -10 : -18,
+          index === 0 ? 40 : index === 1 ? 45 : index === 2 ? 50 : 58,
+        ],
     extrapolate: "clamp",
   });
 
@@ -38,18 +51,25 @@ const CarouselItem = ({
       style={[itemStyle, { transform: [{ translateY }] }]}
       key={`${item.id}_${index}`}
     >
-      <View style={styles.inner}>
-        <Text style={styles.subText}>{item.dummyBook.length}권</Text>
-        <Text style={styles.mainText}>{item.title}</Text>
-      </View>
-      <FlatList
-        data={item.dummyBook}
-        renderItem={({ item }) => <BookItem item={item} />}
-        keyExtractor={(book, index) => `${item.id}_${book.id}_${index}`}
-        numColumns={3}
-        contentContainerStyle={styles.flatListContent}
-        showsVerticalScrollIndicator={false}
-      />
+      <Pressable
+        onLongPress={() => navigation.navigate("EditBook")}
+        key={item.id}
+      >
+        <View style={styles.inner}>
+          <Text style={styles.subText}>{item.dummyBook.length}권</Text>
+          <Text style={styles.mainText}>{item.title}</Text>
+        </View>
+        <FlatList
+          data={item.dummyBook}
+          renderItem={({ item }) => (
+            <BookItem item={item} navigation={navigation} />
+          )}
+          keyExtractor={(book, index) => `${item.id}_${book.id}_${index}`}
+          numColumns={3}
+          contentContainerStyle={styles.flatListContent}
+          showsVerticalScrollIndicator={false}
+        />
+      </Pressable>
     </Animated.View>
   );
 };

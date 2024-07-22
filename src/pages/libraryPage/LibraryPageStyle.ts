@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     marginHorizontal: 5,
+    paddingBottom: 30,
   },
   inner: {
     flexDirection: "row",
