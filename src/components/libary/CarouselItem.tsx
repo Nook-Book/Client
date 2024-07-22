@@ -42,6 +42,7 @@ const CarouselItem = ({
 
   const itemStyle = [
     styles.listWrap,
+    !editType && { paddingBottom: 80 },
     index === 0 && { marginLeft: 0 },
     index === dummyList.length - 1 && { marginRight: 0 },
   ];

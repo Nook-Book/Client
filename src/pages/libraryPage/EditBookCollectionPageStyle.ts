@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     paddingHorizontal: 16,
+    marginBottom: 16,
     paddingTop: 16,
   },
   titleText: {
@@ -21,19 +22,27 @@ export const styles = StyleSheet.create({
     ...Font.Label.XMedium,
     color: "#394149",
   },
+  collectionList: {
+    height: 350,
+  },
   collectionWrap: {
-    marginVertical: 16,
+    marginBottom: 16,
     marginHorizontal: 13,
+  },
+  collectionPlusWrap: {
+    alignItems: "center",
+  },
+  flatListContent: {
+    marginBottom: 16,
+    justifyContent: "center",
   },
   collectionItem: {
     width: 136,
-    position: "relative",
     marginHorizontal: 3,
   },
   collectionPlusItem: {
     width: 164,
-    position: "relative",
-    marginHorizontal: 13,
+    marginHorizontal: 12,
     marginBottom: 6,
   },
   collectionCover: {

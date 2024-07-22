@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  Image,
-  ScrollView,
-} from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import { styles } from "./EditBookCollectionPageStyle";
 import EditHeader from "../../components/header/EditHeader";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
@@ -120,21 +113,25 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
         />
-        <View style={styles.titleWrap}>
-          <Text style={styles.titleText}>전체 컬렉션</Text>
-          <Text style={styles.numText}>전체 {dummyList.length}개</Text>
+        <View style={styles.collectionList}>
+          <View style={styles.titleWrap}>
+            <Text style={styles.titleText}>전체 컬렉션</Text>
+            <Text style={styles.numText}>전체 {dummyList.length}개</Text>
+          </View>
+          <View style={styles.collectionPlusWrap}>
+            <FlatList
+              data={dummyList}
+              renderItem={({ item, index }) => (
+                <CollectionPlusItem item={item} index={index} />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+              numColumns={2}
+              contentContainerStyle={styles.flatListContent}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
         </View>
-        <FlatList
-          style={styles.collectionWrap}
-          data={dummyList}
-          renderItem={({ item, index }) => (
-            <CollectionPlusItem item={item} index={index} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={2}
-          contentContainerStyle={{ alignItems: "center" }}
-          showsHorizontalScrollIndicator={false}
-        />
       </View>
     </View>
   );

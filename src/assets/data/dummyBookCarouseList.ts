@@ -50,6 +50,46 @@ export const dummyList: TBookCategory[] = [
         image: require("../../assets/images/dummy/book/9.png"),
         title: "하루하루가 이별의 날",
       },
+      {
+        id: 11,
+        image: require("../../assets/images/dummy/book/1.png"),
+        title: "무지개 물고기",
+      },
+      {
+        id: 12,
+        image: require("../../assets/images/dummy/book/2.png"),
+        title: "몰입 : 인생을 바꾸는자기 혁명 - Think",
+      },
+      {
+        id: 13,
+        image: require("../../assets/images/dummy/book/3.png"),
+        title: "세이노의 가르침 (70만 부 기념 빨간 표지 빨간 표지)",
+      },
+      {
+        id: 14,
+        image: require("../../assets/images/dummy/book/4.png"),
+        title: "데일 카네기 자기관리론",
+      },
+      {
+        id: 15,
+        image: require("../../assets/images/dummy/book/5.png"),
+        title: "text",
+      },
+      {
+        id: 16,
+        image: require("../../assets/images/dummy/book/6.png"),
+        title: "원씽",
+      },
+      {
+        id: 17,
+        image: require("../../assets/images/dummy/book/7.png"),
+        title: "그릿",
+      },
+      {
+        id: 18,
+        image: require("../../assets/images/dummy/book/8.png"),
+        title: "역행자",
+      },
     ],
   },
   {
@@ -81,6 +121,39 @@ export const dummyList: TBookCategory[] = [
         id: 18,
         image: require("../../assets/images/dummy/book/8.png"),
         title: "역행자",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "읽음",
+    dummyBook: [
+      {
+        id: 19,
+        image: require("../../assets/images/dummy/book/9.png"),
+        title: "하루하루가 이별의 날",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "읽음",
+    dummyBook: [
+      {
+        id: 19,
+        image: require("../../assets/images/dummy/book/9.png"),
+        title: "하루하루가 이별의 날",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "읽음",
+    dummyBook: [
+      {
+        id: 19,
+        image: require("../../assets/images/dummy/book/9.png"),
+        title: "하루하루가 이별의 날",
       },
     ],
   },
