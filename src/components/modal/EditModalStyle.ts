@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Color, Font } from "../../styles/Theme";
+import { Color, Font, Effect } from "../../styles/Theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     zIndex: 200,
   },
   modal: {
+    ...Effect.ModalShadow,
     borderRadius: 5,
     backgroundColor: Color.Secondary,
     paddingVertical: 24,
