@@ -1,10 +1,13 @@
 // src/components/navBar/StackNavigation.tsx
-import * as React from "react";
+
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchPage from "../../pages/searchPage/SearchPage";
-import BestSellerPage from "../../pages/searchPage/BestSellerPage"; // BestSellerPage를 추가
+import BestSellerPage from "../../pages/searchPage/BestSellerPage";
+import SearchResultPage from "../../pages/searchPage/SearchResultPage";
+import { RootStackParamList } from "../../types/navigation/navigation";
 
-const SearchStack = createNativeStackNavigator();
+const SearchStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function SearchStackScreen() {
   return (
@@ -15,6 +18,10 @@ export default function SearchStackScreen() {
     >
       <SearchStack.Screen name="SearchPage" component={SearchPage} />
       <SearchStack.Screen name="BestSellerPage" component={BestSellerPage} />
+      <SearchStack.Screen
+        name="SearchResultPage"
+        component={SearchResultPage}
+      />
     </SearchStack.Navigator>
   );
 }

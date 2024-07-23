@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { View, SafeAreaView, Text, TextInput } from "react-native";
+import { View, SafeAreaView, TextInput, Alert } from "react-native";
 import BackIcon from "../../assets/images/icon/Back.svg";
 import { styles } from "../../styles/search/SearchHeaderStyle";
 import { useNavigation } from "@react-navigation/native";
 import { SearchInputPlaceHolder } from "../../constans/search";
 import { Color } from "../../styles/Theme";
+import { RootStackParamList } from "../../types/search";
 
-export default function SearchHeader() {
-  const navigation = useNavigation();
-  const [searchText, setSearchText] = useState<string>("");
+type Props = {
+  search?: string;
+};
+
+export default function SearchHeader({ search }: Props) {
+  const navigation = useNavigation<RootStackParamList>();
+  const [searchText, setSearchText] = useState<string>(search ? search : "");
+
+  const handleSearchSubmit = () => {
+    if (searchText.trim() === "") {
+      Alert.alert("검색어를 입력해 주세요.");
+      return;
+    }
+    navigation.navigate("SearchResultPage", { query: searchText });
+  };
 
   return (
     <SafeAreaView>
@@ -20,6 +33,7 @@ export default function SearchHeader() {
           value={searchText}
           onChangeText={setSearchText}
           placeholderTextColor={Color.Typo.Secondary}
+          onSubmitEditing={handleSearchSubmit}
         />
       </View>
     </SafeAreaView>

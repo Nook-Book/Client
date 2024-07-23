@@ -8,6 +8,7 @@ import RecentSearchCard from "./RecentSearchCard";
 const RecentSearch = () => {
   const [searchList, setSearchList] = useState(dummyRecentSearchList);
 
+  // 같은 이름이 있을 경우 delete함수가 안 먹히는데 이는 어처피 api호출로 해결될 문제로 보임.
   const handleDeleteCard = (text: string) => {
     setSearchList(searchList.filter((item) => item !== text));
   };

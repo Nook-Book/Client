@@ -3,10 +3,8 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native"; // useNavigation 훅을 가져옵니다
 import { BestSellerButton, BestSellerLabel } from "../../constans/search";
 import { styles } from "../../styles/search/BestSellerStyle";
-import { NavigationProp } from "../../types/search/index";
-import { dummyList } from "../../assets/data/dummyBestBookList";
-import BestSellerBook from "./BestSellerBook";
 import BookCollection from "./BookCollection";
+import { NavigationProp } from "../../types/search";
 
 const BestSeller: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();

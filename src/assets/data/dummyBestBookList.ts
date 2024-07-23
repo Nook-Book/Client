@@ -10,7 +10,8 @@ export const dummyList: BestBook[] = [
   {
     id: 2,
     image: require("../../assets/images/dummy/book/2.png"),
-    title: "몰입 : 인생을 바꾸는 자기 혁명 - Think",
+    title:
+      "몰입 : 인생을 바꾸는 자기 혁명 - Think몰입 : 인생을 바꾸는 자기 혁명 - Think",
     name: "작가 2",
   },
   {
