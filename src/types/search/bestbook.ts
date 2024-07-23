@@ -9,3 +9,13 @@ export type BestBookCategory = {
   title: string;
   dummyBook: BestBook[];
 };
+export interface BestSellerKeywordsCategory {
+  name: string;
+  checked: boolean;
+}
+
+export interface BestSellerKeywordProp {
+  text: string;
+  onFocus: (text: string) => void;
+  checked: boolean;
+}
