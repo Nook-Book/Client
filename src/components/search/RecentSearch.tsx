@@ -12,9 +12,6 @@ const RecentSearch = () => {
     setSearchList(searchList.filter((item) => item !== text));
   };
 
-  // 최근 검색 카드 최대 5개로 제한
-  const limitedSearchList = searchList.slice(0, 5);
-
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{RecentSearchText}</Text>
@@ -23,7 +20,7 @@ const RecentSearch = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.cardContainer}
       >
-        {limitedSearchList.map((search) => (
+        {searchList.map((search) => (
           <RecentSearchCard
             key={search}
             text={search}
