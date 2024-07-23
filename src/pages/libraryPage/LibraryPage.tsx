@@ -1,12 +1,25 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { styles } from "./LibraryPageStyle";
+import MainHeader from "../../components/header/MainHeader";
+import BookList from "../../components/libary/BookList";
+import { dummyList } from "../../assets/data/dummyBookCarouseList";
 
-export default function LibraryPage() {
+const LibraryPage = ({ navigation }: { navigation: any }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>MainPage</Text>
-      <Image source={require("../../assets/icon.png")} style={styles.image} />
+      <MainHeader navigation={navigation} />
+      <BookList
+        navigation={navigation}
+        editType={false}
+        data={dummyList}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+      />
     </View>
   );
-}
+};
+
+export default LibraryPage;

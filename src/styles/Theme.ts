@@ -15,7 +15,7 @@ export const Color = {
     Icon: "#4E5863",
     Badge: "#FF6161",
   },
-  Type: {
+  Typo: {
     Primary: "#272D34",
     Secondary: "#686868",
     Tertiary: "#C9C9C9",

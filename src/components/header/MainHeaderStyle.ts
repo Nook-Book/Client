@@ -3,11 +3,11 @@ import { Color } from "../../styles/Theme";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Color.Secondary,
-  },
-  wrap: {
-    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     alignItems: "center",
+    backgroundColor: Color.Secondary,
   },
 });
