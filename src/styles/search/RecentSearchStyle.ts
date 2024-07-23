@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     ...Font.Label.SemiMedium,
   },
   cardContainer: {
-    display: "flex",
     flexDirection: "row",
     gap: 6,
     marginTop: 10,

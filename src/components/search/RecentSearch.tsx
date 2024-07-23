@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { RecentSearchText } from "../../constans/search";
 import { styles } from "../../styles/search/RecentSearchStyle";
 import { dummyRecentSearchList } from "../../assets/data/dummyRecentSearchList";
@@ -12,18 +12,25 @@ const RecentSearch = () => {
     setSearchList(searchList.filter((item) => item !== text));
   };
 
+  // 최근 검색 카드 최대 5개로 제한
+  const limitedSearchList = searchList.slice(0, 5);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{RecentSearchText}</Text>
-      <View style={styles.cardContainer}>
-        {searchList.map((search) => (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.cardContainer}
+      >
+        {limitedSearchList.map((search) => (
           <RecentSearchCard
             key={search}
             text={search}
             onDelete={handleDeleteCard}
           />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
