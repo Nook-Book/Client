@@ -19,6 +19,7 @@ import FoldItem from "../../components/detail/FoldItem";
 import IconItem from "../../components/detail/IconItem";
 import InfoItem from "../../components/detail/InfoItem";
 import ShareBottomSheet from "../../components/bottomSheet/ShareBottomSheet";
+import CollectionBottomSheet from "../../components/bottomSheet/CollectionBottomSheet";
 
 const DetailPage = ({ navigation }: { navigation: any }) => {
   const [isRead, setIsRead] = useState(false);
@@ -26,6 +27,7 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
   const [isIndex, setIsIndex] = useState(false);
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isShareVisible, setIsShareVisible] = useState(false);
+  const [isCollectionVisible, setIsCollectionVisible] = useState(false);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
@@ -60,19 +62,19 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
             <IconItem
               IconComponent={ColletionIcon}
               text="컬렉션"
-              onPress={() => setIsRead(!isRead)}
+              onPress={() => setIsCollectionVisible(!isCollectionVisible)}
               isActive={false}
             />
             <IconItem
               IconComponent={NoteIcon}
               text="노트"
-              onPress={() => setIsRead(!isRead)}
+              onPress={() => console.log("노트")}
               isActive={false}
             />
             <IconItem
               IconComponent={TimerIcon}
               text="타이머"
-              onPress={() => setIsRead(!isRead)}
+              onPress={() => console.log("타이머")}
               isActive={false}
             />
           </View>
@@ -108,6 +110,9 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
       </ScrollView>
       {isShareVisible && (
         <ShareBottomSheet onClose={() => setIsShareVisible(false)} />
+      )}
+      {isCollectionVisible && (
+        <CollectionBottomSheet onClose={() => setIsCollectionVisible(false)} />
       )}
     </View>
   );

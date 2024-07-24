@@ -12,11 +12,19 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.6)",
     zIndex: 200,
   },
-  modal: {
+  card: {
     backgroundColor: Color.Secondary,
     marginHorizontal: 54,
     marginBottom: 54,
     borderRadius: 5,
+  },
+  modal: {
+    backgroundColor: Color.Secondary,
+    marginHorizontal: 25,
+    marginBottom: 76,
+    borderRadius: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
   logoWrap: {
     alignItems: "flex-end",
@@ -68,17 +76,40 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
   },
-  shareWrap: {
+  pressWrap: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderBottomColor: Color.Border.Stroke,
     borderBottomWidth: 0.8,
   },
-  shareText: {
+  leftText: {
     ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
+    marginLeft: 12,
+  },
+  rightText: {
+    ...Font.Paragraph.SemiMedium,
+    color: Color.Typo.Secondary,
+    marginLeft: 2,
+  },
+  plusWrap: {
+    width: 32,
+    height: 48.71,
+    backgroundColor: "#C4C4C4",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 1.07,
+  },
+  plusIcon: {
+    width: 24,
+    height: 24,
+    color: Color.Contents.Icon,
+  },
+  thumbnailImage: {
+    width: 32,
+    height: 48.71,
+    borderRadius: 1.07,
   },
 });

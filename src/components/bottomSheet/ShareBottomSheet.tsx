@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 import KakaoIcon from "../../assets/images/share/Kakao.svg";
 import LinkIcon from "../../assets/images/share/Link.svg";
-import ShareItem from "./BottomSheetItem";
+import BottomSheetItem from "./BottomSheetItem";
 import ShareCard from "./ShareCard";
 import BottomSheetTitle from "./BottomSheetTitle";
 
@@ -27,19 +27,22 @@ const ShareBottomSheet = ({ onClose }: { onClose: () => void }) => {
       <ShareCard />
       <View style={styles.bottom}>
         <BottomSheetTitle text="도서 공유" onClose={onClose} />
-        <ShareItem
-          Icon={KakaoIcon}
-          text="카카오톡 공유하기"
+        <BottomSheetItem
+          Icon={<KakaoIcon />}
+          leftText="카카오톡 공유하기"
+          rightText=""
           onPress={handleShareKakao}
         />
-        <ShareItem
-          Icon={KakaoIcon} //인스타그램 svg로 수정 필요
-          text="인스타그램 공유하기"
+        <BottomSheetItem
+          Icon={<KakaoIcon />} //인스타그램 svg로 수정 필요
+          leftText="인스타그램 공유하기"
+          rightText=""
           onPress={handleShareInstagram}
         />
-        <ShareItem
-          Icon={LinkIcon}
-          text="링크 복사하기"
+        <BottomSheetItem
+          Icon={<LinkIcon />}
+          leftText="링크 복사하기"
+          rightText=""
           onPress={handleCopyLink}
         />
       </View>

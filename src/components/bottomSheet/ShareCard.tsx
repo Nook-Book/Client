@@ -5,7 +5,7 @@ import LogoIcon from "../../assets/images/icon/Logo.svg";
 
 const ShareCard = () => {
   return (
-    <View style={styles.modal}>
+    <View style={styles.card}>
       <View style={styles.logoWrap}>
         <LogoIcon />
       </View>

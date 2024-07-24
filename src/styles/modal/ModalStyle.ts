@@ -29,6 +29,12 @@ export const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 35,
   },
+  titleText: {
+    ...Font.Label.Medium,
+    textAlign: "center",
+    color: Color.Typo.Primary,
+    marginBottom: 16,
+  },
   buttonWrap: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -41,5 +47,16 @@ export const styles = StyleSheet.create({
     ...Font.Paragraph.Medium,
     color: Color.Typo.Primary,
     marginLeft: 32,
+  },
+  input: {
+    ...Font.Paragraph.SemiMediumInput,
+    paddingHorizontal: 4,
+    paddingVertical: 13,
+    borderColor: Color.Border.Stroke,
+    borderWidth: 1,
+    borderRadius: 2,
+    marginBottom: 35,
+    alignItems: "center",
+    color: Color.Typo.Primary,
   },
 });

@@ -3,17 +3,20 @@ import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 
 const BottomSheetItem = ({
   Icon,
-  text,
+  leftText,
+  rightText,
   onPress,
 }: {
-  Icon: any;
-  text: string;
+  Icon: JSX.Element;
+  leftText: string;
+  rightText: string;
   onPress: () => void;
 }) => {
   return (
-    <Pressable style={styles.shareWrap} onPress={onPress}>
-      <Icon />
-      <Text style={styles.shareText}>{text}</Text>
+    <Pressable style={styles.pressWrap} onPress={onPress}>
+      {Icon}
+      <Text style={styles.leftText}>{leftText}</Text>
+      <Text style={styles.rightText}>{rightText}</Text>
     </Pressable>
   );
 };
