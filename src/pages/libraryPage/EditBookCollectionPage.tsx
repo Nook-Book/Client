@@ -1,5 +1,5 @@
 import { View, Text, FlatList } from "react-native";
-import { styles } from "./EditBookCollectionPageStyle";
+import { styles } from "../../styles/library/EditBookCollectionPageStyle";
 import EditHeader from "../../components/header/EditHeader";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import MinusIcon from "../../assets/images/icon/Minus.svg";

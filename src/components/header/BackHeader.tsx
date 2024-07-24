@@ -1,7 +1,7 @@
 import React from "react";
 import { View, SafeAreaView, Text } from "react-native";
 import BackIcon from "../../assets/images/icon/Back.svg";
-import { styles } from "./BackHeaderStyle";
+import { styles } from "../../styles/header/BackHeaderStyle";
 import { useNavigation } from "@react-navigation/native";
 
 export default function BackHeader({ title }: { title: string }) {

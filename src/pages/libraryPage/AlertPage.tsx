@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, View, Text } from "react-native";
-import { styles } from "./AlertPageStyle";
+import { styles } from "../../styles/library/AlertPageStyle";
 import BackHeader from "../../components/header/BackHeader";
 import { dummyList } from "../../assets/data/dummyAlertList";
 

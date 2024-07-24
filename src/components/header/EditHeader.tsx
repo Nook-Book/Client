@@ -1,6 +1,6 @@
 import React from "react";
 import { View, SafeAreaView, Text, TouchableOpacity } from "react-native";
-import { styles } from "./EditHeaderStyle";
+import { styles } from "../../styles/header/EditHeaderStyle";
 
 export default function EditHeader({
   navigation,

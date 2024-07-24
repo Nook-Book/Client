@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { styles } from "./ModalStyle";
+import { styles } from "../../styles/modal/ModalStyle";
 
 const EditModal = ({
   text,

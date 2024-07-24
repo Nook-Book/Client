@@ -1,12 +1,12 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AlertPage from "./AlertPage";
-import LibraryPage from "./LibraryPage";
+import AlertPage from "../../pages/libraryPage/AlertPage";
+import LibraryPage from "../../pages/libraryPage/LibraryPage";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Color } from "../../styles/Theme";
-import EditBookPage from "./EditBookPage";
-import EditBookCollectionPage from "./EditBookCollectionPage";
-import DetailPage from "../detailPage/DetailPage";
+import EditBookPage from "../../pages/libraryPage/EditBookPage";
+import EditBookCollectionPage from "../../pages/libraryPage/EditBookCollectionPage";
+import DetailPage from "../../pages/detailPage/DetailPage";
 
 const LibraryStack = createNativeStackNavigator();
 

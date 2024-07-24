@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { styles } from "./LibraryPageStyle";
+import { styles } from "../../styles/library/LibraryPageStyle";
 import MainHeader from "../../components/header/MainHeader";
 import BookList from "../../components/libary/BookList";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";
