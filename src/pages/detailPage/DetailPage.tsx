@@ -18,12 +18,14 @@ import TimerIcon from "../../assets/images/icon/Timer.svg";
 import FoldItem from "../../components/detail/FoldItem";
 import IconItem from "../../components/detail/IconItem";
 import InfoItem from "../../components/detail/InfoItem";
+import ShareBottomSheet from "../../components/bottomSheet/ShareBottomSheet";
 
 const DetailPage = ({ navigation }: { navigation: any }) => {
   const [isRead, setIsRead] = useState(false);
   const [isMoreInfo, setIsMoreInfo] = useState(false);
   const [isIndex, setIsIndex] = useState(false);
   const [isTitleVisible, setIsTitleVisible] = useState(false);
+  const [isShareVisible, setIsShareVisible] = useState(false);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
@@ -36,6 +38,7 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
       <BackShareHeader
         title="몰입 : 인생을 바꾸는 자기 혁명"
         isTitleVisible={isTitleVisible}
+        onSharePress={() => setIsShareVisible(!isShareVisible)}
       />
       <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
         <View style={styles.scrollWrap}>
@@ -103,6 +106,9 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
           </View>
         </View>
       </ScrollView>
+      {isShareVisible && (
+        <ShareBottomSheet onClose={() => setIsShareVisible(false)} />
+      )}
     </View>
   );
 };

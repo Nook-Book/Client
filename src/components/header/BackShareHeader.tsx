@@ -8,9 +8,11 @@ import { useNavigation } from "@react-navigation/native";
 export default function BackShareHeader({
   title,
   isTitleVisible,
+  onSharePress,
 }: {
   title: string;
   isTitleVisible: boolean;
+  onSharePress: () => void;
 }) {
   const navigation = useNavigation();
 
@@ -19,7 +21,7 @@ export default function BackShareHeader({
       <View style={styles.container}>
         <BackIcon onPress={() => navigation.goBack()} />
         {isTitleVisible && <Text style={styles.text}>{title}</Text>}
-        <ShareIcon />
+        <ShareIcon onPress={onSharePress} />
       </View>
     </SafeAreaView>
   );
