@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import SearchPage from "../../pages/searchPage/SearchPage";
 import ChallengePage from "../../pages/challengePage/ChallengePage";
 import MyPage from "../../pages/myPage/MyPage";
 import { SvgProps } from "react-native-svg";
@@ -10,7 +9,7 @@ import ChallengeIcon from "../../assets/images/icon/Challenge.svg";
 import MyIcon from "../../assets/images/icon/MY.svg";
 import { Font, Color } from "../../styles/Theme";
 import LibraryStackScreen from "../../pages/libraryPage/LibraryStackScreen";
-import SearchStackScreen from "./\bStackNavigation";
+import SearchStackScreen from "./StackNavigation";
 
 type RootTabParamList = {
   서재: undefined;

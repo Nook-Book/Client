@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 8.5,
     paddingHorizontal: 12,
     backgroundColor: Color.Field[15],
-    ...Font.Label.SemiMedium,
+    ...Font.Label.SemiMediumInput,
     borderRadius: 5,
     marginLeft: 6,
   },
