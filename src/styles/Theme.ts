@@ -107,6 +107,10 @@ export const Font = {
       fontSize: 12,
       lineHeight: 12 * 1.5,
     },
+    SemiMediumInput: {
+      fontFamily: "SCDream5",
+      fontSize: 12,
+    },
     XMedium: {
       fontFamily: "SCDream5",
       fontSize: 14,

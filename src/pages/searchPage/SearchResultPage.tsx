@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { BestSellerPageRouteProp } from "../../types/navigation/navigation";
 import { styles } from "../../styles/search/SearchResultPageStyle";
 import SearchHeader from "../../components/search/SearchHeader";
@@ -20,6 +20,7 @@ const SearchResultPage: React.FC<Props> = ({ route }) => {
       <ScrollView style={styles.cardContainer}>
         {dummyList.map((book) => (
           <ResultBookCard
+            key={book.id}
             image={book.image}
             title={book.title}
             artist={book.name}
