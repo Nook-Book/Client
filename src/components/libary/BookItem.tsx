@@ -5,7 +5,7 @@ import { styles } from "./BookItemStyle";
 const BookItem = ({ item, navigation }: { item: TBook; navigation: any }) => {
   return (
     <Pressable
-      onPress={() => console.log(item)} //상세페이지 이동
+      onPress={() => navigation.navigate("Detail")}
       onLongPress={() => navigation.navigate("EditBook")}
       style={styles.bookItem}
       key={item.id}

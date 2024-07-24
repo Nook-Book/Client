@@ -6,6 +6,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Color } from "../../styles/Theme";
 import EditBookPage from "./EditBookPage";
 import EditBookCollectionPage from "./EditBookCollectionPage";
+import DetailPage from "../detailPage/DetailPage";
 
 const LibraryStack = createNativeStackNavigator();
 
@@ -21,7 +22,8 @@ export default function LibraryStackScreen({
     if (
       routeName === "Alert" ||
       routeName === "EditBook" ||
-      routeName === "EditBookCollection"
+      routeName === "EditBookCollection" ||
+      routeName === "Detail"
     ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
@@ -67,6 +69,11 @@ export default function LibraryStackScreen({
         name="EditBookCollection"
         component={EditBookCollectionPage}
         options={{ headerShown: false, animation: "fade" }}
+      />
+      <LibraryStack.Screen
+        name="Detail"
+        component={DetailPage}
+        options={{ headerShown: false }}
       />
     </LibraryStack.Navigator>
   );
