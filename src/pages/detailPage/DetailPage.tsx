@@ -68,7 +68,7 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
             <IconItem
               IconComponent={NoteIcon}
               text="노트"
-              onPress={() => console.log("노트")}
+              onPress={() => navigation.navigate("AllNote")}
               isActive={false}
             />
             <IconItem

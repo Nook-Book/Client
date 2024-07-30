@@ -9,3 +9,9 @@ export type TBookCategory = {
   title: string;
   dummyBook: TBook[];
 };
+
+export type TBookNote = {
+  id: number;
+  title: string;
+  date: string;
+};

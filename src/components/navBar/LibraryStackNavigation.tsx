@@ -8,6 +8,8 @@ import EditBookPage from "../../pages/libraryPage/EditBookPage";
 import EditBookCollectionPage from "../../pages/libraryPage/EditBookCollectionPage";
 import DetailPage from "../../pages/detailPage/DetailPage";
 import TimerPage from "../../pages/detailPage/TimerPage";
+import AllNotePage from "../../pages/detailPage/AllNotePage";
+import NotePage from "../../pages/detailPage/NotePage";
 
 const LibraryStack = createNativeStackNavigator();
 
@@ -25,7 +27,9 @@ export default function LibraryStackScreen({
       routeName === "EditBook" ||
       routeName === "EditBookCollection" ||
       routeName === "Detail" ||
-      routeName === "Timer"
+      routeName === "Timer" ||
+      routeName === "AllNote" ||
+      routeName === "Note"
     ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
@@ -80,6 +84,16 @@ export default function LibraryStackScreen({
       <LibraryStack.Screen
         name="Timer"
         component={TimerPage}
+        options={{ headerShown: false }}
+      />
+      <LibraryStack.Screen
+        name="AllNote"
+        component={AllNotePage}
+        options={{ headerShown: false }}
+      />
+      <LibraryStack.Screen
+        name="Note"
+        component={NotePage}
         options={{ headerShown: false }}
       />
     </LibraryStack.Navigator>

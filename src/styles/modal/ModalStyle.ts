@@ -22,6 +22,19 @@ export const styles = StyleSheet.create({
     width: "88%",
     maxWidth: 340,
   },
+  headText: {
+    ...Font.Label.Medium,
+    color: Color.Typo.Primary,
+    marginTop: 24,
+    textAlign: "center",
+  },
+  desText: {
+    ...Font.Paragraph.LittleMedium,
+    color: Color.Contents.Icon,
+    marginTop: 4,
+    marginBottom: 35,
+    textAlign: "center",
+  },
   contentText: {
     ...Font.Paragraph.LittleMedium,
     textAlign: "center",
@@ -38,6 +51,7 @@ export const styles = StyleSheet.create({
   buttonWrap: {
     flexDirection: "row",
     justifyContent: "flex-end",
+    gap: 32,
   },
   blueText: {
     ...Font.Paragraph.Medium,
@@ -46,7 +60,6 @@ export const styles = StyleSheet.create({
   grayText: {
     ...Font.Paragraph.Medium,
     color: Color.Typo.Primary,
-    marginLeft: 32,
   },
   input: {
     ...Font.Paragraph.SemiMediumInput,
