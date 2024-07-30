@@ -11,9 +11,11 @@ import { TBookCategory } from "../../types/book";
 import { useState } from "react";
 import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
 import CollectionItem from "../../components/libary/CollectionItem";
+import EditModal from "../../components/modal/EditModal";
 
 const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
   const [collection, setCollection] = useState<TBookCategory[]>(dummyList);
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [isMaxModalStatus, setIsMaxModalStatus] = useState(true);
 
@@ -44,7 +46,7 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
     <View style={styles.container}>
       <EditHeader
         navigation={navigation}
-        onComplete={() => navigation.navigate("Library")}
+        onComplete={() => setEditModalVisible(!isEditModalVisible)}
       />
       <View>
         <View style={styles.titleWrap}>
@@ -101,6 +103,13 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
               : "최소 지정 컬렉션 수는 1개입니다."
           }
           onClose={() => setModalVisible(false)}
+        />
+      )}
+      {isEditModalVisible && (
+        <EditModal
+          text={"변경된 편집 사항이 저장되지 않습니다.\n취소하시겠습니까?"}
+          onClose={() => setModalVisible(false)}
+          onComplate={() => navigation.navigate("Library")}
         />
       )}
     </View>
