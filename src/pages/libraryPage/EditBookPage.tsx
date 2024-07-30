@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { styles } from "./EditBookPageStyle";
+import { styles } from "../../styles/library/EditBookPageStyle";
 import EditHeader from "../../components/header/EditHeader";
 import BookList from "../../components/libary/BookList";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";

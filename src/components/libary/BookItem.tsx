@@ -1,11 +1,11 @@
 import { Image, Text, Pressable } from "react-native";
 import { TBook } from "../../types/book";
-import { styles } from "./BookItemStyle";
+import { styles } from "../../styles/library/BookItemStyle";
 
 const BookItem = ({ item, navigation }: { item: TBook; navigation: any }) => {
   return (
     <Pressable
-      onPress={() => console.log(item)} //상세페이지 이동
+      onPress={() => navigation.navigate("Detail")}
       onLongPress={() => navigation.navigate("EditBook")}
       style={styles.bookItem}
       key={item.id}

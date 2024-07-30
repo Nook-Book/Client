@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { styles } from "./CollectionItemStyle";
+import { styles } from "../../styles/library/CollectionItemStyle";
 import { Color } from "../../styles/Theme";
 import { TBookCategory } from "../../types/book";
 

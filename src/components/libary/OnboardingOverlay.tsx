@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import TouchIcon from "../../assets/images/onBoarding/Touch.svg";
-import { styles } from "./OnboardingScreenStyle";
+import { styles } from "../../styles/library/OnboardingOverlayStyle";
 
 const OnboardingOverlay = ({ onDismiss }: { onDismiss: any }) => {
   return (

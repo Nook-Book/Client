@@ -1,13 +1,12 @@
 import { StyleSheet } from "react-native";
-import { Color, Font } from "../../styles/Theme";
+import { Color, Font } from "../Theme";
 
 export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    padding: 16,
     backgroundColor: Color.Secondary,
   },
   button: {
@@ -16,8 +15,14 @@ export const styles = StyleSheet.create({
     position: "absolute",
     left: 20,
   },
-  text: {
+  text1: {
     ...Font.Label.XMedium,
+    color: Color.Typo.Primary,
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  text2: {
+    ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
     justifyContent: "center",
     textAlign: "center",

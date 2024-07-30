@@ -8,7 +8,7 @@ import SearchIcon from "../../assets/images/icon/Search.svg";
 import ChallengeIcon from "../../assets/images/icon/Challenge.svg";
 import MyIcon from "../../assets/images/icon/MY.svg";
 import { Font, Color } from "../../styles/Theme";
-import LibraryStackScreen from "../../pages/libraryPage/LibraryStackScreen";
+import LibraryStackScreen from "./LibraryStackNavigation";
 import SearchStackScreen from "./StackNavigation";
 
 type RootTabParamList = {

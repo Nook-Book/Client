@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 
 import TabNavigation from "./src/components/navBar/TabNavigation";
-import OnboardingOverlay from "./src/pages/libraryPage/OnboardingScreen";
+import OnboardingOverlay from "./src/components/libary/OnboardingOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {

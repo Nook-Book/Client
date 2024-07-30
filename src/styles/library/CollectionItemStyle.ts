@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Font } from "../../styles/Theme";
+import { Font } from "../Theme";
 
 export const styles = StyleSheet.create({
   collectionMinusItem: {
