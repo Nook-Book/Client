@@ -15,8 +15,14 @@ export const styles = StyleSheet.create({
     position: "absolute",
     left: 20,
   },
-  text: {
+  text1: {
     ...Font.Label.XMedium,
+    color: Color.Typo.Primary,
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  text2: {
+    ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
     justifyContent: "center",
     textAlign: "center",

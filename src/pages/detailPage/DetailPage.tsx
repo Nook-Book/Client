@@ -74,7 +74,7 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
             <IconItem
               IconComponent={TimerIcon}
               text="타이머"
-              onPress={() => console.log("타이머")}
+              onPress={() => navigation.navigate("Timer")}
               isActive={false}
             />
           </View>

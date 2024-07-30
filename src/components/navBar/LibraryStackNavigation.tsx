@@ -7,6 +7,7 @@ import { Color } from "../../styles/Theme";
 import EditBookPage from "../../pages/libraryPage/EditBookPage";
 import EditBookCollectionPage from "../../pages/libraryPage/EditBookCollectionPage";
 import DetailPage from "../../pages/detailPage/DetailPage";
+import TimerPage from "../../pages/detailPage/TimerPage";
 
 const LibraryStack = createNativeStackNavigator();
 
@@ -23,7 +24,8 @@ export default function LibraryStackScreen({
       routeName === "Alert" ||
       routeName === "EditBook" ||
       routeName === "EditBookCollection" ||
-      routeName === "Detail"
+      routeName === "Detail" ||
+      routeName === "Timer"
     ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
@@ -73,6 +75,11 @@ export default function LibraryStackScreen({
       <LibraryStack.Screen
         name="Detail"
         component={DetailPage}
+        options={{ headerShown: false }}
+      />
+      <LibraryStack.Screen
+        name="Timer"
+        component={TimerPage}
         options={{ headerShown: false }}
       />
     </LibraryStack.Navigator>
