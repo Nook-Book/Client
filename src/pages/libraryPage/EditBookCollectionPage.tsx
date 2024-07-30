@@ -15,11 +15,17 @@ import CollectionItem from "../../components/libary/CollectionItem";
 const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
   const [collection, setCollection] = useState<TBookCategory[]>(dummyList);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isMaxModalStatus, setIsMaxModalStatus] = useState(true);
 
   const handleRemoveItem = (itemId: number) => {
-    setCollection((prevCollection) =>
-      prevCollection.filter((item) => item.id !== itemId)
-    );
+    if (collection.length === 1) {
+      setIsMaxModalStatus(false);
+      setModalVisible(true);
+    } else {
+      setCollection((prevCollection) =>
+        prevCollection.filter((item) => item.id !== itemId)
+      );
+    }
   };
 
   const handleAddItem = (itemId: number) => {
@@ -29,6 +35,7 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
         setCollection((prevCollection) => [...prevCollection, itemToAdd]);
       }
     } else {
+      setIsMaxModalStatus(true);
       setModalVisible(true);
     }
   };
@@ -88,7 +95,11 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
       </View>
       {modalVisible && (
         <MaxCollectionModal
-          text={"최대 지정 가능한 컬렉션 수는\n4개입니다."}
+          text={
+            isMaxModalStatus
+              ? "최대 지정 가능한 컬렉션 수는\n4개입니다."
+              : "최소 지정 컬렉션 수는 1개입니다."
+          }
           onClose={() => setModalVisible(false)}
         />
       )}
