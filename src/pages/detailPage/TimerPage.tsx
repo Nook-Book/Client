@@ -79,7 +79,7 @@ const TimerPage = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.container}>
       <BackTextHeader title="타이머" />
-      <View>
+      <View style={styles.contentContainer}>
         <Text style={styles.timeText}>{formatTime(time)}</Text>
         <View style={styles.betweenWrap}>
           <View>
@@ -111,7 +111,7 @@ const TimerPage = ({ navigation }: { navigation: any }) => {
             </Text>
           </Pressable>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {records.map((record, index) => (
             <View key={index} style={styles.recordWrap}>
               <View>

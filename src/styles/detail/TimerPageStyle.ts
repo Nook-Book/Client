@@ -6,6 +6,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.Secondary,
   },
+  contentContainer: {
+    flex: 1,
+    padding: 16,
+  },
   timeText: {
     ...Font.Heading.XXXL,
     marginTop: 32,
