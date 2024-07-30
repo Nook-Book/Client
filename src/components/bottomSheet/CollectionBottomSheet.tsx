@@ -48,7 +48,7 @@ const CollectionBottomSheet = ({ onClose }: { onClose: () => void }) => {
                 }
                 leftText={data.title}
                 rightText={"(" + data.dummyBook.length + "권)"}
-                onPress={() => setIsModalVisible(true)}
+                onPress={onClose} //컬렉션에 저장되도록 수정 필요
               />
             );
           })}
