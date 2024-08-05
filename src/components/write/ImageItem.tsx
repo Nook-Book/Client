@@ -49,7 +49,7 @@ const ImageItem = ({
 
     if (!result.canceled) {
       const imageUri = result.assets[0].uri;
-      const markdownImageSyntax = `![Image](${imageUri})`;
+      const markdownImageSyntax = `![Image](${imageUri})\n`;
       handleTextInsert(markdownImageSyntax);
     }
   };
@@ -70,7 +70,7 @@ const ImageItem = ({
 
     if (!result.canceled) {
       const imageUri = result.assets[0].uri;
-      const markdownImageSyntax = `![Image](${imageUri})`;
+      const markdownImageSyntax = `![Image](${imageUri})\n`;
       handleTextInsert(markdownImageSyntax);
     }
   };

@@ -23,6 +23,7 @@ import KeyboredClickIcon from "../../assets/images/icon/KeyboredClick.svg";
 import { SvgProps } from "react-native-svg";
 import PlusItem from "../../components/write/PlusItem";
 import ImageItem from "../../components/write/ImageItem";
+import TextImportItem from "../../components/write/TextImportItem";
 
 type SelectedMenuType =
   | ""
@@ -205,6 +206,8 @@ const WritePage = ({ navigation }: { navigation: any }) => {
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
               <ImageItem handleTextInsert={handleTextInsert} />
+            ) : selectedMenu === "TextImport" ? (
+              <TextImportItem handleTextInsert={handleTextInsert} />
             ) : (
               <></>
             ))}
