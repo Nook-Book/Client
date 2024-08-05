@@ -120,6 +120,10 @@ export const Font = {
       fontSize: 14,
       lineHeight: 14 * 1.5,
     },
+    Text: {
+      fontFamily: "SCDream5",
+      fontSize: 15.49,
+    },
   },
   Paragraph: {
     XS: {

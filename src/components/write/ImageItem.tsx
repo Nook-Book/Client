@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 
-type ImageItemType = {
+type ImageItemsType = {
   text: string;
   onPress: () => void;
 };
@@ -75,7 +75,7 @@ const ImageItem = ({
     }
   };
 
-  const ImageItem: ImageItemType[] = [
+  const ImageItems: ImageItemsType[] = [
     {
       text: "사진 앨범",
       onPress: openAlbum,
@@ -86,7 +86,7 @@ const ImageItem = ({
     },
   ];
 
-  const renderItem = ({ item }: { item: ImageItemType }) => {
+  const renderItem = ({ item }: { item: ImageItemsType }) => {
     return (
       <Pressable style={[styles.boxWrap]} onPress={item.onPress}>
         <Text style={styles.itemText}>{item.text}</Text>
@@ -97,7 +97,7 @@ const ImageItem = ({
   return (
     <View style={styles.itemWrap}>
       <FlatList
-        data={ImageItem}
+        data={ImageItems}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         numColumns={1}

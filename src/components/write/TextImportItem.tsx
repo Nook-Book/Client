@@ -4,7 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 
-type TextImportItemType = {
+type TextImportItemsType = {
   text: string;
   onPress: () => void;
 };
@@ -77,7 +77,7 @@ const TextImportItem = ({
     }
   };
 
-  const TextImportItem: TextImportItemType[] = [
+  const TextImportItems: TextImportItemsType[] = [
     {
       text: "카메라로 텍스트 추출",
       onPress: openCamera,
@@ -88,7 +88,7 @@ const TextImportItem = ({
     },
   ];
 
-  const renderItem = ({ item }: { item: TextImportItemType }) => {
+  const renderItem = ({ item }: { item: TextImportItemsType }) => {
     return (
       <Pressable style={[styles.boxWrap]} onPress={item.onPress}>
         <Text style={styles.itemText}>{item.text}</Text>
@@ -99,7 +99,7 @@ const TextImportItem = ({
   return (
     <View style={styles.itemWrap}>
       <FlatList
-        data={TextImportItem}
+        data={TextImportItems}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         numColumns={1}

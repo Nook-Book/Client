@@ -10,7 +10,7 @@ import { SvgProps } from "react-native-svg";
 import { View, Text, FlatList, Pressable } from "react-native";
 import { styles } from "../../styles/write/PlusItemStyle";
 
-type PlusItemType = {
+type PlusItemsType = {
   type: string;
   icon: React.FC<SvgProps>;
   text: string;
@@ -21,7 +21,7 @@ const PlusItem = ({
 }: {
   handleTextInsert: (type: string) => void;
 }) => {
-  const PlusItem: PlusItemType[] = [
+  const PlusItems: PlusItemsType[] = [
     {
       type: "# ",
       icon: H1Icon,
@@ -64,7 +64,7 @@ const PlusItem = ({
     },
   ];
 
-  const renderItem = ({ item }: { item: PlusItemType }) => {
+  const renderItem = ({ item }: { item: PlusItemsType }) => {
     return (
       <Pressable
         style={[styles.boxWrap]}
@@ -79,7 +79,7 @@ const PlusItem = ({
   return (
     <View style={styles.itemWrap}>
       <FlatList
-        data={PlusItem}
+        data={PlusItems}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2}

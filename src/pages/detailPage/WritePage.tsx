@@ -24,6 +24,7 @@ import { SvgProps } from "react-native-svg";
 import PlusItem from "../../components/write/PlusItem";
 import ImageItem from "../../components/write/ImageItem";
 import TextImportItem from "../../components/write/TextImportItem";
+import TextShapeItem from "../../components/write/TextShapeItem";
 
 type SelectedMenuType =
   | ""
@@ -208,6 +209,8 @@ const WritePage = ({ navigation }: { navigation: any }) => {
               <ImageItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "TextImport" ? (
               <TextImportItem handleTextInsert={handleTextInsert} />
+            ) : selectedMenu === "TextShape" ? (
+              <TextShapeItem handleTextInsert={handleTextInsert} />
             ) : (
               <></>
             ))}
