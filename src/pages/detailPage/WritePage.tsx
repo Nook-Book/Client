@@ -204,11 +204,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             (selectedMenu === "Plus" || selectedMenu === "Change" ? (
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
-              <ImageItem
-                handleTextInsert={function (type: string): void {
-                  throw new Error("Function not implemented.");
-                }}
-              />
+              <ImageItem handleTextInsert={handleTextInsert} />
             ) : (
               <></>
             ))}
