@@ -40,23 +40,4 @@ export const styles = StyleSheet.create({
     borderLeftWidth: 0.8,
     paddingLeft: 10,
   },
-  itemWrap: {
-    height: 266,
-    alignItems: "center",
-    marginVertical: 16,
-  },
-  boxWrap: {
-    flexDirection: "row",
-    borderColor: Color.Border.Stroke,
-    borderWidth: 1,
-    borderRadius: 2,
-    alignItems: "center",
-    padding: 8,
-    marginVertical: 3,
-    marginHorizontal: 8,
-  },
-  itemText: {
-    ...Font.Paragraph.Medium,
-    color: Color.Typo.Primary,
-  },
 });

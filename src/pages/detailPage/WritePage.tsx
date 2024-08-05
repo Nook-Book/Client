@@ -6,11 +6,9 @@ import {
   View,
   Platform,
   Keyboard,
-  Text,
-  FlatList,
-  ViewStyle,
 } from "react-native";
 import { styles } from "../../styles/detail/WritePageStyle";
+import { markdownStyle } from "../../styles/detail/MarkdownStyle";
 import Markdown from "react-native-markdown-display";
 import WriteHeader from "../../components/header/WriteHeader";
 import { Color } from "../../styles/Theme";
@@ -23,16 +21,11 @@ import ResetIcon from "../../assets/images/icon/Reset.svg";
 import KeyboredIcon from "../../assets/images/icon/Keybored.svg";
 import KeyboredClickIcon from "../../assets/images/icon/KeyboredClick.svg";
 import { SvgProps } from "react-native-svg";
-import H1Icon from "../../assets/images/write/H1.svg";
-import H2Icon from "../../assets/images/write/H2.svg";
-import H3Icon from "../../assets/images/write/H3.svg";
-import BulletIcon from "../../assets/images/write/Bullet.svg";
-import NumberIcon from "../../assets/images/write/Number.svg";
-import QuotationIcon from "../../assets/images/write/Quotation.svg";
-import DividerIcon from "../../assets/images/write/Divider.svg";
-import CalloutIcon from "../../assets/images/write/Callout.svg";
+import PlusItem from "../../components/write/PlusItem";
+import ImageItem from "../../components/write/ImageItem";
 
 type SelectedMenuType =
+  | ""
   | "Plus"
   | "Change"
   | "Image"
@@ -45,39 +38,14 @@ type MenuItemType = {
   type: SelectedMenuType;
 };
 
-type typeItemType = {
-  icon?: React.FC<SvgProps>;
-  text: string;
-  type: string;
-};
-
-const renderItem = ({
-  item,
-  numColumns,
-}: {
-  item: typeItemType;
-  numColumns: 1 | 2;
-}) => {
-  const itemStyle: ViewStyle = {
-    width: numColumns === 1 ? 358 : 171,
-    justifyContent: numColumns === 1 ? "center" : "flex-start",
-  };
-
-  return (
-    <View style={[styles.boxWrap, itemStyle]}>
-      {item.icon && <item.icon style={{ marginRight: 8 }} />}
-      <Text style={styles.itemText}>{item.text}</Text>
-    </View>
-  );
-};
-
 const WritePage = ({ navigation }: { navigation: any }) => {
   const markdownInputRef = useRef<TextInput>(null);
   const [titleText, setTitleText] = useState("");
   const [markdownText, setMarkdownText] = useState(``);
   const [isKeybored, setIsKeybored] = useState(false);
   const [isItemView, setIsItemView] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<SelectedMenuType>("Plus");
+  const [selectedMenu, setSelectedMenu] = useState<SelectedMenuType>("");
+  const [cursorPosition, setCursorPosition] = useState(0);
 
   const menuItem: MenuItemType[] = [
     {
@@ -106,130 +74,42 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     },
   ];
 
-  const typeItem: Record<SelectedMenuType, typeItemType[]> = {
-    Plus: [
-      {
-        type: "1",
-        icon: H1Icon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: H2Icon,
-        text: "제목2",
-      },
-      {
-        type: "1",
-        icon: H3Icon,
-        text: "제목3",
-      },
-      {
-        type: "1",
-        icon: BulletIcon,
-        text: "글머리 기호 목록",
-      },
-      {
-        type: "1",
-        icon: NumberIcon,
-        text: "번호 매기기 목록",
-      },
-      {
-        type: "1",
-        icon: QuotationIcon,
-        text: "인용",
-      },
-      {
-        type: "1",
-        icon: DividerIcon,
-        text: "구분선",
-      },
-      {
-        type: "1",
-        icon: CalloutIcon,
-        text: "콜아웃",
-      },
-    ],
-    Change: [
-      {
-        type: "1",
-        icon: H1Icon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: H2Icon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: H3Icon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: BulletIcon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: NumberIcon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: QuotationIcon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: DividerIcon,
-        text: "제목1",
-      },
-      {
-        type: "1",
-        icon: CalloutIcon,
-        text: "제목1",
-      },
-    ],
-    Image: [
-      {
-        type: "1",
-        text: "사진 앨범",
-      },
-      {
-        type: "2",
-        text: "카메라",
-      },
-    ],
-    TextImport: [
-      {
-        type: "1",
-        text: "카메라로 텍스트 추출",
-      },
-      {
-        type: "2",
-        text: "사진첩에서 텍스트 추출",
-      },
-    ],
-    TextShape: [
-      {
-        type: "1",
-        text: "카메라로 텍스트 추출",
-      },
-      {
-        type: "2",
-        text: "사진첩에서 텍스트 추출",
-      },
-    ],
-    Reset: [],
+  const handleSelectionChange = (event: any) => {
+    setCursorPosition(event.nativeEvent.selection.start);
   };
 
-  const numColumns =
-    selectedMenu === "Image" ||
-    selectedMenu === "TextImport" ||
-    selectedMenu === "TextShape"
-      ? 1
-      : 2;
+  const handleTextInsert = (textToInsert: string) => {
+    const lines = markdownText.split("\n");
+
+    let currentLineIndex = 0;
+    let currentLineStart = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+      const lineLength = lines[i].length + 1;
+      if (cursorPosition <= currentLineStart + lineLength) {
+        currentLineIndex = i;
+        break;
+      }
+      currentLineStart += lineLength;
+    }
+
+    const isCurrentLineNotEmpty = lines[currentLineIndex].trim().length > 0;
+    let newText = markdownText.slice(0, cursorPosition);
+
+    if (isCurrentLineNotEmpty) {
+      newText += "\n";
+    }
+
+    newText += textToInsert;
+    newText += markdownText.slice(cursorPosition);
+
+    setMarkdownText(newText);
+    setCursorPosition(
+      cursorPosition + (isCurrentLineNotEmpty ? 1 : 0) + textToInsert.length
+    );
+
+    markdownInputRef.current?.focus();
+  };
 
   return (
     <View style={styles.container}>
@@ -266,64 +146,72 @@ const WritePage = ({ navigation }: { navigation: any }) => {
               setIsKeybored(true);
               setIsItemView(false);
             }}
+            onSelectionChange={handleSelectionChange}
             multiline
           />
-          <Markdown>{markdownText}</Markdown>
+          <Markdown style={markdownStyle}>{markdownText}</Markdown>
         </ScrollView>
         <View style={styles.fixedWrap}>
-          <View style={styles.menuWrap}>
-            <View style={styles.menuView}>
-              {menuItem.map((data, index) => {
-                return (
-                  <data.icon
-                    key={index}
-                    color={
-                      selectedMenu === data.type
-                        ? Color.Contents.Click
-                        : Color.Contents.Icon
-                    }
+          {(isKeybored || isItemView) && (
+            <View style={styles.menuWrap}>
+              <View style={styles.menuView}>
+                {menuItem.map((data, index) => {
+                  return (
+                    <data.icon
+                      key={index}
+                      color={
+                        selectedMenu === data.type
+                          ? Color.Contents.Click
+                          : Color.Contents.Icon
+                      }
+                      onPress={() => {
+                        if (selectedMenu === data.type) {
+                          setSelectedMenu("");
+                          markdownInputRef.current?.focus();
+                        } else {
+                          setSelectedMenu(data.type);
+                          Keyboard.dismiss();
+                          setIsItemView(true);
+                          setIsKeybored(false);
+                        }
+                      }}
+                    />
+                  );
+                })}
+              </View>
+              <View style={styles.keyboredWrap}>
+                {isKeybored ? (
+                  <KeyboredIcon
                     onPress={() => {
-                      setSelectedMenu(data.type);
                       Keyboard.dismiss();
-                      setIsItemView(true);
-                      setIsKeybored(false);
+                      setIsItemView(false);
+                      setIsKeybored(!isKeybored);
                     }}
                   />
-                );
-              })}
-            </View>
-            <View style={styles.keyboredWrap}>
-              {isKeybored ? (
-                <KeyboredIcon
-                  onPress={() => {
-                    Keyboard.dismiss();
-                    setIsItemView(true);
-                    setIsKeybored(!isKeybored);
-                  }}
-                />
-              ) : (
-                <KeyboredClickIcon
-                  onPress={() => {
-                    markdownInputRef.current?.focus();
-                    setIsItemView(false);
-                    setIsKeybored(!isKeybored);
-                  }}
-                />
-              )}
-            </View>
-          </View>
-          {isItemView && (
-            <View style={styles.itemWrap}>
-              <FlatList
-                key={`flatlist-${numColumns}`}
-                data={typeItem[selectedMenu]}
-                renderItem={(props) => renderItem({ ...props, numColumns })}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={numColumns}
-                showsVerticalScrollIndicator={false}
-              />
+                ) : (
+                  <KeyboredClickIcon
+                    onPress={() => {
+                      markdownInputRef.current?.focus();
+                      setIsItemView(false);
+                      setIsKeybored(!isKeybored);
+                    }}
+                  />
+                )}
+              </View>
             </View>
           )}
+          {isItemView &&
+            (selectedMenu === "Plus" || selectedMenu === "Change" ? (
+              <PlusItem handleTextInsert={handleTextInsert} />
+            ) : selectedMenu === "Image" ? (
+              <ImageItem
+                handleTextInsert={function (type: string): void {
+                  throw new Error("Function not implemented.");
+                }}
+              />
+            ) : (
+              <></>
+            ))}
         </View>
       </KeyboardAvoidingView>
     </View>
