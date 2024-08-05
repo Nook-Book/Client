@@ -61,16 +61,19 @@ const CarouselItem = ({
           <Text style={styles.subText}>{item.dummyBook.length}권</Text>
           <Text style={styles.mainText}>{item.title}</Text>
         </View>
-        <FlatList
-          data={item.dummyBook}
-          renderItem={({ item }) => (
-            <BookItem item={item} navigation={navigation} />
-          )}
-          keyExtractor={(book, index) => `${item.id}_${book.id}_${index}`}
-          numColumns={3}
-          contentContainerStyle={styles.flatListContent}
-          showsVerticalScrollIndicator={false}
-        />
+        <View style={styles.flatListWrap}>
+          <FlatList
+            data={item.dummyBook}
+            renderItem={({ item }) => (
+              <BookItem item={item} navigation={navigation} />
+            )}
+            keyExtractor={(book, index) => `${item.id}_${book.id}_${index}`}
+            numColumns={3}
+            style={styles.flatList}
+            contentContainerStyle={styles.flatListContent}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       </Pressable>
     </Animated.View>
   );
