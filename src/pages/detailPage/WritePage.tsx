@@ -6,12 +6,13 @@ import {
   View,
   Platform,
   Keyboard,
+  Text,
 } from "react-native";
 import { styles } from "../../styles/detail/WritePageStyle";
 import { markdownStyle } from "../../styles/detail/MarkdownStyle";
 import Markdown from "react-native-markdown-display";
 import WriteHeader from "../../components/header/WriteHeader";
-import { Color } from "../../styles/Theme";
+import { Color, Font } from "../../styles/Theme";
 import PlusIcon from "../../assets/images/icon/Plus2.svg";
 import ChangeIcon from "../../assets/images/icon/Change.svg";
 import ImageIcon from "../../assets/images/icon/Image.svg";
@@ -141,6 +142,91 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       type: "Cancelline",
     },
   ];
+
+  const renderRules = {
+    heading1: (node: any, children: any) => (
+      <Text
+        key={node.key}
+        style={{
+          ...Font.Label.Large,
+          marginVertical: 4,
+        }}
+      >
+        {children}
+      </Text>
+    ),
+    heading2: (node: any, children: any) => (
+      <Text
+        key={node.key}
+        style={{
+          ...Font.Label.Medium,
+          marginVertical: 4,
+        }}
+      >
+        {children}
+      </Text>
+    ),
+    heading3: (node: any, children: any) => (
+      <Text
+        key={node.key}
+        style={{
+          ...Font.Label.XMedium,
+          marginVertical: 4,
+        }}
+      >
+        {children}
+      </Text>
+    ),
+    text: (node: any) => {
+      const { content } = node;
+      const colorRegex = /\[\[color:(#[0-9A-Fa-f]{6})\]\](.*?)\[\[\/color\]\]/g;
+      const parts = content.split(colorRegex);
+
+      return (
+        <Text>
+          {parts.map((part: string, index: number) => {
+            if (index % 3 === 0) {
+              return <Text key={index}>{part}</Text>;
+            } else if (index % 3 === 1) {
+              const color = part;
+              const text = parts[index + 1];
+              return (
+                <Text key={index} style={{ color }}>
+                  {text}
+                </Text>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </Text>
+      );
+    },
+  };
+
+  const handleTextColorChange = (color: string) => {
+    const start = selection.start;
+    const end = selection.end;
+
+    if (start !== end) {
+      const selectedText = markdownText.slice(start, end);
+      const beforeText = markdownText.slice(0, start);
+      const afterText = markdownText.slice(end);
+
+      const newText = `${beforeText}[[color:${color}]]${selectedText}[[/color]]${afterText}`;
+
+      saveHistoryState();
+      setMarkdownText(newText);
+      setCursorPosition(end + color.length + 18);
+    }
+
+    setSelectedShapeMenu((prevState) => ({
+      ...prevState,
+      TextColor: false,
+    }));
+
+    markdownInputRef.current?.focus();
+  };
 
   const handleSelectionChange = (event: any) => {
     const { start, end } = event.nativeEvent.selection;
@@ -285,7 +371,9 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             onSelectionChange={handleSelectionChange}
             multiline
           />
-          <Markdown style={markdownStyle}>{markdownText}</Markdown>
+          <Markdown style={markdownStyle} rules={renderRules}>
+            {markdownText}
+          </Markdown>
         </ScrollView>
         <View style={styles.fixedWrap}>
           {(isKeybored || isItemView) && (
@@ -407,9 +495,9 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             ) : selectedMenu === "TextImport" ? (
               <TextImportItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "TextShape" ? (
-              <TextShapeItem />
+              <TextShapeItem handleTextColorChange={handleTextColorChange} />
             ) : (
-              <TextShapeItem />
+              <TextShapeItem handleTextColorChange={handleTextColorChange} />
             ))}
         </View>
       </KeyboardAvoidingView>
