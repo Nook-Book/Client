@@ -17,7 +17,12 @@ export default function WriteHeader({
     <SafeAreaView>
       <View style={styles.container}>
         {isText ? (
-          <CheckIcon onPress={checkClick} />
+          <CheckIcon
+            onPress={() => {
+              navigation.goBack();
+              checkClick();
+            }}
+          />
         ) : (
           <CancelIcon onPress={() => navigation.goBack()} />
         )}
