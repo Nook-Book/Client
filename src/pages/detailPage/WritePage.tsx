@@ -233,14 +233,17 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                               newState[data.type] = !newState[data.type];
                               return newState;
                             });
-                            if (!selectedShapeMenu[data.type]) {
-                              if (selectedShapeMenu.TextColor) {
+                            if (data.type === "TextColor") {
+                              if (!selectedShapeMenu.TextColor) {
                                 Keyboard.dismiss();
                                 setIsItemView(true);
                                 setIsKeybored(false);
+                              } else {
+                                markdownInputRef.current?.focus();
                               }
-                            } else {
-                              markdownInputRef.current?.focus();
+                            }
+                            if (data.type === "Back") {
+                              setSelectedMenu("");
                             }
                           }}
                         />
@@ -302,7 +305,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             ) : selectedMenu === "TextShape" ? (
               <TextShapeItem handleTextInsert={handleTextInsert} />
             ) : (
-              <></>
+              <TextShapeItem handleTextInsert={handleTextInsert} />
             ))}
         </View>
       </KeyboardAvoidingView>
