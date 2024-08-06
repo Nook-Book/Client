@@ -179,19 +179,34 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     ),
     text: (node: any) => {
       const { content } = node;
-      const colorRegex = /\[\[color:(#[0-9A-Fa-f]{6})\]\](.*?)\[\[\/color\]\]/g;
-      const parts = content.split(colorRegex);
+      const regex =
+        /(T#[0-9A-Fa-f]{6})\[(.*?)\]|(Brgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d(\.\d+)?\))\[(.*?)\]/g;
+
+      const parts = content.split(regex);
 
       return (
         <Text>
           {parts.map((part: string, index: number) => {
-            if (index % 3 === 0) {
+            if (index % 6 === 0) {
               return <Text key={index}>{part}</Text>;
-            } else if (index % 3 === 1) {
+            } else if (index % 6 === 1 && part) {
               const color = part;
               const text = parts[index + 1];
               return (
-                <Text key={index} style={{ color }}>
+                <Text key={index} style={{ color: color.slice(1) }}>
+                  {text}
+                </Text>
+              );
+            } else if (index % 6 === 4 && part) {
+              const backgroundColor = parts[3];
+              const text = parts[index + 1];
+              return (
+                <Text
+                  key={index}
+                  style={{
+                    backgroundColor: backgroundColor.slice(1),
+                  }}
+                >
                   {text}
                 </Text>
               );
@@ -204,7 +219,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     },
   };
 
-  const handleTextColorChange = (color: string) => {
+  const handleTextColorChange = (isText: boolean, color: string) => {
     const start = selection.start;
     const end = selection.end;
 
@@ -213,11 +228,17 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       const beforeText = markdownText.slice(0, start);
       const afterText = markdownText.slice(end);
 
-      const newText = `${beforeText}[[color:${color}]]${selectedText}[[/color]]${afterText}`;
+      let newText;
+
+      if (isText) {
+        newText = `${beforeText}T${color}[${selectedText}]${afterText}`;
+      } else {
+        newText = `${beforeText}B${color}[${selectedText}]${afterText}`;
+      }
 
       saveHistoryState();
       setMarkdownText(newText);
-      setCursorPosition(end + color.length + 18);
+      setCursorPosition(end);
     }
 
     setSelectedShapeMenu((prevState) => ({

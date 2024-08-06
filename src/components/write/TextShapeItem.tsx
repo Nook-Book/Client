@@ -19,7 +19,7 @@ type TextShapeItemType = TextColorItemsType | TextBackItemsType;
 const TextShapeItem = ({
   handleTextColorChange,
 }: {
-  handleTextColorChange: (type: string) => void;
+  handleTextColorChange: (isText: boolean, type: string) => void;
 }) => {
   const items: TextShapeItemType[] = [
     { type: "color", style: { color: "" }, text: "텍스트 색" },
@@ -93,7 +93,7 @@ const TextShapeItem = ({
       return (
         <Pressable
           style={styles.boxWrap}
-          onPress={() => handleTextColorChange(item.style.color)}
+          onPress={() => handleTextColorChange(true, item.style.color)}
         >
           <View style={styles.leftWrap}>
             <Text style={[item.style, Font.Label.Text]}>가</Text>
@@ -111,7 +111,9 @@ const TextShapeItem = ({
       return (
         <Pressable
           style={styles.boxWrap}
-          onPress={() => handleTextColorChange(item.style.backgroundColor)}
+          onPress={() =>
+            handleTextColorChange(false, item.style.backgroundColor)
+          }
         >
           <View style={styles.leftWrap}>
             <View style={[item.style, styles.backWrap]}></View>
