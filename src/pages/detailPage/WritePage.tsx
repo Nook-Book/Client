@@ -6,13 +6,12 @@ import {
   View,
   Platform,
   Keyboard,
-  Text,
 } from "react-native";
 import { styles } from "../../styles/detail/WritePageStyle";
-import { markdownStyle } from "../../styles/detail/MarkdownStyle";
+import { markdownStyle } from "../../styles/markdown/MarkdownStyle";
 import Markdown from "react-native-markdown-display";
 import WriteHeader from "../../components/header/WriteHeader";
-import { Color, Font } from "../../styles/Theme";
+import { Color } from "../../styles/Theme";
 import PlusIcon from "../../assets/images/icon/Plus2.svg";
 import ChangeIcon from "../../assets/images/icon/Change.svg";
 import ImageIcon from "../../assets/images/icon/Image.svg";
@@ -32,6 +31,7 @@ import PlusItem from "../../components/write/PlusItem";
 import ImageItem from "../../components/write/ImageItem";
 import TextImportItem from "../../components/write/TextImportItem";
 import TextShapeItem from "../../components/write/TextShapeItem";
+import { RenderRules } from "../../styles/markdown/RenderRules";
 
 type SelectedMenuType =
   | ""
@@ -142,82 +142,6 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       type: "Cancelline",
     },
   ];
-
-  const renderRules = {
-    heading1: (node: any, children: any) => (
-      <Text
-        key={node.key}
-        style={{
-          ...Font.Label.Large,
-          marginVertical: 4,
-        }}
-      >
-        {children}
-      </Text>
-    ),
-    heading2: (node: any, children: any) => (
-      <Text
-        key={node.key}
-        style={{
-          ...Font.Label.Medium,
-          marginVertical: 4,
-        }}
-      >
-        {children}
-      </Text>
-    ),
-    heading3: (node: any, children: any) => (
-      <Text
-        key={node.key}
-        style={{
-          ...Font.Label.XMedium,
-          marginVertical: 4,
-        }}
-      >
-        {children}
-      </Text>
-    ),
-    text: (node: any) => {
-      const { content } = node;
-      const regex =
-        /(T#[0-9A-Fa-f]{6})\[(.*?)\]|(Brgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d(\.\d+)?\))\[(.*?)\]/g;
-
-      const parts = content.split(regex);
-
-      return (
-        <Text>
-          {parts.map((part: string, index: number) => {
-            if (index % 6 === 0) {
-              return <Text key={index}>{part}</Text>;
-            } else if (index % 6 === 1 && part) {
-              const color = part;
-              const text = parts[index + 1];
-              return (
-                <Text key={index} style={{ color: color.slice(1) }}>
-                  {text}
-                </Text>
-              );
-            } else if (index % 6 === 4 && part) {
-              const backgroundColor = parts[3];
-              const text = parts[index + 1];
-              return (
-                <Text
-                  key={index}
-                  style={{
-                    backgroundColor: backgroundColor.slice(1),
-                  }}
-                >
-                  {text}
-                </Text>
-              );
-            } else {
-              return null;
-            }
-          })}
-        </Text>
-      );
-    },
-  };
 
   const handleTextColorChange = (isText: boolean, color: string) => {
     const start = selection.start;
@@ -355,7 +279,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     <View style={styles.container}>
       <WriteHeader
         navigation={navigation}
-        isText={markdownText.length > 0}
+        isText={titleText.length > 0 || markdownText.length > 0}
         checkClick={function (): void {
           throw new Error("Function not implemented.");
         }}
@@ -392,7 +316,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             onSelectionChange={handleSelectionChange}
             multiline
           />
-          <Markdown style={markdownStyle} rules={renderRules}>
+          <Markdown style={markdownStyle} rules={RenderRules}>
             {markdownText}
           </Markdown>
         </ScrollView>

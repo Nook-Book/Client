@@ -3,7 +3,6 @@ import H2Icon from "../../assets/images/write/H2.svg";
 import H3Icon from "../../assets/images/write/H3.svg";
 import BulletIcon from "../../assets/images/write/Bullet.svg";
 import NumberIcon from "../../assets/images/write/Number.svg";
-import QuotationIcon from "../../assets/images/write/Quotation.svg";
 import DividerIcon from "../../assets/images/write/Divider.svg";
 import CalloutIcon from "../../assets/images/write/Callout.svg";
 import { SvgProps } from "react-native-svg";
@@ -48,17 +47,12 @@ const PlusItem = ({
       text: "번호 매기기 목록",
     },
     {
-      type: "> ",
-      icon: QuotationIcon,
-      text: "인용",
-    },
-    {
       type: "---\n",
       icon: DividerIcon,
       text: "구분선",
     },
     {
-      type: "```\n콜아웃\n```\n",
+      type: "> ",
       icon: CalloutIcon,
       text: "콜아웃",
     },

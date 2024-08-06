@@ -24,6 +24,7 @@ import IconItem from "../../components/detail/IconItem";
 import InfoItem from "../../components/detail/InfoItem";
 import ShareBottomSheet from "../../components/bottomSheet/ShareBottomSheet";
 import CollectionBottomSheet from "../../components/bottomSheet/CollectionBottomSheet";
+import { dummyList } from "../../assets/data/dummyNote";
 
 const DetailPage = ({ navigation }: { navigation: any }) => {
   const [isRead, setIsRead] = useState(false);
@@ -38,32 +39,6 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
   >([]);
   const [showIconAnimation, setShowIconAnimation] = useState(false);
   const animationValue = useRef(new Animated.Value(1)).current;
-
-  useEffect(() => {
-    if (showIconAnimation) {
-      Animated.sequence([
-        Animated.timing(animationValue, {
-          toValue: 1,
-          duration: 300,
-          easing: Easing.out(Easing.quad),
-          useNativeDriver: true,
-        }),
-        Animated.timing(animationValue, {
-          toValue: 1,
-          duration: 300,
-          easing: Easing.out(Easing.quad),
-          useNativeDriver: true,
-        }),
-        Animated.timing(animationValue, {
-          toValue: 0,
-          duration: 0,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        setShowIconAnimation(false);
-      });
-    }
-  }, [showIconAnimation]);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
@@ -84,8 +59,34 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
   const handleSaveCollectionPress = () => {
     setIsCollectionVisible(false);
     setSaveSelectedCollection(selectedCollection);
-    if (isCollectionVisible && selectedCollection.length > 0) {
+
+    if (
+      isCollectionVisible &&
+      selectedCollection.length > 0 &&
+      saveSelectedCollection.length === 0
+    ) {
       setShowIconAnimation(true);
+      Animated.sequence([
+        Animated.timing(animationValue, {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValue, {
+          toValue: 1,
+          duration: 450,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValue, {
+          toValue: 0,
+          duration: 0,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setShowIconAnimation(false);
+      });
     }
   };
 
@@ -126,7 +127,11 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
             <IconItem
               IconComponent={NoteIcon}
               text="노트"
-              onPress={() => navigation.navigate("AllNote")}
+              onPress={() =>
+                dummyList.length > 0
+                  ? navigation.navigate("AllNote")
+                  : navigation.navigate("Write")
+              }
               isActive={false}
             />
             <IconItem

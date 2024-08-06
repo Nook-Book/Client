@@ -18,10 +18,13 @@ export const markdownStyle = StyleSheet.create({
     marginVertical: 4,
   },
   blockquote: {
-    ...Font.Paragraph.SemiMedium,
-    borderLeftColor: Color.Typo.Primary,
-    backgroundColor: Color.Secondary,
+    borderLeftWidth: 0,
+    borderColor: Color.Field.Primary,
+    backgroundColor: Color.Field.Primary,
+    borderRadius: 3,
     marginVertical: 4,
+    marginLeft: 0,
+    paddingHorizontal: 8,
   },
   hr: {
     backgroundColor: Color.Border.Stroke,
@@ -35,33 +38,15 @@ export const markdownStyle = StyleSheet.create({
     ...Font.Paragraph.SemiMedium,
     marginVertical: 4,
   },
-  code_block: {
-    ...Font.Paragraph.SemiMedium,
-    borderWidth: 0,
-    backgroundColor: Color.Field.Primary,
-    padding: 8,
-    borderRadius: 3,
-    marginVertical: 4,
-  },
-  fence: {
-    ...Font.Paragraph.SemiMedium,
-    borderWidth: 0,
-    backgroundColor: Color.Field.Primary,
-    padding: 8,
-    borderRadius: 3,
-    marginVertical: 4,
-  },
   strong: {
     ...Font.Label.SemiMedium,
-    marginVertical: 4,
   },
   em: {
     fontStyle: "italic",
-    marginVertical: 4,
   },
   s: {
     ...Font.Paragraph.SemiMedium,
-    marginVertical: 4,
+    textDecorationLine: "line-through",
   },
   code_inline: {
     ...Font.Paragraph.SemiMedium,

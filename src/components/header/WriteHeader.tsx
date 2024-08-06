@@ -20,7 +20,7 @@ export default function WriteHeader({
           <CheckIcon
             onPress={() => {
               navigation.goBack();
-              checkClick();
+              checkClick;
             }}
           />
         ) : (
