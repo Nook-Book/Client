@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     height: 24,
     position: "absolute",
     left: 20,
+    color: Color.Contents.Icon,
   },
   text1: {
     ...Font.Label.XMedium,
