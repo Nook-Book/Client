@@ -79,10 +79,14 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       Underline: false,
       Cancelline: false,
     });
-  const [cursorPosition, setCursorPosition] = useState(0);
   const [history, setHistory] = useState<{ title: string; content: string }[]>(
     []
   );
+  const [cursorPosition, setCursorPosition] = useState(0);
+  const [selection, setSelection] = useState<{ start: number; end: number }>({
+    start: 0,
+    end: 0,
+  });
 
   const menuItem: MenuItemType[] = [
     {
@@ -139,7 +143,29 @@ const WritePage = ({ navigation }: { navigation: any }) => {
   ];
 
   const handleSelectionChange = (event: any) => {
-    setCursorPosition(event.nativeEvent.selection.start);
+    const { start, end } = event.nativeEvent.selection;
+    setSelection({ start, end });
+    setCursorPosition(start);
+    updateShapeMenuBasedOnSelection(start, end);
+  };
+
+  const updateShapeMenuBasedOnSelection = (start: number, end: number) => {
+    const selectedText = markdownText.slice(start, end);
+
+    const isBold = selectedText.startsWith("**") && selectedText.endsWith("**");
+    const isItalic = selectedText.startsWith("_") && selectedText.endsWith("_");
+    const isUnderline =
+      selectedText.startsWith("`") && selectedText.endsWith("`");
+    const isCancelline =
+      selectedText.startsWith("~~") && selectedText.endsWith("~~");
+
+    setSelectedShapeMenu((prevState) => ({
+      ...prevState,
+      Bold: isBold,
+      Italic: isItalic,
+      Underline: isUnderline,
+      Cancelline: isCancelline,
+    }));
   };
 
   const handleTextInsert = (textToInsert: string) => {
@@ -168,7 +194,6 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     newText += markdownText.slice(cursorPosition);
 
     saveHistoryState();
-
     setMarkdownText(newText);
     setCursorPosition(
       cursorPosition + (isCurrentLineNotEmpty ? 1 : 0) + textToInsert.length
@@ -176,6 +201,31 @@ const WritePage = ({ navigation }: { navigation: any }) => {
 
     setSelectedMenu("");
     markdownInputRef.current?.focus();
+  };
+
+  const handleTextType = (text: string, type: boolean) => {
+    const start = selection.start;
+    const end = selection.end;
+
+    const selectedText = markdownText.slice(start, end);
+    const beforeText = markdownText.slice(0, start);
+    const afterText = markdownText.slice(end);
+
+    let newText: string;
+
+    if (type) {
+      newText = `${beforeText}${text}${selectedText}${text}${afterText}`;
+    } else {
+      const newSelectedText = selectedText.replaceAll(text, "");
+      newText = `${beforeText}${newSelectedText}${afterText}`;
+    }
+    saveHistoryState();
+    setMarkdownText(newText);
+    updateShapeMenuBasedOnSelection(start, end);
+    setSelectedShapeMenu((prevState) => ({
+      ...prevState,
+      TextColor: false,
+    }));
   };
 
   const saveHistoryState = () => {
@@ -269,6 +319,34 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                             if (data.type === "Back") {
                               setSelectedMenu("");
                             }
+                            if (data.type === "Bold") {
+                              if (!selectedShapeMenu.Bold) {
+                                handleTextType("**", true);
+                              } else {
+                                handleTextType("**", false);
+                              }
+                            }
+                            if (data.type === "Italic") {
+                              if (!selectedShapeMenu.Italic) {
+                                handleTextType("_", true);
+                              } else {
+                                handleTextType("_", false);
+                              }
+                            }
+                            if (data.type === "Underline") {
+                              if (!selectedShapeMenu.Underline) {
+                                handleTextType("`", true);
+                              } else {
+                                handleTextType("`", false);
+                              }
+                            }
+                            if (data.type === "Cancelline") {
+                              if (!selectedShapeMenu.Cancelline) {
+                                handleTextType("~~", true);
+                              } else {
+                                handleTextType("~~", false);
+                              }
+                            }
                           }}
                         />
                       );
@@ -329,9 +407,9 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             ) : selectedMenu === "TextImport" ? (
               <TextImportItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "TextShape" ? (
-              <TextShapeItem handleTextInsert={handleTextInsert} />
+              <TextShapeItem />
             ) : (
-              <TextShapeItem handleTextInsert={handleTextInsert} />
+              <TextShapeItem />
             ))}
         </View>
       </KeyboardAvoidingView>

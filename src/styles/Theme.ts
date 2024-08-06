@@ -1,7 +1,3 @@
-// import SCDream6 from "../assets/fonts/SCDream6.otf";
-// import SCDream5 from "../assets/fonts/SCDream5.otf";
-// import SCDream4 from "../assets/fonts/SCDream4.otf";
-
 export const Color = {
   Primary: "#000000",
   Secondary: "#FFFFFF",

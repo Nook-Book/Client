@@ -16,11 +16,7 @@ type TextBackItemsType = {
 
 type TextShapeItemType = TextColorItemsType | TextBackItemsType;
 
-const TextShapeItem = ({
-  handleTextInsert,
-}: {
-  handleTextInsert: (type: string) => void;
-}) => {
+const TextShapeItem = () => {
   const items: TextShapeItemType[] = [
     { type: "color", style: { color: "" }, text: "텍스트 색" },
     { type: "color", style: { color: "" }, text: "" },
@@ -91,10 +87,7 @@ const TextShapeItem = ({
       }
 
       return (
-        <Pressable
-          style={styles.boxWrap}
-          onPress={() => handleTextInsert(`{${item.style.color}}`)}
-        >
+        <Pressable style={styles.boxWrap}>
           <View style={styles.leftWrap}>
             <Text style={[item.style, Font.Label.Text]}>가</Text>
           </View>
@@ -109,10 +102,7 @@ const TextShapeItem = ({
       }
 
       return (
-        <Pressable
-          style={styles.boxWrap}
-          onPress={() => handleTextInsert(`{${item.style.backgroundColor}}`)}
-        >
+        <Pressable style={styles.boxWrap}>
           <View style={styles.leftWrap}>
             <View style={[item.style, styles.backWrap]}></View>
           </View>
