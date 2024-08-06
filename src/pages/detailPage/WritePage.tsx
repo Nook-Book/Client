@@ -80,6 +80,9 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       Cancelline: false,
     });
   const [cursorPosition, setCursorPosition] = useState(0);
+  const [history, setHistory] = useState<{ title: string; content: string }[]>(
+    []
+  );
 
   const menuItem: MenuItemType[] = [
     {
@@ -164,6 +167,8 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     newText += textToInsert;
     newText += markdownText.slice(cursorPosition);
 
+    saveHistoryState();
+
     setMarkdownText(newText);
     setCursorPosition(
       cursorPosition + (isCurrentLineNotEmpty ? 1 : 0) + textToInsert.length
@@ -171,6 +176,22 @@ const WritePage = ({ navigation }: { navigation: any }) => {
 
     setSelectedMenu("");
     markdownInputRef.current?.focus();
+  };
+
+  const saveHistoryState = () => {
+    setHistory((prevHistory) => [
+      ...prevHistory,
+      { title: titleText, content: markdownText },
+    ]);
+  };
+
+  const handleReset = () => {
+    if (history.length > 0) {
+      const lastState = history[history.length - 1];
+      setTitleText(lastState.title);
+      setMarkdownText(lastState.content);
+      setHistory(history.slice(0, -1));
+    }
   };
 
   return (
@@ -202,7 +223,10 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             ref={markdownInputRef}
             placeholder="탭하여 기록을 시작해보세요."
             value={markdownText}
-            onChangeText={setMarkdownText}
+            onChangeText={(text) => {
+              saveHistoryState();
+              setMarkdownText(text);
+            }}
             placeholderTextColor={Color.Typo.Tertiary}
             onFocus={() => {
               setIsKeybored(true);
@@ -259,7 +283,9 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                               : Color.Contents.Icon
                           }
                           onPress={() => {
-                            if (selectedMenu === data.type) {
+                            if (data.type === "Reset") {
+                              handleReset();
+                            } else if (selectedMenu === data.type) {
                               setSelectedMenu("");
                               markdownInputRef.current?.focus();
                             } else {
