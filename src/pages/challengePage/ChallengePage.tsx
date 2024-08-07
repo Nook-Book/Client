@@ -53,8 +53,8 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
   return (
     <View style={styles.container}>
       <AllChallengeHeader navigation={navigation} />
-      <View style={styles.contentContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.contentContainer}>
           <ChallengeHead text="초대된 챌린지" data={dummyListInvite} />
           {dummyListInvite.map((data, index) => {
             return (
@@ -78,7 +78,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               <ChallengeItem
                 item={item}
                 index={index}
-                onPress={() => console.log(item)}
+                onPress={() => navigation.navigate("ChallengeDetail")}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -93,15 +93,15 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               <ChallengeItem
                 item={item}
                 index={index}
-                onPress={() => console.log(item)}
+                onPress={() => navigation.navigate("ChallengeDetail")}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
