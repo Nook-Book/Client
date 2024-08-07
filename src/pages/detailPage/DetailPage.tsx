@@ -38,7 +38,7 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
     number[]
   >([]);
   const [showIconAnimation, setShowIconAnimation] = useState(false);
-  const animationValue = useRef(new Animated.Value(1)).current;
+  const animationValue = useRef(new Animated.Value(0)).current;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
@@ -75,7 +75,7 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
         }),
         Animated.timing(animationValue, {
           toValue: 1,
-          duration: 450,
+          duration: 500,
           easing: Easing.out(Easing.quad),
           useNativeDriver: true,
         }),
