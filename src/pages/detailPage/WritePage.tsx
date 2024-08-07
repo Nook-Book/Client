@@ -152,16 +152,29 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       const beforeText = markdownText.slice(0, start);
       const afterText = markdownText.slice(end);
 
+      const textRegex = /T#[0-9A-Fa-f]{6}\[(.*?)\]/;
+      const backgroundRegex =
+        /Brgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d(\.\d+)?\)\[(.*?)\]/;
+
       let newText;
 
-      if (isText) {
-        newText = `${beforeText}T${color}[${selectedText}]${afterText}`;
+      if (isText && textRegex.test(selectedText)) {
+        newText = selectedText.replace(/T#[0-9A-Fa-f]{6}/, `T${color}`);
+      } else if (!isText && backgroundRegex.test(selectedText)) {
+        newText = selectedText.replace(
+          /Brgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d(\.\d+)?\)/,
+          `B${color}`
+        );
       } else {
-        newText = `${beforeText}B${color}[${selectedText}]${afterText}`;
+        if (isText) {
+          newText = `T${color}[${selectedText}]`;
+        } else {
+          newText = `B${color}[${selectedText}]`;
+        }
       }
 
       saveHistoryState();
-      setMarkdownText(newText);
+      setMarkdownText(`${beforeText}${newText}${afterText}`);
       setCursorPosition(end);
     }
 
