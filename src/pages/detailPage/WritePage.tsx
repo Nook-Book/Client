@@ -65,12 +65,12 @@ type SelectedShapeMenuState = {
 };
 
 const WritePage = ({ navigation }: { navigation: any }) => {
-  const markdownInputRef = useRef<TextInput>(null);
-  const [titleText, setTitleText] = useState("");
-  const [markdownText, setMarkdownText] = useState(``);
-  const [isKeybored, setIsKeybored] = useState(false);
-  const [isItemView, setIsItemView] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<SelectedMenuType>("");
+  const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
+  const [titleText, setTitleText] = useState(""); //제목
+  const [markdownText, setMarkdownText] = useState(``); //내용
+  const [isKeybored, setIsKeybored] = useState(false); //키보드 상태
+  const [isItemView, setIsItemView] = useState(false); //아이템뷰 상태
+  const [selectedMenu, setSelectedMenu] = useState<SelectedMenuType>(""); //선택된 메뉴
   const [selectedShapeMenu, setSelectedShapeMenu] =
     useState<SelectedShapeMenuState>({
       Back: false,
@@ -79,16 +79,17 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       Italic: false,
       Underline: false,
       Cancelline: false,
-    });
+    }); //Shape 선택된 메뉴
   const [history, setHistory] = useState<{ title: string; content: string }[]>(
     []
-  );
-  const [cursorPosition, setCursorPosition] = useState(0);
+  ); //작성 기록 상태
+  const [cursorPosition, setCursorPosition] = useState(0); //커서 위치 상태
   const [selection, setSelection] = useState<{ start: number; end: number }>({
     start: 0,
     end: 0,
-  });
+  }); //선택된 텍스트 상태
 
+  //메뉴 아이템
   const menuItem: MenuItemType[] = [
     {
       icon: PlusIcon,
@@ -116,6 +117,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     },
   ];
 
+  //Shape 메뉴 아이템
   const shapeMenuItem: ShapeMenuItemType[] = [
     {
       icon: BackIcon,
@@ -143,6 +145,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     },
   ];
 
+  //색상 변경 함수
   const handleColorChange = (color: string) => {
     const start = selection.start;
     const end = selection.end;
@@ -200,6 +203,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     markdownInputRef.current?.focus();
   };
 
+  //선택 영역 변경 함수
   const handleSelectionChange = (event: any) => {
     const { start, end } = event.nativeEvent.selection;
     setSelection({ start, end });
@@ -207,6 +211,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     updateShapeMenuBasedOnSelection(start, end);
   };
 
+  //선택된 텍스트에 따라 Shape 메뉴 업데이트 함수
   const updateShapeMenuBasedOnSelection = (start: number, end: number) => {
     const selectedText = markdownText.slice(start, end);
 
@@ -226,6 +231,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     }));
   };
 
+  //텍스트 삽입 함수
   const handleTextInsert = (textToInsert: string) => {
     const lines = markdownText.split("\n");
 
@@ -261,6 +267,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     markdownInputRef.current?.focus();
   };
 
+  //텍스트 스타일 적용 함수
   const handleTextType = (text: string, type: boolean) => {
     const start = selection.start;
     const end = selection.end;
@@ -286,6 +293,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     }));
   };
 
+  //기록 상태 저장 함수
   const saveHistoryState = () => {
     setHistory((prevHistory) => [
       ...prevHistory,
@@ -293,6 +301,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     ]);
   };
 
+  //기록 뒤로가기 함수
   const handleReset = () => {
     if (history.length > 0) {
       const lastState = history[history.length - 1];
