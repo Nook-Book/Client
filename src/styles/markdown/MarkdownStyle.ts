@@ -31,25 +31,24 @@ export const markdownStyle = StyleSheet.create({
     marginVertical: 4,
   },
   bullet_list: {
-    ...Font.Paragraph.SemiMedium,
     marginVertical: 4,
+    gap: 4,
   },
   ordered_list: {
-    ...Font.Paragraph.SemiMedium,
     marginVertical: 4,
+    gap: 4,
   },
   strong: {
-    ...Font.Label.SemiMedium,
+    fontWeight: "600",
   },
   em: {
+    //이탤릭체 폰트 추가 필요
     fontStyle: "italic",
   },
   s: {
-    ...Font.Paragraph.SemiMedium,
     textDecorationLine: "line-through",
   },
   code_inline: {
-    ...Font.Paragraph.SemiMedium,
     backgroundColor: "none",
     textDecorationLine: "underline",
   },
