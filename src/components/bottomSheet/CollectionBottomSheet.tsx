@@ -7,7 +7,17 @@ import PlusIcon from "../../assets/images/icon/Plus.svg";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";
 import InputModal from "../modal/InputModal";
 
-const CollectionBottomSheet = ({ onClose }: { onClose: () => void }) => {
+const CollectionBottomSheet = ({
+  clickList,
+  onClose,
+  onComplete,
+  onPress,
+}: {
+  clickList: number[];
+  onClose: () => void;
+  onComplete: () => void;
+  onPress: (id: number) => void;
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
@@ -24,7 +34,11 @@ const CollectionBottomSheet = ({ onClose }: { onClose: () => void }) => {
         </View>
       )}
       <View style={styles.bottom}>
-        <BottomSheetTitle text="컬렉션 선택" onClose={onClose} />
+        <BottomSheetTitle
+          text="컬렉션 선택"
+          onClose={onClose}
+          onComplete={onComplete}
+        />
         <ScrollView style={{ height: 221 }}>
           <BottomSheetItem
             Icon={
@@ -48,7 +62,8 @@ const CollectionBottomSheet = ({ onClose }: { onClose: () => void }) => {
                 }
                 leftText={data.title}
                 rightText={"(" + data.dummyBook.length + "권)"}
-                onPress={onClose} //컬렉션에 저장되도록 수정 필요
+                onPress={() => onPress(data.id)}
+                isClick={clickList.includes(data.id)}
               />
             );
           })}

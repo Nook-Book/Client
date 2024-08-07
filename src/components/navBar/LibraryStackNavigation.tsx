@@ -10,6 +10,7 @@ import DetailPage from "../../pages/detailPage/DetailPage";
 import TimerPage from "../../pages/detailPage/TimerPage";
 import AllNotePage from "../../pages/detailPage/AllNotePage";
 import NotePage from "../../pages/detailPage/NotePage";
+import WritePage from "../../pages/detailPage/WritePage";
 
 const LibraryStack = createNativeStackNavigator();
 
@@ -29,7 +30,8 @@ export default function LibraryStackScreen({
       routeName === "Detail" ||
       routeName === "Timer" ||
       routeName === "AllNote" ||
-      routeName === "Note"
+      routeName === "Note" ||
+      routeName === "Write"
     ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
@@ -94,6 +96,11 @@ export default function LibraryStackScreen({
       <LibraryStack.Screen
         name="Note"
         component={NotePage}
+        options={{ headerShown: false }}
+      />
+      <LibraryStack.Screen
+        name="Write"
+        component={WritePage}
         options={{ headerShown: false }}
       />
     </LibraryStack.Navigator>
