@@ -143,7 +143,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     },
   ];
 
-  const handleTextColorChange = (isText: boolean, color: string) => {
+  const handleColorChange = (color: string) => {
     const start = selection.start;
     const end = selection.end;
 
@@ -152,24 +152,38 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       const beforeText = markdownText.slice(0, start);
       const afterText = markdownText.slice(end);
 
-      const textRegex = /T#[0-9A-Fa-f]{6}\[(.*?)\]/;
-      const backgroundRegex =
-        /Brgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d(\.\d+)?\)\[(.*?)\]/;
+      const textRegex = /T[A-Z]\[(.*?)\]/;
+      const backgroundRegex = /B[A-Z]\[(.*?)\]/;
 
       let newText;
 
-      if (isText && textRegex.test(selectedText)) {
-        newText = selectedText.replace(/T#[0-9A-Fa-f]{6}/, `T${color}`);
-      } else if (!isText && backgroundRegex.test(selectedText)) {
-        newText = selectedText.replace(
-          /Brgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d(\.\d+)?\)/,
-          `B${color}`
-        );
-      } else {
-        if (isText) {
-          newText = `T${color}[${selectedText}]`;
+      if (color.startsWith("T")) {
+        if (color.slice(-1) === "A") {
+          if (textRegex.test(selectedText)) {
+            newText = selectedText.replace(/T[A-Z]\[/, "").slice(0, -1);
+          } else {
+            newText = selectedText;
+          }
         } else {
-          newText = `B${color}[${selectedText}]`;
+          if (textRegex.test(selectedText)) {
+            newText = selectedText.replace(/T[A-Z]/, color);
+          } else {
+            newText = `${color}[${selectedText}]`;
+          }
+        }
+      } else if (color.startsWith("B")) {
+        if (color.slice(-1) === "A") {
+          if (backgroundRegex.test(selectedText)) {
+            newText = selectedText.replace(/B[A-Z]\[/, "").slice(0, -1);
+          } else {
+            newText = selectedText;
+          }
+        } else {
+          if (backgroundRegex.test(selectedText)) {
+            newText = selectedText.replace(/B[A-Z]/, color);
+          } else {
+            newText = `${color}[${selectedText}]`;
+          }
         }
       }
 
@@ -453,9 +467,9 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             ) : selectedMenu === "TextImport" ? (
               <TextImportItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "TextShape" ? (
-              <TextShapeItem handleTextColorChange={handleTextColorChange} />
+              <TextShapeItem handleColorChange={handleColorChange} />
             ) : (
-              <TextShapeItem handleTextColorChange={handleTextColorChange} />
+              <TextShapeItem handleColorChange={handleColorChange} />
             ))}
         </View>
       </KeyboardAvoidingView>
