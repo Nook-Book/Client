@@ -76,6 +76,14 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
   },
+  complateWrap: {
+    position: "absolute",
+    right: 20,
+  },
+  complateText: {
+    ...Font.Paragraph.SemiMedium,
+    color: Color.Typo.Primary,
+  },
   pressWrap: {
     flexDirection: "row",
     alignItems: "center",

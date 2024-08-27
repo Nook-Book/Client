@@ -9,7 +9,7 @@ export default function AllNoteHeader({ navigation }: { navigation: any }) {
     <SafeAreaView>
       <View style={styles.container}>
         <BackIcon style={styles.button} onPress={() => navigation.goBack()} />
-        <NoteIcon onPress={() => console.log("노트")} />
+        <NoteIcon onPress={() => navigation.navigate("Write")} />
       </View>
     </SafeAreaView>
   );

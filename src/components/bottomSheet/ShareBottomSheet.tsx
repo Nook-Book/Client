@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 import KakaoIcon from "../../assets/images/share/Kakao.svg";
+import InstagramIcon from "../../assets/images/share/Instagram.svg";
 import LinkIcon from "../../assets/images/share/Link.svg";
 import BottomSheetItem from "./BottomSheetItem";
 import ShareCard from "./ShareCard";
@@ -34,7 +35,7 @@ const ShareBottomSheet = ({ onClose }: { onClose: () => void }) => {
           onPress={handleShareKakao}
         />
         <BottomSheetItem
-          Icon={<KakaoIcon />} //인스타그램 svg로 수정 필요
+          Icon={<InstagramIcon />}
           leftText="인스타그램 공유하기"
           rightText=""
           onPress={handleShareInstagram}

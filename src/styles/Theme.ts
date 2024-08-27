@@ -1,7 +1,3 @@
-// import SCDream6 from "../assets/fonts/SCDream6.otf";
-// import SCDream5 from "../assets/fonts/SCDream5.otf";
-// import SCDream4 from "../assets/fonts/SCDream4.otf";
-
 export const Color = {
   Primary: "#000000",
   Secondary: "#FFFFFF",
@@ -60,6 +56,10 @@ export const Font = {
       fontSize: 28.43,
       lineHeight: 28.43 * 1.6,
     },
+    XLInput: {
+      fontFamily: "SCDream6",
+      fontSize: 28.43,
+    },
     Large: {
       fontFamily: "SCDream6",
       fontSize: 21.33,
@@ -115,6 +115,10 @@ export const Font = {
       fontFamily: "SCDream5",
       fontSize: 14,
       lineHeight: 14 * 1.5,
+    },
+    Text: {
+      fontFamily: "SCDream5",
+      fontSize: 15.49,
     },
   },
   Paragraph: {

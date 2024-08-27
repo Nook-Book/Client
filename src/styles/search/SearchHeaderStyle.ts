@@ -28,5 +28,6 @@ export const styles = StyleSheet.create({
   button: {
     width: 24,
     height: 24,
+    color: Color.Contents.Icon,
   },
 });
