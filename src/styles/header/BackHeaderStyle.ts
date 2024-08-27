@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     padding: 16,
     backgroundColor: Color.Secondary,
+    height: 56,
   },
   button: {
     width: 24,

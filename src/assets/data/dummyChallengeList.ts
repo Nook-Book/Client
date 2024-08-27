@@ -91,3 +91,71 @@ export const dummyListInvite: TInviteChallenge[] = [
       "밀란 쿤데라 책 도전하쉴?밀란 쿤데라 책 도전하쉴?밀란 쿤데라 책 도전하쉴?",
   },
 ];
+
+export const dummyListCard = {
+  image: require("../../assets/images/dummy/book/1.png"),
+  title: "미라클 모닝 독서 가즈앗미라클 모닝 독서 가즈앗",
+  isEnd: false,
+  profileList: [
+    {
+      id: 1,
+      image: require("../../assets/images/dummy/book/1.png"),
+      name: "야옹아멍멍해바두두",
+    },
+    {
+      id: 2,
+      image: require("../../assets/images/dummy/book/2.png"),
+      name: "야옹아멍멍해바두두",
+    },
+    {
+      id: 3,
+      image: require("../../assets/images/dummy/book/3.png"),
+      name: "두부두부",
+    },
+    {
+      id: 4,
+      image: require("../../assets/images/dummy/book/4.png"),
+      name: "독서두기무라타쿠야",
+    },
+    {
+      id: 5,
+      image: require("../../assets/images/dummy/book/5.png"),
+      name: "Youyoung",
+    },
+  ],
+  date: "2024.3.2 (일) ~ 2024.3.25 (일)",
+  totalTime: "16시간",
+  dailyTime: "40분",
+  cardList: [
+    {
+      id: 1,
+      isEnabled: true,
+      name: "야옹아멍멍해바두두",
+      time: "00 : 21 : 00",
+    },
+    {
+      id: 2,
+      isEnabled: false,
+      name: "두두",
+      time: "03 : 21 : 00",
+    },
+    {
+      id: 3,
+      isEnabled: true,
+      name: "야옹아멍멍해바두두",
+      time: "00 : 21 : 00",
+    },
+    {
+      id: 4,
+      isEnabled: true,
+      name: "야옹아멍멍해바두두",
+      time: "00 : 21 : 00",
+    },
+    {
+      id: 5,
+      isEnabled: true,
+      name: "야옹아멍멍해바두두",
+      time: "00 : 21 : 00",
+    },
+  ],
+};

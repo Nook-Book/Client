@@ -6,6 +6,7 @@ import ChallengePage from "../../pages/challengePage/ChallengePage";
 import AllChallengePage from "../../pages/challengePage/AllChallengePage";
 import ChallengeDetailPage from "../../pages/challengePage/ChallengeDetailPage";
 import InviteChallengeDetailPage from "../../pages/challengePage/InviteChallengeDetailPage";
+import StatusCardDetailPage from "../../pages/challengePage/StatusCardDetailPage";
 
 const ChallengeStack = createNativeStackNavigator();
 
@@ -18,7 +19,11 @@ export default function ChallengeStackScreen({
 }) {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "Alert") {
+    if (
+      routeName === "ChallengeDetail" ||
+      routeName === "InviteChallengeDetail" ||
+      routeName === "StatusCardDetail"
+    ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
       });
@@ -62,6 +67,11 @@ export default function ChallengeStackScreen({
       <ChallengeStack.Screen
         name="InviteChallengeDetail"
         component={InviteChallengeDetailPage}
+        options={{ headerShown: false }}
+      />
+      <ChallengeStack.Screen
+        name="StatusCardDetail"
+        component={StatusCardDetailPage}
         options={{ headerShown: false }}
       />
     </ChallengeStack.Navigator>

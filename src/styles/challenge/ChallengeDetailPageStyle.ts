@@ -59,8 +59,9 @@ export const styles = StyleSheet.create({
   },
   profileWrap: {
     flexDirection: "row",
-    height: 35,
-    gap: 15,
+    width: 230,
+    columnGap: 15,
+    flexWrap: "wrap",
   },
   lengthWrap: {
     position: "absolute",
@@ -70,12 +71,13 @@ export const styles = StyleSheet.create({
   },
   lengthText: {
     ...Font.Label.Small,
-    color: Color.Typo.Secondary,
+    color: Color.Typo.Primary,
   },
   profileItem: {
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
+    height: 35,
   },
   profileImage: {
     width: 25.75,
@@ -93,5 +95,31 @@ export const styles = StyleSheet.create({
   itemBoldText: {
     ...Font.Heading.Small,
     color: Color.Typo.Primary,
+  },
+  statusWrap: {
+    borderColor: Color.Border.Stroke,
+    borderTopWidth: 0.8,
+    paddingBottom: 200,
+  },
+  statusText: {
+    ...Font.Label.Medium,
+    color: Color.Typo.Primary,
+    padding: 16,
+  },
+  statusItemWrap: {
+    padding: 16,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 23,
+  },
+  statusCardWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 72,
+    height: 100,
+  },
+  statusCardText: {
+    ...Font.Label.Small,
+    paddingVertical: 2,
   },
 });

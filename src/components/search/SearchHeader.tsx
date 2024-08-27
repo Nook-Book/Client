@@ -26,7 +26,11 @@ export default function SearchHeader({ search }: Props) {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <BackIcon style={styles.button} onPress={() => navigation.goBack()} />
+        <BackIcon
+          style={styles.button}
+          onPress={() => navigation.goBack()}
+          color={Color.Contents.Icon}
+        />
         <TextInput
           style={styles.input}
           placeholder={SearchInputPlaceHolder}
