@@ -6,6 +6,7 @@ import {
   Image,
   FlatList,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { styles } from "../../styles/challenge/ChallengePageStyle";
 import AllChallengeHeader from "../../components/header/RightTextHeader";
@@ -14,6 +15,7 @@ import {
   dummyListInvite,
   dummyListLong,
 } from "../../assets/data/dummyChallengeList";
+import PlusIcon from "../../assets/images/icon/Plus.svg";
 import InterIcon from "../../assets/images/icon/Inter.svg";
 import { Color } from "../../styles/Theme";
 import { TChallenge } from "../../types/challenge";
@@ -102,6 +104,14 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
           />
         </View>
       </ScrollView>
+      <View style={styles.plusWrap}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("NewChallenge")}
+          style={styles.plusButton}
+        >
+          <PlusIcon width={28.8} height={28.8} color={Color.Contents.Icon} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

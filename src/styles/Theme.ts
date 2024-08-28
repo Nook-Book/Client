@@ -92,6 +92,10 @@ export const Font = {
       fontSize: 21.33,
       lineHeight: 21.33 * 1.5,
     },
+    LargeInput: {
+      fontFamily: "SCDream5",
+      fontSize: 21.33,
+    },
     Medium: {
       fontFamily: "SCDream5",
       fontSize: 16,
