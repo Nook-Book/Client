@@ -70,17 +70,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  readTimeText: {
-    ...Font.Label.Small,
-    color: Color.Typo.Primary,
-    paddingVertical: 16,
-  },
-  readTimeWrap: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 16,
-    paddingVertical: 4,
-  },
   friendBtnWrap: {
     width: "100%",
     backgroundColor: Color.Click[200],
