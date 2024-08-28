@@ -19,9 +19,11 @@ export const styles = StyleSheet.create({
   },
   calendar: {
     borderRadius: 5,
-    height: 328,
-    backgroundColor: Color.Field[15],
     marginBottom: 16,
+    backgroundColor: Color.Field[15],
+    paddingTop: 7,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
   },
   dateWrap: {
     borderRadius: 5,
