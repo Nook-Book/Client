@@ -1,11 +1,14 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { styles } from "./MyPageStyle";
+import Profile from "../../components/myPage/Profile";
+import MyPageNav from "../../components/myPage/MyPageNav";
+import { styles } from "../../styles/myPage/MyPageStyle";
 
 export default function MyPage() {
   return (
     <View style={styles.container}>
-      <Text>Search Screen</Text>
+      <MyPageNav />
+      <Profile />
     </View>
   );
 }

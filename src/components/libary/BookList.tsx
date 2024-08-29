@@ -22,8 +22,8 @@ const BookList = ({
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const itemWidth = 338;
   const { width: windowWidth } = useWindowDimensions();
+  const itemWidth = windowWidth - 52;
   const flatListRef = useRef<FlatList>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const [snapToInterval, setSnapToInterval] = useState(0);
