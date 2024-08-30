@@ -18,12 +18,4 @@ export const styles = StyleSheet.create({
     ...Font.Paragraph.LittleMedium,
     color: Color.Typo.Primary,
   },
-  selectedWrap: {
-    width: 270,
-    height: 28,
-    borderRadius: 2,
-    backgroundColor: Color.Field.Primary,
-    position: "absolute",
-    zIndex: 1,
-  },
 });

@@ -1,109 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { styles } from "../../styles/challenge/CustomWheelPickerStyle";
-import WheelPicker from "react-native-wheely";
+import RNDateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
 const CustomWheelPicker = ({
   title,
-  period,
   setPeriod,
 }: {
   title: string;
-  period: {
-    hour: number;
-    minute: number;
-    amPm: number;
-  };
-  setPeriod: React.Dispatch<
-    React.SetStateAction<{
-      hour: number;
-      minute: number;
-      amPm: number;
-    }>
-  >;
+  setPeriod: (period: { hour: number; minute: number; amPm: number }) => void;
 }) => {
-  const hours = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-  const minutes = [
-    "00",
-    "05",
-    "10",
-    "15",
-    "20",
-    "25",
-    "30",
-    "35",
-    "40",
-    "45",
-    "55",
-  ];
-  const amPm = ["AM", "PM"];
+  const [date, setDate] = useState(new Date());
 
-  const handleHourChange = (index: number) => {
-    setPeriod((prevPeriod) => ({
-      ...prevPeriod,
-      hour: index,
-    }));
-  };
+  const handleChange = (
+    event: DateTimePickerEvent,
+    selectedDate?: Date | undefined
+  ) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
 
-  const handleMinuteChange = (index: number) => {
-    setPeriod((prevPeriod) => ({
-      ...prevPeriod,
-      minute: index,
-    }));
-  };
+    const hour = currentDate.getHours();
+    const minute = currentDate.getMinutes();
+    const amPm = hour >= 12 ? 1 : 0;
 
-  const handleAmPmChange = (index: number) => {
-    setPeriod((prevPeriod) => ({
-      ...prevPeriod,
-      amPm: index,
-    }));
+    setPeriod({
+      hour: hour > 12 ? hour - 12 : hour === 0 ? 12 : hour,
+      minute,
+      amPm,
+    });
   };
 
   return (
     <View>
       <Text style={styles.readTimeText}>{title}</Text>
       <View style={styles.readTimeWrap}>
-        <View style={styles.selectedWrap} />
-        <WheelPicker
-          selectedIndex={period.hour}
-          options={hours}
-          onChange={handleHourChange}
-          visibleRest={1}
-          itemStyle={{ borderColor: "transparent" }}
-          itemTextStyle={styles.itemText}
-          selectedIndicatorStyle={{ backgroundColor: "transparent" }}
-        />
-        <Text style={styles.itemText}>:</Text>
-        <WheelPicker
-          selectedIndex={period.minute}
-          options={minutes}
-          onChange={handleMinuteChange}
-          visibleRest={1}
-          itemStyle={{ borderColor: "transparent" }}
-          itemTextStyle={styles.itemText}
-          selectedIndicatorStyle={{ backgroundColor: "transparent" }}
-        />
-        <WheelPicker
-          selectedIndex={period.amPm}
-          options={amPm}
-          onChange={handleAmPmChange}
-          visibleRest={1}
-          itemStyle={{ borderColor: "transparent" }}
-          itemTextStyle={styles.itemText}
-          selectedIndicatorStyle={{ backgroundColor: "transparent" }}
+        <RNDateTimePicker
+          value={date}
+          mode="time"
+          is24Hour={false}
+          display="spinner"
+          onChange={handleChange}
+          minuteInterval={5}
+          style={{
+            height: 120,
+          }}
         />
       </View>
     </View>
