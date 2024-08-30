@@ -1,55 +1,116 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { styles } from "../../styles/challenge/CustomWheelPickerStyle";
-import RNDateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import { Color } from "../../styles/Theme";
 
-const CustomWheelPicker = ({
+const CustomTimePicker = ({
   title,
+  period,
   setPeriod,
 }: {
   title: string;
-  setPeriod: (period: { hour: number; minute: number; amPm: number }) => void;
+  period: {
+    hour: string;
+    minute: string;
+    amPm: string;
+  };
+  setPeriod: React.Dispatch<
+    React.SetStateAction<{
+      hour: string;
+      minute: string;
+      amPm: string;
+    }>
+  >;
 }) => {
   const [date, setDate] = useState(new Date());
 
-  const handleChange = (
-    event: DateTimePickerEvent,
-    selectedDate?: Date | undefined
-  ) => {
-    const currentDate = selectedDate || date;
-    setDate(currentDate);
+  const handleHourChange = (itemValue: string) => {
+    setPeriod((prevPeriod) => ({
+      ...prevPeriod,
+      hour: itemValue,
+    }));
+  };
 
-    const hour = currentDate.getHours();
-    const minute = currentDate.getMinutes();
-    const amPm = hour >= 12 ? 1 : 0;
+  const handleMinuteChange = (itemValue: string) => {
+    setPeriod((prevPeriod) => ({
+      ...prevPeriod,
+      minute: itemValue,
+    }));
+  };
 
-    setPeriod({
-      hour: hour > 12 ? hour - 12 : hour === 0 ? 12 : hour,
-      minute,
-      amPm,
-    });
+  const handleAmPmChange = (itemValue: string) => {
+    setPeriod((prevPeriod) => ({
+      ...prevPeriod,
+      amPm: itemValue,
+    }));
   };
 
   return (
     <View>
       <Text style={styles.readTimeText}>{title}</Text>
-      <View style={styles.readTimeWrap}>
-        <RNDateTimePicker
-          value={date}
-          mode="time"
-          is24Hour={false}
-          display="spinner"
-          onChange={handleChange}
-          minuteInterval={5}
-          style={{
-            height: 120,
-          }}
-        />
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={period.hour}
+          onValueChange={(itemValue) => handleHourChange(itemValue)}
+          style={styles.picker}
+          itemStyle={styles.itemText}
+        >
+          {Array.from({ length: 12 }, (_, i) => {
+            const hour = String(i + 1).padStart(2, "0");
+            return (
+              <Picker.Item
+                key={hour}
+                label={hour}
+                value={hour}
+                color={Color.Typo.Primary}
+                style={styles.itemText}
+              />
+            );
+          })}
+        </Picker>
+        <Text style={styles.itemText}>:</Text>
+        <Picker
+          selectedValue={period.minute}
+          onValueChange={(itemValue) => handleMinuteChange(itemValue)}
+          style={styles.picker}
+          itemStyle={styles.itemText}
+        >
+          {Array.from({ length: 12 }, (_, i) => {
+            const minute = String(i * 5).padStart(2, "0");
+            return (
+              <Picker.Item
+                key={minute}
+                label={minute}
+                value={minute}
+                color={Color.Typo.Primary}
+                style={styles.itemText}
+              />
+            );
+          })}
+        </Picker>
+        <Picker
+          selectedValue={period.amPm}
+          onValueChange={(itemValue) => handleAmPmChange(itemValue)}
+          style={styles.picker}
+          itemStyle={styles.itemText}
+        >
+          <Picker.Item
+            label="AM"
+            value="AM"
+            color={Color.Typo.Primary}
+            style={styles.itemText}
+          />
+          <Picker.Item
+            label="PM"
+            value="PM"
+            color={Color.Typo.Primary}
+            style={styles.itemText}
+          />
+        </Picker>
       </View>
     </View>
   );
 };
 
-export default CustomWheelPicker;
+export default CustomTimePicker;

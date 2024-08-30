@@ -14,8 +14,20 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 35,
   },
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  picker: {
+    width: 100,
+  },
   itemText: {
     ...Font.Paragraph.LittleMedium,
-    color: Color.Typo.Primary,
   },
 });

@@ -22,14 +22,14 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
   const [startPeriod, setStartPeriod] = useState({
-    hour: 0,
-    minute: 0,
-    amPm: 0,
+    hour: "01",
+    minute: "00",
+    amPm: "AM",
   });
   const [endPeriod, setEndPeriod] = useState({
-    hour: 0,
-    minute: 0,
-    amPm: 0,
+    hour: "01",
+    minute: "00",
+    amPm: "AM",
   });
 
   const handleImagePress = () => {
@@ -95,8 +95,16 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
               {isCheck ? <CheckBoxCheckIcon /> : <CheckBoxDefaultIcon />}
             </Pressable>
           </View>
-          <CustomWheelPicker title="시작 시간" setPeriod={setStartPeriod} />
-          <CustomWheelPicker title="종료 시간" setPeriod={setEndPeriod} />
+          <CustomWheelPicker
+            title="시작 시간"
+            period={startPeriod}
+            setPeriod={setStartPeriod}
+          />
+          <CustomWheelPicker
+            title="종료 시간"
+            period={endPeriod}
+            setPeriod={setEndPeriod}
+          />
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>목표 시간량 설정</Text>
