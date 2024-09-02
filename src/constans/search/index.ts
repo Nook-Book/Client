@@ -13,7 +13,4 @@ export const BestSellerKeywordsList: Category[] = [
   { name: "자기계발", checked: false },
   { name: "시/에세이", checked: false },
   { name: "인문/교양", checked: false },
-  { name: "취미/실용", checked: false },
-  { name: "매거진", checked: false },
-  { name: "판타지/무협", checked: false },
 ];
