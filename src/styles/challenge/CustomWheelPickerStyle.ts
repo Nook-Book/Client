@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   readTimeText: {
     ...Font.Label.Small,
     color: Color.Typo.Primary,
-    paddingTop: 16,
+    paddingVertical: 16,
   },
   readTimeWrap: {
     flexDirection: "row",
@@ -29,5 +29,6 @@ export const styles = StyleSheet.create({
   },
   itemText: {
     ...Font.Paragraph.LittleMedium,
+    color: Color.Primary,
   },
 });
