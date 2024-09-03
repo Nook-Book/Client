@@ -16,11 +16,17 @@ import CheckBoxDefaultIcon from "../../assets/images/challange/CheckBoxDefault.s
 import BottomOneButton from "../../components/bottomSheet/BottomOneButton";
 import TimePickerModal from "../../components/modal/TimePickerModal";
 import { TTime } from "../../types/challenge";
+import {
+  calculateDaysDifference,
+  getDayOfWeek,
+} from "../../utils/calendarUtils";
 
 export default function NewChallengePage({ navigation }: { navigation: any }) {
   const [title, setTitle] = useState(""); //챌린지 이름
   const [imageUri, setImageUri] = useState<string | null>(null); //챌린지 이미지
   const [isImagemodal, setIsImagemodal] = useState(false); //이미지 모달
+  const startDate = "2024-09-12";
+  const endDate = "2024-09-14";
   const [isCheck, setIsCheck] = useState(false); //독서 시간 설정 안 함 true
   const [startPeriod, setStartPeriod] = useState<TTime>({
     hour: "01",
@@ -112,14 +118,33 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>기간 설정</Text>
           <View style={styles.periodWrap}>
-            <Pressable style={styles.periodDateWrap}>
+            <Pressable
+              style={styles.periodDateWrap}
+              onPress={() =>
+                navigation.navigate("CalenderSelect", {
+                  currentStartDate: startDate,
+                  currentEndDate: endDate,
+                })
+              }
+            >
               <Text style={styles.periodHeadText}>시작일</Text>
-              <Text style={styles.periodDateText}>2024.3.2 (일)</Text>
+              <Text style={styles.periodDateText}>
+                {startDate.replaceAll("-", ".")} ({getDayOfWeek(startDate)})
+              </Text>
             </Pressable>
-            <Text style={styles.periodHeadText}>24일</Text>
-            <Pressable style={styles.periodDateWrap}>
+            <Text style={styles.periodHeadText}>
+              {startDate && endDate
+                ? `${calculateDaysDifference(startDate, endDate)}일`
+                : ""}
+            </Text>
+            <Pressable
+              style={styles.periodDateWrap}
+              onPress={() => navigation.navigate("CalenderSelect")}
+            >
               <Text style={styles.periodHeadText}>종료일</Text>
-              <Text style={styles.periodDateText}>2024.3.25 (일)</Text>
+              <Text style={styles.periodDateText}>
+                {endDate.replaceAll("-", ".")} ({getDayOfWeek(endDate)})
+              </Text>
             </Pressable>
           </View>
         </View>

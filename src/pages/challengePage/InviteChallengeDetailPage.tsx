@@ -45,7 +45,11 @@ export default function InviteChallengeDetailPage({
           </Text>
           <View style={styles.endWrap}>
             <Text style={styles.endText}>
-              {dummyListCard.isEnd ? "종료" : "진행중"}
+              {dummyListCard.status === "END"
+                ? "종료"
+                : dummyListCard.status === "INPROGRESS"
+                ? "진행중"
+                : "진행 예정"}
             </Text>
           </View>
         </View>
