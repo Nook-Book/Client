@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { CalendarList, LocaleConfig } from "react-native-calendars";
 import { styles } from "../../styles/challenge/CalenderSelectPageStyle";
 import { Color, Font } from "../../styles/Theme";
@@ -55,12 +55,15 @@ LocaleConfig.locales["ko"] = {
 LocaleConfig.defaultLocale = "ko";
 
 export default function CalenderSelectPage({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: any;
 }) {
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const { currentStartDate, currentEndDate } = route.params;
+  const [startDate, setStartDate] = useState<string>(currentStartDate || "");
+  const [endDate, setEndDate] = useState<string>(currentEndDate || "");
   const [markedDates, setMarkedDates] = useState<any>({});
 
   useEffect(() => {
@@ -125,6 +128,13 @@ export default function CalenderSelectPage({
     return markedDates;
   };
 
+  const handleConfirm = () => {
+    navigation.navigate("NewChallenge", {
+      updatedStartDate: startDate,
+      updatedEndDate: endDate,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <CalenderHeader title="날짜 선택" navigation={navigation} />
@@ -177,7 +187,7 @@ export default function CalenderSelectPage({
           </Text>
         </View>
       </View>
-      <View
+      <Pressable
         style={[
           styles.buttonWrap,
           {
@@ -185,6 +195,7 @@ export default function CalenderSelectPage({
               startDate && endDate ? Color.Click[400] : Color.Field.Background,
           },
         ]}
+        onPress={handleConfirm}
       >
         <Text
           style={[
@@ -197,7 +208,7 @@ export default function CalenderSelectPage({
         >
           확인
         </Text>
-      </View>
+      </Pressable>
     </View>
   );
 }

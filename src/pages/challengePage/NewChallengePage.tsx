@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -18,15 +18,23 @@ import TimePickerModal from "../../components/modal/TimePickerModal";
 import { TTime } from "../../types/challenge";
 import {
   calculateDaysDifference,
+  formatDateToString,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
 
-export default function NewChallengePage({ navigation }: { navigation: any }) {
+export default function NewChallengePage({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
+  const todayDate = formatDateToString(new Date()); //오늘 날짜
   const [title, setTitle] = useState(""); //챌린지 이름
   const [imageUri, setImageUri] = useState<string | null>(null); //챌린지 이미지
   const [isImagemodal, setIsImagemodal] = useState(false); //이미지 모달
-  const startDate = "2024-09-12";
-  const endDate = "2024-09-14";
+  const [startDate, setStartDate] = useState<string>(todayDate); //시작일
+  const [endDate, setEndDate] = useState<string>(todayDate); //종료일
   const [isCheck, setIsCheck] = useState(false); //독서 시간 설정 안 함 true
   const [startPeriod, setStartPeriod] = useState<TTime>({
     hour: "01",
@@ -46,6 +54,15 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
   const [pickerType, setPickerType] = useState<"START" | "END" | "GOAL" | null>(
     null
   ); //picker 타입
+
+  useEffect(() => {
+    if (route.params?.updatedStartDate) {
+      setStartDate(route.params.updatedStartDate);
+    }
+    if (route.params?.updatedEndDate) {
+      setEndDate(route.params.updatedEndDate);
+    }
+  }, [route.params]);
 
   //이미지 핸들러
   const handleImagePress = () => setIsImagemodal(true);
@@ -139,7 +156,12 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
             </Text>
             <Pressable
               style={styles.periodDateWrap}
-              onPress={() => navigation.navigate("CalenderSelect")}
+              onPress={() =>
+                navigation.navigate("CalenderSelect", {
+                  currentStartDate: startDate,
+                  currentEndDate: endDate,
+                })
+              }
             >
               <Text style={styles.periodHeadText}>종료일</Text>
               <Text style={styles.periodDateText}>

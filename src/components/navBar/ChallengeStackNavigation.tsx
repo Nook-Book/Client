@@ -87,10 +87,6 @@ export default function ChallengeStackScreen({
         name="CalenderSelect"
         component={CalenderSelectPage}
         options={{ headerShown: false }}
-        initialParams={{
-          currentStartDate: null,
-          currentEndDate: null,
-        }}
       />
     </ChallengeStack.Navigator>
   );
