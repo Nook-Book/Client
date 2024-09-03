@@ -41,38 +41,51 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
     null
   ); //picker 타입
 
-  const handleImagePress = () => {
-    setIsImagemodal(true);
-  };
+  //이미지 핸들러
+  const handleImagePress = () => setIsImagemodal(true);
+  const handleImagePicked = (uri: string | null) => setImageUri(uri);
 
-  const handleImagePicked = (uri: string | null) => {
-    setImageUri(uri);
-  };
-
+  //시간 피커 핸들러
   const handleTimePickerComplete = (
     type: "START" | "END" | "GOAL",
     time: TTime
   ) => {
-    if (type === "START") {
-      setStartPeriod({
-        hour: time.hour,
-        minute: time.minute,
-        ampm: time.ampm,
-      });
-    } else if (type === "END") {
-      setEndPeriod({
-        hour: time.hour,
-        minute: time.minute,
-        ampm: time.ampm,
-      });
-    } else if (type === "GOAL") {
-      setGoalTime({
-        hour: time.hour,
-        minute: time.minute,
-      });
-    }
+    const updater = {
+      START: setStartPeriod,
+      END: setEndPeriod,
+      GOAL: setGoalTime,
+    };
+    updater[type](time);
     setIsPickerModal(false);
   };
+
+  //시간 텍스트 형식 변환
+  const formatTimeText = (time: TTime) =>
+    `${time.hour} : ${time.minute} ${time.ampm}`
+      .split(" ")
+      .map((char, index) => (
+        <Text key={index} style={styles.itemText}>
+          {char}
+        </Text>
+      ));
+
+  //시간 설정 컴포넌트
+  const TimeSetting = ({
+    label,
+    time,
+    onPress,
+  }: {
+    label: string;
+    time: TTime;
+    onPress: () => void;
+  }) => (
+    <View>
+      <Text style={styles.readTimeText}>{label}</Text>
+      <Pressable style={styles.readTimeWrap} onPress={onPress}>
+        <View style={styles.itemTextContainer}>{formatTimeText(time)}</View>
+      </Pressable>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -82,18 +95,10 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
           <Pressable style={styles.imageBtnWrap} onPress={handleImagePress}>
             <Text style={styles.imageBtnText}>커버 변경</Text>
           </Pressable>
-          {imageUri ? (
-            <Image source={{ uri: imageUri }} style={styles.image} />
-          ) : (
-            <View
-              style={[
-                styles.image,
-                {
-                  backgroundColor: "#FFE870",
-                },
-              ]}
-            ></View>
-          )}
+          <Image
+            source={imageUri ? { uri: imageUri } : undefined}
+            style={[styles.image, !imageUri && { backgroundColor: "#FFE870" }]}
+          />
         </View>
         <View style={styles.headWrap}>
           <TextInput
@@ -129,46 +134,22 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
               {isCheck ? <CheckBoxCheckIcon /> : <CheckBoxDefaultIcon />}
             </Pressable>
           </View>
-          <View>
-            <Text style={styles.readTimeText}>시작 시간</Text>
-            <Pressable
-              style={styles.readTimeWrap}
-              onPress={() => {
-                setPickerType("START");
-                setIsPickerModal(true);
-              }}
-            >
-              <View style={styles.itemTextContainer}>
-                {`${startPeriod.hour} : ${startPeriod.minute} ${startPeriod.ampm}`
-                  .split(" ")
-                  .map((char, index) => (
-                    <Text key={index} style={styles.itemText}>
-                      {char}
-                    </Text>
-                  ))}
-              </View>
-            </Pressable>
-          </View>
-          <View>
-            <Text style={styles.readTimeText}>종료 시간</Text>
-            <Pressable
-              style={styles.readTimeWrap}
-              onPress={() => {
-                setPickerType("END");
-                setIsPickerModal(true);
-              }}
-            >
-              <View style={styles.itemTextContainer}>
-                {`${endPeriod.hour} : ${endPeriod.minute} ${endPeriod.ampm}`
-                  .split(" ")
-                  .map((char, index) => (
-                    <Text key={index} style={styles.itemText}>
-                      {char}
-                    </Text>
-                  ))}
-              </View>
-            </Pressable>
-          </View>
+          <TimeSetting
+            label="시작 시간"
+            time={startPeriod}
+            onPress={() => {
+              setPickerType("START");
+              setIsPickerModal(true);
+            }}
+          />
+          <TimeSetting
+            label="종료 시간"
+            time={endPeriod}
+            onPress={() => {
+              setPickerType("END");
+              setIsPickerModal(true);
+            }}
+          />
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>목표 시간량 설정</Text>
