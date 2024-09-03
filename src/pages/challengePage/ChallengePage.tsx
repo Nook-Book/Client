@@ -87,6 +87,21 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
             horizontal
             showsHorizontalScrollIndicator={false}
           />
+          <ChallengeHead text="진행 예정인 챌린지" data={dummyListLong} />
+          <FlatList
+            style={styles.challengeWrap}
+            data={dummyListLong}
+            renderItem={({ item, index }) => (
+              <ChallengeItem
+                item={item}
+                index={index}
+                onPress={() => navigation.navigate("ChallengeDetail")}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
           <ChallengeHead text="종료된 챌린지" data={dummyListLong} />
           <FlatList
             style={styles.challengeWrap}

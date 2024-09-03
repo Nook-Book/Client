@@ -95,7 +95,7 @@ export const dummyListInvite: TInviteChallenge[] = [
 export const dummyListCard = {
   image: require("../../assets/images/dummy/book/1.png"),
   title: "미라클 모닝 독서 가즈앗미라클 모닝 독서 가즈앗",
-  isEnd: false,
+  status: "INPROGRESS",
   profileList: [
     {
       id: 1,
