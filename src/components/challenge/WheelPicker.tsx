@@ -6,7 +6,6 @@ import {
   NativeSyntheticEvent,
   Text,
   View,
-  ViewStyle,
 } from "react-native";
 import { styles } from "../../styles/challenge/CustomWheelPickerStyle";
 
@@ -15,11 +14,10 @@ interface Props {
   onItemChange: (item: string) => void;
   itemHeight: number;
   initValue?: string;
-  containerStyle?: ViewStyle;
 }
 
 const WheelPicker: React.FC<Props> = (props) => {
-  const { items, onItemChange, itemHeight, initValue, containerStyle } = props;
+  const { items, onItemChange, itemHeight, initValue } = props;
   const flatListRef = useRef<Animated.FlatList<string>>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
   const initValueIndex = initValue ? items.indexOf(initValue) : 0;
@@ -38,12 +36,13 @@ const WheelPicker: React.FC<Props> = (props) => {
 
     return (
       <Animated.View
-        style={{
-          height: itemHeight,
-          transform: [{ scale }],
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        style={[
+          styles.readTimeWrap,
+          {
+            height: itemHeight,
+            transform: [{ scale }],
+          },
+        ]}
       >
         <Text style={styles.itemText}>{item}</Text>
       </Animated.View>
@@ -74,7 +73,7 @@ const WheelPicker: React.FC<Props> = (props) => {
   const modifiedItems = ["", ...items, ""];
 
   return (
-    <View style={[{ height: itemHeight * 3 }, containerStyle]}>
+    <View style={{ height: itemHeight * 3 }}>
       <Animated.FlatList
         ref={flatListRef}
         data={modifiedItems}

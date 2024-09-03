@@ -43,6 +43,36 @@ export const styles = StyleSheet.create({
     ...Font.Paragraph.SemiSmall,
     color: Color.Typo.Primary,
   },
+  readTimeText: {
+    ...Font.Label.Small,
+    color: Color.Typo.Primary,
+    paddingVertical: 16,
+  },
+  readTimeWrap: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+  itemTextContainer: {
+    flexDirection: "row",
+    backgroundColor: Color.Field.Primary,
+    borderRadius: 2,
+    gap: 51,
+    paddingHorizontal: 26.5,
+    paddingVertical: 3,
+  },
+  itemGoalContainer: {
+    flexDirection: "row",
+    backgroundColor: Color.Field.Primary,
+    borderRadius: 2,
+    paddingHorizontal: 31,
+    paddingVertical: 3,
+    marginTop: 10,
+  },
+  itemText: {
+    ...Font.Paragraph.LittleMedium,
+    color: Color.Primary,
+  },
   periodWrap: {
     flexDirection: "row",
     justifyContent: "space-between",

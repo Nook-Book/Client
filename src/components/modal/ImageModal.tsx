@@ -2,18 +2,13 @@ import React from "react";
 import { View, Text, Modal, Alert, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { styles } from "../../styles/modal/ImageModalStyle";
+import { TImagePickerModalProps } from "../../types/challenge";
 
-interface ImagePickerModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onImagePicked: (uri: string | null) => void;
-}
-
-const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
+const ImagePickerModal = ({
   visible,
   onClose,
   onImagePicked,
-}) => {
+}: TImagePickerModalProps) => {
   const launchCameraHandler = async () => {
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     if (permissionResult.granted) {

@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     right: 0,
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 1000,
+    zIndex: 100,
   },
   bottomWrap: {
     width: "100%",

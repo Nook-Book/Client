@@ -14,30 +14,64 @@ import ImagePickerModal from "../../components/modal/ImageModal";
 import CheckBoxCheckIcon from "../../assets/images/challange/CheckBoxCheck.svg";
 import CheckBoxDefaultIcon from "../../assets/images/challange/CheckBoxDefault.svg";
 import BottomOneButton from "../../components/bottomSheet/BottomOneButton";
-import CustomWheelPicker from "../../components/challenge/CustomWheelPicker";
+import TimePickerModal from "../../components/modal/TimePickerModal";
+import { TTime } from "../../types/challenge";
 
 export default function NewChallengePage({ navigation }: { navigation: any }) {
-  const [title, setTitle] = useState("");
-  const [imageUri, setImageUri] = useState<string | null>(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [isCheck, setIsCheck] = useState(false);
-  const [startPeriod, setStartPeriod] = useState({
+  const [title, setTitle] = useState(""); //챌린지 이름
+  const [imageUri, setImageUri] = useState<string | null>(null); //챌린지 이미지
+  const [isImagemodal, setIsImagemodal] = useState(false); //이미지 모달
+  const [isCheck, setIsCheck] = useState(false); //독서 시간 설정 안 함 true
+  const [startPeriod, setStartPeriod] = useState<TTime>({
     hour: "01",
     minute: "00",
-    amPm: "AM",
-  });
-  const [endPeriod, setEndPeriod] = useState({
+    ampm: "AM",
+  }); //시작 시간 설정
+  const [endPeriod, setEndPeriod] = useState<TTime>({
     hour: "01",
     minute: "00",
-    amPm: "AM",
-  });
+    ampm: "AM",
+  }); //종료 시간 설정
+  const [goalTime, setGoalTime] = useState<TTime>({
+    hour: "00",
+    minute: "00",
+  }); //목표 시간량 설정
+  const [isPickerModal, setIsPickerModal] = useState(false); //picker 모달
+  const [pickerType, setPickerType] = useState<"START" | "END" | "GOAL" | null>(
+    null
+  ); //picker 타입
 
   const handleImagePress = () => {
-    setModalVisible(true);
+    setIsImagemodal(true);
   };
 
   const handleImagePicked = (uri: string | null) => {
     setImageUri(uri);
+  };
+
+  const handleTimePickerComplete = (
+    type: "START" | "END" | "GOAL",
+    time: TTime
+  ) => {
+    if (type === "START") {
+      setStartPeriod({
+        hour: time.hour,
+        minute: time.minute,
+        ampm: time.ampm,
+      });
+    } else if (type === "END") {
+      setEndPeriod({
+        hour: time.hour,
+        minute: time.minute,
+        ampm: time.ampm,
+      });
+    } else if (type === "GOAL") {
+      setGoalTime({
+        hour: time.hour,
+        minute: time.minute,
+      });
+    }
+    setIsPickerModal(false);
   };
 
   return (
@@ -95,22 +129,72 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
               {isCheck ? <CheckBoxCheckIcon /> : <CheckBoxDefaultIcon />}
             </Pressable>
           </View>
-          <CustomWheelPicker
-            title="시작 시간"
-            period={startPeriod}
-            setPeriod={setStartPeriod}
-          />
-          <CustomWheelPicker
-            title="종료 시간"
-            period={endPeriod}
-            setPeriod={setEndPeriod}
-          />
+          <View>
+            <Text style={styles.readTimeText}>시작 시간</Text>
+            <Pressable
+              style={styles.readTimeWrap}
+              onPress={() => {
+                setPickerType("START");
+                setIsPickerModal(true);
+              }}
+            >
+              <View style={styles.itemTextContainer}>
+                {`${startPeriod.hour} : ${startPeriod.minute} ${startPeriod.ampm}`
+                  .split(" ")
+                  .map((char, index) => (
+                    <Text key={index} style={styles.itemText}>
+                      {char}
+                    </Text>
+                  ))}
+              </View>
+            </Pressable>
+          </View>
+          <View>
+            <Text style={styles.readTimeText}>종료 시간</Text>
+            <Pressable
+              style={styles.readTimeWrap}
+              onPress={() => {
+                setPickerType("END");
+                setIsPickerModal(true);
+              }}
+            >
+              <View style={styles.itemTextContainer}>
+                {`${endPeriod.hour} : ${endPeriod.minute} ${endPeriod.ampm}`
+                  .split(" ")
+                  .map((char, index) => (
+                    <Text key={index} style={styles.itemText}>
+                      {char}
+                    </Text>
+                  ))}
+              </View>
+            </Pressable>
+          </View>
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>목표 시간량 설정</Text>
-          <View>
-            <Text>아아</Text>
-          </View>
+          <Pressable
+            style={styles.readTimeWrap}
+            onPress={() => {
+              setPickerType("GOAL");
+              setIsPickerModal(true);
+            }}
+          >
+            <View style={styles.itemGoalContainer}>
+              <Text style={styles.itemText}>{goalTime.hour}</Text>
+              <Text
+                style={[styles.itemText, { marginLeft: 28, marginRight: 44 }]}
+              >
+                H
+              </Text>
+              <Text style={styles.itemText}>:</Text>
+              <Text
+                style={[styles.itemText, { marginLeft: 44, marginRight: 28 }]}
+              >
+                {goalTime.minute}
+              </Text>
+              <Text style={styles.itemText}>M</Text>
+            </View>
+          </Pressable>
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>친구와 함께하기</Text>
@@ -125,9 +209,29 @@ export default function NewChallengePage({ navigation }: { navigation: any }) {
         disabled={!title}
       />
       <ImagePickerModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        visible={isImagemodal}
+        onClose={() => setIsImagemodal(false)}
         onImagePicked={handleImagePicked}
+      />
+      <TimePickerModal
+        visible={isPickerModal}
+        text={
+          pickerType === "START"
+            ? "시작 시간"
+            : pickerType === "END"
+            ? "종료 시간"
+            : "목표 시간량 설정"
+        }
+        type={pickerType!}
+        initValue={
+          pickerType === "START"
+            ? startPeriod
+            : pickerType === "END"
+            ? endPeriod
+            : goalTime
+        }
+        onClose={() => setIsPickerModal(false)}
+        onComplate={handleTimePickerComplete}
       />
     </View>
   );

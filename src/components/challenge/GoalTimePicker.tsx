@@ -4,31 +4,26 @@ import { useRef } from "react";
 import { styles } from "../../styles/challenge/CustomWheelPickerStyle";
 import { TTime } from "../../types/challenge";
 
-interface Props {
+type Props = {
   onTimeChange: (time: TTime) => void;
   itemHeight: number;
   initValue?: TTime;
-}
+};
 
-const TimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
-  const ampmItems = ["AM", "PM"];
-  const hourItems = Array.from({ length: 12 }, (_, i) =>
-    String(i + 1).padStart(2, "0")
+const GoalTimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
+  const hourItems = Array.from({ length: 24 }, (_, i) =>
+    String(i).padStart(2, "0")
   );
   const minuteItems = Array.from({ length: 12 }, (_, i) =>
     String(i * 5).padStart(2, "0")
   );
-  const { ampm, hour, minute } = initValue || {};
+  const { hour, minute } = initValue || {};
 
-  const selectedAMPM = useRef("");
   const selectedHour = useRef("");
   const selectedMinute = useRef("");
 
   const handleIndexChange = (category: string, item: string) => {
     switch (category) {
-      case "ampm":
-        selectedAMPM.current = item;
-        break;
       case "hour":
         selectedHour.current = item;
         break;
@@ -40,7 +35,6 @@ const TimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
     }
 
     onTimeChange({
-      ampm: selectedAMPM.current,
       hour: selectedHour.current,
       minute: selectedMinute.current,
     });
@@ -49,7 +43,7 @@ const TimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
   return (
     <View
       style={[
-        styles.timePickerContainer,
+        styles.timeGoalPickerContainer,
         {
           height: itemHeight * 3,
         },
@@ -69,7 +63,17 @@ const TimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
           },
         ]}
       >
-        <Text style={styles.itemText}>:</Text>
+        <Text style={[styles.itemText, { marginLeft: 28 }]}>H</Text>
+      </View>
+      <View
+        style={[
+          styles.readTimeWrap,
+          {
+            height: itemHeight * 3,
+          },
+        ]}
+      >
+        <Text style={[styles.itemText, { marginHorizontal: 44 }]}>:</Text>
       </View>
       <WheelPicker
         items={minuteItems}
@@ -77,12 +81,16 @@ const TimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
         itemHeight={itemHeight}
         initValue={minute}
       />
-      <WheelPicker
-        items={ampmItems}
-        onItemChange={(item) => handleIndexChange("ampm", item)}
-        itemHeight={itemHeight}
-        initValue={ampm}
-      />
+      <View
+        style={[
+          styles.readTimeWrap,
+          {
+            height: itemHeight * 3,
+          },
+        ]}
+      >
+        <Text style={[styles.itemText, { marginLeft: 28 }]}>M</Text>
+      </View>
       <View
         style={[
           styles.selectedWrap,
@@ -96,4 +104,4 @@ const TimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
   );
 };
 
-export default TimePicker;
+export default GoalTimePicker;

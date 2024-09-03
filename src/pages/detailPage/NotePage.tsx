@@ -40,14 +40,13 @@ const NotePage = ({ navigation }: { navigation: any }) => {
           </Markdown>
         </ScrollView>
       </View>
-      {isDeleteModal && (
-        <TitleDesModal
-          titleText="삭제하기"
-          desText={"해당 기록이 삭제됩니다\n이 동작은 취소할 수 없습니다."}
-          onComplate={() => setIsDeleteModal(!isDeleteModal)}
-          onClose={() => setIsDeleteModal(!isDeleteModal)}
-        />
-      )}
+      <TitleDesModal
+        visible={isDeleteModal}
+        titleText="삭제하기"
+        desText={"해당 기록이 삭제됩니다\n이 동작은 취소할 수 없습니다."}
+        onComplate={() => setIsDeleteModal(!isDeleteModal)}
+        onClose={() => setIsDeleteModal(!isDeleteModal)}
+      />
     </View>
   );
 };
