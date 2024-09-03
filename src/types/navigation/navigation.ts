@@ -1,17 +1,19 @@
-// navigation/types.ts
+import { RouteProp } from "@react-navigation/native";
 
-// 스크린 이름과 그에 대한 파라미터를 정의합니다.
-export type RootStackParamList = {
+export type RootSearchStackParamList = {
   SearchPage: undefined;
   BestSellerPage: undefined;
   SearchResultPage: { query: string };
   navigate: (screen: string) => void;
 };
 
-// React Navigation의 RouteProp을 사용하여 route.params의 타입을 정의합니다.
-import { RouteProp } from "@react-navigation/native";
+export type RootMyPageStackParamList = {
+  MyPage: undefined;
+  SettingPage: undefined;
+  navigate: (screen: string) => void;
+};
 
 export type BestSellerPageRouteProp = RouteProp<
-  RootStackParamList,
+  RootSearchStackParamList,
   "SearchResultPage"
 >;

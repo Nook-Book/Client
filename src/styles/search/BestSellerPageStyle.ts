@@ -14,5 +14,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 6,
     marginTop: 10,
+    marginBottom: 10,
   },
 });

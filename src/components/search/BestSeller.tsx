@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // useNavigation 훅을 가져옵니다
+import { useNavigation } from "@react-navigation/native";
 import { BestSellerButton, BestSellerLabel } from "../../constans/search";
 import { styles } from "../../styles/search/BestSellerStyle";
 import BookCollection from "./BookCollection";
