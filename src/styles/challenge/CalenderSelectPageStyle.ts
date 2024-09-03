@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
   periodDateWrap: {
     alignItems: "center",
     padding: 4,
+    minWidth: 130,
   },
   periodHeadText: {
     ...Font.Label.SemiMedium,

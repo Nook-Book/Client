@@ -159,3 +159,76 @@ export const dummyListCard = {
     },
   ],
 };
+
+export const dummyListParticipant = [
+  {
+    id: 1,
+    image: require("../../assets/images/dummy/book/9.png"),
+    name: "강두기",
+  },
+  {
+    id: 2,
+    image: require("../../assets/images/dummy/book/1.png"),
+    name: "강두기",
+  },
+  {
+    id: 3,
+    image: require("../../assets/images/dummy/book/2.png"),
+    name: "강두기",
+  },
+  {
+    id: 4,
+    image: require("../../assets/images/dummy/book/2.png"),
+    name: "강두기",
+  },
+  {
+    id: 5,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 6,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 7,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 8,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 9,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 10,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 11,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 12,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 13,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+  {
+    id: 14,
+    image: require("../../assets/images/dummy/book/4.png"),
+    name: "강두기",
+  },
+];

@@ -8,6 +8,7 @@ import {
   calculateDaysDifference,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
+import BottomOneButton from "../../components/bottomSheet/BottomOneButton";
 
 // Locale 설정
 LocaleConfig.locales["ko"] = {
@@ -172,7 +173,9 @@ export default function CalenderSelectPage({
         <View style={styles.periodDateWrap}>
           <Text style={styles.periodHeadText}>시작일</Text>
           <Text style={styles.periodDateText}>
-            {startDate.replaceAll("-", ".")} ({getDayOfWeek(startDate)})
+            {startDate
+              ? `${startDate.replaceAll("-", ".")} (${getDayOfWeek(startDate)})`
+              : ""}
           </Text>
         </View>
         <Text style={styles.periodHeadText}>
@@ -183,32 +186,17 @@ export default function CalenderSelectPage({
         <View style={styles.periodDateWrap}>
           <Text style={styles.periodHeadText}>종료일</Text>
           <Text style={styles.periodDateText}>
-            {endDate.replaceAll("-", ".")} ({getDayOfWeek(endDate)})
+            {endDate
+              ? `${endDate.replaceAll("-", ".")} (${getDayOfWeek(endDate)})`
+              : ""}
           </Text>
         </View>
       </View>
-      <Pressable
-        style={[
-          styles.buttonWrap,
-          {
-            backgroundColor:
-              startDate && endDate ? Color.Click[400] : Color.Field.Background,
-          },
-        ]}
-        onPress={handleConfirm}
-      >
-        <Text
-          style={[
-            styles.buttonText,
-            {
-              color:
-                startDate && endDate ? Color.Secondary : Color.Typo.Secondary,
-            },
-          ]}
-        >
-          확인
-        </Text>
-      </Pressable>
+      <BottomOneButton
+        handleAccept={handleConfirm}
+        text="확인"
+        disabled={!(!!startDate && !!endDate)}
+      />
     </View>
   );
 }

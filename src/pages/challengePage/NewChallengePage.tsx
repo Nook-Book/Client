@@ -54,6 +54,7 @@ export default function NewChallengePage({
   const [pickerType, setPickerType] = useState<"START" | "END" | "GOAL" | null>(
     null
   ); //picker 타입
+  const [selectedParticipant, setSelectedParticipant] = useState<number[]>([]); //선택된 참여자
 
   useEffect(() => {
     if (route.params?.updatedStartDate) {
@@ -61,6 +62,9 @@ export default function NewChallengePage({
     }
     if (route.params?.updatedEndDate) {
       setEndDate(route.params.updatedEndDate);
+    }
+    if (route.params?.updatedSelectedParticipant) {
+      setSelectedParticipant(route.params.updatedSelectedParticipant);
     }
   }, [route.params]);
 
@@ -226,7 +230,14 @@ export default function NewChallengePage({
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>친구와 함께하기</Text>
-          <Pressable style={styles.friendBtnWrap}>
+          <Pressable
+            style={styles.friendBtnWrap}
+            onPress={() =>
+              navigation.navigate("AddParticipant", {
+                currentSelectedParticipant: selectedParticipant,
+              })
+            }
+          >
             <Text style={styles.friendBtnText}>친구 초대하기</Text>
           </Pressable>
         </View>

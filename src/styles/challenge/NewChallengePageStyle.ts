@@ -82,6 +82,7 @@ export const styles = StyleSheet.create({
   periodDateWrap: {
     alignItems: "center",
     padding: 4,
+    minWidth: 130,
   },
   periodHeadText: {
     ...Font.Label.SemiMedium,
@@ -109,7 +110,6 @@ export const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     marginTop: 16,
-    marginBottom: 87,
   },
   friendBtnText: {
     ...Font.Label.SemiMedium,

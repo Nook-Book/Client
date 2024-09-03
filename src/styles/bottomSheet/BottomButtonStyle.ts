@@ -2,24 +2,10 @@ import { StyleSheet } from "react-native";
 import { Font } from "../Theme";
 
 export const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 100,
-  },
-  bottomWrap: {
-    width: "100%",
-    flexDirection: "row",
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+  buttonWrap: {
     height: 72,
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     ...Font.Label.Medium,
