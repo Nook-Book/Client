@@ -97,7 +97,11 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
         isTitleVisible={isTitleVisible}
         onSharePress={() => setIsShareVisible(!isShareVisible)}
       />
-      <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
+      <ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.scrollWrap}>
           <View style={styles.mainWrap}>
             <Image

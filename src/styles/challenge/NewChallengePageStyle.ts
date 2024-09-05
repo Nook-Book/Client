@@ -104,8 +104,6 @@ export const styles = StyleSheet.create({
   friendBtnWrap: {
     width: "100%",
     backgroundColor: Color.Click[200],
-    borderColor: Color.Border.Primary,
-    borderWidth: 1,
     borderRadius: 5,
     padding: 16,
     alignItems: "center",

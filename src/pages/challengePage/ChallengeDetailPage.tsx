@@ -13,6 +13,7 @@ import ProfileList from "../../components/challenge/ProfileList";
 import StatusList from "../../components/challenge/StatusList";
 import { dummyListCard } from "../../assets/data/dummyChallengeList";
 import ChallengeCard from "../../components/challenge/ChallengeCard";
+import { getDayOfWeek } from "../../utils/calendarUtils";
 
 export default function ChallengeDetailPage({
   navigation,
@@ -40,7 +41,11 @@ export default function ChallengeDetailPage({
           navigation.navigate("ChallengeDetailSetting");
         }}
       />
-      <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
+      <ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.contentContainer}>
           <Image source={dummyListCard.image} style={styles.image} />
         </View>
@@ -65,7 +70,12 @@ export default function ChallengeDetailPage({
         />
         <View style={styles.itemWrap}>
           <Text style={styles.leftText}>기간</Text>
-          <Text style={styles.itemText}>{dummyListCard.date}</Text>
+          <Text style={styles.itemText}>
+            {dummyListCard.startDate.replaceAll("-", ".")} (
+            {getDayOfWeek(dummyListCard.startDate)}) ~{" "}
+            {dummyListCard.endDate.replaceAll("-", ".")} (
+            {getDayOfWeek(dummyListCard.endDate)})
+          </Text>
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.leftText}>목표 시간</Text>

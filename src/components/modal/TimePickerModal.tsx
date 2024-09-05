@@ -56,11 +56,11 @@ const TimePickerModal = ({
             )}
           </View>
           <View style={styles.buttonWrap}>
-            <TouchableOpacity onPress={onClose}>
-              <Text style={styles.grayText}>취소</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={() => onComplate(type, time)}>
               <Text style={styles.blueText}>완료</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onClose}>
+              <Text style={styles.grayText}>취소</Text>
             </TouchableOpacity>
           </View>
         </View>

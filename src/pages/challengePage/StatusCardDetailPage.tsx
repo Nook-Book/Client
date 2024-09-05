@@ -117,7 +117,7 @@ export default function StatusCardDetailPage({
         title="피쉬벅"
         isTitleVisible={true}
       />
-      <ScrollView scrollEventThrottle={16}>
+      <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <Text style={styles.headText}>독서량 달력</Text>
         <View style={styles.calendarWrap}>
           <View style={styles.calendar}>

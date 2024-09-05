@@ -121,7 +121,11 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
       </ScrollView>
       <View style={styles.plusWrap}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("NewChallenge")}
+          onPress={() =>
+            navigation.navigate("NewChallenge", {
+              isNew: true,
+            })
+          }
           style={styles.plusButton}
         >
           <PlusIcon width={28.8} height={28.8} color={Color.Contents.Icon} />

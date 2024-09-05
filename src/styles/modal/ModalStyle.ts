@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
   },
   timePickerWrap: {
     marginTop: 20,
-    marginBottom: 25,
+    marginBottom: 34,
   },
   desText: {
     ...Font.Paragraph.LittleMedium,

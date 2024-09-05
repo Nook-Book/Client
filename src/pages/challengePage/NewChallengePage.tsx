@@ -21,6 +21,7 @@ import {
   formatDateToString,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
+import { dummyListCard } from "../../assets/data/dummyChallengeList";
 
 export default function NewChallengePage({
   route,
@@ -29,32 +30,36 @@ export default function NewChallengePage({
   route: any;
   navigation: any;
 }) {
+  const { isNew } = route.params;
   const todayDate = formatDateToString(new Date()); //오늘 날짜
-  const [title, setTitle] = useState(""); //챌린지 이름
-  const [imageUri, setImageUri] = useState<string | null>(null); //챌린지 이미지
+  const [title, setTitle] = useState(isNew ? "" : dummyListCard.title); //챌린지 이름
+  const [imageUri, setImageUri] = useState<string | null>(
+    isNew ? null : dummyListCard.image
+  ); //챌린지 이미지
   const [isImagemodal, setIsImagemodal] = useState(false); //이미지 모달
-  const [startDate, setStartDate] = useState<string>(todayDate); //시작일
-  const [endDate, setEndDate] = useState<string>(todayDate); //종료일
-  const [isCheck, setIsCheck] = useState(false); //독서 시간 설정 안 함 true
-  const [startPeriod, setStartPeriod] = useState<TTime>({
-    hour: "01",
-    minute: "00",
-    ampm: "AM",
-  }); //시작 시간 설정
-  const [endPeriod, setEndPeriod] = useState<TTime>({
-    hour: "01",
-    minute: "00",
-    ampm: "AM",
-  }); //종료 시간 설정
-  const [goalTime, setGoalTime] = useState<TTime>({
-    hour: "00",
-    minute: "00",
-  }); //목표 시간량 설정
+  const [startDate, setStartDate] = useState<string>(
+    isNew ? todayDate : dummyListCard.startDate
+  ); // 시작일
+  const [endDate, setEndDate] = useState<string>(
+    isNew ? todayDate : dummyListCard.endDate
+  ); // 종료일
+  const [isCheck, setIsCheck] = useState(isNew ? false : dummyListCard.isCheck); // 독서 시간 설정 안 함
+  const [startPeriod, setStartPeriod] = useState<TTime>(
+    isNew ? { hour: "01", minute: "00", ampm: "AM" } : dummyListCard.startPeriod
+  ); // 시작 시간 설정
+  const [endPeriod, setEndPeriod] = useState<TTime>(
+    isNew ? { hour: "01", minute: "00", ampm: "AM" } : dummyListCard.endPeriod
+  ); // 종료 시간 설정
+  const [goalTime, setGoalTime] = useState<TTime>(
+    isNew ? { hour: "00", minute: "00" } : dummyListCard.goalTime
+  ); // 하루 목표 시간량 설정
   const [isPickerModal, setIsPickerModal] = useState(false); //picker 모달
   const [pickerType, setPickerType] = useState<"START" | "END" | "GOAL" | null>(
     null
   ); //picker 타입
-  const [selectedParticipant, setSelectedParticipant] = useState<number[]>([]); //선택된 참여자
+  const [selectedParticipant, setSelectedParticipant] = useState<number[]>(
+    isNew ? [] : dummyListCard.selectedParticipant
+  ); // 선택된 참여자
 
   useEffect(() => {
     if (route.params?.updatedStartDate) {
@@ -116,8 +121,8 @@ export default function NewChallengePage({
 
   return (
     <View style={styles.container}>
-      <BackHeader title="챌린지 생성" />
-      <ScrollView scrollEventThrottle={16}>
+      <BackHeader title={isNew ? "챌린지 생성" : "챌린지 수정"} />
+      <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <Pressable style={styles.imageBtnWrap} onPress={handleImagePress}>
             <Text style={styles.imageBtnText}>커버 변경</Text>
@@ -203,7 +208,7 @@ export default function NewChallengePage({
           />
         </View>
         <View style={styles.itemWrap}>
-          <Text style={styles.headText}>목표 시간량 설정</Text>
+          <Text style={styles.headText}>하루 목표 시간량 설정</Text>
           <Pressable
             style={styles.readTimeWrap}
             onPress={() => {
@@ -243,8 +248,8 @@ export default function NewChallengePage({
         </View>
       </ScrollView>
       <BottomOneButton
-        handleAccept={() => console.log("생성하기")}
-        text="생성하기"
+        handleAccept={() => console.log(isNew ? "생성하기" : "수정하기")}
+        text={isNew ? "생성하기" : "수정하기"}
         disabled={!title}
       />
       <ImagePickerModal
@@ -259,7 +264,7 @@ export default function NewChallengePage({
             ? "시작 시간"
             : pickerType === "END"
             ? "종료 시간"
-            : "목표 시간량 설정"
+            : "하루 목표 시간량"
         }
         type={pickerType!}
         initValue={

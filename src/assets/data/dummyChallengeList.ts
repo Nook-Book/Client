@@ -123,9 +123,26 @@ export const dummyListCard = {
       name: "Youyoung",
     },
   ],
-  date: "2024.3.2 (일) ~ 2024.3.25 (일)",
+  isCheck: true,
+  startDate: "2024-03-02",
+  endDate: "2024-03-24",
+  startPeriod: {
+    hour: "01",
+    minute: "00",
+    ampm: "AM",
+  },
+  endPeriod: {
+    hour: "03",
+    minute: "05",
+    ampm: "PM",
+  },
+  goalTime: {
+    hour: "05",
+    minute: "15",
+  },
   totalTime: "16시간",
   dailyTime: "40분",
+  selectedParticipant: [1, 3, 6],
   cardList: [
     {
       id: 1,

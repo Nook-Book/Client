@@ -30,7 +30,11 @@ export default function ChallengeDetailSettingPage({
         <View>
           <Pressable
             style={styles.pressWrap}
-            onPress={() => navigation.navigate("EditChallenge")}
+            onPress={() =>
+              navigation.navigate("NewChallenge", {
+                isNew: false,
+              })
+            }
           >
             <Text style={styles.pressText}>챌린지 수정</Text>
             <InterIcon />
