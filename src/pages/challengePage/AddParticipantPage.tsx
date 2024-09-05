@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { FlatList, View, Text, Pressable, TextInput } from "react-native";
+import { FlatList, View, Text, TextInput } from "react-native";
 import { styles } from "../../styles/challenge/AddParticipantPageStyle";
 import BackHeader from "../../components/header/BackHeader";
 import { dummyListParticipant } from "../../assets/data/dummyChallengeList";

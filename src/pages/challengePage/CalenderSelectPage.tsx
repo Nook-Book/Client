@@ -130,7 +130,9 @@ export default function CalenderSelectPage({
   };
 
   const handleConfirm = () => {
-    navigation.navigate("NewChallenge", {
+    const previousScreen =
+      navigation.getState().routes[navigation.getState().index - 1].name;
+    navigation.navigate(previousScreen, {
       updatedStartDate: startDate,
       updatedEndDate: endDate,
     });

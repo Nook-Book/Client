@@ -9,10 +9,12 @@ export default function BackSettingHeader({
   title,
   isTitleVisible,
   navigation,
+  onPress,
 }: {
   title: string;
   isTitleVisible: boolean;
   navigation: any;
+  onPress: () => void;
 }) {
   return (
     <SafeAreaView>
@@ -22,7 +24,7 @@ export default function BackSettingHeader({
           color={Color.Contents.Icon}
         />
         {isTitleVisible && <Text style={styles.text}>{title}</Text>}
-        <SettingIcon onPress={() => navigation.navigate("ChallengeSetting")} />
+        <SettingIcon onPress={onPress} />
       </View>
     </SafeAreaView>
   );

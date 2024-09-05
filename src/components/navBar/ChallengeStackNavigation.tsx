@@ -10,6 +10,9 @@ import StatusCardDetailPage from "../../pages/challengePage/StatusCardDetailPage
 import NewChallengePage from "../../pages/challengePage/NewChallengePage";
 import CalenderSelectPage from "../../pages/challengePage/CalenderSelectPage";
 import AddParticipantPage from "../../pages/challengePage/AddParticipantPage";
+import ChallengeDetailSettingPage from "../../pages/challengePage/ChallengeDetailSettingPage";
+import EditChallengePage from "../../pages/challengePage/EditChallengePage";
+import EditParticipantPage from "../../pages/challengePage/EditParticipantPage";
 
 const ChallengeStack = createNativeStackNavigator();
 
@@ -28,7 +31,10 @@ export default function ChallengeStackScreen({
       routeName === "StatusCardDetail" ||
       routeName === "NewChallenge" ||
       routeName === "CalenderSelect" ||
-      routeName === "AddParticipant"
+      routeName === "AddParticipant" ||
+      routeName === "ChallengeDetailSetting" ||
+      routeName === "EditChallenge" ||
+      routeName === "EditParticipant"
     ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
@@ -93,6 +99,21 @@ export default function ChallengeStackScreen({
       <ChallengeStack.Screen
         name="AddParticipant"
         component={AddParticipantPage}
+        options={{ headerShown: false }}
+      />
+      <ChallengeStack.Screen
+        name="ChallengeDetailSetting"
+        component={ChallengeDetailSettingPage}
+        options={{ headerShown: false }}
+      />
+      <ChallengeStack.Screen
+        name="EditChallenge"
+        component={EditChallengePage}
+        options={{ headerShown: false }}
+      />
+      <ChallengeStack.Screen
+        name="EditParticipant"
+        component={EditParticipantPage}
         options={{ headerShown: false }}
       />
     </ChallengeStack.Navigator>

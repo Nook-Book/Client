@@ -35,6 +35,10 @@ export default function ChallengeDetailPage({
         title={dummyListCard.title}
         isTitleVisible={isTitleVisible}
         navigation={navigation}
+        onPress={() => {
+          //챌린지 주인인지 확인 필요 -> 주인이면 페이지 이동, 아니면 모달 실행
+          navigation.navigate("ChallengeDetailSetting");
+        }}
       />
       <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
         <View style={styles.contentContainer}>
