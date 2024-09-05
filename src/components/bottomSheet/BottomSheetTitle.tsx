@@ -13,10 +13,12 @@ const BottomSheetTitle = ({
 }) => {
   return (
     <View style={styles.topWrap}>
-      <CancelIcon style={styles.closeIcon} onPress={onClose} />
+      <Pressable style={styles.leftWrap} onPress={onClose}>
+        <CancelIcon />
+      </Pressable>
       <Text style={styles.headText}>{text}</Text>
       {onComplete && (
-        <Pressable style={styles.complateWrap} onPress={onComplete}>
+        <Pressable style={styles.rightWrap} onPress={onComplete}>
           <Text style={styles.complateText}>완료</Text>
         </Pressable>
       )}

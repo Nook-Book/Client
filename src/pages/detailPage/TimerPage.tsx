@@ -94,8 +94,8 @@ const TimerPage = () => {
               styles.timerButton,
               {
                 backgroundColor: isRunning
-                  ? Color.Contents.Click
-                  : Color.Click[100],
+                  ? Color.NegativeTransparent
+                  : Color.PositiveTransparent,
               },
             ]}
             onPress={handleStartStop}
@@ -104,7 +104,7 @@ const TimerPage = () => {
               style={[
                 styles.timerText,
                 {
-                  color: isRunning ? Color.Secondary : Color.Typo.Primary,
+                  color: isRunning ? Color.Negative : Color.Positive,
                 },
               ]}
             >

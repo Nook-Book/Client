@@ -3,9 +3,11 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TextInput,
+  Text,
   View,
   Platform,
   Keyboard,
+  Pressable,
 } from "react-native";
 import { styles } from "../../styles/detail/WritePageStyle";
 import { markdownStyle } from "../../styles/markdown/MarkdownStyle";
@@ -13,7 +15,6 @@ import Markdown from "react-native-markdown-display";
 import WriteHeader from "../../components/header/WriteHeader";
 import { Color } from "../../styles/Theme";
 import PlusIcon from "../../assets/images/icon/Plus2.svg";
-import ChangeIcon from "../../assets/images/icon/Change.svg";
 import ImageIcon from "../../assets/images/icon/Image.svg";
 import TextImportIcon from "../../assets/images/icon/TextImport.svg";
 import TextShapeIcon from "../../assets/images/icon/TextShape.svg";
@@ -36,7 +37,6 @@ import { RenderRules } from "../../styles/markdown/RenderRules";
 type SelectedMenuType =
   | ""
   | "Plus"
-  | "Change"
   | "Image"
   | "TextImport"
   | "TextShape"
@@ -66,6 +66,7 @@ type SelectedShapeMenuState = {
 
 const WritePage = ({ navigation }: { navigation: any }) => {
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
+  const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
   const [titleText, setTitleText] = useState(""); //제목
   const [markdownText, setMarkdownText] = useState(``); //내용
   const [isKeybored, setIsKeybored] = useState(false); //키보드 상태
@@ -94,10 +95,6 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     {
       icon: PlusIcon,
       type: "Plus",
-    },
-    {
-      icon: ChangeIcon,
-      type: "Change",
     },
     {
       icon: ImageIcon,
@@ -316,10 +313,50 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       <WriteHeader
         navigation={navigation}
         isText={titleText.length > 0 || markdownText.length > 0}
-        checkClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+        checkClick={() => console.log("저장")}
       />
+      <View style={styles.tabViewWrap}>
+        <Pressable
+          style={[
+            styles.tabWrap,
+            {
+              borderColor: isWriteView ? Color.Contents.Click : "#DBDBDB",
+            },
+          ]}
+          onPress={() => setIsWriteView(true)}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              {
+                color: isWriteView ? Color.Contents.Click : "#DBDBDB",
+              },
+            ]}
+          >
+            글쓰기
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.tabWrap,
+            {
+              borderColor: isWriteView ? "#DBDBDB" : Color.Contents.Click,
+            },
+          ]}
+          onPress={() => setIsWriteView(false)}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              {
+                color: isWriteView ? "#DBDBDB" : Color.Contents.Click,
+              },
+            ]}
+          >
+            미리보기
+          </Text>
+        </Pressable>
+      </View>
       <KeyboardAvoidingView
         style={styles.contentContainer}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -328,33 +365,41 @@ const WritePage = ({ navigation }: { navigation: any }) => {
           style={{ marginHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
         >
-          <TextInput
-            style={styles.titleText}
-            placeholder="제목을 입력해주세요"
-            value={titleText}
-            onChangeText={setTitleText}
-            placeholderTextColor={Color.Typo.Tertiary}
-            onFocus={() => setIsItemView(false)}
-          />
-          <TextInput
-            ref={markdownInputRef}
-            placeholder="탭하여 기록을 시작해보세요."
-            value={markdownText}
-            onChangeText={(text) => {
-              saveHistoryState();
-              setMarkdownText(text);
-            }}
-            placeholderTextColor={Color.Typo.Tertiary}
-            onFocus={() => {
-              setIsKeybored(true);
-              setIsItemView(false);
-            }}
-            onSelectionChange={handleSelectionChange}
-            multiline
-          />
-          <Markdown style={markdownStyle} rules={RenderRules}>
-            {markdownText}
-          </Markdown>
+          {isWriteView ? (
+            <>
+              <TextInput
+                style={styles.titleText}
+                placeholder="제목을 입력해주세요"
+                value={titleText}
+                onChangeText={setTitleText}
+                placeholderTextColor={Color.Typo.Tertiary}
+                onFocus={() => setIsItemView(false)}
+              />
+              <TextInput
+                ref={markdownInputRef}
+                placeholder="탭하여 기록을 시작해보세요."
+                value={markdownText}
+                onChangeText={(text) => {
+                  saveHistoryState();
+                  setMarkdownText(text);
+                }}
+                placeholderTextColor={Color.Typo.Tertiary}
+                onFocus={() => {
+                  setIsKeybored(true);
+                  setIsItemView(false);
+                }}
+                onSelectionChange={handleSelectionChange}
+                multiline
+              />
+            </>
+          ) : (
+            <>
+              <Text style={styles.titleText}>{titleText}</Text>
+              <Markdown style={markdownStyle} rules={RenderRules}>
+                {markdownText}
+              </Markdown>
+            </>
+          )}
         </ScrollView>
         <View style={styles.fixedWrap}>
           {(isKeybored || isItemView) && (
@@ -363,13 +408,8 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                 {selectedMenu === "TextShape"
                   ? shapeMenuItem.map((data, index) => {
                       return (
-                        <data.icon
+                        <Pressable
                           key={index}
-                          color={
-                            selectedShapeMenu[data.type]
-                              ? Color.Contents.Click
-                              : Color.Contents.Icon
-                          }
                           onPress={() => {
                             setSelectedShapeMenu((prevState) => {
                               const newState = { ...prevState };
@@ -417,18 +457,21 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                               }
                             }
                           }}
-                        />
+                        >
+                          <data.icon
+                            color={
+                              selectedShapeMenu[data.type]
+                                ? Color.Contents.Click
+                                : Color.Contents.Icon
+                            }
+                          />
+                        </Pressable>
                       );
                     })
                   : menuItem.map((data, index) => {
                       return (
-                        <data.icon
+                        <Pressable
                           key={index}
-                          color={
-                            selectedMenu === data.type
-                              ? Color.Contents.Click
-                              : Color.Contents.Icon
-                          }
                           onPress={() => {
                             if (data.type === "Reset") {
                               handleReset();
@@ -442,34 +485,46 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                               setIsKeybored(false);
                             }
                           }}
-                        />
+                        >
+                          <data.icon
+                            color={
+                              selectedMenu === data.type
+                                ? Color.Contents.Click
+                                : Color.Contents.Icon
+                            }
+                          />
+                        </Pressable>
                       );
                     })}
               </View>
               <View style={styles.keyboredWrap}>
                 {isKeybored ? (
-                  <KeyboredIcon
+                  <Pressable
                     onPress={() => {
                       Keyboard.dismiss();
                       setIsItemView(false);
                       setIsKeybored(!isKeybored);
                     }}
-                  />
+                  >
+                    <KeyboredIcon />
+                  </Pressable>
                 ) : (
-                  <KeyboredClickIcon
+                  <Pressable
                     onPress={() => {
                       setSelectedMenu("");
                       markdownInputRef.current?.focus();
                       setIsItemView(false);
                       setIsKeybored(!isKeybored);
                     }}
-                  />
+                  >
+                    <KeyboredClickIcon />
+                  </Pressable>
                 )}
               </View>
             </View>
           )}
           {isItemView &&
-            (selectedMenu === "Plus" || selectedMenu === "Change" ? (
+            (selectedMenu === "Plus" ? (
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
               <ImageItem handleTextInsert={handleTextInsert} />

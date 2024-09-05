@@ -21,11 +21,8 @@ export default function NoteHeader({
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={styles.buttonWrap}
-        >
-          <DeleteIcon onPress={onDelete} />
+        <Pressable onPress={onDelete} style={styles.buttonWrap}>
+          <DeleteIcon />
         </Pressable>
       </View>
     </SafeAreaView>

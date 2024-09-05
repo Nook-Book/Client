@@ -66,9 +66,10 @@ export const styles = StyleSheet.create({
     borderBottomColor: Color.Border.Stroke,
     borderBottomWidth: 0.8,
   },
-  closeIcon: {
+  leftWrap: {
     position: "absolute",
-    left: 16,
+    left: 0,
+    padding: 16,
   },
   headText: {
     ...Font.Label.SemiMedium,
@@ -76,9 +77,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
   },
-  complateWrap: {
+  rightWrap: {
     position: "absolute",
-    right: 20,
+    right: 0,
+    padding: 16,
+    paddingHorizontal: 20,
   },
   complateText: {
     ...Font.Paragraph.SemiMedium,

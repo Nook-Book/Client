@@ -10,6 +10,21 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 16,
   },
+  tabViewWrap: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  tabWrap: {
+    width: "50%",
+    alignItems: "center",
+    borderBottomWidth: 2,
+  },
+  tabText: {
+    ...Font.Heading.SemiMedium,
+    paddingTop: 4,
+    paddingBottom: 5,
+  },
   titleText: {
     ...Font.Heading.XLInput,
     marginTop: 16,
@@ -24,6 +39,7 @@ export const styles = StyleSheet.create({
   menuWrap: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     borderColor: Color.Border.Stroke,
     borderTopWidth: 0.8,
     borderBottomWidth: 0.8,

@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styles } from "../../styles/challenge/ChallengeDetailPageStyle";
-import { Color } from "../../styles/Theme";
 
 type ProfileItemProps = {
   item: {
