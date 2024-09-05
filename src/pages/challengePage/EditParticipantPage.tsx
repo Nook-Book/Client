@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, FlatList, Pressable, Text } from "react-native";
+import { View, Pressable, Text } from "react-native";
 import { styles } from "../../styles/challenge/EditParticipantPageStyle";
 import DeleteModal from "../../components/modal/DeleteModal";
 import DeleteButton from "../../components/challenge/DeleteButton";
@@ -7,6 +7,7 @@ import { dummyListParticipant } from "../../assets/data/dummyChallengeList";
 import ParticipantDeleteItem from "../../components/challenge/ParticipantDeleteItem";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
+import { SwipeListView } from "react-native-swipe-list-view";
 
 export default function EditParticipantPage({
   navigation,
@@ -43,12 +44,30 @@ export default function EditParticipantPage({
           </View>
           <Text style={styles.participantText}>참여자 추가하기</Text>
         </Pressable>
-        <FlatList
+        <SwipeListView
           data={dummyListParticipant}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => {
             return <ParticipantDeleteItem item={item} />;
           }}
-          keyExtractor={(item) => item.id.toString()}
+          renderHiddenItem={(data) => (
+            <View style={styles.rowBack}>
+              <Pressable
+                onPress={() => {
+                  setSelectedParticipant({
+                    id: data.item.id,
+                    name: data.item.name,
+                  });
+                  setIsParticipantDeleteModal(true);
+                }}
+              >
+                <Text style={styles.rowBackText}>삭제하기</Text>
+              </Pressable>
+            </View>
+          )}
+          rightOpenValue={-93}
+          stopRightSwipe={-93}
+          disableRightSwipe
           showsVerticalScrollIndicator={false}
         />
         <DeleteButton

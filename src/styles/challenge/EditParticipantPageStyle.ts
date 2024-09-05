@@ -22,11 +22,11 @@ export const styles = StyleSheet.create({
     color: Color.Contents.Icon,
   },
   participantWrap: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
-    gap: 9,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: Color.Secondary,
   },
   participantImage: {
     width: 40.67,
@@ -39,10 +39,23 @@ export const styles = StyleSheet.create({
   participantText: {
     ...Font.Label.XMedium,
     color: Color.Typo.Primary,
+    marginLeft: 9,
   },
   ownerText: {
     ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
-    marginLeft: -6,
+    marginLeft: 6,
+  },
+  rowBack: {
+    alignItems: "flex-end",
+    backgroundColor: Color.Field.Primary,
+    flex: 1,
+    justifyContent: "center",
+    paddingRight: 20,
+    marginVertical: 8,
+  },
+  rowBackText: {
+    ...Font.Paragraph.LittleMedium,
+    color: Color.Typo.Primary,
   },
 });
