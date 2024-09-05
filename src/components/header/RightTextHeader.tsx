@@ -1,13 +1,23 @@
 import React from "react";
 import { View, SafeAreaView, Text, Pressable } from "react-native";
-import { styles } from "../../styles/header/RightTextHeaderStyle";
+import { styles } from "../../styles/header/HeaderStyle";
 
 export default function RightTextHeader({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <Pressable onPress={() => navigation.navigate("AllChallenge")}>
-          <Text style={styles.text}>전체보기</Text>
+      <View
+        style={[
+          styles.rightContainer,
+          {
+            paddingRight: 16,
+          },
+        ]}
+      >
+        <Pressable
+          onPress={() => navigation.navigate("AllChallenge")}
+          style={styles.buttonWrap}
+        >
+          <Text style={styles.text2Blue}>전체보기</Text>
         </Pressable>
       </View>
     </SafeAreaView>

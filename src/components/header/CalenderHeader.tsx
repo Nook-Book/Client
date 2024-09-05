@@ -1,7 +1,7 @@
 import React from "react";
-import { View, SafeAreaView, Text } from "react-native";
+import { View, SafeAreaView, Text, Pressable } from "react-native";
 import CancelIcon from "../../assets/images/icon/Cancel.svg";
-import { styles } from "../../styles/header/BackHeaderStyle";
+import { styles } from "../../styles/header/HeaderStyle";
 import { Color } from "../../styles/Theme";
 
 export default function CalenderHeader({
@@ -13,12 +13,13 @@ export default function CalenderHeader({
 }) {
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <CancelIcon
-          style={styles.button}
+      <View style={styles.centerContainer}>
+        <Pressable
           onPress={() => navigation.goBack()}
-          color={Color.Contents.Icon}
-        />
+          style={styles.leftButtonWrap}
+        >
+          <CancelIcon color={Color.Contents.Icon} />
+        </Pressable>
         <Text style={styles.text1}>{title}</Text>
       </View>
     </SafeAreaView>

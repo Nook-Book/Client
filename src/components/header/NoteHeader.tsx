@@ -1,8 +1,8 @@
 import React from "react";
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, Pressable } from "react-native";
 import BackIcon from "../../assets/images/icon/Back.svg";
 import DeleteIcon from "../../assets/images/icon/Delete.svg";
-import { styles } from "../../styles/header/AllNoteHeaderStyle";
+import { styles } from "../../styles/header/HeaderStyle";
 import { Color } from "../../styles/Theme";
 
 export default function NoteHeader({
@@ -14,13 +14,19 @@ export default function NoteHeader({
 }) {
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <BackIcon
-          style={styles.button}
+      <View style={styles.betweenContainer}>
+        <Pressable
           onPress={() => navigation.goBack()}
-          color={Color.Contents.Icon}
-        />
-        <DeleteIcon onPress={onDelete} />
+          style={styles.buttonWrap}
+        >
+          <BackIcon color={Color.Contents.Icon} />
+        </Pressable>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={styles.buttonWrap}
+        >
+          <DeleteIcon onPress={onDelete} />
+        </Pressable>
       </View>
     </SafeAreaView>
   );
