@@ -26,7 +26,6 @@ export default function ChallengeStackScreen({
     const routeName = getFocusedRouteNameFromRoute(route);
     if (
       routeName === "ChallengeDetail" ||
-      routeName === "InviteChallengeDetail" ||
       routeName === "StatusCardDetail" ||
       routeName === "NewChallenge" ||
       routeName === "CalenderSelect" ||
@@ -73,11 +72,6 @@ export default function ChallengeStackScreen({
         name="ChallengeDetail"
         component={ChallengeDetailPage}
         options={{ headerShown: false, animation: "fade" }}
-      />
-      <ChallengeStack.Screen
-        name="InviteChallengeDetail"
-        component={InviteChallengeDetailPage}
-        options={{ headerShown: false }}
       />
       <ChallengeStack.Screen
         name="StatusCardDetail"

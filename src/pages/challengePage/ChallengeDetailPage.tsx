@@ -14,12 +14,17 @@ import StatusList from "../../components/challenge/StatusList";
 import { dummyListCard } from "../../assets/data/dummyChallengeList";
 import ChallengeCard from "../../components/challenge/ChallengeCard";
 import { getDayOfWeek } from "../../utils/calendarUtils";
+import BottomTwoButton from "../../components/bottomSheet/BottomTwoButton";
+import BackTitleHeader from "../../components/header/BackTitleHeader";
 
 export default function ChallengeDetailPage({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: any;
 }) {
+  const { isInvite } = route.params;
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showAllProfiles, setShowAllProfiles] = useState(false);
@@ -32,15 +37,23 @@ export default function ChallengeDetailPage({
 
   return (
     <View style={styles.container}>
-      <BackSettingHeader
-        title={dummyListCard.title}
-        isTitleVisible={isTitleVisible}
-        navigation={navigation}
-        onPress={() => {
-          //챌린지 주인인지 확인 필요 -> 주인이면 페이지 이동, 아니면 모달 실행
-          navigation.navigate("ChallengeDetailSetting");
-        }}
-      />
+      {isInvite ? (
+        <BackTitleHeader
+          navigation={navigation}
+          title={dummyListCard.title}
+          isTitleVisible={isTitleVisible}
+        />
+      ) : (
+        <BackSettingHeader
+          title={dummyListCard.title}
+          isTitleVisible={isTitleVisible}
+          navigation={navigation}
+          onPress={() => {
+            //챌린지 주인인지 확인 필요 -> 주인이면 페이지 이동, 아니면 모달 실행
+            navigation.navigate("ChallengeDetailSetting");
+          }}
+        />
+      )}
       <ScrollView
         onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -95,6 +108,12 @@ export default function ChallengeDetailPage({
         <ChallengeCard
           handleStatus={() => navigation.navigate("StatusCardDetail")}
           handleCancel={() => setIsModalVisible(false)}
+        />
+      )}
+      {isInvite && (
+        <BottomTwoButton
+          handleAccept={() => console.log("수락")}
+          handleReject={() => console.log("거절")}
         />
       )}
     </View>

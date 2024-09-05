@@ -63,7 +63,11 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               <Pressable
                 key={index}
                 style={styles.inviteWrap}
-                onPress={() => navigation.navigate("InviteChallengeDetail")}
+                onPress={() =>
+                  navigation.navigate("ChallengeDetail", {
+                    isInvite: true,
+                  })
+                }
               >
                 <Text style={styles.inviteText} numberOfLines={1}>
                   {data.title}
@@ -80,7 +84,11 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               <ChallengeItem
                 item={item}
                 index={index}
-                onPress={() => navigation.navigate("ChallengeDetail")}
+                onPress={() =>
+                  navigation.navigate("ChallengeDetail", {
+                    isInvite: false,
+                  })
+                }
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -95,7 +103,11 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               <ChallengeItem
                 item={item}
                 index={index}
-                onPress={() => navigation.navigate("ChallengeDetail")}
+                onPress={() =>
+                  navigation.navigate("ChallengeDetail", {
+                    isInvite: false,
+                  })
+                }
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -110,7 +122,11 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               <ChallengeItem
                 item={item}
                 index={index}
-                onPress={() => navigation.navigate("ChallengeDetail")}
+                onPress={() =>
+                  navigation.navigate("ChallengeDetail", {
+                    isInvite: false,
+                  })
+                }
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -123,7 +139,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("NewChallenge", {
-              isNew: true,
+              isNew: false,
             })
           }
           style={styles.plusButton}

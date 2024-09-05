@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
   statusWrap: {
     borderColor: Color.Border.Stroke,
     borderTopWidth: 0.8,
-    paddingBottom: 200,
+    paddingBottom: 100,
   },
   statusText: {
     ...Font.Label.Medium,

@@ -20,7 +20,11 @@ export default function AllChallengePage({ navigation }: { navigation: any }) {
             <Pressable
               key={index}
               style={styles.itemWrap}
-              onPress={() => navigation.navigate("ChallengeDetail")}
+              onPress={() =>
+                navigation.navigate("ChallengeDetail", {
+                  isInvite: false,
+                })
+              }
             >
               <Image style={styles.itemImage} source={item.image} />
               <Text style={styles.itemText} numberOfLines={2}>
