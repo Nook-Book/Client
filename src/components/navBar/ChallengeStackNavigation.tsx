@@ -5,7 +5,6 @@ import { Color } from "../../styles/Theme";
 import ChallengePage from "../../pages/challengePage/ChallengePage";
 import AllChallengePage from "../../pages/challengePage/AllChallengePage";
 import ChallengeDetailPage from "../../pages/challengePage/ChallengeDetailPage";
-import InviteChallengeDetailPage from "../../pages/challengePage/InviteChallengeDetailPage";
 import StatusCardDetailPage from "../../pages/challengePage/StatusCardDetailPage";
 import NewChallengePage from "../../pages/challengePage/NewChallengePage";
 import CalenderSelectPage from "../../pages/challengePage/CalenderSelectPage";

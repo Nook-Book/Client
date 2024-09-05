@@ -3,9 +3,11 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TextInput,
+  Text,
   View,
   Platform,
   Keyboard,
+  Pressable,
 } from "react-native";
 import { styles } from "../../styles/detail/WritePageStyle";
 import { markdownStyle } from "../../styles/markdown/MarkdownStyle";
@@ -66,6 +68,7 @@ type SelectedShapeMenuState = {
 
 const WritePage = ({ navigation }: { navigation: any }) => {
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
+  const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
   const [titleText, setTitleText] = useState(""); //제목
   const [markdownText, setMarkdownText] = useState(``); //내용
   const [isKeybored, setIsKeybored] = useState(false); //키보드 상태
@@ -320,6 +323,48 @@ const WritePage = ({ navigation }: { navigation: any }) => {
           throw new Error("Function not implemented.");
         }}
       />
+      <View style={styles.tabViewWrap}>
+        <Pressable
+          style={[
+            styles.tabWrap,
+            {
+              borderColor: isWriteView ? Color.Contents.Click : "#DBDBDB",
+            },
+          ]}
+          onPress={() => setIsWriteView(true)}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              {
+                color: isWriteView ? Color.Contents.Click : "#DBDBDB",
+              },
+            ]}
+          >
+            글쓰기
+          </Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.tabWrap,
+            {
+              borderColor: isWriteView ? "#DBDBDB" : Color.Contents.Click,
+            },
+          ]}
+          onPress={() => setIsWriteView(false)}
+        >
+          <Text
+            style={[
+              styles.tabText,
+              {
+                color: isWriteView ? "#DBDBDB" : Color.Contents.Click,
+              },
+            ]}
+          >
+            미리보기
+          </Text>
+        </Pressable>
+      </View>
       <KeyboardAvoidingView
         style={styles.contentContainer}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -328,33 +373,41 @@ const WritePage = ({ navigation }: { navigation: any }) => {
           style={{ marginHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
         >
-          <TextInput
-            style={styles.titleText}
-            placeholder="제목을 입력해주세요"
-            value={titleText}
-            onChangeText={setTitleText}
-            placeholderTextColor={Color.Typo.Tertiary}
-            onFocus={() => setIsItemView(false)}
-          />
-          <TextInput
-            ref={markdownInputRef}
-            placeholder="탭하여 기록을 시작해보세요."
-            value={markdownText}
-            onChangeText={(text) => {
-              saveHistoryState();
-              setMarkdownText(text);
-            }}
-            placeholderTextColor={Color.Typo.Tertiary}
-            onFocus={() => {
-              setIsKeybored(true);
-              setIsItemView(false);
-            }}
-            onSelectionChange={handleSelectionChange}
-            multiline
-          />
-          <Markdown style={markdownStyle} rules={RenderRules}>
-            {markdownText}
-          </Markdown>
+          {isWriteView ? (
+            <>
+              <TextInput
+                style={styles.titleText}
+                placeholder="제목을 입력해주세요"
+                value={titleText}
+                onChangeText={setTitleText}
+                placeholderTextColor={Color.Typo.Tertiary}
+                onFocus={() => setIsItemView(false)}
+              />
+              <TextInput
+                ref={markdownInputRef}
+                placeholder="탭하여 기록을 시작해보세요."
+                value={markdownText}
+                onChangeText={(text) => {
+                  saveHistoryState();
+                  setMarkdownText(text);
+                }}
+                placeholderTextColor={Color.Typo.Tertiary}
+                onFocus={() => {
+                  setIsKeybored(true);
+                  setIsItemView(false);
+                }}
+                onSelectionChange={handleSelectionChange}
+                multiline
+              />
+            </>
+          ) : (
+            <>
+              <Text style={styles.titleText}>{titleText}</Text>
+              <Markdown style={markdownStyle} rules={RenderRules}>
+                {markdownText}
+              </Markdown>
+            </>
+          )}
         </ScrollView>
         <View style={styles.fixedWrap}>
           {(isKeybored || isItemView) && (
