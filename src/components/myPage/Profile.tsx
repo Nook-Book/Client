@@ -1,9 +1,11 @@
 import { View, Text, Button, TouchableOpacity } from "react-native";
 import ProfileImage from "../../assets/images/profile/ProfileImage.svg";
 import { styles } from "../../styles/myPage/Profile";
+import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "../../types/search";
 
 const Profile = () => {
-  const handleEditPress = () => {};
+  const navigation = useNavigation<NavigationProp>();
 
   const handleFriendPress = () => {};
 
@@ -22,7 +24,12 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={handleEditPress} style={styles.friendButton}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("EditProfilePage");
+        }}
+        style={styles.friendButton}
+      >
         <Text style={styles.buttonText}>프로필 편집</Text>
       </TouchableOpacity>
     </View>

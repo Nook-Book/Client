@@ -10,6 +10,9 @@ export type RootSearchStackParamList = {
 export type RootMyPageStackParamList = {
   MyPage: undefined;
   SettingPage: undefined;
+  EditProfilePage: undefined;
+  SetIdPage: undefined;
+  SetNicknamePage: undefined;
   navigate: (screen: string) => void;
 };
 

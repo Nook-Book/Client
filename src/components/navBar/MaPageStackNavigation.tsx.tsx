@@ -5,6 +5,10 @@ import SettingPage from "../../pages/myPage/SettingPage";
 import MyPage from "../../pages/myPage/MyPage";
 import { Color } from "../../styles/Theme";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import EditProfilePage from "../../pages/myPage/EditProfilePage";
+import SetProfilePage from "../../pages/myPage/SetIdPage";
+import SetIdPage from "../../pages/myPage/SetIdPage";
+import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
 
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
@@ -50,6 +54,21 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="SettingPage"
         component={SettingPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="EditProfilePage"
+        component={EditProfilePage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="SetIdPage"
+        component={SetIdPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="SetNicknamePage"
+        component={SetNicknamePage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>

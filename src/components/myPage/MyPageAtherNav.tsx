@@ -5,16 +5,16 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../types/search";
 import BackIcon from "../../assets/images/icon/Back.svg";
 
-const SettingNav = () => {
+const MyPageAtherNav = ({ title }: { title: string }) => {
   const navigation = useNavigation<RootStackParamList>();
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <BackIcon style={styles.button} onPress={() => navigation.goBack()} />
-        <Text>설정</Text>
+        <Text>{title}</Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default SettingNav;
+export default MyPageAtherNav;

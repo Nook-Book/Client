@@ -3,8 +3,8 @@ import { View, Text, SafeAreaView, Switch } from "react-native";
 import { styles } from "../../styles/settingPage/SettingPage";
 import { Color } from "../../styles/Theme";
 import SettingAuthComponent from "../../components/setting/SettingAuthComponent";
-import SettingNav from "../../components/setting/SettingNav";
 import SettingModal from "../../components/setting/SettingModal";
+import MyPageAtherNav from "../../components/myPage/MyPageAtherNav";
 
 const SettingPage = () => {
   // 상태를 관리하기 위한 상태 변수와 상태 변경 함수
@@ -27,7 +27,7 @@ const SettingPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SettingNav />
+      <MyPageAtherNav title="설정" />
       <View style={styles.contentContainer}>
         <Text style={styles.label}>알림 활성화</Text>
         <Switch
