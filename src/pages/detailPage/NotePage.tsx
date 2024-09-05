@@ -27,7 +27,7 @@ const NotePage = ({ navigation }: { navigation: any }) => {
     <View style={styles.container}>
       <NoteHeader
         navigation={navigation}
-        onDelete={() => setIsDeleteModal(!isDeleteModal)}
+        onDelete={() => setIsDeleteModal(true)}
       />
       <View style={styles.contentContainer}>
         <ScrollView
@@ -42,10 +42,13 @@ const NotePage = ({ navigation }: { navigation: any }) => {
       </View>
       <TitleDesModal
         visible={isDeleteModal}
-        titleText="삭제하기"
+        titleText="기록 삭제"
         desText={"해당 기록이 삭제됩니다\n이 동작은 취소할 수 없습니다."}
-        onComplate={() => setIsDeleteModal(!isDeleteModal)}
-        onClose={() => setIsDeleteModal(!isDeleteModal)}
+        onComplate={() => {
+          navigation.goBack();
+          setIsDeleteModal(false);
+        }}
+        onClose={() => setIsDeleteModal(false)}
       />
     </View>
   );

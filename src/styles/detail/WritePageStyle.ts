@@ -39,6 +39,7 @@ export const styles = StyleSheet.create({
   menuWrap: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     borderColor: Color.Border.Stroke,
     borderTopWidth: 0.8,
     borderBottomWidth: 0.8,

@@ -27,7 +27,7 @@ const TitleDesModal = ({
           <Text style={styles.desText}>{desText}</Text>
           <View style={styles.buttonWrap}>
             <TouchableOpacity onPress={onComplate}>
-              <Text style={styles.grayText}>삭제하기</Text>
+              <Text style={styles.grayText}>삭제</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onClose}>
               <Text style={styles.blueText}>취소</Text>

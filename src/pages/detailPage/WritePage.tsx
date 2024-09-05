@@ -15,7 +15,6 @@ import Markdown from "react-native-markdown-display";
 import WriteHeader from "../../components/header/WriteHeader";
 import { Color } from "../../styles/Theme";
 import PlusIcon from "../../assets/images/icon/Plus2.svg";
-import ChangeIcon from "../../assets/images/icon/Change.svg";
 import ImageIcon from "../../assets/images/icon/Image.svg";
 import TextImportIcon from "../../assets/images/icon/TextImport.svg";
 import TextShapeIcon from "../../assets/images/icon/TextShape.svg";
@@ -38,7 +37,6 @@ import { RenderRules } from "../../styles/markdown/RenderRules";
 type SelectedMenuType =
   | ""
   | "Plus"
-  | "Change"
   | "Image"
   | "TextImport"
   | "TextShape"
@@ -97,10 +95,6 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     {
       icon: PlusIcon,
       type: "Plus",
-    },
-    {
-      icon: ChangeIcon,
-      type: "Change",
     },
     {
       icon: ImageIcon,
@@ -319,9 +313,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       <WriteHeader
         navigation={navigation}
         isText={titleText.length > 0 || markdownText.length > 0}
-        checkClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+        checkClick={() => console.log("저장")}
       />
       <View style={styles.tabViewWrap}>
         <Pressable
@@ -416,13 +408,8 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                 {selectedMenu === "TextShape"
                   ? shapeMenuItem.map((data, index) => {
                       return (
-                        <data.icon
+                        <Pressable
                           key={index}
-                          color={
-                            selectedShapeMenu[data.type]
-                              ? Color.Contents.Click
-                              : Color.Contents.Icon
-                          }
                           onPress={() => {
                             setSelectedShapeMenu((prevState) => {
                               const newState = { ...prevState };
@@ -470,18 +457,21 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                               }
                             }
                           }}
-                        />
+                        >
+                          <data.icon
+                            color={
+                              selectedShapeMenu[data.type]
+                                ? Color.Contents.Click
+                                : Color.Contents.Icon
+                            }
+                          />
+                        </Pressable>
                       );
                     })
                   : menuItem.map((data, index) => {
                       return (
-                        <data.icon
+                        <Pressable
                           key={index}
-                          color={
-                            selectedMenu === data.type
-                              ? Color.Contents.Click
-                              : Color.Contents.Icon
-                          }
                           onPress={() => {
                             if (data.type === "Reset") {
                               handleReset();
@@ -495,34 +485,46 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                               setIsKeybored(false);
                             }
                           }}
-                        />
+                        >
+                          <data.icon
+                            color={
+                              selectedMenu === data.type
+                                ? Color.Contents.Click
+                                : Color.Contents.Icon
+                            }
+                          />
+                        </Pressable>
                       );
                     })}
               </View>
               <View style={styles.keyboredWrap}>
                 {isKeybored ? (
-                  <KeyboredIcon
+                  <Pressable
                     onPress={() => {
                       Keyboard.dismiss();
                       setIsItemView(false);
                       setIsKeybored(!isKeybored);
                     }}
-                  />
+                  >
+                    <KeyboredIcon />
+                  </Pressable>
                 ) : (
-                  <KeyboredClickIcon
+                  <Pressable
                     onPress={() => {
                       setSelectedMenu("");
                       markdownInputRef.current?.focus();
                       setIsItemView(false);
                       setIsKeybored(!isKeybored);
                     }}
-                  />
+                  >
+                    <KeyboredClickIcon />
+                  </Pressable>
                 )}
               </View>
             </View>
           )}
           {isItemView &&
-            (selectedMenu === "Plus" || selectedMenu === "Change" ? (
+            (selectedMenu === "Plus" ? (
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
               <ImageItem handleTextInsert={handleTextInsert} />
