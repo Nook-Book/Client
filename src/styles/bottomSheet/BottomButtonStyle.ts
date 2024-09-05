@@ -10,4 +10,8 @@ export const styles = StyleSheet.create({
   buttonText: {
     ...Font.Label.Medium,
   },
+  betweenContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 });

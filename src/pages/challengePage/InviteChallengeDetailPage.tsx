@@ -12,7 +12,7 @@ import BackTitleHeader from "../../components/header/BackTitleHeader";
 import { dummyListCard } from "../../assets/data/dummyChallengeList";
 import ProfileList from "../../components/challenge/ProfileList";
 import StatusList from "../../components/challenge/StatusList";
-import BottomButton from "../../components/bottomSheet/BottomButton";
+import BottomTwoButton from "../../components/bottomSheet/BottomTwoButton";
 
 export default function InviteChallengeDetailPage({
   navigation,
@@ -73,7 +73,7 @@ export default function InviteChallengeDetailPage({
         </View>
         <StatusList cards={dummyListCard.cardList} />
       </ScrollView>
-      <BottomButton
+      <BottomTwoButton
         handleAccept={() => console.log("수락")}
         handleReject={() => console.log("거절")}
       />

@@ -22,7 +22,10 @@ const ChallengeCard = ({
               style={styles.profileImage}
             />
             <Text style={styles.profileText}>야옹아멍멍해봐</Text>
-            <Pressable style={styles.profileBtn}>
+            <Pressable
+              style={styles.profileBtn}
+              onPress={() => console.log("찌르기")}
+            >
               <Text style={styles.profileBtnText}>찌르기</Text>
             </Pressable>
           </View>

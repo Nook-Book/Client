@@ -72,6 +72,7 @@ export const styles = StyleSheet.create({
   lengthText: {
     ...Font.Label.Small,
     color: Color.Typo.Primary,
+    padding: 10,
   },
   profileItem: {
     flexDirection: "row",
