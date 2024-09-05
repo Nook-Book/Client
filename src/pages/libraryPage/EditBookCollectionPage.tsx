@@ -95,23 +95,21 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
           </View>
         </View>
       </View>
-      {modalVisible && (
-        <MaxCollectionModal
-          text={
-            isMaxModalStatus
-              ? "최대 지정 가능한 컬렉션 수는\n4개입니다."
-              : "최소 지정 컬렉션 수는 1개입니다."
-          }
-          onClose={() => setModalVisible(false)}
-        />
-      )}
-      {isEditModalVisible && (
-        <EditModal
-          text={"변경된 편집 사항이 저장되지 않습니다.\n취소하시겠습니까?"}
-          onClose={() => setModalVisible(false)}
-          onComplate={() => navigation.navigate("Library")}
-        />
-      )}
+      <MaxCollectionModal
+        visible={modalVisible}
+        text={
+          isMaxModalStatus
+            ? "최대 지정 가능한 컬렉션 수는\n4개입니다."
+            : "최소 지정 컬렉션 수는 1개입니다."
+        }
+        onClose={() => setModalVisible(false)}
+      />
+      <EditModal
+        visible={isEditModalVisible}
+        text={"변경된 편집 사항이 저장되지 않습니다.\n취소하시겠습니까?"}
+        onClose={() => setModalVisible(false)}
+        onComplate={() => navigation.navigate("Library")}
+      />
     </View>
   );
 };

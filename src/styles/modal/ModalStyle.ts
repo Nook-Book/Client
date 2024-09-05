@@ -3,15 +3,10 @@ import { Color, Font, Effect } from "../../styles/Theme";
 
 export const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    zIndex: 200,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modal: {
     ...Effect.ModalShadow,
@@ -27,6 +22,15 @@ export const styles = StyleSheet.create({
     color: Color.Typo.Primary,
     marginTop: 24,
     textAlign: "center",
+  },
+  headTimeText: {
+    ...Font.Label.Medium,
+    color: Color.Typo.Primary,
+    textAlign: "center",
+  },
+  timePickerWrap: {
+    marginTop: 20,
+    marginBottom: 34,
   },
   desText: {
     ...Font.Paragraph.LittleMedium,
