@@ -19,11 +19,18 @@ export default function AddParticipantPage({
     currentSelectedParticipant || []
   );
   const [search, setSearch] = useState("");
+  const previousScreen =
+    navigation.getState().routes[navigation.getState().index - 1].name;
 
   const handleConfirm = () => {
-    navigation.navigate("NewChallenge", {
-      updatedSelectedParticipant: selectedParticipant,
-    });
+    if (previousScreen === "EditParticipant") {
+      navigation.goBack();
+      //서버에 바로 참여자 추가 저장
+    } else {
+      navigation.navigate(previousScreen, {
+        updatedSelectedParticipant: selectedParticipant,
+      });
+    }
   };
 
   const handleSelect = useCallback(
@@ -53,7 +60,11 @@ export default function AddParticipantPage({
 
   return (
     <View style={styles.container}>
-      <BackHeader title="친구 선택" />
+      <BackHeader
+        title={
+          previousScreen === "EditParticipant" ? "참여자 추가" : "친구 선택"
+        }
+      />
       <TextInput
         style={styles.input}
         onChangeText={setSearch}

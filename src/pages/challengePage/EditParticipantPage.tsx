@@ -38,7 +38,14 @@ export default function EditParticipantPage({
       <BackTextHeader title="참여자 관리" />
       <View style={styles.betweenWrap}>
         <Text style={styles.headText}>참여자</Text>
-        <Pressable style={styles.participantWrap}>
+        <Pressable
+          style={styles.participantWrap}
+          onPress={() =>
+            navigation.navigate("AddParticipant", {
+              currentSelectedParticipant: [],
+            })
+          }
+        >
           <View style={styles.participantImage}>
             <PlusIcon style={styles.plusIcon} />
           </View>
