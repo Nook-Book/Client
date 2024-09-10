@@ -7,8 +7,6 @@ import { NavigationProp } from "../../types/search";
 const Profile = () => {
   const navigation = useNavigation<NavigationProp>();
 
-  const handleFriendPress = () => {};
-
   return (
     <View style={styles.container}>
       <ProfileImage style={styles.profileImage} />
@@ -19,7 +17,11 @@ const Profile = () => {
         </View>
         <View style={styles.friendContainer}>
           <Text style={styles.friendName}>친구</Text>
-          <TouchableOpacity onPress={handleFriendPress}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("FriendPage");
+            }}
+          >
             <Text style={styles.friendNumber}>13</Text>
           </TouchableOpacity>
         </View>

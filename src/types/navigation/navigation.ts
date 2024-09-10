@@ -13,6 +13,7 @@ export type RootMyPageStackParamList = {
   EditProfilePage: undefined;
   SetIdPage: undefined;
   SetNicknamePage: undefined;
+  FriendPage: undefined;
   navigate: (screen: string) => void;
 };
 

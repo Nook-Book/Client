@@ -11,7 +11,7 @@ const MyPageAtherNav = ({ title }: { title: string }) => {
     <SafeAreaView>
       <View style={styles.container}>
         <BackIcon style={styles.button} onPress={() => navigation.goBack()} />
-        <Text>{title}</Text>
+        <Text style={styles.text}>{title}</Text>
       </View>
     </SafeAreaView>
   );

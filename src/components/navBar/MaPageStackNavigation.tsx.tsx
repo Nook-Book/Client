@@ -9,6 +9,7 @@ import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import SetProfilePage from "../../pages/myPage/SetIdPage";
 import SetIdPage from "../../pages/myPage/SetIdPage";
 import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
+import FriendPage from "../../pages/myPage/FriendPage";
 
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
@@ -69,6 +70,11 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="SetNicknamePage"
         component={SetNicknamePage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="FriendPage"
+        component={FriendPage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>

@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../types/search";
 import { styles } from ".././../../styles/myPage/editProfilePage/SetProfileNav";
 
-const MyPageAtherNav = ({
+const SetProfileNav = ({
   title,
   onClick,
 }: {
@@ -27,4 +27,4 @@ const MyPageAtherNav = ({
   );
 };
 
-export default MyPageAtherNav;
+export default SetProfileNav;
