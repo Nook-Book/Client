@@ -45,3 +45,11 @@ export const MyPageBookCategorydata = [
     legendFontSize: 15,
   },
 ];
+
+export const PageLists = [
+  "SettingPage",
+  "EditProfilePage",
+  "SetIdPage",
+  "SetNicknamePage",
+  "FriendPage",
+];

@@ -1,15 +1,15 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RootMyPageStackParamList } from "../../types/navigation/navigation";
-import SettingPage from "../../pages/myPage/SettingPage";
-import MyPage from "../../pages/myPage/MyPage";
-import { Color } from "../../styles/Theme";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { PageLists } from "../../constans/myPage";
 import EditProfilePage from "../../pages/myPage/EditProfilePage";
-import SetProfilePage from "../../pages/myPage/SetIdPage";
+import FriendPage from "../../pages/myPage/FriendPage";
+import MyPage from "../../pages/myPage/MyPage";
 import SetIdPage from "../../pages/myPage/SetIdPage";
 import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
-import FriendPage from "../../pages/myPage/FriendPage";
+import SettingPage from "../../pages/myPage/SettingPage";
+import { Color } from "../../styles/Theme";
+import { RootMyPageStackParamList } from "../../types/navigation/navigation";
 
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
@@ -22,7 +22,7 @@ export default function MaPageStackScreen({
 }) {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "SettingPage") {
+    if (PageLists.includes(routeName!)) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
       });

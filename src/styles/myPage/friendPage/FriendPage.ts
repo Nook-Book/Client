@@ -35,15 +35,14 @@ export const styles = StyleSheet.create({
     margin: 16,
     height: 36,
   },
-  delete: {
+  overlay: {
     display: "flex",
-    backgroundColor: Color.Field.Primary,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 93,
-    height: 40,
-  },
-  text: {
-    ...Font.Paragraph.LittleMedium,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1,
   },
 });
