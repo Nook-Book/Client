@@ -3,13 +3,12 @@ import { Color, Font } from "../../Theme";
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 56,
-    gap: 9,
+    padding: 16,
+    borderTopColor: Color.Border.Stroke,
+    borderTopWidth: 0.8,
   },
-  name: {
-    ...Font.Label.XMedium,
+  label: {
+    ...Font.Label.SemiMedium,
     color: Color.Typo.Primary,
   },
 });

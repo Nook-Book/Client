@@ -7,11 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Color.Secondary,
   },
   friendContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    height: 53,
-    alignItems: "center",
+    paddingHorizontal: 16,
   },
   friendButton: {
     width: "50%",
@@ -44,5 +40,20 @@ export const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     zIndex: 1,
+  },
+  addFriendContainer: {
+    padding: 16,
+    borderTopColor: Color.Border.Stroke,
+    borderTopWidth: 0.8,
+  },
+  label: {
+    ...Font.Label.SemiMedium,
+    color: Color.Typo.Primary,
+    marginBottom: 16,
+  },
+  border: {
+    borderTopColor: Color.Border.Stroke,
+    borderTopWidth: 0.8,
+    marginBottom: 16,
   },
 });
