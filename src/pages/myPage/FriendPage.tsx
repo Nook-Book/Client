@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Alert, Text, TextInput, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Text, TextInput, View } from "react-native";
 import {
   GestureHandlerRootView,
   Swipeable,
@@ -14,6 +15,7 @@ import SendRequestFriend from "../../components/myPage/friendPage/SendRequestFri
 import { FriendsList } from "../../constans/myPage/friendPage/friends";
 import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
+import { FriendParamList } from "../../types/friend";
 
 const FriendPage = () => {
   const [friendNav, setFriendNav] = useState<"친구 목록" | "친구 추가">(
@@ -22,13 +24,20 @@ const FriendPage = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
+  const [userList, setUserList] = useState<string[]>([]);
+  const FriendsSearchResultList = FriendsList.filter(
+    (friend) => friend.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
+  );
 
+  const navigation = useNavigation<FriendParamList>();
+
+  const FriendDummy = ["minjufish", "minjufish", "minjufish"];
+  const FriendDummyList = FriendDummy.filter(
+    (friend) => friend.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
+  );
   const handleSearchSubmit = () => {
-    if (searchText.trim() === "") {
-      Alert.alert("검색어를 입력해 주세요.");
-      return;
-    }
-    // navigation.navigate("SearchResultPage", { query: searchText });
+    setUserList(FriendDummyList.length > 0 ? FriendDummyList : []);
+    // navigation.navigate("FriendSearchResultPage", { query: searchText });
   };
 
   const handleSetFriendNav = (state: "친구 목록" | "친구 추가") => {
@@ -39,6 +48,13 @@ const FriendPage = () => {
     setModalText(name);
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    if (searchText === "") {
+      setUserList([]);
+    }
+  }, [searchText]);
+
   return (
     <View style={styles.container}>
       {isModalOpen && (
@@ -60,10 +76,11 @@ const FriendPage = () => {
         onChangeText={setSearchText}
         placeholderTextColor={Color.Typo.Secondary}
         onSubmitEditing={handleSearchSubmit}
+        autoCapitalize="none"
       />
       {friendNav === "친구 목록" ? (
         <GestureHandlerRootView style={styles.friendContainer}>
-          {FriendsList.map((name, index) => (
+          {FriendsSearchResultList.map((name, index) => (
             <>
               <Swipeable
                 friction={1}
@@ -83,11 +100,20 @@ const FriendPage = () => {
         </GestureHandlerRootView>
       ) : (
         <View style={styles.addFriendContainer}>
-          <Text style={styles.label}>받은 요청</Text>
-          <ReceivedRequestFriend />
-          <View style={styles.border} />
-          <Text style={styles.label}>보낸 요청</Text>
-          <SendRequestFriend />
+          {searchText === "" ? (
+            <>
+              <View style={styles.border} />
+              <Text style={styles.label}>받은 요청</Text>
+              <ReceivedRequestFriend />
+              <View style={styles.border} />
+              <Text style={styles.label}>보낸 요청</Text>
+              <SendRequestFriend userList={FriendDummy} isRequest={true} />
+            </>
+          ) : (
+            <>
+              <SendRequestFriend userList={FriendDummyList} isRequest={false} />
+            </>
+          )}
         </View>
       )}
     </View>

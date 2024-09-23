@@ -1,17 +1,17 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
-import { BestSellerPageRouteProp } from "../../types/navigation/navigation";
-import { styles } from "../../styles/search/SearchResultPageStyle";
-import SearchHeader from "../../components/search/SearchHeader";
+import { ScrollView, View } from "react-native";
 import { dummyList } from "../../assets/data/dummyBestBookList";
 import ResultBookCard from "../../components/search/ResultBookCard";
+import SearchHeader from "../../components/search/SearchHeader";
+import { styles } from "../../styles/search/SearchResultPageStyle";
+import { BestSellerPageRouteProp } from "../../types/navigation/navigation";
 
 type Props = {
   route: BestSellerPageRouteProp;
 };
 
 const SearchResultPage: React.FC<Props> = ({ route }) => {
-  const { query } = route.params; // query
+  const { query } = route.params;
 
   return (
     <View style={styles.container}>

@@ -14,10 +14,16 @@ export type RootMyPageStackParamList = {
   SetIdPage: undefined;
   SetNicknamePage: undefined;
   FriendPage: undefined;
+  FriendSearchResultPage: { query: string };
   navigate: (screen: string) => void;
 };
 
 export type BestSellerPageRouteProp = RouteProp<
   RootSearchStackParamList,
   "SearchResultPage"
+>;
+
+export type SearchFriendResultRouteProp = RouteProp<
+  RootMyPageStackParamList,
+  "FriendSearchResultPage"
 >;

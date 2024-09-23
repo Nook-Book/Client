@@ -4,6 +4,7 @@ import React from "react";
 import { PageLists } from "../../constans/myPage";
 import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import FriendPage from "../../pages/myPage/FriendPage";
+import FriendSearchResultPage from "../../pages/myPage/FriendSearchResultPage";
 import MyPage from "../../pages/myPage/MyPage";
 import SetIdPage from "../../pages/myPage/SetIdPage";
 import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
@@ -75,6 +76,11 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="FriendPage"
         component={FriendPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="FriendSearchResultPage"
+        component={FriendSearchResultPage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>

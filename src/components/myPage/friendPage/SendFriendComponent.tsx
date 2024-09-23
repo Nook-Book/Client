@@ -3,8 +3,14 @@ import { Text, TouchableOpacity, View } from "react-native";
 import Profile from "../../../assets/images/profile/FriendProfile.svg";
 import { styles } from "../../../styles/myPage/friendPage/ReceivedFriendComponent";
 
-const SendFriendComponent = ({ name }: { name: string }) => {
-  const [isRequest, setIsRequest] = useState<boolean>(true);
+const SendFriendComponent = ({
+  name,
+  isRequestProp,
+}: {
+  name: string;
+  isRequestProp: boolean;
+}) => {
+  const [isRequest, setIsRequest] = useState<boolean>(isRequestProp);
   const handleCancleRequest = () => {
     setIsRequest(false);
   };

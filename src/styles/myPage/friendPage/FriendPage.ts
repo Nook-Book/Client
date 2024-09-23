@@ -42,9 +42,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   addFriendContainer: {
-    padding: 16,
-    borderTopColor: Color.Border.Stroke,
-    borderTopWidth: 0.8,
+    paddingHorizontal: 16,
   },
   label: {
     ...Font.Label.SemiMedium,
@@ -55,5 +53,6 @@ export const styles = StyleSheet.create({
     borderTopColor: Color.Border.Stroke,
     borderTopWidth: 0.8,
     marginBottom: 16,
+    marginHorizontal: -16,
   },
 });

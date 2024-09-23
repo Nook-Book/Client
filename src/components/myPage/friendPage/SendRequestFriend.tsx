@@ -1,14 +1,29 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import SendFriendComponent from "./SendFriendComponent";
 
-const SendRequestFriend = () => {
-  const SendRequests = ["야옹아 멍멍해봐"];
+const SendRequestFriend = ({
+  userList,
+  isRequest,
+}: {
+  userList: string[];
+  isRequest: boolean;
+}) => {
   return (
     <View>
-      {SendRequests.map((name, index) => (
-        <SendFriendComponent name={name} key={index} />
-      ))}
+      {userList.length > 0 ? (
+        <>
+          {userList.map((name, index) => (
+            <SendFriendComponent
+              name={name}
+              key={index}
+              isRequestProp={isRequest}
+            />
+          ))}
+        </>
+      ) : (
+        <Text>없음</Text>
+      )}
     </View>
   );
 };
