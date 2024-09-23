@@ -1,8 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import Profile from "../../../assets/images/profile/FriendProfile.svg";
 import { styles } from "../../../styles/myPage/friendPage/FriendComponent";
-import { FriendComponentProps } from "../../../types/friend";
+import { FriendComponentProps, FriendParamList } from "../../../types/friend";
 
 const FriendComponent: React.FC<FriendComponentProps> = ({
   image,
@@ -11,14 +12,19 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   isRequestProp,
 }) => {
   const [isRequest, setIsRequest] = useState<boolean>(isRequestProp!);
+  const navigation = useNavigation<FriendParamList>();
+
   const handleCancleRequest = () => {
     setIsRequest(false);
   };
   const handleRequestFriend = () => {
     setIsRequest(true);
   };
+  const handleClickComponent = () => {
+    navigation.navigate("FriendSearchResultPage", { query: name });
+  };
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleClickComponent}>
       <View style={styles.item}>
         <Profile />
         <Text style={styles.name}>{name}</Text>
@@ -52,7 +58,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
           )}
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
