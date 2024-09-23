@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import SendFriendComponent from "./SendFriendComponent";
+import FriendComponent from "./FriendComponent";
 
 const SendRequestFriend = ({
   userList,
@@ -14,9 +14,10 @@ const SendRequestFriend = ({
       {userList.length > 0 ? (
         <>
           {userList.map((name, index) => (
-            <SendFriendComponent
+            <FriendComponent
               name={name}
               key={index}
+              type={"SendFriend"}
               isRequestProp={isRequest}
             />
           ))}

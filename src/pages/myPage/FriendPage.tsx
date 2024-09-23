@@ -93,7 +93,7 @@ const FriendPage = () => {
                 )}
                 key={index}
               >
-                <FriendComponent name={name} />
+                <FriendComponent name={name} type="Friend" />
               </Swipeable>
             </>
           ))}
