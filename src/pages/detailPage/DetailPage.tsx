@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ScrollView,
   View,
@@ -7,12 +7,16 @@ import {
   Linking,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Animated,
+  Easing,
 } from "react-native";
 import { styles } from "../../styles/detail/DetailPageStyle";
 import BackShareHeader from "../../components/header/BackShareHeader";
 import ReadDefaultIcon from "../../assets/images/icon/ReadDefault.svg";
 import ReadIcon from "../../assets/images/icon/Read.svg";
 import ColletionIcon from "../../assets/images/icon/Colletion.svg";
+import ColletionClickIcon from "../../assets/images/icon/ColletionClick.svg";
+import ColletionAniIcon from "../../assets/images/icon/ColletionAni.svg";
 import NoteIcon from "../../assets/images/icon/Note.svg";
 import TimerIcon from "../../assets/images/icon/Timer.svg";
 import FoldItem from "../../components/detail/FoldItem";
@@ -20,6 +24,7 @@ import IconItem from "../../components/detail/IconItem";
 import InfoItem from "../../components/detail/InfoItem";
 import ShareBottomSheet from "../../components/bottomSheet/ShareBottomSheet";
 import CollectionBottomSheet from "../../components/bottomSheet/CollectionBottomSheet";
+import { dummyList } from "../../assets/data/dummyNote";
 
 const DetailPage = ({ navigation }: { navigation: any }) => {
   const [isRead, setIsRead] = useState(false);
@@ -28,11 +33,61 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isShareVisible, setIsShareVisible] = useState(false);
   const [isCollectionVisible, setIsCollectionVisible] = useState(false);
+  const [selectedCollection, setSelectedCollection] = useState<number[]>([]);
+  const [saveSelectedCollection, setSaveSelectedCollection] = useState<
+    number[]
+  >([]);
+  const [showIconAnimation, setShowIconAnimation] = useState(false);
+  const animationValue = useRef(new Animated.Value(0)).current;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
     const threshold = 278;
     setIsTitleVisible(scrollY > threshold);
+  };
+
+  const handleCollectionPress = (id: number) => {
+    setSelectedCollection((prevSelectedCollection) => {
+      if (prevSelectedCollection.includes(id)) {
+        return prevSelectedCollection.filter((itemId) => itemId !== id);
+      } else {
+        return [...prevSelectedCollection, id];
+      }
+    });
+  };
+
+  const handleSaveCollectionPress = () => {
+    setIsCollectionVisible(false);
+    setSaveSelectedCollection(selectedCollection);
+
+    if (
+      isCollectionVisible &&
+      selectedCollection.length > 0 &&
+      saveSelectedCollection.length === 0
+    ) {
+      setShowIconAnimation(true);
+      Animated.sequence([
+        Animated.timing(animationValue, {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValue, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValue, {
+          toValue: 0,
+          duration: 0,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setShowIconAnimation(false);
+      });
+    }
   };
 
   return (
@@ -42,7 +97,11 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
         isTitleVisible={isTitleVisible}
         onSharePress={() => setIsShareVisible(!isShareVisible)}
       />
-      <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
+      <ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.scrollWrap}>
           <View style={styles.mainWrap}>
             <Image
@@ -60,7 +119,11 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
               isActive={isRead}
             />
             <IconItem
-              IconComponent={ColletionIcon}
+              IconComponent={
+                saveSelectedCollection.length > 0
+                  ? ColletionClickIcon
+                  : ColletionIcon
+              }
               text="컬렉션"
               onPress={() => setIsCollectionVisible(!isCollectionVisible)}
               isActive={false}
@@ -68,7 +131,11 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
             <IconItem
               IconComponent={NoteIcon}
               text="노트"
-              onPress={() => navigation.navigate("AllNote")}
+              onPress={() =>
+                dummyList.length > 0
+                  ? navigation.navigate("AllNote")
+                  : navigation.navigate("Write")
+              }
               isActive={false}
             />
             <IconItem
@@ -112,7 +179,29 @@ const DetailPage = ({ navigation }: { navigation: any }) => {
         <ShareBottomSheet onClose={() => setIsShareVisible(false)} />
       )}
       {isCollectionVisible && (
-        <CollectionBottomSheet onClose={() => setIsCollectionVisible(false)} />
+        <CollectionBottomSheet
+          onClose={() => setIsCollectionVisible(false)}
+          clickList={selectedCollection}
+          onComplete={() => handleSaveCollectionPress()}
+          onPress={(id) => handleCollectionPress(id)}
+        />
+      )}
+      {showIconAnimation && (
+        <Animated.View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1,
+            transform: [{ scale: animationValue }],
+          }}
+        >
+          <ColletionAniIcon />
+        </Animated.View>
       )}
     </View>
   );

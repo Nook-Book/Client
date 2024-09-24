@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 16,
+    paddingVertical: 16,
   },
   dateText: {
     ...Font.Paragraph.SemiMedium,

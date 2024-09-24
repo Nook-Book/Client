@@ -3,13 +3,20 @@ import { Color, Font } from "../Theme";
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 16,
-    alignItems: "center",
+    flex: 1,
     backgroundColor: Color.Secondary,
   },
-  text: {
+  betweenWrap: {
+    flex: 1,
+    justifyContent: "space-between",
+  },
+  pressWrap: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 8,
+    paddingVertical: 10.5,
+  },
+  pressText: {
     ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
   },

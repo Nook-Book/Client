@@ -11,6 +11,7 @@ import { Font, Color } from "../../styles/Theme";
 import LibraryStackScreen from "./LibraryStackNavigation";
 import SearchStackScreen from "./SearchStackNavigation";
 import MaPageStackScreen from "./MaPageStackNavigation.tsx";
+import ChallengeStackScreen from "./ChallengeStackNavigation";
 
 type RootTabParamList = {
   서재: undefined;
@@ -76,8 +77,8 @@ export default function TabNavigation() {
     >
       <Tab.Screen name="서재" component={LibraryStackScreen} />
       <Tab.Screen name="검색" component={SearchStackScreen} />
-      <Tab.Screen name="챌린지" component={ChallengePage} />
       <Tab.Screen name="마이" component={MaPageStackScreen} />
+      <Tab.Screen name="챌린지" component={ChallengeStackScreen} />
     </Tab.Navigator>
   );
 }

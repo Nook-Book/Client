@@ -1,6 +1,7 @@
 import BackIcon from "../../assets/images/icon/Back.svg";
 import { View, Text, Pressable } from "react-native";
 import { styles } from "../../styles/detail/FoldItemStyle";
+import { Color } from "../../styles/Theme";
 
 const FoldItem = ({
   isFold,
@@ -24,6 +25,7 @@ const FoldItem = ({
           style={{
             transform: [{ rotate: isFold ? "90deg" : "270deg" }],
           }}
+          color={Color.Contents.Icon}
         />
       </Pressable>
       {isFold && (

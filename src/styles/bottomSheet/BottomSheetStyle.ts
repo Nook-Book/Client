@@ -66,15 +66,26 @@ export const styles = StyleSheet.create({
     borderBottomColor: Color.Border.Stroke,
     borderBottomWidth: 0.8,
   },
-  closeIcon: {
+  leftWrap: {
     position: "absolute",
-    left: 16,
+    left: 0,
+    padding: 16,
   },
   headText: {
     ...Font.Label.SemiMedium,
     color: Color.Typo.Primary,
     justifyContent: "center",
     textAlign: "center",
+  },
+  rightWrap: {
+    position: "absolute",
+    right: 0,
+    padding: 16,
+    paddingHorizontal: 20,
+  },
+  complateText: {
+    ...Font.Paragraph.SemiMedium,
+    color: Color.Typo.Primary,
   },
   pressWrap: {
     flexDirection: "row",

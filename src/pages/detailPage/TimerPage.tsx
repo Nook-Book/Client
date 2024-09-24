@@ -4,7 +4,7 @@ import { styles } from "../../styles/detail/TimerPageStyle";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import { Color } from "../../styles/Theme";
 
-const TimerPage = ({ navigation }: { navigation: any }) => {
+const TimerPage = () => {
   const [isRunning, setIsRunning] = useState(false); //타이머 작동 여부
   const [time, setTime] = useState(0); //현재 타이머 시간
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
@@ -65,9 +65,10 @@ const TimerPage = ({ navigation }: { navigation: any }) => {
       };
       setRecords((prevRecords) => {
         const updatedRecords = [newRecord, ...prevRecords];
-        return updatedRecords.length > 10
-          ? updatedRecords.slice(0, 10)
-          : updatedRecords;
+        if (updatedRecords.length > 10) {
+          updatedRecords.pop();
+        }
+        return updatedRecords;
       });
       setAccumulatedTime((prevAccumulatedTime) => prevAccumulatedTime + time);
     } else {
@@ -93,8 +94,8 @@ const TimerPage = ({ navigation }: { navigation: any }) => {
               styles.timerButton,
               {
                 backgroundColor: isRunning
-                  ? Color.Contents.Click
-                  : Color.Click[100],
+                  ? Color.NegativeTransparent
+                  : Color.PositiveTransparent,
               },
             ]}
             onPress={handleStartStop}
@@ -103,7 +104,7 @@ const TimerPage = ({ navigation }: { navigation: any }) => {
               style={[
                 styles.timerText,
                 {
-                  color: isRunning ? Color.Secondary : Color.Typo.Primary,
+                  color: isRunning ? Color.Negative : Color.Positive,
                 },
               ]}
             >
