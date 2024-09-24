@@ -1,18 +1,43 @@
-import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
-import Profile from "../../components/myPage/Profile";
-import MyPageNav from "../../components/myPage/MyPageNav";
-import { styles } from "../../styles/myPage/MyPageStyle";
-import CategoryReport from "../../components/myPage/CategoryReport";
+import AtherUserProfile from "../../components/myPage/AtherUserProfile";
 import Bookstatistics from "../../components/myPage/Bookstatistics";
+import CategoryReport from "../../components/myPage/CategoryReport";
+import FriendDeleteModal from "../../components/myPage/friendPage/FriendDeleteModal";
+import MyPageAtherNav from "../../components/myPage/MyPageAtherNav";
+import { styles } from "../../styles/myPage/friendPage/FriendSearchResultPage";
+import { SearchFriendResultRouteProp } from "../../types/navigation/navigation";
 
-export default function MyPage() {
+const FriendSearchResultPage = ({
+  route,
+}: {
+  route: SearchFriendResultRouteProp;
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const { query } = route.params; // query
+
   return (
     <View style={styles.container}>
+      {isModalOpen && (
+        <>
+          <View style={styles.overlay} />
+          <FriendDeleteModal
+            title={query}
+            onExit={() => setIsModalOpen(false)}
+          />
+        </>
+      )}
       <ScrollView>
-        <MyPageNav />
-        <Profile />
+        <MyPageAtherNav title={""} />
+        <AtherUserProfile
+          name={query}
+          type={"Friend"}
+          onClick={handleOpenModal}
+        />
         <View style={styles.readingActivityContainer}>
           <View style={styles.HeaderContainer}>
             <Text style={styles.activityHeader}>독서활동</Text>
@@ -49,4 +74,6 @@ export default function MyPage() {
       </ScrollView>
     </View>
   );
-}
+};
+
+export default FriendSearchResultPage;

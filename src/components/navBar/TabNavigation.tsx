@@ -9,7 +9,8 @@ import ChallengeIcon from "../../assets/images/icon/Challenge.svg";
 import MyIcon from "../../assets/images/icon/MY.svg";
 import { Font, Color } from "../../styles/Theme";
 import LibraryStackScreen from "./LibraryStackNavigation";
-import SearchStackScreen from "./StackNavigation";
+import SearchStackScreen from "./SearchStackNavigation";
+import MaPageStackScreen from "./MaPageStackNavigation.tsx";
 import ChallengeStackScreen from "./ChallengeStackNavigation";
 
 type RootTabParamList = {
@@ -76,8 +77,8 @@ export default function TabNavigation() {
     >
       <Tab.Screen name="서재" component={LibraryStackScreen} />
       <Tab.Screen name="검색" component={SearchStackScreen} />
+      <Tab.Screen name="마이" component={MaPageStackScreen} />
       <Tab.Screen name="챌린지" component={ChallengeStackScreen} />
-      <Tab.Screen name="마이" component={MyPage} />
     </Tab.Navigator>
   );
 }
