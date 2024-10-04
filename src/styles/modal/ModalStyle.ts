@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   modal: {
     ...Effect.ModalShadow,
@@ -51,6 +51,24 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     color: Color.Typo.Primary,
     marginBottom: 16,
+  },
+  warningTitleText: {
+    ...Font.Label.Medium,
+    textAlign: "center",
+    color: Color.Typo.Primary,
+    marginTop: 24,
+    marginBottom: 16,
+  },
+  warningContentText: {
+    ...Font.Paragraph.LittleMedium,
+    textAlign: "center",
+    color: Color.Contents.Icon,
+  },
+  warningText: {
+    ...Font.Paragraph.Small,
+    textAlign: "center",
+    color: Color.Contents.Icon,
+    marginBottom: 35,
   },
   buttonWrap: {
     flexDirection: "row",

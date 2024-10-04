@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -33,6 +33,7 @@ import ImageItem from "../../components/write/ImageItem";
 import TextImportItem from "../../components/write/TextImportItem";
 import TextShapeItem from "../../components/write/TextShapeItem";
 import { RenderRules } from "../../styles/markdown/RenderRules";
+import WarningModal from "../../components/modal/WarningModal";
 
 type SelectedMenuType =
   | ""
@@ -64,7 +65,62 @@ type SelectedShapeMenuState = {
   [key in SelectedShapeMenuType]: boolean;
 };
 
+//메뉴 아이템
+const menuItem: MenuItemType[] = [
+  {
+    icon: PlusIcon,
+    type: "Plus",
+  },
+  {
+    icon: ImageIcon,
+    type: "Image",
+  },
+  {
+    icon: TextImportIcon,
+    type: "TextImport",
+  },
+  {
+    icon: TextShapeIcon,
+    type: "TextShape",
+  },
+  {
+    icon: ResetIcon,
+    type: "Reset",
+  },
+];
+
+//Shape 메뉴 아이템
+const shapeMenuItem: ShapeMenuItemType[] = [
+  {
+    icon: BackIcon,
+    type: "Back",
+  },
+  {
+    icon: TextColorIcon,
+    type: "TextColor",
+  },
+  {
+    icon: BoldIcon,
+    type: "Bold",
+  },
+  {
+    icon: ItalicIcon,
+    type: "Italic",
+  },
+  {
+    icon: UnderlineIcon,
+    type: "Underline",
+  },
+  {
+    icon: CancellineIcon,
+    type: "Cancelline",
+  },
+];
+
 const WritePage = ({ navigation }: { navigation: any }) => {
+  const [isFirst, setIsFirst] = useState(true); //처음 작성하는 글인지 (전 페이지에서 받아오도록 수정 필요)
+  const [isWarningModal, setIsWarningModal] = useState(false); //색상 변경 주의 모달
+
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
   const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
   const [titleText, setTitleText] = useState(""); //제목
@@ -89,58 +145,6 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     start: 0,
     end: 0,
   }); //선택된 텍스트 상태
-
-  //메뉴 아이템
-  const menuItem: MenuItemType[] = [
-    {
-      icon: PlusIcon,
-      type: "Plus",
-    },
-    {
-      icon: ImageIcon,
-      type: "Image",
-    },
-    {
-      icon: TextImportIcon,
-      type: "TextImport",
-    },
-    {
-      icon: TextShapeIcon,
-      type: "TextShape",
-    },
-    {
-      icon: ResetIcon,
-      type: "Reset",
-    },
-  ];
-
-  //Shape 메뉴 아이템
-  const shapeMenuItem: ShapeMenuItemType[] = [
-    {
-      icon: BackIcon,
-      type: "Back",
-    },
-    {
-      icon: TextColorIcon,
-      type: "TextColor",
-    },
-    {
-      icon: BoldIcon,
-      type: "Bold",
-    },
-    {
-      icon: ItalicIcon,
-      type: "Italic",
-    },
-    {
-      icon: UnderlineIcon,
-      type: "Underline",
-    },
-    {
-      icon: CancellineIcon,
-      type: "Cancelline",
-    },
-  ];
 
   //색상 변경 함수
   const handleColorChange = (color: string) => {
@@ -475,6 +479,10 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                           onPress={() => {
                             if (data.type === "Reset") {
                               handleReset();
+                            } else if (data.type === "TextShape" && isFirst) {
+                              setIsWarningModal(true);
+                              setIsFirst(false);
+                              setSelectedMenu(data.type);
                             } else if (selectedMenu === data.type) {
                               setSelectedMenu("");
                               markdownInputRef.current?.focus();
@@ -537,6 +545,10 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             ))}
         </View>
       </KeyboardAvoidingView>
+      <WarningModal
+        visible={isWarningModal}
+        onClose={() => setIsWarningModal(false)}
+      />
     </View>
   );
 };
