@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import GoogleLogo from "../../assets/images/icon/GoogleLogo.svg";
 import KakaoLogo from "../../assets/images/icon/KakaoLogo.svg";
 import Logo from "../../assets/images/icon/Logo.svg";
@@ -12,15 +12,17 @@ const LoginPage = () => {
     <View style={styles.container}>
       <Logo style={styles.logo} />
       <View style={styles.buttonContainer}>
-        <View style={styles.kakaoButton}>
+        <TouchableOpacity style={styles.kakaoButton}>
           <KakaoLogo />
           <Text style={styles.kakaoButtonText}>카카오로 시작하기</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.bottomButtonContainer}>
-          <NaverLogo />
-          <View style={styles.googleButton}>
+          <TouchableOpacity>
+            <NaverLogo />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.googleButton}>
             <GoogleLogo />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
