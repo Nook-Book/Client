@@ -1,15 +1,18 @@
-import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import * as React from "react";
 
-import TabNavigation from "./src/components/navBar/TabNavigation";
-import OnboardingOverlay from "./src/components/libary/OnboardingOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import OnboardingOverlay from "./src/components/libary/OnboardingOverlay";
+import LoginStackScreen from "./src/components/navBar/LoginStackScreen";
+import TabNavigation from "./src/components/navBar/TabNavigation";
 
 export default function App() {
   //처음 방문 시 온보딩 화면 실행
   const [showOnboarding, setShowOnboarding] = React.useState(false);
 
+  //로그인 여부 확인 상태 (추후 수정할 것)
+  const [isLogin, setIsLogin] = React.useState(false);
   const handleOnboardingDismiss = () => {
     setShowOnboarding(false);
   };
@@ -36,9 +39,15 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <TabNavigation />
-      {showOnboarding && (
-        <OnboardingOverlay onDismiss={handleOnboardingDismiss} />
+      {!isLogin ? (
+        <LoginStackScreen />
+      ) : (
+        <>
+          <TabNavigation />
+          {showOnboarding && (
+            <OnboardingOverlay onDismiss={handleOnboardingDismiss} />
+          )}
+        </>
       )}
     </NavigationContainer>
   );
