@@ -18,6 +18,12 @@ export type RootMyPageStackParamList = {
   navigate: (screen: string) => void;
 };
 
+export type RootLoginStackParamList = {
+  LoginPage: undefined;
+  JoinPage: undefined;
+  navigate: (screen: string) => void;
+};
+
 export type BestSellerPageRouteProp = RouteProp<
   RootSearchStackParamList,
   "SearchResultPage"

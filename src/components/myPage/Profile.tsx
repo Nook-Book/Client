@@ -1,7 +1,7 @@
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Text, TouchableOpacity, View } from "react-native";
 import ProfileImage from "../../assets/images/profile/ProfileImage.svg";
 import { styles } from "../../styles/myPage/Profile";
-import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "../../types/search";
 
 const Profile = () => {
@@ -11,10 +11,8 @@ const Profile = () => {
     <View style={styles.container}>
       <ProfileImage style={styles.profileImage} />
       <View style={styles.profileContainer}>
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>민주피쉬</Text>
-          <Text style={styles.email}>@minjufish</Text>
-        </View>
+        <Text style={styles.name}>응우엔티푸엉민주피쉬</Text>
+        <Text style={styles.email}>@minjufish</Text>
         <View style={styles.friendContainer}>
           <Text style={styles.friendName}>친구</Text>
           <TouchableOpacity
