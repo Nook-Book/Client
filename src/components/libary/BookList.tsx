@@ -6,8 +6,8 @@ import React, {
   useState,
 } from "react";
 import { FlatList, useWindowDimensions, Animated } from "react-native";
-import { TBookCategory } from "../../types/book";
 import CarouselItem from "./CarouselItem";
+import { TMainCollectionListDetailRes } from "../../types/library";
 
 const BookList = ({
   navigation,
@@ -18,7 +18,7 @@ const BookList = ({
 }: {
   navigation: any;
   editType: boolean;
-  data: TBookCategory[];
+  data: TMainCollectionListDetailRes[];
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
@@ -30,9 +30,11 @@ const BookList = ({
 
   //초기 스크롤 설정
   useEffect(() => {
-    setTimeout(() => {
-      flatListRef.current?.scrollToIndex({ index: 0, animated: false });
-    }, 0);
+    if (data.length > 0) {
+      setTimeout(() => {
+        flatListRef.current?.scrollToIndex({ index: 0, animated: false });
+      }, 0);
+    }
   }, []);
 
   //현재 인덱스에 따른 스냅 간격 설정
@@ -57,7 +59,7 @@ const BookList = ({
       viewableItems,
     }: {
       viewableItems: {
-        item: TBookCategory;
+        item: TMainCollectionListDetailRes;
         index: number | null;
         key: string;
         isViewable: boolean;
@@ -85,7 +87,7 @@ const BookList = ({
           editType={editType}
         />
       )}
-      keyExtractor={(item, index) => `${item.id}_${index}`}
+      keyExtractor={(item, index) => `${item.collectionId}_${index}`}
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}

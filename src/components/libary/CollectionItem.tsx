@@ -1,7 +1,13 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { styles } from "../../styles/library/CollectionItemStyle";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  useWindowDimensions,
+} from "react-native";
+import { getStyles } from "../../styles/library/CollectionItemStyle";
 import { Color } from "../../styles/Theme";
-import { TBookCategory } from "../../types/book";
+import { TCollectionListDetailRes } from "../../types/library";
 
 const CollectionItem = ({
   item,
@@ -10,12 +16,15 @@ const CollectionItem = ({
   onPress,
   icon: IconComponent,
 }: {
-  item: TBookCategory;
+  item: TCollectionListDetailRes;
   index: number;
   isPlusItem: boolean;
   onPress: () => void;
   icon: React.ElementType;
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+  const styles = getStyles(windowWidth);
+
   return (
     <View
       style={
@@ -37,11 +46,11 @@ const CollectionItem = ({
         />
         <View style={styles.imageGrid}>
           {Array.from({ length: 4 }).map((_, idx) => {
-            const data = item.dummyBook[idx];
+            const data = item.collectionBooksCoverList[idx];
             return data ? (
               <Image
                 key={idx}
-                source={data.image}
+                source={{ uri: data }}
                 style={
                   isPlusItem
                     ? styles.collectionPlusImage
@@ -62,8 +71,10 @@ const CollectionItem = ({
         </View>
       </TouchableOpacity>
       <View style={styles.textWrap}>
-        <Text style={styles.collectionTitleText}>{item.title}</Text>
-        <Text style={styles.collectionNumText}>{item.dummyBook.length}권</Text>
+        <Text style={styles.collectionTitleText}>{item.collectionTitle}</Text>
+        <Text style={styles.collectionNumText}>
+          {item.collectionBooksCoverList.length}권
+        </Text>
       </View>
     </View>
   );

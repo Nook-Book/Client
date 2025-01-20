@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Color, Font, Effect } from "../Theme";
+import { Color, Font } from "../Theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,9 +11,6 @@ export const styles = StyleSheet.create({
     color: Color.Typo.Primary,
     textAlign: "center",
     paddingVertical: 17.5,
-  },
-  listWrap: {
-    height: 546,
   },
   listButton: {
     padding: 16,

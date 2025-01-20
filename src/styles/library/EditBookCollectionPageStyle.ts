@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.Secondary,
   },
+  innerContainer: {
+    flex: 1,
+  },
   titleWrap: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -25,12 +28,10 @@ export const styles = StyleSheet.create({
   collectionMinusWrap: {
     marginBottom: 16,
     marginHorizontal: 13,
+    flexShrink: 0,
   },
   collectionList: {
-    height: 350,
-  },
-  collectionPlusWrap: {
-    alignItems: "center",
+    marginBottom: 425,
   },
   flatListContent: {
     marginBottom: 16,

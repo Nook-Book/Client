@@ -3,19 +3,16 @@ import { View, SafeAreaView, Text, Pressable } from "react-native";
 import { styles } from "../../styles/header/HeaderStyle";
 
 export default function EditHeader({
-  navigation,
+  onCancel,
   onComplete,
 }: {
-  navigation: any;
+  onCancel: () => void;
   onComplete: () => void;
 }) {
   return (
     <SafeAreaView>
       <View style={styles.betweenContainer}>
-        <Pressable
-          onPress={() => navigation.navigate("Library")}
-          style={styles.buttonWrap}
-        >
+        <Pressable onPress={onCancel} style={styles.buttonWrap}>
           <Text style={styles.text2}>취소</Text>
         </Pressable>
         <Pressable onPress={onComplete} style={styles.buttonWrap}>
