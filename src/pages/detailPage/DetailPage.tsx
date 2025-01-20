@@ -246,22 +246,26 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
                 <InfoItem title="출판일" content={book?.item.pubDate} />
                 <InfoItem title="페이지" content={`${book?.item.itemPage}p`} />
               </View>
-              <FoldItem
-                isFold={isMoreInfo}
-                onPress={() => setIsMoreInfo(!isMoreInfo)}
-                title="상세 정보"
-                content={book?.item.fullDescription}
-              />
-              <FoldItem
-                isFold={isIndex}
-                onPress={() => setIsIndex(!isIndex)}
-                title="목차"
-                content={book?.item.toc.replace(/<br\s*\/?>/g, "\n")}
-              />
+              {book?.item.fullDescription && (
+                <FoldItem
+                  isFold={isMoreInfo}
+                  onPress={() => setIsMoreInfo(!isMoreInfo)}
+                  title="상세 정보"
+                  content={book?.item.fullDescription}
+                />
+              )}
+              {book?.item.toc && (
+                <FoldItem
+                  isFold={isIndex}
+                  onPress={() => setIsIndex(!isIndex)}
+                  title="목차"
+                  content={book?.item.toc}
+                />
+              )}
               <View style={styles.sourceWrap}>
                 <Text
                   style={styles.sourceLink}
-                  onPress={() => Linking.openURL(book?.item.link)} //해당 도서 상세 페이지로 수정 필요
+                  onPress={() => Linking.openURL(book?.item.link)}
                 >
                   자세히보기
                 </Text>

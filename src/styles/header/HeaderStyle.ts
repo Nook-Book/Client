@@ -59,6 +59,8 @@ export const styles = StyleSheet.create({
     color: Color.Typo.Primary,
     justifyContent: "center",
     textAlign: "center",
+    flex: 1,
+    paddingHorizontal: 5,
   },
   text2Blue: {
     ...Font.Paragraph.SemiMedium,

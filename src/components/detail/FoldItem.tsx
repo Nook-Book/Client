@@ -32,7 +32,11 @@ const FoldItem = ({
         <View
           style={[styles.moreView, { borderBottomWidth: isFold ? 0.8 : 0 }]}
         >
-          <Text style={styles.moreViewText}>{content}</Text>
+          <Text style={styles.moreViewText}>
+            {content
+              .replaceAll(/<br\s*\/?>/gi, "\n")
+              .replaceAll(/<\/?[a-zA-Z]+>/gi, "")}
+          </Text>
         </View>
       )}
     </View>

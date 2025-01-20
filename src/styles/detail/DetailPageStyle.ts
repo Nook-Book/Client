@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   mainWrap: {
     padding: 16,
     alignItems: "center",
-    paddingHorizontal: 70,
+    paddingHorizontal: 50,
   },
   image: {
     width: 150,
@@ -23,10 +23,12 @@ export const styles = StyleSheet.create({
     ...Font.Heading.Medium,
     color: Color.Typo.Primary,
     marginTop: 16,
+    textAlign: "center",
   },
   authorText: {
     ...Font.Paragraph.Medium,
     color: Color.Typo.Primary,
+    textAlign: "center",
   },
   iconWrap: {
     flexDirection: "row",
