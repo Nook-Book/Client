@@ -8,8 +8,8 @@ export const getStyles = (windowWidth: number) => {
       marginHorizontal: 3,
     },
     collectionPlusItem: {
-      width: (windowWidth - 56) / 2,
-      marginHorizontal: 12,
+      width: (windowWidth - 62) / 2,
+      marginHorizontal: 16,
       marginBottom: 6,
     },
     collectionImages: {
@@ -44,8 +44,8 @@ export const getStyles = (windowWidth: number) => {
       margin: 2,
     },
     collectionPlusImage: {
-      width: (windowWidth - 56) / 4 - 8,
-      height: (windowWidth - 56) * (137 / 360) - 8,
+      width: (windowWidth - 62) / 4 - 8,
+      height: (windowWidth - 62) * (137 / 360) - 8,
       margin: 2,
     },
     textWrap: {

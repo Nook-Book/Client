@@ -17,7 +17,9 @@ const BookItem = ({
 
   return (
     <Pressable
-      onPress={() => !editType && navigation.navigate("Detail")}
+      onPress={() =>
+        !editType && navigation.navigate("Detail", { isbn: item.isbn })
+      }
       onLongPress={() => !editType && navigation.navigate("EditBook")}
       style={styles.bookItem}
       key={item.bookId}

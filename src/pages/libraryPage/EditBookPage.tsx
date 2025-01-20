@@ -11,7 +11,7 @@ import { useCallback, useState } from "react";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import { Color } from "../../styles/Theme";
 import { TMainCollectionListDetailRes } from "../../types/library";
-import { getList } from "../../api/collection/getList";
+import { getCurrentList } from "../../api/collection/getCurrentList";
 import EditModal from "../../components/modal/EditModal";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -31,7 +31,7 @@ const EditBookPage = ({
 
   const fetchCollectionList = async () => {
     try {
-      const response = await getList();
+      const response = await getCurrentList();
       if (response?.check) {
         setList(response.information.mainCollectionListDetailRes);
       }

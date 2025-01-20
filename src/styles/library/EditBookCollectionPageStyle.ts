@@ -33,9 +33,6 @@ export const styles = StyleSheet.create({
   collectionList: {
     marginBottom: 425,
   },
-  collectionPlusWrap: {
-    alignItems: "center",
-  },
   flatListContent: {
     marginBottom: 16,
     justifyContent: "center",
