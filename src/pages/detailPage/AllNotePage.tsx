@@ -1,27 +1,60 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { ScrollView, View, Text, Image, Pressable } from "react-native";
 import { styles } from "../../styles/detail/AllNotePageStyle";
 import AllNoteHeader from "../../components/header/AllNoteHeader";
 import { Color } from "../../styles/Theme";
-import { dummyList } from "../../assets/data/dummyNote";
 import NotePencelIcon from "../../assets/images/icon/NotePencel.svg";
+import { useFocusEffect } from "@react-navigation/native";
+import { getNoteList } from "../../api/note/getNoteList";
+import { TgetNoteListInformationRes } from "../../types/note";
 
-const AllNotePage = ({ navigation }: { navigation: any }) => {
+const AllNotePage = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: any;
+}) => {
+  const bookId = route?.params?.bookId;
+  const [noteList, setNoteList] = useState<TgetNoteListInformationRes>();
+
+  const fetchNoteList = async () => {
+    try {
+      const response = await getNoteList(bookId);
+      if (response?.check) {
+        setNoteList(response.information);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchNoteList();
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <AllNoteHeader navigation={navigation} />
       <View style={styles.contentContainer}>
         <View style={styles.bookWrap}>
-          <View style={styles.bookImage}>
-            <Image source={require("../../assets/images/dummy/book/2.png")} />
-          </View>
-          <Text style={styles.bookText}>몰입 : 인생을 바꾸는 자기 혁명</Text>
+          <Image
+            source={{ uri: noteList?.bookImage }}
+            style={styles.bookImage}
+          />
+          <Text style={styles.bookText}>{noteList?.bookTitle}</Text>
         </View>
         <Text style={styles.lengthText}>
-          전체 <Text style={{ color: Color.Typo.Primary }}>2</Text>개
+          전체{" "}
+          <Text style={{ color: Color.Typo.Primary }}>
+            {noteList?.noteCount}
+          </Text>
+          개
         </Text>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {dummyList.map((data, index) => {
+          {noteList?.noteListRes.map((data, index) => {
             return (
               <Pressable
                 key={index}
@@ -34,7 +67,9 @@ const AllNotePage = ({ navigation }: { navigation: any }) => {
                     {data.title}
                   </Text>
                 </View>
-                <Text style={styles.dateText}>{data.date}</Text>
+                <Text style={styles.dateText}>
+                  {data.createdDate.replaceAll("-", ".")}
+                </Text>
               </Pressable>
             );
           })}
