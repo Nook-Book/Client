@@ -15,7 +15,7 @@ const FoldItem = ({
   content: string;
 }) => {
   return (
-    <>
+    <View>
       <Pressable
         style={[styles.moreWrap, { borderBottomWidth: isFold ? 0 : 0.8 }]}
         onPress={onPress}
@@ -35,7 +35,7 @@ const FoldItem = ({
           <Text style={styles.moreViewText}>{content}</Text>
         </View>
       )}
-    </>
+    </View>
   );
 };
 
