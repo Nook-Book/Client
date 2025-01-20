@@ -1,11 +1,21 @@
 import React from "react";
-import { View, Text, FlatList, Image, Pressable } from "react-native";
-import { styles } from "../../styles/challenge/AllChallengePageStyle";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  Pressable,
+  useWindowDimensions,
+} from "react-native";
+import { getStyles } from "../../styles/challenge/AllChallengePageStyle";
 import BackHeader from "../../components/header/BackHeader";
 import { dummyListLong } from "../../assets/data/dummyChallengeList";
 import { Color } from "../../styles/Theme";
 
 export default function AllChallengePage({ navigation }: { navigation: any }) {
+  const { width: windowWidth } = useWindowDimensions();
+  const styles = getStyles(windowWidth);
+
   return (
     <View style={styles.container}>
       <BackHeader title="전체보기" />

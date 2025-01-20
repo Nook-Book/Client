@@ -2,16 +2,14 @@ import {
   View,
   Text,
   FlatList,
-  Dimensions,
   Animated,
   Pressable,
+  useWindowDimensions,
 } from "react-native";
-import { styles } from "../../styles/library/CarouselItemStyle";
+import { getStyles } from "../../styles/library/CarouselItemStyle";
 import { TBookCategory } from "../../types/book";
 import BookItem from "./BookItem";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";
-
-const { width: windowWidth } = Dimensions.get("window");
 
 const CarouselItem = ({
   item,
@@ -26,6 +24,9 @@ const CarouselItem = ({
   navigation: any;
   editType: boolean;
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+  const styles = getStyles(windowWidth);
+
   const position = Animated.divide(scrollX, windowWidth);
 
   const translateY = position.interpolate({
@@ -42,7 +43,7 @@ const CarouselItem = ({
 
   const itemStyle = [
     styles.listWrap,
-    !editType && { paddingBottom: 80 },
+    !editType && { paddingBottom: 55 },
     index === 0 && { marginLeft: 0 },
     index === dummyList.length - 1 && { marginRight: 0 },
   ];
@@ -65,7 +66,7 @@ const CarouselItem = ({
           <FlatList
             data={item.dummyBook}
             renderItem={({ item }) => (
-              <BookItem item={item} navigation={navigation} />
+              <BookItem item={item} navigation={navigation} editType={editType} />
             )}
             keyExtractor={(book, index) => `${item.id}_${book.id}_${index}`}
             numColumns={3}

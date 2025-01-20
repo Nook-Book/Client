@@ -1,5 +1,11 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { styles } from "../../styles/library/CollectionItemStyle";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  useWindowDimensions,
+} from "react-native";
+import { getStyles } from "../../styles/library/CollectionItemStyle";
 import { Color } from "../../styles/Theme";
 import { TBookCategory } from "../../types/book";
 
@@ -16,6 +22,9 @@ const CollectionItem = ({
   onPress: () => void;
   icon: React.ElementType;
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+  const styles = getStyles(windowWidth);
+
   return (
     <View
       style={

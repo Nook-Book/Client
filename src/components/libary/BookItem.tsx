@@ -1,12 +1,24 @@
-import { Image, Text, Pressable } from "react-native";
+import { Image, Text, Pressable, useWindowDimensions } from "react-native";
 import { TBook } from "../../types/book";
-import { styles } from "../../styles/library/BookItemStyle";
+import { getStyles } from "../../styles/library/BookItemStyle";
 
-const BookItem = ({ item, navigation }: { item: TBook; navigation: any }) => {
+const BookItem = ({
+  item,
+  editType,
+  navigation,
+}: {
+  item: TBook;
+  editType: boolean;
+  navigation: any;
+}) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const styles = getStyles(windowWidth);
+
   return (
     <Pressable
-      onPress={() => navigation.navigate("Detail")}
-      onLongPress={() => navigation.navigate("EditBook")}
+      onPress={() => !editType && navigation.navigate("Detail")}
+      onLongPress={() => !editType && navigation.navigate("EditBook")}
       style={styles.bookItem}
       key={item.id}
     >

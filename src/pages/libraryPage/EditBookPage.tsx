@@ -1,4 +1,9 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { styles } from "../../styles/library/EditBookPageStyle";
 import EditHeader from "../../components/header/EditHeader";
 import BookList from "../../components/libary/BookList";
@@ -8,6 +13,7 @@ import PlusIcon from "../../assets/images/icon/Plus.svg";
 import { Color } from "../../styles/Theme";
 
 const EditBookPage = ({ navigation }: { navigation: any }) => {
+  const { height: windowHeight } = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
@@ -17,7 +23,7 @@ const EditBookPage = ({ navigation }: { navigation: any }) => {
         onComplete={() => navigation.navigate("Library")}
       />
       <Text style={styles.numText}>{currentIndex + 1}번째</Text>
-      <View style={styles.listWrap}>
+      <View style={{ height: windowHeight / 1.43 }}>
         <BookList
           navigation={navigation}
           editType={true}

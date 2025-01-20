@@ -48,7 +48,7 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
         navigation={navigation}
         onComplete={() => setEditModalVisible(!isEditModalVisible)}
       />
-      <View>
+      <View style={styles.innerContainer}>
         <View style={styles.titleWrap}>
           <Text style={styles.titleText}>현재 컬렉션</Text>
           <Text style={styles.numText}>전체 {collection.length}개</Text>
