@@ -235,7 +235,9 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
                 <IconItem
                   IconComponent={TimerIcon}
                   text="타이머"
-                  onPress={() => navigation.navigate("Timer")}
+                  onPress={() =>
+                    navigation.navigate("Timer", { bookId: book.bookId })
+                  }
                   isActive={false}
                 />
               </View>

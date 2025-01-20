@@ -1,17 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { styles } from "../../styles/detail/TimerPageStyle";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import { Color } from "../../styles/Theme";
+import { useFocusEffect } from "@react-navigation/native";
+import { getTimerList } from "../../api/book/getTimerList";
+import { TTimerListInformationRes } from "../../types/timer";
+import { postTimer } from "../../api/book/postTimer";
 
-const TimerPage = () => {
+const TimerPage = ({ route }: { route: any }) => {
+  const bookId = route?.params?.bookId;
+  const [timerList, setTimerList] = useState<TTimerListInformationRes>();
+
   const [isRunning, setIsRunning] = useState(false); //타이머 작동 여부
   const [time, setTime] = useState(0); //현재 타이머 시간
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-  const [records, setRecords] = useState<
-    { date: string; time: string; duration: string }[]
-  >([]); //기록된 타이머 정보
-  const [accumulatedTime, setAccumulatedTime] = useState(0); //누적 독서 시간
+
+  const fetchTimerList = async () => {
+    try {
+      const response = await getTimerList(bookId);
+      if (response?.check) {
+        setTimerList(response.information);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchTimerList();
+    }, [])
+  );
 
   //타이머 작동 및 정지 관리
   useEffect(() => {
@@ -29,8 +49,8 @@ const TimerPage = () => {
     };
   }, [isRunning]);
 
-  //시간 형식 HH:MM:SS으로 포맷팅
-  const formatTime = (time: number) => {
+  //시간 형식 HH:MM:SS으로 변환
+  const formatTimer = (time: number) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
@@ -39,38 +59,22 @@ const TimerPage = () => {
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  //날짜 형식 YYYY.MM.DD으로 포맷팅
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}.${month}.${day}`;
-  };
+  //시간 형식 nn시 nn분으로 변환
+  const formatTime = (dateString: string | undefined) => {
+    if (!dateString) return "";
 
-  //시간을 HH시 MM분 형식으로 포맷팅
-  const formatTimeWithKorean = (date: Date) => {
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${hours}시 ${minutes}분`;
+    const [hour, minutes] = dateString.split(":");
+    return `${parseInt(hour)}시 ${parseInt(minutes)}분`;
   };
 
   //시작, 중지 버튼 클릭 핸들러
-  const handleStartStop = () => {
+  const handleStartStop = async () => {
     if (isRunning) {
-      const now = new Date();
-      const newRecord = {
-        date: formatDate(now),
-        time: formatTimeWithKorean(now),
-        duration: formatTime(time),
-      };
-      setRecords((prevRecords) => {
-        const updatedRecords = [newRecord, ...prevRecords];
-        if (updatedRecords.length > 10) {
-          updatedRecords.pop();
-        }
-        return updatedRecords;
-      });
-      setAccumulatedTime((prevAccumulatedTime) => prevAccumulatedTime + time);
+      const response = await postTimer(bookId, time);
+      if (response.check) {
+        fetchTimerList();
+        setTime(0);
+      }
     } else {
       setTime(0);
     }
@@ -81,12 +85,14 @@ const TimerPage = () => {
     <View style={styles.container}>
       <BackTextHeader title="타이머" />
       <View style={styles.contentContainer}>
-        <Text style={styles.timeText}>{formatTime(time)}</Text>
+        <Text style={styles.timeText}>
+          {formatTimer(time).replaceAll(":", " : ")}
+        </Text>
         <View style={styles.betweenWrap}>
           <View>
             <Text style={styles.accumulatedHeadText}>누적 독서 시간</Text>
             <Text style={styles.accumulatedText}>
-              {formatTime(accumulatedTime)}
+              {timerList?.totalReadTime.replaceAll(":", " : ")}
             </Text>
           </View>
           <Pressable
@@ -113,13 +119,19 @@ const TimerPage = () => {
           </Pressable>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {records.map((record, index) => (
+          {timerList?.recordResList.map((record, index) => (
             <View key={index} style={styles.recordWrap}>
               <View>
-                <Text style={styles.recordDateText}>{record.date}</Text>
-                <Text style={styles.recordTimeText}>{record.time}</Text>
+                <Text style={styles.recordDateText}>
+                  {record.date.replaceAll("-", ".")}
+                </Text>
+                <Text style={styles.recordTimeText}>
+                  {formatTime(record.time)}
+                </Text>
               </View>
-              <Text style={styles.recordDurationText}>{record.duration}</Text>
+              <Text style={styles.recordDurationText}>
+                {record.readTime.replaceAll(":", " : ")}
+              </Text>
             </View>
           ))}
         </ScrollView>
