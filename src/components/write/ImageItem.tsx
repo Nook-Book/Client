@@ -3,6 +3,7 @@ import { styles } from "../../styles/write/ImageItemStyle";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
+import { postImage } from "../../api/note/postImage";
 
 type ImageItemsType = {
   text: string;
@@ -42,15 +43,13 @@ const ImageItem = ({
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
+      allowsEditing: false,
       quality: 1,
     });
 
     if (!result.canceled) {
-      const imageUri = result.assets[0].uri;
-      const markdownImageSyntax = `![Image](${imageUri})\n`;
-      handleTextInsert(markdownImageSyntax);
+      const fileUri = result.assets[0].uri;
+      await uploadImage(fileUri);
     }
   };
 
@@ -63,15 +62,36 @@ const ImageItem = ({
 
     const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
+      allowsEditing: false,
       quality: 1,
     });
 
     if (!result.canceled) {
-      const imageUri = result.assets[0].uri;
-      const markdownImageSyntax = `![Image](${imageUri})\n`;
-      handleTextInsert(markdownImageSyntax);
+      const fileUri = result.assets[0].uri;
+      await uploadImage(fileUri);
+    }
+  };
+
+  const uploadImage = async (uri: string) => {
+    try {
+      const fileName = uri.split("/").pop() || "image.jpg";
+      const type = `image/${fileName.split(".").pop()}` || "image/jpeg";
+
+      const formData = new FormData();
+      formData.append("image", {
+        uri,
+        name: fileName,
+        type,
+      } as unknown as Blob);
+
+      const response = await postImage(formData);
+      if (response.check) {
+        const markdownImageSyntax = `![Image](${response.information.imageUrl})\n`;
+        handleTextInsert(markdownImageSyntax);
+      }
+    } catch (error) {
+      console.error("이미지 업로드 실패:", error);
+      Alert.alert("업로드 실패", "이미지를 업로드하지 못했습니다.");
     }
   };
 
@@ -99,7 +119,7 @@ const ImageItem = ({
       <FlatList
         data={ImageItems}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         numColumns={1}
         showsVerticalScrollIndicator={false}
       />
