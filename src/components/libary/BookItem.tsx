@@ -1,13 +1,13 @@
 import { Image, Text, Pressable, useWindowDimensions } from "react-native";
-import { TBook } from "../../types/book";
 import { getStyles } from "../../styles/library/BookItemStyle";
+import { TCollectionBooksListDetailRes } from "../../types/library";
 
 const BookItem = ({
   item,
   editType,
   navigation,
 }: {
-  item: TBook;
+  item: TCollectionBooksListDetailRes;
   editType: boolean;
   navigation: any;
 }) => {
@@ -20,9 +20,9 @@ const BookItem = ({
       onPress={() => !editType && navigation.navigate("Detail")}
       onLongPress={() => !editType && navigation.navigate("EditBook")}
       style={styles.bookItem}
-      key={item.id}
+      key={item.bookId}
     >
-      <Image source={item.image} style={styles.image} />
+      <Image source={{ uri: item.cover }} style={styles.image} />
       <Text style={styles.titleText} numberOfLines={2}>
         {item.title}
       </Text>

@@ -44,9 +44,16 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <EditHeader
-        navigation={navigation}
-        onComplete={() => setEditModalVisible(!isEditModalVisible)}
+        onCancel={() => {
+          console.log("변경된 사항이 있을 때만 모달 띄우기");
+          setEditModalVisible(!isEditModalVisible);
+        }}
+        onComplete={() => {
+          console.log("변경된 사항 저장");
+          navigation.navigate("EditBook", { isTaskComplete: true });
+        }}
       />
       <View style={styles.innerContainer}>
         <View style={styles.titleWrap}>
@@ -107,7 +114,8 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
       <EditModal
         visible={isEditModalVisible}
         text={"변경된 편집 사항이 저장되지 않습니다.\n취소하시겠습니까?"}
-        onClose={() => setModalVisible(false)}
+        rightText="취소"
+        onClose={() => setEditModalVisible(false)}
         onComplate={() => navigation.navigate("Library")}
       />
     </View>

@@ -7,9 +7,9 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { getStyles } from "../../styles/library/CarouselItemStyle";
-import { TBookCategory } from "../../types/book";
 import BookItem from "./BookItem";
 import { dummyList } from "../../assets/data/dummyBookCarouseList";
+import { TMainCollectionListDetailRes } from "../../types/library";
 
 const CarouselItem = ({
   item,
@@ -18,7 +18,7 @@ const CarouselItem = ({
   navigation,
   editType,
 }: {
-  item: TBookCategory;
+  item: TMainCollectionListDetailRes;
   index: number;
   scrollX: Animated.Value;
   navigation: any;
@@ -51,24 +51,32 @@ const CarouselItem = ({
   return (
     <Animated.View
       style={[itemStyle, { transform: [{ translateY }] }]}
-      key={`${item.id}_${index}`}
+      key={`${item.collectionId}_${index}`}
     >
       <Pressable
         onLongPress={() => !editType && navigation.navigate("EditBook")}
-        key={item.id}
+        key={item.collectionId}
         style={{ height: "100%" }}
       >
         <View style={styles.inner}>
-          <Text style={styles.subText}>{item.dummyBook.length}권</Text>
-          <Text style={styles.mainText}>{item.title}</Text>
+          <Text style={styles.subText}>
+            {item.collectionBooksListDetailRes.length}권
+          </Text>
+          <Text style={styles.mainText}>{item.collectionTitle}</Text>
         </View>
         <View style={styles.flatListWrap}>
           <FlatList
-            data={item.dummyBook}
+            data={item.collectionBooksListDetailRes}
             renderItem={({ item }) => (
-              <BookItem item={item} navigation={navigation} editType={editType} />
+              <BookItem
+                item={item}
+                navigation={navigation}
+                editType={editType}
+              />
             )}
-            keyExtractor={(book, index) => `${item.id}_${book.id}_${index}`}
+            keyExtractor={(book, index) =>
+              `${item.collectionId}_${book.bookId}_${index}`
+            }
             numColumns={3}
             style={styles.flatList}
             contentContainerStyle={styles.flatListContent}
