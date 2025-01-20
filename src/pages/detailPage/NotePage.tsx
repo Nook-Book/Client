@@ -9,6 +9,7 @@ import { RenderRules } from "../../styles/markdown/RenderRules";
 import { getNoteDetail } from "../../api/note/getNoteDetail";
 import { TNoteDetailInformationRes } from "../../types/note";
 import { useFocusEffect } from "@react-navigation/native";
+import { deleteNote } from "../../api/note/deleteNote";
 
 const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
   const noteId = route?.params?.noteId;
@@ -40,6 +41,15 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
     return `${parseInt(year)}년 ${parseInt(month)}월 ${parseInt(day)}일`;
   };
 
+  //독서 노트 삭제
+  const handleDeleteNote = async () => {
+    const response = await deleteNote(noteId);
+    if (response.check) {
+      navigation.goBack();
+      setIsDeleteModal(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ height: 50 }}></View>
@@ -65,10 +75,7 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
         visible={isDeleteModal}
         titleText="기록 삭제"
         desText={"해당 기록이 삭제됩니다\n이 동작은 취소할 수 없습니다."}
-        onComplate={() => {
-          navigation.goBack();
-          setIsDeleteModal(false);
-        }}
+        onComplate={handleDeleteNote}
         onClose={() => setIsDeleteModal(false)}
       />
     </View>
