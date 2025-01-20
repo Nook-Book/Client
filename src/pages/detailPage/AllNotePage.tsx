@@ -37,7 +37,13 @@ const AllNotePage = ({
 
   return (
     <View style={styles.container}>
-      <AllNoteHeader navigation={navigation} />
+      <View style={{ height: 50 }}></View>
+      <AllNoteHeader
+        navigation={navigation}
+        onWritePress={() =>
+          navigation.navigate("Write", { bookId: bookId, isFirst: false })
+        }
+      />
       <View style={styles.contentContainer}>
         <View style={styles.bookWrap}>
           <Image

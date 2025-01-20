@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -34,6 +34,9 @@ import TextImportItem from "../../components/write/TextImportItem";
 import TextShapeItem from "../../components/write/TextShapeItem";
 import { RenderRules } from "../../styles/markdown/RenderRules";
 import WarningModal from "../../components/modal/WarningModal";
+import EditModal from "../../components/modal/EditModal";
+import { postNote } from "../../api/note/postNote";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type SelectedMenuType =
   | ""
@@ -117,9 +120,11 @@ const shapeMenuItem: ShapeMenuItemType[] = [
   },
 ];
 
-const WritePage = ({ navigation }: { navigation: any }) => {
-  const [isFirst, setIsFirst] = useState(true); //처음 작성하는 글인지 (전 페이지에서 받아오도록 수정 필요)
+const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
+  const bookId = route?.params?.bookId;
+
   const [isWarningModal, setIsWarningModal] = useState(false); //색상 변경 주의 모달
+  const [isEditModal, setIsEditModal] = useState(false); //작성 취소 시 경고 모달
 
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
   const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
@@ -312,12 +317,33 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     }
   };
 
+  //독서 기록 저장 함수
+  const handleSaveNote = async () => {
+    try {
+      const response = await postNote({
+        bookId: bookId,
+        title: titleText,
+        content: markdownText,
+      });
+      if (response.check) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <WriteHeader
-        navigation={navigation}
-        isText={titleText.length > 0 || markdownText.length > 0}
-        checkClick={() => console.log("저장")}
+        isText={titleText.length > 0 && markdownText.length > 0}
+        onCheckPress={handleSaveNote}
+        onCancelPress={() =>
+          titleText.length > 0 || markdownText.length > 0
+            ? setIsEditModal(true)
+            : navigation.goBack()
+        }
       />
       <View style={styles.tabViewWrap}>
         <Pressable
@@ -400,7 +426,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             <>
               <Text style={styles.titleText}>{titleText}</Text>
               <Markdown style={markdownStyle} rules={RenderRules}>
-                {markdownText}
+                {String(markdownText)}
               </Markdown>
             </>
           )}
@@ -476,12 +502,17 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                       return (
                         <Pressable
                           key={index}
-                          onPress={() => {
+                          onPress={async () => {
                             if (data.type === "Reset") {
                               handleReset();
-                            } else if (data.type === "TextShape" && isFirst) {
-                              setIsWarningModal(true);
-                              setIsFirst(false);
+                            } else if (data.type === "TextShape") {
+                              const isFirst = await AsyncStorage.getItem(
+                                "isFirst"
+                              );
+                              if (isFirst === null) {
+                                setIsWarningModal(true);
+                                await AsyncStorage.setItem("isFirst", "true");
+                              }
                               setSelectedMenu(data.type);
                             } else if (selectedMenu === data.type) {
                               setSelectedMenu("");
@@ -548,6 +579,13 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       <WarningModal
         visible={isWarningModal}
         onClose={() => setIsWarningModal(false)}
+      />
+      <EditModal
+        visible={isEditModal}
+        text={"작성한 사항이 저장되지 않았습니다.\n취소하시겠습니까?"}
+        rightText="취소"
+        onClose={() => setIsEditModal(false)}
+        onComplate={() => navigation.goBack()}
       />
     </View>
   );

@@ -225,7 +225,10 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
                   onPress={() =>
                     book?.hasNote
                       ? navigation.navigate("AllNote", { bookId: book.bookId })
-                      : navigation.navigate("Write", { bookId: book.bookId })
+                      : navigation.navigate("Write", {
+                          bookId: book.bookId,
+                          isFirst: true,
+                        })
                   }
                   isActive={false}
                 />

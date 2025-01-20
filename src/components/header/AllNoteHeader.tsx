@@ -5,7 +5,13 @@ import NoteIcon from "../../assets/images/icon/Note.svg";
 import { styles } from "../../styles/header/HeaderStyle";
 import { Color } from "../../styles/Theme";
 
-export default function AllNoteHeader({ navigation }: { navigation: any }) {
+export default function AllNoteHeader({
+  navigation,
+  onWritePress,
+}: {
+  navigation: any;
+  onWritePress: () => void;
+}) {
   return (
     <SafeAreaView>
       <View style={styles.betweenContainer}>
@@ -15,10 +21,7 @@ export default function AllNoteHeader({ navigation }: { navigation: any }) {
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Write")}
-          style={styles.buttonWrap}
-        >
+        <Pressable onPress={onWritePress} style={styles.buttonWrap}>
           <NoteIcon />
         </Pressable>
       </View>

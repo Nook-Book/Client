@@ -26,3 +26,9 @@ export type TNoteDetailInformationRes = {
   content: string;
   createdDate: string;
 };
+
+export type TSaveNoteReq = {
+  bookId: number;
+  title: string;
+  content: string;
+};
