@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import JoinPage from "../../pages/loginPage/JoinPage";
 import LoginPage from "../../pages/loginPage/LoginPage";
-import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import { RootLoginStackParamList } from "../../types/navigation/navigation";
 
 const LoginStack = createNativeStackNavigator<RootLoginStackParamList>();
@@ -45,7 +45,7 @@ export default function LoginStackScreen() {
       />
       <LoginStack.Screen
         name="JoinPage"
-        component={EditProfilePage}
+        component={JoinPage}
         options={{ headerShown: false }}
       />
     </LoginStack.Navigator>
