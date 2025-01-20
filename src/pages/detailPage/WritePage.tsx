@@ -38,13 +38,7 @@ import EditModal from "../../components/modal/EditModal";
 import { postNote } from "../../api/note/postNote";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type SelectedMenuType =
-  | ""
-  | "Plus"
-  | "Image"
-  | "TextImport"
-  | "TextShape"
-  | "Reset";
+type SelectedMenuType = "" | "Plus" | "Image" | "TextShape" | "Reset";
 
 type SelectedShapeMenuType =
   | "Back"
@@ -77,10 +71,6 @@ const menuItem: MenuItemType[] = [
   {
     icon: ImageIcon,
     type: "Image",
-  },
-  {
-    icon: TextImportIcon,
-    type: "TextImport",
   },
   {
     icon: TextShapeIcon,
@@ -567,8 +557,6 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
               <ImageItem handleTextInsert={handleTextInsert} />
-            ) : selectedMenu === "TextImport" ? (
-              <TextImportItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "TextShape" ? (
               <TextShapeItem handleColorChange={handleColorChange} />
             ) : (
