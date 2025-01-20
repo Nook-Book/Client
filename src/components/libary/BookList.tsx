@@ -28,21 +28,16 @@ const BookList = ({
   const scrollX = useRef(new Animated.Value(0)).current;
   const [snapToInterval, setSnapToInterval] = useState(0);
 
-  //초기 스크롤 설정
-  useEffect(() => {
-    if (data.length > 0) {
-      setTimeout(() => {
-        flatListRef.current?.scrollToIndex({ index: 0, animated: false });
-      }, 0);
-    }
-  }, []);
-
   //현재 인덱스에 따른 스냅 간격 설정
   useEffect(() => {
-    if (currentIndex === 0 || currentIndex === 2) {
-      setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2 - 2.5);
+    if (data.length === 4) {
+      if (currentIndex === 0 || currentIndex === 2) {
+        setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2 - 2.5);
+      } else if (currentIndex === 1 || currentIndex === 3) {
+        setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2 - 7.5);
+      }
     } else {
-      setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2 - 7.5);
+      setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2);
     }
   }, [currentIndex, windowWidth]);
 
@@ -85,6 +80,7 @@ const BookList = ({
           scrollX={scrollX}
           navigation={navigation}
           editType={editType}
+          length={data.length}
         />
       )}
       keyExtractor={(item, index) => `${item.collectionId}_${index}`}
@@ -96,7 +92,7 @@ const BookList = ({
       snapToInterval={snapToInterval}
       scrollEventThrottle={16}
       contentContainerStyle={{
-        paddingHorizontal: (windowWidth - itemWidth) / 2,
+        paddingHorizontal: 26,
       }}
       onViewableItemsChanged={handleViewableItemsChanged}
       viewabilityConfig={viewabilityConfig}

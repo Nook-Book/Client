@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 import BottomSheetItem from "./BottomSheetItem";
 import BottomSheetTitle from "./BottomSheetTitle";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
-import { dummyList } from "../../assets/data/dummyBookCarouseList";
 import InputModal from "../modal/InputModal";
+import { getList } from "../../api/collection/getList";
+import { useFocusEffect } from "@react-navigation/native";
+import { TCollectionListDetailRes } from "../../types/library";
+import { postNew } from "../../api/collection/postNew";
 
 const CollectionBottomSheet = ({
   clickList,
@@ -19,6 +22,37 @@ const CollectionBottomSheet = ({
   onPress: (id: number) => void;
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [list, setList] = useState<TCollectionListDetailRes[]>([]);
+
+  const fetchCollectionList = async () => {
+    try {
+      const response = await getList();
+      if (response?.check) {
+        setList(response.information.collectionListDetailRes);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchCollectionList();
+    }, [])
+  );
+
+  //새 컬렉션 생성
+  const handleNewCollection = async (text: string) => {
+    try {
+      const response = await postNew(text);
+      if (response.check) {
+        fetchCollectionList();
+        setIsModalVisible(!isModalVisible);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -26,10 +60,7 @@ const CollectionBottomSheet = ({
         <View style={styles.modal}>
           <InputModal
             onClose={() => setIsModalVisible(!isModalVisible)}
-            onComplate={() => {
-              setIsModalVisible(!isModalVisible);
-              console.log("생성하기");
-            }}
+            onComplate={handleNewCollection}
           />
         </View>
       )}
@@ -50,20 +81,20 @@ const CollectionBottomSheet = ({
             rightText=""
             onPress={() => setIsModalVisible(true)}
           />
-          {dummyList.map((data, index) => {
+          {list.map((data, index) => {
             return (
               <BottomSheetItem
                 key={index}
                 Icon={
                   <Image
-                    source={data.dummyBook[0].image}
+                    source={{ uri: data.collectionBooksCoverList[0] }}
                     style={styles.thumbnailImage}
                   />
                 }
-                leftText={data.title}
-                rightText={"(" + data.dummyBook.length + "권)"}
-                onPress={() => onPress(data.id)}
-                isClick={clickList.includes(data.id)}
+                leftText={data.collectionTitle}
+                rightText={`(${data.collectionBooksCoverList.length}권)`}
+                onPress={() => onPress(data.collectionId)}
+                isClick={clickList.includes(data.collectionId)}
               />
             );
           })}

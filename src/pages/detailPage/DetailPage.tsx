@@ -28,16 +28,19 @@ import { getBookDetail } from "../../api/book/getBookDetail";
 import { useFocusEffect } from "@react-navigation/native";
 import { TBookDetailInformationRes } from "../../types/detail";
 import { patchBookDetailStatus } from "../../api/book/patchBookDetailStatus";
+import { deleteBook } from "../../api/collection/deleteBook";
+import { postAddBook } from "../../api/collection/postAddBook";
 
 const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
   const isbn = route?.params?.isbn;
   const [book, setBook] = useState<TBookDetailInformationRes>();
 
-  const fetchCollectionList = async () => {
+  const fetchBookDetail = async () => {
     try {
       const response = await getBookDetail(isbn);
       if (response?.check) {
         setBook(response.information);
+        setSelectedCollection(response.information.collectionIds);
       }
     } catch (error) {
       console.error("오류:", error);
@@ -46,7 +49,7 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   useFocusEffect(
     useCallback(() => {
-      fetchCollectionList();
+      fetchBookDetail();
     }, [])
   );
 
@@ -55,10 +58,7 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isShareVisible, setIsShareVisible] = useState(false);
   const [isCollectionVisible, setIsCollectionVisible] = useState(false);
-  const [selectedCollection, setSelectedCollection] = useState<number[]>([]);
-  const [saveSelectedCollection, setSaveSelectedCollection] = useState<
-    number[]
-  >([]);
+  const [selectedCollection, setSelectedCollection] = useState<number[]>([]); //선택한 컬렉션 id
   const [showIconAnimation, setShowIconAnimation] = useState(false);
   const animationValue = useRef(new Animated.Value(0)).current;
 
@@ -68,6 +68,7 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
     setIsTitleVisible(scrollY > threshold);
   };
 
+  //컬렉션 선택 함수
   const handleCollectionPress = (id: number) => {
     setSelectedCollection((prevSelectedCollection) => {
       if (prevSelectedCollection.includes(id)) {
@@ -78,37 +79,79 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
     });
   };
 
-  const handleSaveCollectionPress = () => {
-    setIsCollectionVisible(false);
-    setSaveSelectedCollection(selectedCollection);
+  //컬렉션 저장 함수
+  const handleSaveCollectionPress = async () => {
+    try {
+      if (!book) return;
 
-    if (
-      isCollectionVisible &&
-      selectedCollection.length > 0 &&
-      saveSelectedCollection.length === 0
-    ) {
-      setShowIconAnimation(true);
-      Animated.sequence([
-        Animated.timing(animationValue, {
-          toValue: 1,
-          duration: 400,
-          easing: Easing.out(Easing.quad),
-          useNativeDriver: true,
-        }),
-        Animated.timing(animationValue, {
-          toValue: 1,
-          duration: 500,
-          easing: Easing.out(Easing.quad),
-          useNativeDriver: true,
-        }),
-        Animated.timing(animationValue, {
-          toValue: 0,
-          duration: 0,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        setShowIconAnimation(false);
+      const deleteBooks = book.collectionIds.filter(
+        (id) => !selectedCollection.includes(id)
+      );
+      const addBooks = selectedCollection.filter(
+        (id) => !book.collectionIds.includes(id)
+      );
+
+      const deleteResults = await Promise.all(
+        deleteBooks.map((collectionId) =>
+          deleteBook(collectionId, [book.bookId])
+        )
+      );
+
+      if (deleteResults.some((res) => !res.check)) {
+        console.error("컬렉션 삭제 중 오류 발생");
+        return;
+      }
+
+      const addResults = await Promise.all(
+        addBooks.map((collectionId) => postAddBook(collectionId, book.bookId))
+      );
+
+      if (addResults.some((res) => !res.check)) {
+        console.error("컬렉션 추가 중 오류 발생");
+        return;
+      }
+
+      setIsCollectionVisible(false);
+      setBook((prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            collectionIds: selectedCollection,
+          };
+        }
+        return prev;
       });
+
+      if (
+        isCollectionVisible &&
+        selectedCollection.length > 0 &&
+        book?.collectionIds.length === 0
+      ) {
+        setShowIconAnimation(true);
+        Animated.sequence([
+          Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 400,
+            easing: Easing.out(Easing.quad),
+            useNativeDriver: true,
+          }),
+          Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 500,
+            easing: Easing.out(Easing.quad),
+            useNativeDriver: true,
+          }),
+          Animated.timing(animationValue, {
+            toValue: 0,
+            duration: 0,
+            useNativeDriver: true,
+          }),
+        ]).start(() => {
+          setShowIconAnimation(false);
+        });
+      }
+    } catch (error) {
+      console.error("오류:", error);
     }
   };
 
@@ -139,6 +182,7 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
     <View style={styles.container}>
       {book && (
         <>
+          <View style={{ height: 50 }}></View>
           <BackShareHeader
             title={book?.item.title}
             isTitleVisible={isTitleVisible}
@@ -227,7 +271,10 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
           )}
           {isCollectionVisible && (
             <CollectionBottomSheet
-              onClose={() => setIsCollectionVisible(false)}
+              onClose={() => {
+                setSelectedCollection(book.collectionIds);
+                setIsCollectionVisible(false);
+              }}
               clickList={selectedCollection}
               onComplete={() => handleSaveCollectionPress()}
               onPress={(id) => handleCollectionPress(id)}

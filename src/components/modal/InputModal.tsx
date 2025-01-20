@@ -8,7 +8,7 @@ const InputModal = ({
   onComplate,
 }: {
   onClose: () => void;
-  onComplate: () => void;
+  onComplate: (text: string) => void;
 }) => {
   const [text, setText] = useState("");
 
@@ -26,7 +26,7 @@ const InputModal = ({
         <TouchableOpacity
           onPress={() => {
             if (text.length >= 1) {
-              onComplate();
+              onComplate(text);
             }
           }}
         >
