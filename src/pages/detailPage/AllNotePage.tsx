@@ -6,7 +6,7 @@ import { Color } from "../../styles/Theme";
 import NotePencelIcon from "../../assets/images/icon/NotePencel.svg";
 import { useFocusEffect } from "@react-navigation/native";
 import { getNoteList } from "../../api/note/getNoteList";
-import { TgetNoteListInformationRes } from "../../types/note";
+import { TNoteListInformationRes } from "../../types/note";
 
 const AllNotePage = ({
   navigation,
@@ -16,7 +16,7 @@ const AllNotePage = ({
   route: any;
 }) => {
   const bookId = route?.params?.bookId;
-  const [noteList, setNoteList] = useState<TgetNoteListInformationRes>();
+  const [noteList, setNoteList] = useState<TNoteListInformationRes>();
 
   const fetchNoteList = async () => {
     try {
@@ -59,7 +59,9 @@ const AllNotePage = ({
               <Pressable
                 key={index}
                 style={styles.noteWrap}
-                onPress={() => navigation.navigate("Note")}
+                onPress={() =>
+                  navigation.navigate("Note", { noteId: data.noteId })
+                }
               >
                 <View style={styles.titleWrap}>
                   <NotePencelIcon />

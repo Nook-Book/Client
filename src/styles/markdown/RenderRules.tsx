@@ -59,7 +59,7 @@ export const RenderRules = {
 
       if (matchStart > lastIndex) {
         parts.push(
-          <Text key={lastIndex}>
+          <Text key={`text-${lastIndex}`}>
             {content.substring(lastIndex, matchStart)}
           </Text>
         );
@@ -68,7 +68,10 @@ export const RenderRules = {
       if (textColorMatch) {
         const colorKey = textColorMatch[1];
         parts.push(
-          <Text key={matchStart} style={{ color: colorMap[colorKey] }}>
+          <Text
+            key={`textColor-${matchStart}`}
+            style={{ color: colorMap[colorKey] }}
+          >
             {textColorContent}
           </Text>
         );
@@ -76,7 +79,7 @@ export const RenderRules = {
         const backgroundKey = bgColorMatch[1];
         parts.push(
           <Text
-            key={matchStart}
+            key={`bgColor-${matchStart}`}
             style={{ backgroundColor: backgroundColorMap[backgroundKey] }}
           >
             {bgColorContent}
@@ -88,7 +91,9 @@ export const RenderRules = {
     }
 
     if (lastIndex < content.length) {
-      parts.push(<Text key={lastIndex}>{content.substring(lastIndex)}</Text>);
+      parts.push(
+        <Text key={`text-${lastIndex}`}>{content.substring(lastIndex)}</Text>
+      );
     }
 
     return <Text>{parts}</Text>;

@@ -1,17 +1,28 @@
-export type TgetNoteListRes = {
+export type TNoteListRes = {
   check: boolean;
-  information: TgetNoteListInformationRes;
+  information: TNoteListInformationRes;
 };
 
-export type TgetNoteListInformationRes = {
+export type TNoteListInformationRes = {
   bookTitle: string;
   bookImage: string;
   noteCount: number;
-  noteListRes: TgetNoteListNoteListResRes[];
+  noteListRes: TNoteListNoteListResRes[];
 };
 
-export type TgetNoteListNoteListResRes = {
+export type TNoteListNoteListResRes = {
   noteId: number;
   title: string;
+  createdDate: string;
+};
+
+export type TNoteDetailRes = {
+  check: true;
+  information: TNoteDetailInformationRes;
+};
+
+export type TNoteDetailInformationRes = {
+  title: string;
+  content: string;
   createdDate: string;
 };
