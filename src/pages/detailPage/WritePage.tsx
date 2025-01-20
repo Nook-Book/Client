@@ -35,6 +35,7 @@ import WarningModal from "../../components/modal/WarningModal";
 import EditModal from "../../components/modal/EditModal";
 import { postNote } from "../../api/note/postNote";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { deleteImage } from "../../api/note/deleteImage";
 
 type SelectedMenuType = "" | "Plus" | "Image" | "TextShape" | "Reset";
 
@@ -138,6 +139,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     start: 0,
     end: 0,
   }); //선택된 텍스트 상태
+  const [addImageList, setAddImageList] = useState<string[]>([]); //추가한 이미지 리스트
 
   //색상 변경 함수
   const handleColorChange = (color: string) => {
@@ -305,9 +307,35 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     }
   };
 
+  //사용되지 않는 이미지 삭제 함수
+  const deleteUnusedImages = async (markdownText: string) => {
+    try {
+      for (const imageUrl of addImageList) {
+        if (!markdownText.includes(imageUrl)) {
+          await deleteImage(imageUrl);
+        }
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  //이미지 삭제 함수
+  const deleteImages = async () => {
+    try {
+      for (const imageUrl of addImageList) {
+        await deleteImage(imageUrl);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
   //독서 기록 저장 함수
   const handleSaveNote = async () => {
     try {
+      await deleteUnusedImages(markdownText);
+
       const response = await postNote({
         bookId: bookId,
         title: titleText,
@@ -554,7 +582,10 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
             (selectedMenu === "Plus" ? (
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
-              <ImageItem handleTextInsert={handleTextInsert} />
+              <ImageItem
+                handleTextInsert={handleTextInsert}
+                setAddImageList={setAddImageList}
+              />
             ) : selectedMenu === "TextShape" ? (
               <TextShapeItem handleColorChange={handleColorChange} />
             ) : (
@@ -571,7 +602,10 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
         text={"작성한 사항이 저장되지 않았습니다.\n취소하시겠습니까?"}
         rightText="취소"
         onClose={() => setIsEditModal(false)}
-        onComplate={() => navigation.goBack()}
+        onComplate={() => {
+          deleteImages();
+          navigation.goBack();
+        }}
       />
     </View>
   );

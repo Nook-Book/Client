@@ -12,8 +12,10 @@ type ImageItemsType = {
 
 const ImageItem = ({
   handleTextInsert,
+  setAddImageList,
 }: {
   handleTextInsert: (type: string) => void;
+  setAddImageList: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
   const [hasCameraPermission, setHasCameraPermission] = useState<
     boolean | null
@@ -72,6 +74,7 @@ const ImageItem = ({
     }
   };
 
+  //이미지 업로드 함수
   const uploadImage = async (uri: string) => {
     try {
       const fileName = uri.split("/").pop() || "image.jpg";
@@ -86,8 +89,9 @@ const ImageItem = ({
 
       const response = await postImage(formData);
       if (response.check) {
-        const markdownImageSyntax = `![Image](${response.information.imageUrl})\n`;
+        const markdownImageSyntax = `![Image](${response.information.imageUrl})\n\n`;
         handleTextInsert(markdownImageSyntax);
+        setAddImageList((prev) => [...prev, response.information.imageUrl]);
       }
     } catch (error) {
       console.error("이미지 업로드 실패:", error);
