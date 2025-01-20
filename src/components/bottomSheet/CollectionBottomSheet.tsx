@@ -92,7 +92,7 @@ const CollectionBottomSheet = ({
                   />
                 }
                 leftText={data.collectionTitle}
-                rightText={`(${data.collectionBooksCoverList.length}권)`}
+                rightText={`(${data.totalBooks}권)`}
                 onPress={() => onPress(data.collectionId)}
                 isClick={clickList.includes(data.collectionId)}
               />

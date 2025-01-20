@@ -34,6 +34,7 @@ export type TCollectionListDetailRes = {
   collectionStatus: "MAIN" | "NORMAL";
   collectionId: number;
   collectionTitle: string;
+  totalBooks: number;
   collectionBooksCoverList: string[];
 };
 
