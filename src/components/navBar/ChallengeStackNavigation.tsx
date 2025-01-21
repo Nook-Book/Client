@@ -7,8 +7,6 @@ import AllChallengePage from "../../pages/challengePage/AllChallengePage";
 import ChallengeDetailPage from "../../pages/challengePage/ChallengeDetailPage";
 import StatusCardDetailPage from "../../pages/challengePage/StatusCardDetailPage";
 import NewChallengePage from "../../pages/challengePage/NewChallengePage";
-import CalenderSelectPage from "../../pages/challengePage/CalenderSelectPage";
-import AddParticipantPage from "../../pages/challengePage/AddParticipantPage";
 import ChallengeDetailSettingPage from "../../pages/challengePage/ChallengeDetailSettingPage";
 import EditParticipantPage from "../../pages/challengePage/EditParticipantPage";
 
@@ -27,8 +25,6 @@ export default function ChallengeStackScreen({
       routeName === "ChallengeDetail" ||
       routeName === "StatusCardDetail" ||
       routeName === "NewChallenge" ||
-      routeName === "CalenderSelect" ||
-      routeName === "AddParticipant" ||
       routeName === "ChallengeDetailSetting" ||
       routeName === "EditParticipant"
     ) {
@@ -80,16 +76,6 @@ export default function ChallengeStackScreen({
       <ChallengeStack.Screen
         name="NewChallenge"
         component={NewChallengePage}
-        options={{ headerShown: false }}
-      />
-      <ChallengeStack.Screen
-        name="CalenderSelect"
-        component={CalenderSelectPage}
-        options={{ headerShown: false }}
-      />
-      <ChallengeStack.Screen
-        name="AddParticipant"
-        component={AddParticipantPage}
         options={{ headerShown: false }}
       />
       <ChallengeStack.Screen

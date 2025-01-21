@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Pressable, Image } from "react-native";
-import { styles } from "../../styles/challenge/AddParticipantPageStyle";
+import { styles } from "../../styles/challenge/AddParticipantModalStyle";
 import { Color } from "../../styles/Theme";
 
 const ParticipantItem = ({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -23,6 +23,8 @@ import {
 } from "../../utils/calendarUtils";
 import { patchImage } from "../../api/challenge/patchImage";
 import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
+import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
+import AddParticipantModal from "../../components/modal/AddParticipantModal";
 
 export default function NewChallengePage({
   route,
@@ -60,23 +62,24 @@ export default function NewChallengePage({
   const [imageUri, setImageUri] = useState<string>(
     isNew ? "" : detail.challengeCover
   ); //챌린지 이미지
-  const [isImagemodal, setIsImagemodal] = useState(false); //이미지 모달
+  const [isImageModal, setIsImageModal] = useState(false); //이미지 모달
   const [startDate, setStartDate] = useState<string>(
     isNew ? todayDate : detail.startDate
   ); // 시작일
   const [endDate, setEndDate] = useState<string>(
     isNew ? todayDate : detail.endDate
   ); // 종료일
+  const [isCalenderModal, setIsCalenderModal] = useState(false); //캘린더 모달
   const [isCheck, setIsCheck] = useState(
-    isNew ? false : detail.startDate === null
+    isNew ? false : detail.dailyStartTime === null
   ); // 독서 시간 설정 안 함
   const [startPeriod, setStartPeriod] = useState<TTime>(
-    isNew || detail.startTime === null
+    isNew || detail.dailyStartTime === null
       ? { hour: "01", minute: "00", ampm: "AM" }
       : convertToPeriodFormat(detail.dailyStartTime)
   ); // 시작 시간 설정
   const [endPeriod, setEndPeriod] = useState<TTime>(
-    isNew || detail.endTime === null
+    isNew || detail.dailyEndTime === null
       ? { hour: "01", minute: "00", ampm: "AM" }
       : convertToPeriodFormat(detail.dailyEndTime)
   ); // 종료 시간 설정
@@ -99,21 +102,10 @@ export default function NewChallengePage({
           (data: { participantId: number }) => data.participantId
         )
   ); // 선택된 참여자
-
-  useEffect(() => {
-    if (route.params?.updatedStartDate) {
-      setStartDate(route.params.updatedStartDate);
-    }
-    if (route.params?.updatedEndDate) {
-      setEndDate(route.params.updatedEndDate);
-    }
-    if (route.params?.updatedSelectedParticipant) {
-      setSelectedParticipant(route.params.updatedSelectedParticipant);
-    }
-  }, [route.params]);
+  const [isParticipantModal, setIsParticipantModal] = useState(false); //친구 선택 모달
 
   //이미지 핸들러
-  const handleImagePress = () => setIsImagemodal(true);
+  const handleImagePress = () => setIsImageModal(true);
   const handleImagePicked = (uri: string) => setImageUri(uri);
 
   //시간 피커 핸들러
@@ -184,8 +176,8 @@ export default function NewChallengePage({
         startDate: detail.startDate,
         endDate: detail.endDate,
         dailyGoal: detail.dailyGoal,
-        startTime: detail.dailyStartTime.slice(0, -3),
-        endTime: detail.dailyEndTime.slice(0, -3),
+        startTime: detail.dailyStartTime || detail.dailyStartTime.slice(0, -3),
+        endTime: detail.dailyStartTime || detail.dailyEndTime.slice(0, -3),
       };
 
       if (isNew) {
@@ -247,12 +239,7 @@ export default function NewChallengePage({
           <View style={styles.periodWrap}>
             <Pressable
               style={styles.periodDateWrap}
-              onPress={() =>
-                navigation.navigate("CalenderSelect", {
-                  currentStartDate: startDate,
-                  currentEndDate: endDate,
-                })
-              }
+              onPress={() => setIsCalenderModal(true)}
             >
               <Text style={styles.periodHeadText}>시작일</Text>
               <Text style={styles.periodDateText}>
@@ -342,11 +329,7 @@ export default function NewChallengePage({
           <Text style={styles.headText}>친구와 함께하기</Text>
           <Pressable
             style={styles.friendBtnWrap}
-            onPress={() =>
-              navigation.navigate("AddParticipant", {
-                currentSelectedParticipant: selectedParticipant,
-              })
-            }
+            onPress={() => setIsParticipantModal(true)}
           >
             <Text style={styles.friendBtnText}>친구 초대하기</Text>
           </Pressable>
@@ -358,8 +341,8 @@ export default function NewChallengePage({
         disabled={!title || !imageUri}
       />
       <ImagePickerModal
-        visible={isImagemodal}
-        onClose={() => setIsImagemodal(false)}
+        visible={isImageModal}
+        onClose={() => setIsImageModal(false)}
         onImagePicked={handleImagePicked}
       />
       <TimePickerModal
@@ -381,6 +364,27 @@ export default function NewChallengePage({
         }
         onClose={() => setIsPickerModal(false)}
         onComplate={handleTimePickerComplete}
+      />
+      <CalenderSelectModal
+        visible={isCalenderModal}
+        onClose={() => setIsCalenderModal(false)}
+        onComplate={(editStartDate, editEndDate) => {
+          setStartDate(editStartDate);
+          setEndDate(editEndDate);
+          setIsCalenderModal(false);
+        }}
+        startDate={startDate}
+        endDate={endDate}
+      />
+      <AddParticipantModal
+        visible={isParticipantModal}
+        onClose={() => setIsParticipantModal(false)}
+        onComplate={(editParticipant) => {
+          setSelectedParticipant(editParticipant);
+          setIsParticipantModal(false);
+        }}
+        selectedParticipant={selectedParticipant}
+        isNew={true}
       />
     </View>
   );

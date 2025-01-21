@@ -5,14 +5,20 @@ import { styles } from "../../styles/header/HeaderStyle";
 import { useNavigation } from "@react-navigation/native";
 import { Color } from "../../styles/Theme";
 
-export default function BackHeader({ title }: { title: string }) {
+export default function BackHeader({
+  title,
+  onPress,
+}: {
+  title: string;
+  onPress?: () => void;
+}) {
   const navigation = useNavigation();
 
   return (
     <SafeAreaView>
       <View style={styles.centerContainer}>
         <Pressable
-          onPress={() => navigation.goBack()}
+          onPress={() => (onPress ? onPress() : navigation.goBack())}
           style={styles.leftButtonWrap}
         >
           <BackIcon color={Color.Contents.Icon} />

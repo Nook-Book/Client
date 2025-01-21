@@ -8,6 +8,7 @@ import ParticipantDeleteItem from "../../components/challenge/ParticipantDeleteI
 import BackTextHeader from "../../components/header/BackTextHeader";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import { SwipeListView } from "react-native-swipe-list-view";
+import AddParticipantModal from "../../components/modal/AddParticipantModal";
 
 export default function EditParticipantPage({
   navigation,
@@ -21,6 +22,7 @@ export default function EditParticipantPage({
     id: 0,
     name: "",
   });
+  const [isParticipantModal, setIsParticipantModal] = useState(false); //친구 선택 모달
 
   //챌린지 삭제
   const handleDelete = () => {
@@ -41,11 +43,7 @@ export default function EditParticipantPage({
         <Text style={styles.headText}>참여자</Text>
         <Pressable
           style={styles.participantWrap}
-          onPress={() =>
-            navigation.navigate("AddParticipant", {
-              currentSelectedParticipant: [],
-            })
-          }
+          onPress={() => setIsParticipantModal(true)}
         >
           <View style={styles.participantImage}>
             <PlusIcon style={styles.plusIcon} />
@@ -100,6 +98,16 @@ export default function EditParticipantPage({
         text={`${selectedParticipant.name}을 챌린지에서\n삭제하시겠습니까?`}
         onClose={() => setIsParticipantDeleteModal(false)}
         onComplate={handleParticipantDelete}
+      />
+      <AddParticipantModal
+        visible={isParticipantModal}
+        onClose={() => setIsParticipantModal(false)}
+        onComplate={(editParticipant) => {
+          //setSelectedParticipant(editParticipant);
+          setIsParticipantModal(false);
+        }}
+        selectedParticipant={[]}
+        isNew={false}
       />
     </View>
   );
