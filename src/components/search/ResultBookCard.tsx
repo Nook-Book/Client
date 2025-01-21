@@ -1,6 +1,6 @@
-import { View, Image, Text } from "react-native";
-import { ResultBookProp } from "../../types/search";
+import { Image, Text, View } from "react-native";
 import { styles } from "../../styles/search/ResultBookCardStyle";
+import { ResultBookProp } from "../../types/search";
 const ResultBookCard = ({
   image,
   title,
@@ -9,7 +9,7 @@ const ResultBookCard = ({
 }: ResultBookProp) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={image} />
+      <Image style={styles.image} source={{ uri: image }} />
       <View style={styles.cardConatiner}>
         <Text style={styles.title} ellipsizeMode="tail">
           {title}

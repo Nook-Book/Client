@@ -1,4 +1,5 @@
-import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { RecentSearchText } from "../../constans/search";
 import { useDeleteKeyword, useGetKeyword } from "../../hooks/book/useKeyword";
@@ -10,6 +11,12 @@ const RecentSearch = () => {
   const searchList = data.information;
 
   const { mutate } = useDeleteKeyword();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [])
+  );
 
   const handleDeleteKeyword = (keywordId: number) => {
     mutate(
