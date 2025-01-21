@@ -23,17 +23,17 @@ export const backgroundColorMap: { [key: string]: string } = {
 
 export const RenderRules = {
   heading1: (node: any, children: any) => (
-    <Text key={node.key} style={markdownStyle.heading1}>
+    <Text key={`heading1-${node.key}`} style={markdownStyle.heading1}>
       {children}
     </Text>
   ),
   heading2: (node: any, children: any) => (
-    <Text key={node.key} style={markdownStyle.heading2}>
+    <Text key={`heading2-${node.key}`} style={markdownStyle.heading2}>
       {children}
     </Text>
   ),
   heading3: (node: any, children: any) => (
-    <Text key={node.key} style={markdownStyle.heading3}>
+    <Text key={`heading3-${node.key}`} style={markdownStyle.heading3}>
       {children}
     </Text>
   ),
@@ -44,6 +44,7 @@ export const RenderRules = {
     let match;
     const parts: JSX.Element[] = [];
     let lastIndex = 0;
+    let uniqueId = 0;
 
     while ((match = regex.exec(content)) !== null) {
       const [
@@ -56,35 +57,39 @@ export const RenderRules = {
 
       const matchStart = match.index;
       const matchEnd = regex.lastIndex;
+      const randomKey = Math.random().toString(36).slice(2, 8);
 
       if (matchStart > lastIndex) {
         parts.push(
-          <Text key={`text-${lastIndex}`}>
+          <Text key={`text-${uniqueId}-${randomKey}`}>
             {content.substring(lastIndex, matchStart)}
           </Text>
         );
+        uniqueId++;
       }
 
       if (textColorMatch) {
         const colorKey = textColorMatch[1];
         parts.push(
           <Text
-            key={`textColor-${matchStart}`}
+            key={`textColor-${colorKey}-${uniqueId}-${randomKey}`}
             style={{ color: colorMap[colorKey] }}
           >
             {textColorContent}
           </Text>
         );
+        uniqueId++;
       } else if (bgColorMatch) {
         const backgroundKey = bgColorMatch[1];
         parts.push(
           <Text
-            key={`bgColor-${matchStart}`}
+            key={`bgColor-${backgroundKey}-${uniqueId}-${randomKey}`}
             style={{ backgroundColor: backgroundColorMap[backgroundKey] }}
           >
             {bgColorContent}
           </Text>
         );
+        uniqueId++;
       }
 
       lastIndex = matchEnd;
@@ -92,10 +97,19 @@ export const RenderRules = {
 
     if (lastIndex < content.length) {
       parts.push(
-        <Text key={`text-${lastIndex}`}>{content.substring(lastIndex)}</Text>
+        <Text
+          key={`text-${uniqueId}-${Math.random().toString(36).slice(2, 8)}`}
+        >
+          {content.substring(lastIndex)}
+        </Text>
       );
+      uniqueId++;
     }
 
-    return <Text>{parts}</Text>;
+    return (
+      <Text key={`text-container-${Math.random().toString(36).slice(2, 8)}`}>
+        {parts}
+      </Text>
+    );
   },
 };
