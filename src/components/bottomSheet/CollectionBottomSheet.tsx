@@ -1,5 +1,11 @@
-import { useCallback, useState } from "react";
-import { View, Image, ScrollView } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import {
+  View,
+  Image,
+  ScrollView,
+  Keyboard,
+  useWindowDimensions,
+} from "react-native";
 import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 import BottomSheetItem from "./BottomSheetItem";
 import BottomSheetTitle from "./BottomSheetTitle";
@@ -21,8 +27,10 @@ const CollectionBottomSheet = ({
   onComplete: () => void;
   onPress: (id: number) => void;
 }) => {
+  const { height: windowHeight } = useWindowDimensions();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [list, setList] = useState<TCollectionListDetailRes[]>([]);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const fetchCollectionList = async () => {
     try {
@@ -54,17 +62,49 @@ const CollectionBottomSheet = ({
     }
   };
 
+  //키보드 상태 감지
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () =>
+      setIsKeyboardVisible(true)
+    );
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () =>
+      setIsKeyboardVisible(false)
+    );
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       {isModalVisible && (
-        <View style={styles.modal}>
+        <View
+          style={[
+            styles.modal,
+            {
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              marginTop: windowHeight / 3.1,
+            },
+          ]}
+        >
           <InputModal
             onClose={() => setIsModalVisible(!isModalVisible)}
             onComplate={handleNewCollection}
+            setIsKeyboardVisible={setIsKeyboardVisible}
           />
         </View>
       )}
-      <View style={styles.bottom}>
+      <View
+        style={[
+          styles.bottom,
+          { display: isKeyboardVisible ? "none" : "flex" },
+        ]}
+      >
         <BottomSheetTitle
           text="컬렉션 선택"
           onClose={onClose}
