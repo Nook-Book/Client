@@ -23,6 +23,6 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   bestSellerContainer: {
-    marginBottom: 20,
+    marginBottom: 100,
   },
 });
