@@ -1,28 +1,24 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { styles } from "../../styles/challenge/ChallengeDetailPageStyle";
+import { TChallengeDetailParticipantsRes } from "../../types/challenge";
 
 type ProfileItemProps = {
-  item: {
-    id: number;
-    image: any;
-    name: string;
-  };
+  item: TChallengeDetailParticipantsRes;
 };
 
 const ProfileItem = ({ item }: ProfileItemProps) => (
   <View style={styles.profileItem}>
-    <Image source={item.image} style={styles.profileImage} />
-    <Text style={styles.itemText}>{item.name}</Text>
+    <Image
+      source={{ uri: item.participantImage }}
+      style={styles.profileImage}
+    />
+    <Text style={styles.itemText}>{item.nickname}</Text>
   </View>
 );
 
 type ProfileListProps = {
-  profiles: {
-    id: number;
-    image: any;
-    name: string;
-  }[];
+  profiles: TChallengeDetailParticipantsRes[];
   showAllProfiles: boolean;
   onShowAllProfiles: () => void;
 };
@@ -41,7 +37,7 @@ const ProfileList = ({
         {profiles
           .slice(0, showAllProfiles ? profiles.length : 2)
           .map((profile) => (
-            <ProfileItem key={profile.id} item={profile} />
+            <ProfileItem key={profile.participantId} item={profile} />
           ))}
       </View>
     </View>

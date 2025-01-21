@@ -2,7 +2,7 @@ import React from "react";
 import { View, SafeAreaView, Text, Pressable } from "react-native";
 import { styles } from "../../styles/header/HeaderStyle";
 
-export default function RightTextHeader({ navigation }: { navigation: any }) {
+export default function RightTextHeader({ onPress }: { onPress: () => void }) {
   return (
     <SafeAreaView>
       <View
@@ -13,10 +13,7 @@ export default function RightTextHeader({ navigation }: { navigation: any }) {
           },
         ]}
       >
-        <Pressable
-          onPress={() => navigation.navigate("AllChallenge")}
-          style={styles.buttonWrap}
-        >
+        <Pressable onPress={onPress} style={styles.buttonWrap}>
           <Text style={styles.text2Blue}>전체보기</Text>
         </Pressable>
       </View>

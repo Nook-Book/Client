@@ -9,23 +9,31 @@ import {
 } from "react-native";
 import { getStyles } from "../../styles/challenge/AllChallengePageStyle";
 import BackHeader from "../../components/header/BackHeader";
-import { dummyListLong } from "../../assets/data/dummyChallengeList";
 import { Color } from "../../styles/Theme";
 
-export default function AllChallengePage({ navigation }: { navigation: any }) {
+export default function AllChallengePage({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: any;
+}) {
   const { width: windowWidth } = useWindowDimensions();
   const styles = getStyles(windowWidth);
 
+  const list = route.params.list;
+
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackHeader title="전체보기" />
       <View style={styles.contentContainer}>
         <Text style={styles.lengthText}>
-          {dummyListLong.length}
+          {list.waitingCount + list.progressCount + list.endCount}
           <Text style={{ color: Color.Typo.Secondary }}>개</Text>
         </Text>
         <FlatList
-          data={dummyListLong}
+          data={[...list.waitingList, ...list.progressList, ...list.endList]}
           renderItem={({ item, index }) => (
             <Pressable
               key={index}
@@ -33,10 +41,18 @@ export default function AllChallengePage({ navigation }: { navigation: any }) {
               onPress={() =>
                 navigation.navigate("ChallengeDetail", {
                   isInvite: false,
+                  challengeId: item.challengeId,
                 })
               }
             >
-              <Image style={styles.itemImage} source={item.image} />
+              <Image
+                source={{
+                  uri:
+                    "https://nookbook-image-bucket.s3.amazonaws.com/" +
+                    item.challengeCover,
+                }}
+                style={styles.itemImage}
+              />
               <Text style={styles.itemText} numberOfLines={2}>
                 {item.title}
               </Text>

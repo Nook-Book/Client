@@ -40,11 +40,19 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  leftTextButtonWrap: {
+    width: 56,
+    height: 56,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   leftButtonWrap: {
     width: 56,
     height: 56,
     justifyContent: "center",
     alignItems: "center",
+    position: "absolute",
+    left: 0,
   },
   text1: {
     ...Font.Label.XMedium,

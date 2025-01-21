@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   ScrollView,
@@ -11,11 +11,14 @@ import { styles } from "../../styles/challenge/ChallengeDetailPageStyle";
 import BackSettingHeader from "../../components/header/BackSettingHeader";
 import ProfileList from "../../components/challenge/ProfileList";
 import StatusList from "../../components/challenge/StatusList";
-import { dummyListCard } from "../../assets/data/dummyChallengeList";
 import ChallengeCard from "../../components/challenge/ChallengeCard";
 import { getDayOfWeek } from "../../utils/calendarUtils";
 import BottomTwoButton from "../../components/bottomSheet/BottomTwoButton";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
+import { useFocusEffect } from "@react-navigation/native";
+import { TChallengeDetailInformationRes } from "../../types/challenge";
+import { getChallengeDetail } from "../../api/challenge/getChallengeDetail";
+import { dummyListCard } from "../../assets/data/dummyChallengeList";
 
 export default function ChallengeDetailPage({
   route,
@@ -24,10 +27,30 @@ export default function ChallengeDetailPage({
   route: any;
   navigation: any;
 }) {
-  const { isInvite } = route.params;
+  const { isInvite, challengeId } = route.params;
+
+  const [detail, setDetail] = useState<TChallengeDetailInformationRes>();
+
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showAllProfiles, setShowAllProfiles] = useState(false);
+
+  const fetchChallengeDetail = async () => {
+    try {
+      const response = await getChallengeDetail(challengeId);
+      if (response?.check) {
+        setDetail(response.information);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchChallengeDetail();
+    }, [])
+  );
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollY = event.nativeEvent.contentOffset.y;
@@ -37,84 +60,98 @@ export default function ChallengeDetailPage({
 
   return (
     <View style={styles.container}>
-      {isInvite ? (
-        <BackTitleHeader
-          navigation={navigation}
-          title={dummyListCard.title}
-          isTitleVisible={isTitleVisible}
-        />
-      ) : (
-        <BackSettingHeader
-          title={dummyListCard.title}
-          isTitleVisible={isTitleVisible}
-          navigation={navigation}
-          onPress={() => {
-            //챌린지 주인인지 확인 필요 -> 주인이면 페이지 이동, 아니면 모달 실행
-            navigation.navigate("ChallengeDetailSetting");
-          }}
-        />
-      )}
-      <ScrollView
-        onScroll={handleScroll}
-        scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.contentContainer}>
-          <Image source={dummyListCard.image} style={styles.image} />
-        </View>
-        <View style={styles.headWrap}>
-          <Text style={styles.headText} numberOfLines={1}>
-            {dummyListCard.title}
-          </Text>
-          <View style={styles.endWrap}>
-            <Text style={styles.endText}>
-              {dummyListCard.status === "END"
-                ? "종료"
-                : dummyListCard.status === "INPROGRESS"
-                ? "진행중"
-                : "진행 예정"}
-            </Text>
-          </View>
-        </View>
-        <ProfileList
-          profiles={dummyListCard.profileList}
-          showAllProfiles={showAllProfiles}
-          onShowAllProfiles={() => setShowAllProfiles(true)}
-        />
-        <View style={styles.itemWrap}>
-          <Text style={styles.leftText}>기간</Text>
-          <Text style={styles.itemText}>
-            {dummyListCard.startDate.replaceAll("-", ".")} (
-            {getDayOfWeek(dummyListCard.startDate)}) ~{" "}
-            {dummyListCard.endDate.replaceAll("-", ".")} (
-            {getDayOfWeek(dummyListCard.endDate)})
-          </Text>
-        </View>
-        <View style={styles.itemWrap}>
-          <Text style={styles.leftText}>목표 시간</Text>
-          <Text style={styles.itemLightText}>
-            총
-            <Text style={styles.itemBoldText}> {dummyListCard.totalTime}</Text>{" "}
-            / 하루
-            <Text style={styles.itemBoldText}> {dummyListCard.dailyTime}</Text>
-          </Text>
-        </View>
-        <StatusList
-          cards={dummyListCard.cardList}
-          setIsModalVisible={setIsModalVisible}
-        />
-      </ScrollView>
-      {isModalVisible && (
-        <ChallengeCard
-          handleStatus={() => navigation.navigate("StatusCardDetail")}
-          handleCancel={() => setIsModalVisible(false)}
-        />
-      )}
-      {isInvite && (
-        <BottomTwoButton
-          handleAccept={() => console.log("수락")}
-          handleReject={() => console.log("거절")}
-        />
+      {detail && (
+        <>
+          <View style={{ height: 50 }}></View>
+          {isInvite ? (
+            <BackTitleHeader
+              navigation={navigation}
+              title={detail.title}
+              isTitleVisible={isTitleVisible}
+            />
+          ) : (
+            <BackSettingHeader
+              title={detail.title}
+              isTitleVisible={isTitleVisible}
+              navigation={navigation}
+              onPress={() =>
+                navigation.navigate("ChallengeDetailSetting", {
+                  isEditable: detail.isEditable,
+                })
+              }
+            />
+          )}
+          <ScrollView
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.contentContainer}>
+              <Image
+                source={{
+                  uri:
+                    "https://nookbook-image-bucket.s3.amazonaws.com/" +
+                    detail.challengeCover,
+                }}
+                style={styles.image}
+              />
+            </View>
+            <View style={styles.headWrap}>
+              <Text style={styles.headText} numberOfLines={1}>
+                {detail.title}
+              </Text>
+              <View style={styles.endWrap}>
+                <Text style={styles.endText}>
+                  {detail.challengeStatus === "END"
+                    ? "종료"
+                    : detail.challengeStatus === "PROGRESS"
+                    ? "진행중"
+                    : "진행 예정"}
+                </Text>
+              </View>
+            </View>
+            <ProfileList
+              profiles={detail.participants}
+              showAllProfiles={showAllProfiles}
+              onShowAllProfiles={() => setShowAllProfiles(true)}
+            />
+            <View style={styles.itemWrap}>
+              <Text style={styles.leftText}>기간</Text>
+              <Text style={styles.itemText}>
+                {detail.startDate.replaceAll("-", ".")} (
+                {getDayOfWeek(detail.startDate)}) ~{" "}
+                {detail.endDate.replaceAll("-", ".")} (
+                {getDayOfWeek(detail.endDate)})
+              </Text>
+            </View>
+            <View style={styles.itemWrap}>
+              <Text style={styles.leftText}>목표 시간</Text>
+              <Text style={styles.itemLightText}>
+                총
+                <Text style={styles.itemBoldText}> {detail.totalHour}시간</Text>{" "}
+                / 하루
+                <Text style={styles.itemBoldText}> {detail.dailyGoal}분</Text>
+              </Text>
+            </View>
+            {/* 현황 API 연동 필요 */}
+            <StatusList
+              cards={dummyListCard.cardList}
+              setIsModalVisible={setIsModalVisible}
+            />
+          </ScrollView>
+          {isModalVisible && (
+            <ChallengeCard
+              handleStatus={() => navigation.navigate("StatusCardDetail")}
+              handleCancel={() => setIsModalVisible(false)}
+            />
+          )}
+          {isInvite && (
+            <BottomTwoButton
+              handleAccept={() => console.log("수락")}
+              handleReject={() => console.log("거절")}
+            />
+          )}
+        </>
       )}
     </View>
   );
