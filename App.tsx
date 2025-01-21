@@ -1,12 +1,16 @@
-import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import * as React from "react";
 
-import TabNavigation from "./src/components/navBar/TabNavigation";
-import OnboardingOverlay from "./src/components/libary/OnboardingOverlay";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import OnboardingOverlay from "./src/components/libary/OnboardingOverlay";
+import TabNavigation from "./src/components/navBar/TabNavigation";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function App() {
+  const queryClient = new QueryClient();
+
   //처음 방문 시 온보딩 화면 실행
   const [showOnboarding, setShowOnboarding] = React.useState(false);
 
@@ -35,11 +39,13 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <NavigationContainer>
-      <TabNavigation />
-      {showOnboarding && (
-        <OnboardingOverlay onDismiss={handleOnboardingDismiss} />
-      )}
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <TabNavigation />
+        {showOnboarding && (
+          <OnboardingOverlay onDismiss={handleOnboardingDismiss} />
+        )}
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
