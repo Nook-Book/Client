@@ -45,8 +45,6 @@ export const styles = StyleSheet.create({
     height: 56,
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
-    left: 0,
   },
   text1: {
     ...Font.Label.XMedium,

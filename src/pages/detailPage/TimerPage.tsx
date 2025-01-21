@@ -8,7 +8,7 @@ import { getTimerList } from "../../api/book/getTimerList";
 import { TTimerListInformationRes } from "../../types/timer";
 import { postTimer } from "../../api/book/postTimer";
 
-const TimerPage = ({ route }: { route: any }) => {
+const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
   const bookId = route?.params?.bookId;
   const [timerList, setTimerList] = useState<TTimerListInformationRes>();
 
@@ -83,7 +83,14 @@ const TimerPage = ({ route }: { route: any }) => {
 
   return (
     <View style={styles.container}>
-      <BackTextHeader title="타이머" />
+      <View style={{ height: 50 }}></View>
+      <BackTextHeader
+        title="타이머"
+        onBackPress={() => {
+          handleStartStop();
+          navigation.goBack();
+        }}
+      />
       <View style={styles.contentContainer}>
         <Text style={styles.timeText}>
           {formatTimer(time).replaceAll(":", " : ")}
