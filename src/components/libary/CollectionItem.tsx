@@ -72,9 +72,7 @@ const CollectionItem = ({
       </TouchableOpacity>
       <View style={styles.textWrap}>
         <Text style={styles.collectionTitleText}>{item.collectionTitle}</Text>
-        <Text style={styles.collectionNumText}>
-          {item.collectionBooksCoverList.length}권
-        </Text>
+        <Text style={styles.collectionNumText}>{item.totalBooks}권</Text>
       </View>
     </View>
   );

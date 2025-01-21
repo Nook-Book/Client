@@ -26,7 +26,11 @@ export default function BackShareHeader({
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        {isTitleVisible && <Text style={styles.text2}>{title}</Text>}
+        {isTitleVisible && (
+          <Text style={styles.text2} numberOfLines={1}>
+            {title}
+          </Text>
+        )}
         <Pressable onPress={onSharePress} style={styles.buttonWrap}>
           <ShareIcon />
         </Pressable>

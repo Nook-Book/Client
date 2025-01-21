@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { getStyles } from "../../styles/library/CarouselItemStyle";
 import BookItem from "./BookItem";
-import { dummyList } from "../../assets/data/dummyBookCarouseList";
 import { TMainCollectionListDetailRes } from "../../types/library";
 
 const CarouselItem = ({
@@ -17,12 +16,14 @@ const CarouselItem = ({
   scrollX,
   navigation,
   editType,
+  length,
 }: {
   item: TMainCollectionListDetailRes;
   index: number;
   scrollX: Animated.Value;
   navigation: any;
   editType: boolean;
+  length: number;
 }) => {
   const { width: windowWidth } = useWindowDimensions();
   const styles = getStyles(windowWidth);
@@ -45,7 +46,7 @@ const CarouselItem = ({
     styles.listWrap,
     !editType && { paddingBottom: 55 },
     index === 0 && { marginLeft: 0 },
-    index === dummyList.length - 1 && { marginRight: 0 },
+    index === length - 1 && { marginRight: 0 },
   ];
 
   return (

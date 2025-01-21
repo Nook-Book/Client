@@ -6,9 +6,11 @@ import { Color } from "../../styles/Theme";
 const InputModal = ({
   onClose,
   onComplate,
+  setIsKeyboardVisible,
 }: {
   onClose: () => void;
-  onComplate: () => void;
+  onComplate: (text: string) => void;
+  setIsKeyboardVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [text, setText] = useState("");
 
@@ -21,12 +23,13 @@ const InputModal = ({
         value={text}
         placeholder="컬렉션 이름은 최소 한 글자 이상 입력해주세요."
         placeholderTextColor={Color.Typo.Secondary}
+        onFocus={() => setIsKeyboardVisible(true)}
       />
       <View style={styles.buttonWrap}>
         <TouchableOpacity
           onPress={() => {
             if (text.length >= 1) {
-              onComplate();
+              onComplate(text);
             }
           }}
         >

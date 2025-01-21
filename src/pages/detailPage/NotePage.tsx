@@ -1,53 +1,90 @@
-import React, { useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import React, { useCallback, useState } from "react";
+import { ScrollView, View, Text, Pressable } from "react-native";
 import { styles } from "../../styles/detail/NotePageStyle";
 import NoteHeader from "../../components/header/NoteHeader";
 import TitleDesModal from "../../components/modal/TitleDesModal";
 import Markdown from "react-native-markdown-display";
 import { markdownStyle } from "../../styles/markdown/MarkdownStyle";
 import { RenderRules } from "../../styles/markdown/RenderRules";
+import { getNoteDetail } from "../../api/note/getNoteDetail";
+import { TNoteDetailInformationRes } from "../../types/note";
+import { useFocusEffect } from "@react-navigation/native";
+import { deleteNote } from "../../api/note/deleteNote";
 
-const NotePage = ({ navigation }: { navigation: any }) => {
+const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
+  const noteId = route?.params?.noteId;
   const [isDeleteModal, setIsDeleteModal] = useState(false);
-  const titleText = "몰입이란 몰까....";
-  const markdownText = `# BB[몰입이란] 몰까....
-책에서 말하길 TG[몰입을] 잘하려면 첫번째로
-# 편안한 BR[앙ㅇ2]자리 TB[앙ㅇ] 찾기
-## 몰입하다가 자두댐ㅎㅎ
-### 왜냐면 꿈에서도 TR[몰입이] 이어지기 때무네
-+ 좋은 듯
-+ 나쁜 듯
-1. BP[체리]사기
-2. 바나나사기
----
-> 가장 BP[중요한] 것은 **TB[아무래도]** TP[몰입을 하고자하는] \`마음가짐\`인 듯...
-~~TY[내일부터]~~ _BD[실행해보자]_`;
+  const [noteDetail, setNoteDetail] = useState<TNoteDetailInformationRes>();
+
+  const fetchNoteDetail = async () => {
+    try {
+      const response = await getNoteDetail(noteId);
+      if (response?.check) {
+        setNoteDetail(response.information);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchNoteDetail();
+    }, [])
+  );
+
+  //날짜 형식 변환(년월일)
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return "";
+
+    const [year, month, day] = dateString.split("-");
+    return `${parseInt(year)}년 ${parseInt(month)}월 ${parseInt(day)}일`;
+  };
+
+  //독서 노트 삭제
+  const handleDeleteNote = async () => {
+    const response = await deleteNote(noteId);
+    if (response.check) {
+      navigation.goBack();
+      setIsDeleteModal(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <NoteHeader
         navigation={navigation}
         onDelete={() => setIsDeleteModal(true)}
       />
-      <View style={styles.contentContainer}>
+      <Pressable
+        style={styles.contentContainer}
+        onLongPress={() =>
+          navigation.navigate("Write", {
+            noteId: noteId,
+            title: noteDetail?.title,
+            content: noteDetail?.content,
+          })
+        }
+      >
         <ScrollView
           style={{ marginHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
         >
-          <Text style={styles.titleText}>{titleText}</Text>
+          <Text style={styles.dateText}>
+            {formatDate(noteDetail?.createdDate)}
+          </Text>
+          <Text style={styles.titleText}>{noteDetail?.title}</Text>
           <Markdown style={markdownStyle} rules={RenderRules}>
-            {markdownText}
+            {String(noteDetail?.content)}
           </Markdown>
         </ScrollView>
-      </View>
+      </Pressable>
       <TitleDesModal
         visible={isDeleteModal}
         titleText="기록 삭제"
         desText={"해당 기록이 삭제됩니다\n이 동작은 취소할 수 없습니다."}
-        onComplate={() => {
-          navigation.goBack();
-          setIsDeleteModal(false);
-        }}
+        onComplate={handleDeleteNote}
         onClose={() => setIsDeleteModal(false)}
       />
     </View>

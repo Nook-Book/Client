@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     ...Effect.ImageStandard,
     width: 90,
     height: 137,
+    borderRadius: 3,
   },
   bookText: {
     ...Font.Heading.Large,

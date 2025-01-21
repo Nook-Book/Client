@@ -75,7 +75,7 @@ const PlusItem = ({
       <FlatList
         data={PlusItems}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         numColumns={2}
         showsVerticalScrollIndicator={false}
       />

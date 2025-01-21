@@ -1,11 +1,20 @@
-import { useState } from "react";
-import { View, Image, ScrollView } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import {
+  View,
+  Image,
+  ScrollView,
+  Keyboard,
+  useWindowDimensions,
+} from "react-native";
 import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 import BottomSheetItem from "./BottomSheetItem";
 import BottomSheetTitle from "./BottomSheetTitle";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
-import { dummyList } from "../../assets/data/dummyBookCarouseList";
 import InputModal from "../modal/InputModal";
+import { getList } from "../../api/collection/getList";
+import { useFocusEffect } from "@react-navigation/native";
+import { TCollectionListDetailRes } from "../../types/library";
+import { postNew } from "../../api/collection/postNew";
 
 const CollectionBottomSheet = ({
   clickList,
@@ -18,22 +27,84 @@ const CollectionBottomSheet = ({
   onComplete: () => void;
   onPress: (id: number) => void;
 }) => {
+  const { height: windowHeight } = useWindowDimensions();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [list, setList] = useState<TCollectionListDetailRes[]>([]);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  const fetchCollectionList = async () => {
+    try {
+      const response = await getList();
+      if (response?.check) {
+        setList(response.information.collectionListDetailRes);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchCollectionList();
+    }, [])
+  );
+
+  //새 컬렉션 생성
+  const handleNewCollection = async (text: string) => {
+    try {
+      const response = await postNew(text);
+      if (response.check) {
+        fetchCollectionList();
+        setIsModalVisible(!isModalVisible);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  //키보드 상태 감지
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () =>
+      setIsKeyboardVisible(true)
+    );
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () =>
+      setIsKeyboardVisible(false)
+    );
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
       {isModalVisible && (
-        <View style={styles.modal}>
+        <View
+          style={[
+            styles.modal,
+            {
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              marginTop: windowHeight / 3.1,
+            },
+          ]}
+        >
           <InputModal
             onClose={() => setIsModalVisible(!isModalVisible)}
-            onComplate={() => {
-              setIsModalVisible(!isModalVisible);
-              console.log("생성하기");
-            }}
+            onComplate={handleNewCollection}
+            setIsKeyboardVisible={setIsKeyboardVisible}
           />
         </View>
       )}
-      <View style={styles.bottom}>
+      <View
+        style={[
+          styles.bottom,
+          { display: isKeyboardVisible ? "none" : "flex" },
+        ]}
+      >
         <BottomSheetTitle
           text="컬렉션 선택"
           onClose={onClose}
@@ -50,20 +121,20 @@ const CollectionBottomSheet = ({
             rightText=""
             onPress={() => setIsModalVisible(true)}
           />
-          {dummyList.map((data, index) => {
+          {list.map((data, index) => {
             return (
               <BottomSheetItem
                 key={index}
                 Icon={
                   <Image
-                    source={data.dummyBook[0].image}
+                    source={{ uri: data.collectionBooksCoverList[0] }}
                     style={styles.thumbnailImage}
                   />
                 }
-                leftText={data.title}
-                rightText={"(" + data.dummyBook.length + "권)"}
-                onPress={() => onPress(data.id)}
-                isClick={clickList.includes(data.id)}
+                leftText={data.collectionTitle}
+                rightText={`(${data.totalBooks}권)`}
+                onPress={() => onPress(data.collectionId)}
+                isClick={clickList.includes(data.collectionId)}
               />
             );
           })}

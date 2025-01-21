@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -16,7 +16,6 @@ import WriteHeader from "../../components/header/WriteHeader";
 import { Color } from "../../styles/Theme";
 import PlusIcon from "../../assets/images/icon/Plus2.svg";
 import ImageIcon from "../../assets/images/icon/Image.svg";
-import TextImportIcon from "../../assets/images/icon/TextImport.svg";
 import TextShapeIcon from "../../assets/images/icon/TextShape.svg";
 import ResetIcon from "../../assets/images/icon/Reset.svg";
 import KeyboredIcon from "../../assets/images/icon/Keybored.svg";
@@ -30,18 +29,16 @@ import CancellineIcon from "../../assets/images/icon/Cancelline.svg";
 import { SvgProps } from "react-native-svg";
 import PlusItem from "../../components/write/PlusItem";
 import ImageItem from "../../components/write/ImageItem";
-import TextImportItem from "../../components/write/TextImportItem";
 import TextShapeItem from "../../components/write/TextShapeItem";
 import { RenderRules } from "../../styles/markdown/RenderRules";
 import WarningModal from "../../components/modal/WarningModal";
+import EditModal from "../../components/modal/EditModal";
+import { postNote } from "../../api/note/postNote";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { deleteImage } from "../../api/note/deleteImage";
+import { putEditNote } from "../../api/note/putEditNote";
 
-type SelectedMenuType =
-  | ""
-  | "Plus"
-  | "Image"
-  | "TextImport"
-  | "TextShape"
-  | "Reset";
+type SelectedMenuType = "" | "Plus" | "Image" | "TextShape" | "Reset";
 
 type SelectedShapeMenuType =
   | "Back"
@@ -74,10 +71,6 @@ const menuItem: MenuItemType[] = [
   {
     icon: ImageIcon,
     type: "Image",
-  },
-  {
-    icon: TextImportIcon,
-    type: "TextImport",
   },
   {
     icon: TextShapeIcon,
@@ -117,14 +110,17 @@ const shapeMenuItem: ShapeMenuItemType[] = [
   },
 ];
 
-const WritePage = ({ navigation }: { navigation: any }) => {
-  const [isFirst, setIsFirst] = useState(true); //처음 작성하는 글인지 (전 페이지에서 받아오도록 수정 필요)
+const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
+  const bookId = route?.params?.bookId;
+  const { noteId, title, content } = route.params;
+
   const [isWarningModal, setIsWarningModal] = useState(false); //색상 변경 주의 모달
+  const [isEditModal, setIsEditModal] = useState(false); //작성 취소 시 경고 모달
 
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
   const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
-  const [titleText, setTitleText] = useState(""); //제목
-  const [markdownText, setMarkdownText] = useState(``); //내용
+  const [titleText, setTitleText] = useState(title || ""); //제목
+  const [markdownText, setMarkdownText] = useState(content || ""); //내용
   const [isKeybored, setIsKeybored] = useState(false); //키보드 상태
   const [isItemView, setIsItemView] = useState(false); //아이템뷰 상태
   const [selectedMenu, setSelectedMenu] = useState<SelectedMenuType>(""); //선택된 메뉴
@@ -145,6 +141,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     start: 0,
     end: 0,
   }); //선택된 텍스트 상태
+  const [addImageList, setAddImageList] = useState<string[]>([]); //추가한 이미지 리스트
 
   //색상 변경 함수
   const handleColorChange = (color: string) => {
@@ -312,12 +309,85 @@ const WritePage = ({ navigation }: { navigation: any }) => {
     }
   };
 
+  //사용되지 않는 이미지 삭제 함수
+  const deleteUnusedImages = async (markdownText: string) => {
+    try {
+      for (const imageUrl of addImageList) {
+        if (!markdownText.includes(imageUrl)) {
+          await deleteImage(imageUrl);
+        }
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  //이미지 삭제 함수
+  const deleteImages = async () => {
+    try {
+      for (const imageUrl of addImageList) {
+        await deleteImage(imageUrl);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  //독서 기록 저장 함수
+  const handleSaveNote = async () => {
+    try {
+      await deleteUnusedImages(markdownText);
+
+      const response = await postNote({
+        bookId: bookId,
+        title: titleText,
+        content: markdownText,
+      });
+      if (response.check) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  //독서 기록 수정 함수
+  const handleEditNote = async () => {
+    try {
+      await deleteUnusedImages(markdownText);
+
+      const response = await putEditNote(noteId, {
+        title: titleText,
+        content: markdownText,
+      });
+      if (response.check) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <WriteHeader
-        navigation={navigation}
-        isText={titleText.length > 0 || markdownText.length > 0}
-        checkClick={() => console.log("저장")}
+        isText={
+          titleText.length > 0 &&
+          markdownText.length > 0 &&
+          (title !== titleText || content !== markdownText)
+        }
+        onCheckPress={() =>
+          bookId === undefined ? handleEditNote() : handleSaveNote()
+        }
+        onCancelPress={() => {
+          const isEdit =
+            noteId === undefined
+              ? titleText.length > 0 || markdownText.length > 0
+              : title !== titleText || content !== markdownText;
+
+          isEdit ? setIsEditModal(true) : navigation.goBack();
+        }}
       />
       <View style={styles.tabViewWrap}>
         <Pressable
@@ -400,7 +470,7 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             <>
               <Text style={styles.titleText}>{titleText}</Text>
               <Markdown style={markdownStyle} rules={RenderRules}>
-                {markdownText}
+                {String(markdownText)}
               </Markdown>
             </>
           )}
@@ -476,12 +546,17 @@ const WritePage = ({ navigation }: { navigation: any }) => {
                       return (
                         <Pressable
                           key={index}
-                          onPress={() => {
+                          onPress={async () => {
                             if (data.type === "Reset") {
                               handleReset();
-                            } else if (data.type === "TextShape" && isFirst) {
-                              setIsWarningModal(true);
-                              setIsFirst(false);
+                            } else if (data.type === "TextShape") {
+                              const isFirst = await AsyncStorage.getItem(
+                                "isFirst"
+                              );
+                              if (isFirst === null) {
+                                setIsWarningModal(true);
+                                await AsyncStorage.setItem("isFirst", "true");
+                              }
                               setSelectedMenu(data.type);
                             } else if (selectedMenu === data.type) {
                               setSelectedMenu("");
@@ -535,9 +610,10 @@ const WritePage = ({ navigation }: { navigation: any }) => {
             (selectedMenu === "Plus" ? (
               <PlusItem handleTextInsert={handleTextInsert} />
             ) : selectedMenu === "Image" ? (
-              <ImageItem handleTextInsert={handleTextInsert} />
-            ) : selectedMenu === "TextImport" ? (
-              <TextImportItem handleTextInsert={handleTextInsert} />
+              <ImageItem
+                handleTextInsert={handleTextInsert}
+                setAddImageList={setAddImageList}
+              />
             ) : selectedMenu === "TextShape" ? (
               <TextShapeItem handleColorChange={handleColorChange} />
             ) : (
@@ -548,6 +624,16 @@ const WritePage = ({ navigation }: { navigation: any }) => {
       <WarningModal
         visible={isWarningModal}
         onClose={() => setIsWarningModal(false)}
+      />
+      <EditModal
+        visible={isEditModal}
+        text={"작성한 사항이 저장되지 않았습니다.\n취소하시겠습니까?"}
+        rightText="취소"
+        onClose={() => setIsEditModal(false)}
+        onComplate={() => {
+          deleteImages();
+          navigation.goBack();
+        }}
       />
     </View>
   );

@@ -122,5 +122,6 @@ export const styles = StyleSheet.create({
     width: 32,
     height: 48.71,
     borderRadius: 1.07,
+    backgroundColor: "#C4C4C4",
   },
 });

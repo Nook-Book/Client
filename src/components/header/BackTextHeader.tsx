@@ -5,19 +5,27 @@ import { styles } from "../../styles/header/HeaderStyle";
 import { useNavigation } from "@react-navigation/native";
 import { Color } from "../../styles/Theme";
 
-export default function BackTextHeader({ title }: { title: string }) {
+export default function BackTextHeader({
+  title,
+  onBackPress,
+}: {
+  title: string;
+  onBackPress?: () => void;
+}) {
   const navigation = useNavigation();
 
   return (
     <SafeAreaView>
       <View style={styles.centerContainer}>
         <Pressable
-          onPress={() => navigation.goBack()}
+          onPress={() =>
+            onBackPress === undefined ? navigation.goBack() : onBackPress()
+          }
           style={styles.leftButtonWrap}
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        <Text style={styles.text2}>{title}</Text>
+        <Text style={[styles.text2, { marginRight: 56 }]}>{title}</Text>
       </View>
     </SafeAreaView>
   );

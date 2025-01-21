@@ -5,32 +5,23 @@ import CheckIcon from "../../assets/images/icon/Check.svg";
 import { styles } from "../../styles/header/HeaderStyle";
 
 export default function WriteHeader({
-  navigation,
   isText,
-  checkClick,
+  onCheckPress,
+  onCancelPress,
 }: {
-  navigation: any;
   isText: boolean;
-  checkClick: () => void;
+  onCheckPress: () => void;
+  onCancelPress: () => void;
 }) {
   return (
     <SafeAreaView>
       <View style={styles.rightContainer}>
         {isText ? (
-          <Pressable
-            onPress={() => {
-              navigation.goBack();
-              checkClick;
-            }}
-            style={styles.buttonWrap}
-          >
+          <Pressable onPress={onCheckPress} style={styles.buttonWrap}>
             <CheckIcon />
           </Pressable>
         ) : (
-          <Pressable
-            onPress={() => navigation.goBack()}
-            style={styles.buttonWrap}
-          >
+          <Pressable onPress={onCancelPress} style={styles.buttonWrap}>
             <CancelIcon />
           </Pressable>
         )}
