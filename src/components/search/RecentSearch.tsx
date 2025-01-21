@@ -1,16 +1,36 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback } from "react";
+import { ScrollView, Text, View } from "react-native";
 import { RecentSearchText } from "../../constans/search";
+import { useDeleteKeyword, useGetKeyword } from "../../hooks/book/useKeyword";
 import { styles } from "../../styles/search/RecentSearchStyle";
-import { dummyRecentSearchList } from "../../assets/data/dummyRecentSearchList";
 import RecentSearchCard from "./RecentSearchCard";
 
 const RecentSearch = () => {
-  const [searchList, setSearchList] = useState(dummyRecentSearchList);
+  const { data, refetch } = useGetKeyword();
+  const searchList = data.information;
 
-  // 같은 이름이 있을 경우 delete함수가 안 먹히는데 이는 어처피 api호출로 해결될 문제로 보임.
-  const handleDeleteCard = (text: string) => {
-    setSearchList(searchList.filter((item) => item !== text));
+  const { mutate } = useDeleteKeyword();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [])
+  );
+
+  const handleDeleteKeyword = (keywordId: number) => {
+    mutate(
+      { keywordId },
+      {
+        onSuccess: (data) => {
+          console.log("Success");
+          refetch();
+        },
+        onError: (error) => {
+          console.log("Error", error.message);
+        },
+      }
+    );
   };
 
   return (
@@ -23,9 +43,9 @@ const RecentSearch = () => {
       >
         {searchList.map((search) => (
           <RecentSearchCard
-            key={search}
-            text={search}
-            onDelete={handleDeleteCard}
+            key={search.keywordId}
+            text={search.content}
+            onDelete={() => handleDeleteKeyword(search.keywordId)}
           />
         ))}
       </ScrollView>
