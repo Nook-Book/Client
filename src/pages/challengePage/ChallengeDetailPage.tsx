@@ -58,6 +58,12 @@ export default function ChallengeDetailPage({
     setIsTitleVisible(scrollY > threshold);
   };
 
+  //시간 변환
+  const formatTime = (time: string) => {
+    const [hour, minute] = time.split(":");
+    return `${hour}시 ${minute === "00" ? "" : `${minute}분`}`;
+  };
+
   return (
     <View style={styles.container}>
       {detail && (
@@ -76,9 +82,7 @@ export default function ChallengeDetailPage({
               navigation={navigation}
               onPress={() =>
                 navigation.navigate("ChallengeDetailSetting", {
-                  isEditable: detail.isEditable,
-                  challengeId: detail.challengeId,
-                  title: detail.title,
+                  detail: detail,
                 })
               }
             />
@@ -91,9 +95,7 @@ export default function ChallengeDetailPage({
             <View style={styles.contentContainer}>
               <Image
                 source={{
-                  uri:
-                    "https://nookbook-image-bucket.s3.amazonaws.com/" +
-                    detail.challengeCover,
+                  uri: detail.challengeCover,
                 }}
                 style={styles.image}
               />
@@ -135,6 +137,23 @@ export default function ChallengeDetailPage({
                 <Text style={styles.itemBoldText}> {detail.dailyGoal}분</Text>
               </Text>
             </View>
+            {detail.dailyStartTime && detail.dailyEndTime && (
+              <View style={styles.itemWrap}>
+                <Text style={styles.leftText}>독서 시간</Text>
+                <Text style={styles.itemLightText}>
+                  시작
+                  <Text style={styles.itemBoldText}>
+                    {" "}
+                    {formatTime(detail.dailyStartTime)}
+                  </Text>{" "}
+                  / 종료
+                  <Text style={styles.itemBoldText}>
+                    {" "}
+                    {formatTime(detail.dailyEndTime)}
+                  </Text>
+                </Text>
+              </View>
+            )}
             {/* 현황 API 연동 필요 */}
             <StatusList
               cards={dummyListCard.cardList}

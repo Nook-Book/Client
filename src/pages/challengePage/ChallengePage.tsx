@@ -72,9 +72,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
       <Pressable key={index} style={styles.challengeItem} onPress={onPress}>
         <Image
           source={{
-            uri:
-              "https://nookbook-image-bucket.s3.amazonaws.com/" +
-              item.challengeCover,
+            uri: item.challengeCover,
           }}
           style={styles.challengeImage}
         />
@@ -178,7 +176,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("NewChallenge", {
-              isNew: false,
+              isNew: true,
             })
           }
           style={styles.plusButton}

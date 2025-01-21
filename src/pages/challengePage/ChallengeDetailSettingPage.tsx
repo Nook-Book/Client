@@ -6,7 +6,7 @@ import InterIcon from "../../assets/images/icon/Inter.svg";
 import DeleteModal from "../../components/modal/DeleteModal";
 import DeleteButton from "../../components/challenge/DeleteButton";
 import { deleteChallenge } from "../../api/challenge/deleteChallenge";
-import { deleteParticipant } from "../../api/challenge/delete";
+import { deleteParticipant } from "../../api/challenge/deleteParticipant";
 
 export default function ChallengeDetailSettingPage({
   navigation,
@@ -15,13 +15,13 @@ export default function ChallengeDetailSettingPage({
   navigation: any;
   route: any;
 }) {
-  const { isEditable, title, challengeId } = route.params;
+  const { detail } = route.params;
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isExitModal, setIsExitModal] = useState(false);
 
   //챌린지 삭제
   const handleDelete = async () => {
-    const response = await deleteChallenge(challengeId);
+    const response = await deleteChallenge(detail.challengeId);
     if (response.check) {
       setIsDeleteModal(false);
       navigation.navigate("Challenge");
@@ -31,7 +31,7 @@ export default function ChallengeDetailSettingPage({
   //챌린지 나가기
   const handleExit = async () => {
     //participantId 값 필요
-    const response = await deleteParticipant(challengeId, 3);
+    const response = await deleteParticipant(detail.challengeId, 3);
     if (response.check) {
       setIsExitModal(false);
       navigation.navigate("Challenge");
@@ -47,7 +47,7 @@ export default function ChallengeDetailSettingPage({
         title={""}
       />
       <View style={styles.betweenWrap}>
-        {isEditable ? (
+        {detail.isEditable ? (
           <>
             <View>
               <Pressable
@@ -55,6 +55,7 @@ export default function ChallengeDetailSettingPage({
                 onPress={() =>
                   navigation.navigate("NewChallenge", {
                     isNew: false,
+                    detail: detail,
                   })
                 }
               >
@@ -86,14 +87,14 @@ export default function ChallengeDetailSettingPage({
       </View>
       <DeleteModal
         visible={isDeleteModal}
-        text={`‘${title}’\n챌린지를 삭제하시겠습니까?`}
+        text={`‘${detail.title}’\n챌린지를 삭제하시겠습니까?`}
         onClose={() => setIsDeleteModal(false)}
         onComplate={handleDelete}
       />
       <DeleteModal
         visible={isExitModal}
         leftText="나가기"
-        text={`‘${title}’\n챌린지에서 나가시겠습니까?`}
+        text={`‘${detail.title}’\n챌린지에서 나가시겠습니까?`}
         onClose={() => setIsExitModal(false)}
         onComplate={handleExit}
       />

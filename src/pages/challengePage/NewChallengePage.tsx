@@ -21,7 +21,8 @@ import {
   formatDateToString,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
-import { dummyListCard } from "../../assets/data/dummyChallengeList";
+import { patchImage } from "../../api/challenge/patchImage";
+import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
 
 export default function NewChallengePage({
   route,
@@ -30,35 +31,73 @@ export default function NewChallengePage({
   route: any;
   navigation: any;
 }) {
-  const { isNew } = route.params;
+  const convertToPeriodFormat = (time: string) => {
+    const [hour, minute] = time.split(":");
+    const hourInt = parseInt(hour, 10);
+    const ampm = hourInt >= 12 ? "PM" : "AM";
+    const formattedHour = hourInt % 12 === 0 ? 12 : hourInt % 12;
+    return {
+      hour: String(formattedHour).padStart(2, "0"),
+      minute,
+      ampm,
+    };
+  };
+
+  const convertTo24HourFormat = (time: TTime) => {
+    let hour = parseInt(time.hour);
+    if (time.ampm === "PM" && hour !== 12) {
+      hour += 12;
+    } else if (time.ampm === "AM" && hour === 12) {
+      hour = 0;
+    }
+
+    return `${hour.toString().padStart(2, "0")}:${time.minute}`;
+  };
+
+  const { isNew, detail } = route.params;
   const todayDate = formatDateToString(new Date()); //오늘 날짜
-  const [title, setTitle] = useState(isNew ? "" : dummyListCard.title); //챌린지 이름
-  const [imageUri, setImageUri] = useState<string | null>(
-    isNew ? null : dummyListCard.image
+  const [title, setTitle] = useState(isNew ? "" : detail.title); //챌린지 이름
+  const [imageUri, setImageUri] = useState<string>(
+    isNew ? "" : detail.challengeCover
   ); //챌린지 이미지
   const [isImagemodal, setIsImagemodal] = useState(false); //이미지 모달
   const [startDate, setStartDate] = useState<string>(
-    isNew ? todayDate : dummyListCard.startDate
+    isNew ? todayDate : detail.startDate
   ); // 시작일
   const [endDate, setEndDate] = useState<string>(
-    isNew ? todayDate : dummyListCard.endDate
+    isNew ? todayDate : detail.endDate
   ); // 종료일
-  const [isCheck, setIsCheck] = useState(isNew ? false : dummyListCard.isCheck); // 독서 시간 설정 안 함
+  const [isCheck, setIsCheck] = useState(
+    isNew ? false : detail.startDate === null
+  ); // 독서 시간 설정 안 함
   const [startPeriod, setStartPeriod] = useState<TTime>(
-    isNew ? { hour: "01", minute: "00", ampm: "AM" } : dummyListCard.startPeriod
+    isNew || detail.startTime === null
+      ? { hour: "01", minute: "00", ampm: "AM" }
+      : convertToPeriodFormat(detail.dailyStartTime)
   ); // 시작 시간 설정
   const [endPeriod, setEndPeriod] = useState<TTime>(
-    isNew ? { hour: "01", minute: "00", ampm: "AM" } : dummyListCard.endPeriod
+    isNew || detail.endTime === null
+      ? { hour: "01", minute: "00", ampm: "AM" }
+      : convertToPeriodFormat(detail.dailyEndTime)
   ); // 종료 시간 설정
   const [goalTime, setGoalTime] = useState<TTime>(
-    isNew ? { hour: "00", minute: "00" } : dummyListCard.goalTime
+    isNew
+      ? { hour: "00", minute: "00" }
+      : {
+          hour: String(Math.floor(detail.dailyGoal / 60)).padStart(2, "0"),
+          minute: String(detail.dailyGoal % 60).padStart(2, "0"),
+        }
   ); // 하루 목표 시간량 설정
   const [isPickerModal, setIsPickerModal] = useState(false); //picker 모달
   const [pickerType, setPickerType] = useState<"START" | "END" | "GOAL" | null>(
     null
   ); //picker 타입
   const [selectedParticipant, setSelectedParticipant] = useState<number[]>(
-    isNew ? [] : dummyListCard.selectedParticipant
+    isNew
+      ? []
+      : detail.participants?.map(
+          (data: { participantId: number }) => data.participantId
+        )
   ); // 선택된 참여자
 
   useEffect(() => {
@@ -75,7 +114,7 @@ export default function NewChallengePage({
 
   //이미지 핸들러
   const handleImagePress = () => setIsImagemodal(true);
-  const handleImagePicked = (uri: string | null) => setImageUri(uri);
+  const handleImagePicked = (uri: string) => setImageUri(uri);
 
   //시간 피커 핸들러
   const handleTimePickerComplete = (
@@ -119,18 +158,80 @@ export default function NewChallengePage({
     </View>
   );
 
+  const handleAccept = async () => {
+    try {
+      const fileName = imageUri.split("/").pop() || "image.jpg";
+      const type = `image/${fileName.split(".").pop()}` || "image/jpeg";
+
+      const formData = new FormData();
+      formData.append("challengeCover", {
+        uri: imageUri,
+        name: fileName,
+        type,
+      } as unknown as Blob);
+
+      const data = {
+        title: title,
+        startDate: startDate,
+        endDate: endDate,
+        dailyGoal: parseInt(goalTime.hour) * 60 + parseInt(goalTime.minute),
+        startTime: isCheck ? null : convertTo24HourFormat(startPeriod),
+        endTime: isCheck ? null : convertTo24HourFormat(endPeriod),
+      };
+
+      const detailData = {
+        title: detail.title,
+        startDate: detail.startDate,
+        endDate: detail.endDate,
+        dailyGoal: detail.dailyGoal,
+        startTime: detail.dailyStartTime.slice(0, -3),
+        endTime: detail.dailyEndTime.slice(0, -3),
+      };
+
+      if (isNew) {
+        //새로운 챌린지 생성
+      } else {
+        if (!imageUri.includes("https://")) {
+          const imageRes = await patchImage(detail.challengeId, formData);
+          if (!imageRes?.check) return;
+        }
+
+        if (data !== detailData) {
+          const editRes = await patchEditChallenge(detail.challengeId, data);
+          if (!editRes?.check) return;
+        }
+
+        navigation.navigate("Challenge");
+      }
+    } catch (error) {
+      console.error("이미지 업로드 실패:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackHeader title={isNew ? "챌린지 생성" : "챌린지 수정"} />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <Pressable style={styles.imageBtnWrap} onPress={handleImagePress}>
             <Text style={styles.imageBtnText}>커버 변경</Text>
           </Pressable>
-          <Image
-            source={imageUri ? { uri: imageUri } : undefined}
-            style={[styles.image, !imageUri && { backgroundColor: "#FFE870" }]}
-          />
+          {imageUri ? (
+            <Image
+              source={{
+                uri: imageUri,
+              }}
+              style={styles.image}
+            />
+          ) : (
+            <View
+              style={[
+                styles.image,
+                !imageUri && { backgroundColor: "#FFE870" },
+              ]}
+            ></View>
+          )}
         </View>
         <View style={styles.headWrap}>
           <TextInput
@@ -194,16 +295,20 @@ export default function NewChallengePage({
             label="시작 시간"
             time={startPeriod}
             onPress={() => {
-              setPickerType("START");
-              setIsPickerModal(true);
+              if (!isCheck) {
+                setPickerType("START");
+                setIsPickerModal(true);
+              }
             }}
           />
           <TimeSetting
             label="종료 시간"
             time={endPeriod}
             onPress={() => {
-              setPickerType("END");
-              setIsPickerModal(true);
+              if (!isCheck) {
+                setPickerType("END");
+                setIsPickerModal(true);
+              }
             }}
           />
         </View>
@@ -248,9 +353,9 @@ export default function NewChallengePage({
         </View>
       </ScrollView>
       <BottomOneButton
-        handleAccept={() => console.log(isNew ? "생성하기" : "수정하기")}
+        handleAccept={handleAccept}
         text={isNew ? "생성하기" : "수정하기"}
-        disabled={!title}
+        disabled={!title || !imageUri}
       />
       <ImagePickerModal
         visible={isImagemodal}

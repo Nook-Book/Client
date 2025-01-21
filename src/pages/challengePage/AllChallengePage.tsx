@@ -47,9 +47,7 @@ export default function AllChallengePage({
             >
               <Image
                 source={{
-                  uri:
-                    "https://nookbook-image-bucket.s3.amazonaws.com/" +
-                    item.challengeCover,
+                  uri: item.challengeCover,
                 }}
                 style={styles.itemImage}
               />

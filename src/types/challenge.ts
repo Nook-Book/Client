@@ -12,7 +12,7 @@ export type TInviteChallenge = {
 export type TImagePickerModalProps = {
   visible: boolean;
   onClose: () => void;
-  onImagePicked: (uri: string | null) => void;
+  onImagePicked: (uri: string) => void;
 };
 
 export type TTime = {
@@ -56,6 +56,8 @@ export type TChallengeDetailInformationRes = {
   endDate: string;
   totalHour: number;
   dailyGoal: number;
+  dailyStartTime: string;
+  dailyEndTime: string;
   participants: TChallengeDetailParticipantsRes[];
 };
 
@@ -67,4 +69,13 @@ export type TChallengeDetailParticipantsRes = {
   readingBookTitle: string;
   readingBookImage: string;
   dailyReadingTime: null | number;
+};
+
+export type TEditChallengeReq = {
+  title: string;
+  startDate: string;
+  endDate: string;
+  dailyGoal: number;
+  startTime: null | string;
+  endTime: null | string;
 };
