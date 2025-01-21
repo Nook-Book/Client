@@ -25,6 +25,7 @@ import { patchImage } from "../../api/challenge/patchImage";
 import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
 import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
 import AddParticipantModal from "../../components/modal/AddParticipantModal";
+import { postChallenge } from "../../api/challenge/postChallenge";
 
 export default function NewChallengePage({
   route,
@@ -163,30 +164,42 @@ export default function NewChallengePage({
       } as unknown as Blob);
 
       const data = {
-        title: title,
-        startDate: startDate,
-        endDate: endDate,
+        title,
+        startDate,
+        endDate,
         dailyGoal: parseInt(goalTime.hour) * 60 + parseInt(goalTime.minute),
         startTime: isCheck ? null : convertTo24HourFormat(startPeriod),
         endTime: isCheck ? null : convertTo24HourFormat(endPeriod),
       };
 
-      const detailData = {
-        title: detail.title,
-        startDate: detail.startDate,
-        endDate: detail.endDate,
-        dailyGoal: detail.dailyGoal,
-        startTime: detail.dailyStartTime || detail.dailyStartTime.slice(0, -3),
-        endTime: detail.dailyStartTime || detail.dailyEndTime.slice(0, -3),
-      };
-
       if (isNew) {
-        //새로운 챌린지 생성
+        formData.append(
+          "challengeCreateReq",
+          new Blob([JSON.stringify(data)], { type: "application/json" })
+        );
+
+        const newRes = await postChallenge(formData);
+        //에러 수정 필요
       } else {
         if (!imageUri.includes("https://")) {
           const imageRes = await patchImage(detail.challengeId, formData);
           if (!imageRes?.check) return;
         }
+
+        const detailData = {
+          title: detail.title,
+          startDate: detail.startDate,
+          endDate: detail.endDate,
+          dailyGoal: detail.dailyGoal,
+          startTime:
+            detail.dailyStartTime !== null
+              ? detail.dailyStartTime.slice(0, -3)
+              : null,
+          endTime:
+            detail.dailyStartTime !== null
+              ? detail.dailyEndTime.slice(0, -3)
+              : null,
+        };
 
         if (data !== detailData) {
           const editRes = await patchEditChallenge(detail.challengeId, data);
@@ -196,7 +209,7 @@ export default function NewChallengePage({
         navigation.navigate("Challenge");
       }
     } catch (error) {
-      console.error("이미지 업로드 실패:", error);
+      console.error("오류:", error);
     }
   };
 
@@ -338,7 +351,7 @@ export default function NewChallengePage({
       <BottomOneButton
         handleAccept={handleAccept}
         text={isNew ? "생성하기" : "수정하기"}
-        disabled={!title || !imageUri}
+        disabled={!title}
       />
       <ImagePickerModal
         visible={isImageModal}
