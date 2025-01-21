@@ -32,3 +32,8 @@ export type TSaveNoteReq = {
   title: string;
   content: string;
 };
+
+export type TEditNoteReq = {
+  title: string;
+  content: string;
+};

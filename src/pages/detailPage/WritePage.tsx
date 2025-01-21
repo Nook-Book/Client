@@ -36,6 +36,7 @@ import EditModal from "../../components/modal/EditModal";
 import { postNote } from "../../api/note/postNote";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { deleteImage } from "../../api/note/deleteImage";
+import { putEditNote } from "../../api/note/putEditNote";
 
 type SelectedMenuType = "" | "Plus" | "Image" | "TextShape" | "Reset";
 
@@ -111,14 +112,15 @@ const shapeMenuItem: ShapeMenuItemType[] = [
 
 const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
   const bookId = route?.params?.bookId;
+  const { noteId, title, content } = route.params;
 
   const [isWarningModal, setIsWarningModal] = useState(false); //색상 변경 주의 모달
   const [isEditModal, setIsEditModal] = useState(false); //작성 취소 시 경고 모달
 
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
   const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
-  const [titleText, setTitleText] = useState(""); //제목
-  const [markdownText, setMarkdownText] = useState(``); //내용
+  const [titleText, setTitleText] = useState(title || ""); //제목
+  const [markdownText, setMarkdownText] = useState(content || ""); //내용
   const [isKeybored, setIsKeybored] = useState(false); //키보드 상태
   const [isItemView, setIsItemView] = useState(false); //아이템뷰 상태
   const [selectedMenu, setSelectedMenu] = useState<SelectedMenuType>(""); //선택된 메뉴
@@ -349,17 +351,43 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     }
   };
 
+  //독서 기록 수정 함수
+  const handleEditNote = async () => {
+    try {
+      await deleteUnusedImages(markdownText);
+
+      const response = await putEditNote(noteId, {
+        title: titleText,
+        content: markdownText,
+      });
+      if (response.check) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ height: 50 }}></View>
       <WriteHeader
-        isText={titleText.length > 0 && markdownText.length > 0}
-        onCheckPress={handleSaveNote}
-        onCancelPress={() =>
-          titleText.length > 0 || markdownText.length > 0
-            ? setIsEditModal(true)
-            : navigation.goBack()
+        isText={
+          titleText.length > 0 &&
+          markdownText.length > 0 &&
+          (title !== titleText || content !== markdownText)
         }
+        onCheckPress={() =>
+          bookId === undefined ? handleEditNote() : handleSaveNote()
+        }
+        onCancelPress={() => {
+          const isEdit =
+            noteId === undefined
+              ? titleText.length > 0 || markdownText.length > 0
+              : title !== titleText || content !== markdownText;
+
+          isEdit ? setIsEditModal(true) : navigation.goBack();
+        }}
       />
       <View style={styles.tabViewWrap}>
         <Pressable
