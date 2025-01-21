@@ -21,7 +21,7 @@ export default function BackTextHeader({
           onPress={() =>
             onBackPress === undefined ? navigation.goBack() : onBackPress()
           }
-          style={styles.leftButtonWrap}
+          style={styles.leftTextButtonWrap}
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>

@@ -15,7 +15,7 @@ const ImagePickerModal = ({
       const result: any = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [3, 4],
+        aspect: [5, 3],
         quality: 1,
       });
 
@@ -35,12 +35,12 @@ const ImagePickerModal = ({
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [3, 4],
+        aspect: [5, 3],
         quality: 1,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        onImagePicked(result.assets[0].uri || null);
+        onImagePicked(result.assets[0].uri);
       }
     } else {
       Alert.alert("권한 오류", "미디어 라이브러리 접근 권한이 필요합니다.");

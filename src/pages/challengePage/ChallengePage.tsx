@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   View,
   Text,
@@ -10,23 +10,49 @@ import {
 } from "react-native";
 import { styles } from "../../styles/challenge/ChallengePageStyle";
 import AllChallengeHeader from "../../components/header/RightTextHeader";
-import {
-  dummyList,
-  dummyListInvite,
-  dummyListLong,
-} from "../../assets/data/dummyChallengeList";
+import { dummyListInvite } from "../../assets/data/dummyChallengeList";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import InterIcon from "../../assets/images/icon/Inter.svg";
 import { Color } from "../../styles/Theme";
-import { TChallenge } from "../../types/challenge";
+import {
+  TChallengeListInfoRes,
+  TChallengeListInformationRes,
+} from "../../types/challenge";
+import { getChallengeList } from "../../api/challenge/getChallengeList";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ChallengePage({ navigation }: { navigation: any }) {
-  const ChallengeHead = ({ text, data }: { text: string; data: any }) => {
+  const [list, setList] = useState<TChallengeListInformationRes>();
+
+  const fetchChallengeList = async () => {
+    try {
+      const response = await getChallengeList();
+      if (response?.check) {
+        setList(response.information);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchChallengeList();
+    }, [])
+  );
+
+  const ChallengeHead = ({
+    text,
+    count,
+  }: {
+    text: string;
+    count: number | undefined;
+  }) => {
     return (
       <View style={styles.headWrap}>
         <Text style={styles.headText}>{text}</Text>
         <Text style={styles.headText}>
-          {data.length}
+          {count}
           <Text style={{ color: Color.Typo.Secondary }}>개</Text>
         </Text>
       </View>
@@ -38,13 +64,18 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
     index,
     onPress,
   }: {
-    item: TChallenge;
+    item: TChallengeListInfoRes;
     index: number;
     onPress: () => void;
   }) => {
     return (
       <Pressable key={index} style={styles.challengeItem} onPress={onPress}>
-        <Image source={item.image} style={styles.challengeImage} />
+        <Image
+          source={{
+            uri: item.challengeCover,
+          }}
+          style={styles.challengeImage}
+        />
         <Text style={styles.challengeText} numberOfLines={1}>
           {item.title}
         </Text>
@@ -54,10 +85,13 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <AllChallengeHeader navigation={navigation} />
+      <View style={{ height: 50 }}></View>
+      <AllChallengeHeader
+        onPress={() => navigation.navigate("AllChallenge", { list: list })}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <ChallengeHead text="초대된 챌린지" data={dummyListInvite} />
+          <ChallengeHead text="초대된 챌린지" count={3} />
           {dummyListInvite.map((data, index) => {
             return (
               <Pressable
@@ -76,10 +110,10 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
               </Pressable>
             );
           })}
-          <ChallengeHead text="진행 중인 챌린지" data={dummyList} />
+          <ChallengeHead text="진행 중인 챌린지" count={list?.progressCount} />
           <FlatList
             style={styles.challengeWrap}
-            data={dummyList}
+            data={list?.progressList}
             renderItem={({ item, index }) => (
               <ChallengeItem
                 item={item}
@@ -87,18 +121,19 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
                 onPress={() =>
                   navigation.navigate("ChallengeDetail", {
                     isInvite: false,
+                    challengeId: item.challengeId,
                   })
                 }
               />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(_, index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
-          <ChallengeHead text="진행 예정인 챌린지" data={dummyListLong} />
+          <ChallengeHead text="진행 예정인 챌린지" count={list?.waitingCount} />
           <FlatList
             style={styles.challengeWrap}
-            data={dummyListLong}
+            data={list?.waitingList}
             renderItem={({ item, index }) => (
               <ChallengeItem
                 item={item}
@@ -106,18 +141,19 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
                 onPress={() =>
                   navigation.navigate("ChallengeDetail", {
                     isInvite: false,
+                    challengeId: item.challengeId,
                   })
                 }
               />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(_, index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
-          <ChallengeHead text="종료된 챌린지" data={dummyListLong} />
+          <ChallengeHead text="종료된 챌린지" count={list?.endCount} />
           <FlatList
             style={styles.challengeWrap}
-            data={dummyListLong}
+            data={list?.endList}
             renderItem={({ item, index }) => (
               <ChallengeItem
                 item={item}
@@ -125,11 +161,12 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
                 onPress={() =>
                   navigation.navigate("ChallengeDetail", {
                     isInvite: false,
+                    challengeId: item.challengeId,
                   })
                 }
               />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(_, index) => index.toString()}
             horizontal
             showsHorizontalScrollIndicator={false}
           />
@@ -139,7 +176,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("NewChallenge", {
-              isNew: false,
+              isNew: true,
             })
           }
           style={styles.plusButton}

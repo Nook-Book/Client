@@ -4,6 +4,8 @@ import { Color, Font } from "../Theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Color.Secondary,
   },
   contentContainer: {
@@ -16,6 +18,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0.8,
     borderColor: Color.Border.Stroke,
     padding: 16,
+    width: "100%",
   },
   periodDateWrap: {
     alignItems: "center",

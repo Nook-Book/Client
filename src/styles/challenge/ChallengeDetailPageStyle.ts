@@ -84,6 +84,7 @@ export const styles = StyleSheet.create({
     width: 25.75,
     height: 25.75,
     borderRadius: 100,
+    backgroundColor: "#C4C4C4",
   },
   itemText: {
     ...Font.Label.Small,

@@ -6,18 +6,15 @@ import { Color } from "../../styles/Theme";
 
 export default function CalenderHeader({
   title,
-  navigation,
+  onPress,
 }: {
   title: string;
-  navigation: any;
+  onPress: () => void;
 }) {
   return (
     <SafeAreaView>
       <View style={styles.centerContainer}>
-        <Pressable
-          onPress={() => navigation.goBack()}
-          style={styles.leftButtonWrap}
-        >
+        <Pressable onPress={onPress} style={styles.leftButtonWrap}>
           <CancelIcon color={Color.Contents.Icon} />
         </Pressable>
         <Text style={styles.text1}>{title}</Text>
