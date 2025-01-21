@@ -35,6 +35,7 @@ export default function EditParticipantPage({
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackTextHeader title="참여자 관리" />
       <View style={styles.betweenWrap}>
         <Text style={styles.headText}>참여자</Text>
@@ -85,6 +86,7 @@ export default function EditParticipantPage({
               name: "두기",
             });
           }}
+          text="챌린지 삭제"
         />
       </View>
       <DeleteModal

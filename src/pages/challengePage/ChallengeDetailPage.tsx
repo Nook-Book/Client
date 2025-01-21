@@ -77,6 +77,8 @@ export default function ChallengeDetailPage({
               onPress={() =>
                 navigation.navigate("ChallengeDetailSetting", {
                   isEditable: detail.isEditable,
+                  challengeId: detail.challengeId,
+                  title: detail.title,
                 })
               }
             />
