@@ -1,18 +1,44 @@
-import BookstatisticsHeader from "./BookstatisticsHeader";
-import React from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import React, { useEffect } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
+import { useReport } from "../../hooks/mypage/useReport";
+import useYear from "../../store/useYear";
 import { Color, Font } from "../../styles/Theme";
+import BookstatisticsHeader from "./BookstatisticsHeader";
 const Bookstatistics = () => {
   const screenWidth = Dimensions.get("window").width;
 
+  const { year } = useYear();
+
+  const { data, refetch } = useReport();
+
+  const countList: number[] = new Array(12).fill(0);
+
+  useEffect(() => {
+    refetch();
+
+    data.information.forEach((item) => {
+      if (item.month >= 1 && item.month <= 12) {
+        countList[item.month - 1] = item.count;
+      }
+    });
+  }, [year]);
+
+  data.information.forEach((item) => {
+    if (item.month >= 1 && item.month <= 12) {
+      countList[item.month - 1] = item.count;
+    }
+  });
+
+  console.log(countList);
+
   // 막대 그래프에 표시할 데이터
-  const data = {
+  const reportData = {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
 
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43, 50, 0, 0, 0, 0, 0],
+        data: countList,
       },
     ],
   };
@@ -40,7 +66,7 @@ const Bookstatistics = () => {
       <BookstatisticsHeader />
       <BarChart
         style={styles.chart}
-        data={data}
+        data={reportData}
         width={screenWidth}
         height={220}
         yAxisLabel=""
