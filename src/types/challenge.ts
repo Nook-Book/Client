@@ -119,15 +119,39 @@ export type TInviteContentRes = {
 };
 
 export type TFriendListRes = {
-  check: boolean;
-  information: [
-    {
+  check: true;
+  information: {
+    content: {
       userId: number;
-      friendId: number;
       nickname: string;
       imageUrl: string;
-    }
-  ];
+    }[];
+    pageable: {
+      pageNumber: number;
+      pageSize: number;
+      sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+      };
+      offset: number;
+      paged: boolean;
+      unpaged: boolean;
+    };
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    size: number;
+    number: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+  };
 };
 
 export type TParticipantRes = {
