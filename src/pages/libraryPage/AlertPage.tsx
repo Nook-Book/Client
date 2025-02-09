@@ -9,12 +9,13 @@ export default function AlertPage() {
     item,
     index,
   }: {
-    item: { id: number; content: string };
+    item: { id: number; content: string; date: string };
     index: number;
   }) => {
     return (
       <View style={styles.alertItem} key={index}>
         <Text style={styles.alertText}>{item.content}</Text>
+        <Text style={styles.dateText}>{item.date}</Text>
       </View>
     );
   };

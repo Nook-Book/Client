@@ -57,7 +57,7 @@ const EditBookPage = ({
         }}
       />
       <Text style={styles.numText}>{currentIndex + 1}번째</Text>
-      <View style={{ height: windowHeight / 1.43 }}>
+      <View style={{ height: windowHeight / 1.5 }}>
         <BookList
           navigation={navigation}
           editType={true}
