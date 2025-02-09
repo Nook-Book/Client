@@ -91,7 +91,6 @@ export default function ChallengeDetailPage({
     <View style={styles.container}>
       {detail && (
         <>
-          <View style={{ height: 50 }}></View>
           {isInvite ? (
             <BackTitleHeader
               navigation={navigation}

@@ -83,7 +83,6 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackTextHeader
         title="타이머"
         onBackPress={() => {

@@ -26,6 +26,7 @@ import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
 import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
 import AddParticipantModal from "../../components/modal/AddParticipantModal";
 import { postChallenge } from "../../api/challenge/postChallenge";
+import { postParticipant } from "../../api/challenge/postParticipant";
 
 export default function NewChallengePage({
   route,
@@ -181,6 +182,7 @@ export default function NewChallengePage({
 
         const newRes = await postChallenge(formData);
         //에러 수정 필요
+        handleParticipant(0); //challengeId 받아서 보내기
       } else {
         if (!imageUri.includes("https://")) {
           const imageRes = await patchImage(detail.challengeId, formData);
@@ -207,6 +209,8 @@ export default function NewChallengePage({
           if (!editRes?.check) return;
         }
 
+        handleParticipant();
+
         navigation.navigate("ChallengeDetail", {
           ...route.params,
           isInvite: false,
@@ -217,9 +221,21 @@ export default function NewChallengePage({
     }
   };
 
+  //참여자 추가
+  const handleParticipant = async (challengeId?: number) => {
+    if (challengeId) {
+      for (const participantId of selectedParticipant) {
+        await postParticipant(challengeId, participantId);
+      }
+    } else {
+      for (const participantId of selectedParticipant) {
+        await postParticipant(detail.challengeId, participantId);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackHeader title={isNew ? "챌린지 생성" : "챌린지 수정"} />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>

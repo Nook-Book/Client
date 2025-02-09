@@ -129,3 +129,18 @@ export type TFriendListRes = {
     }
   ];
 };
+
+export type TParticipantRes = {
+  check: boolean;
+  information: {
+    isOwner: boolean;
+    participantList: TParticipantListRes[];
+  };
+};
+
+export type TParticipantListRes = {
+  participantId: number;
+  participantNickname: string;
+  participantImage: string;
+  role: string;
+};

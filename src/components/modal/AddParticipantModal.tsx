@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { FlatList, View, Text, TextInput, Modal, Alert } from "react-native";
+import { FlatList, View, Text, TextInput, Modal } from "react-native";
 import { styles } from "../../styles/challenge/AddParticipantModalStyle";
 import BackHeader from "../header/BackHeader";
 import { Color } from "../../styles/Theme";

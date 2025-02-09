@@ -25,7 +25,6 @@ export default function AllChallengePage({
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackHeader title="전체보기" />
       <View style={styles.contentContainer}>
         <Text style={styles.lengthText}>
