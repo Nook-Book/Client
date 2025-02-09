@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { styles } from "../../styles/bottomSheet/BottomSheetStyle";
 import KakaoIcon from "../../assets/images/share/Kakao.svg";
 import InstagramIcon from "../../assets/images/share/Instagram.svg";
@@ -8,6 +8,7 @@ import ShareCard from "./ShareCard";
 import BottomSheetTitle from "./BottomSheetTitle";
 import * as Linking from "expo-linking";
 import * as Clipboard from "expo-clipboard";
+import * as Sharing from "expo-sharing";
 
 const ShareBottomSheet = ({
   isbn,
@@ -17,22 +18,29 @@ const ShareBottomSheet = ({
   onClose: () => void;
 }) => {
   const generateDeepLink = () => {
-    return Linking.createURL(`/book/${isbn}`);
+    if (__DEV__) {
+      return Linking.createURL(`/book/${isbn}`);
+    } else {
+      return `https://nookbook.com/book/${isbn}`;
+    }
   };
 
-  const handleShareKakao = () => {
-    // 카카오톡 공유 로직
-    console.log("카카오톡 공유하기");
-  };
+  const handleShare = async () => {
+    const link = generateDeepLink();
 
-  const handleShareInstagram = () => {
-    // 인스타그램 공유 로직
-    console.log("인스타그램 공유하기");
+    try {
+      await Sharing.shareAsync(link, {
+        dialogTitle: "NookBook",
+      });
+    } catch (error) {
+      console.error("공유 실패:", error);
+    }
   };
 
   const handleCopyLink = () => {
     const link = generateDeepLink();
     Clipboard.setStringAsync(link);
+    Alert.alert("", "링크가 복사되었습니다!", [{ text: "확인" }]);
   };
 
   return (
@@ -44,13 +52,13 @@ const ShareBottomSheet = ({
           Icon={<KakaoIcon />}
           leftText="카카오톡 공유하기"
           rightText=""
-          onPress={handleShareKakao}
+          onPress={handleShare}
         />
         <BottomSheetItem
           Icon={<InstagramIcon />}
           leftText="인스타그램 공유하기"
           rightText=""
-          onPress={handleShareInstagram}
+          onPress={handleShare}
         />
         <BottomSheetItem
           Icon={<LinkIcon />}
