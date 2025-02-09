@@ -13,4 +13,8 @@ export const styles = StyleSheet.create({
     ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
   },
+  dateText: {
+    ...Font.Paragraph.XS,
+    color: Color.Typo.Secondary,
+  },
 });

@@ -25,7 +25,7 @@ export default function BackTextHeader({
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        <Text style={[styles.text2, { marginRight: 56 }]}>{title}</Text>
+        <Text style={[styles.centerText, { marginRight: 56 }]}>{title}</Text>
       </View>
     </SafeAreaView>
   );

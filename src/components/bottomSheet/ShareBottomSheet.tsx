@@ -6,8 +6,20 @@ import LinkIcon from "../../assets/images/share/Link.svg";
 import BottomSheetItem from "./BottomSheetItem";
 import ShareCard from "./ShareCard";
 import BottomSheetTitle from "./BottomSheetTitle";
+import * as Linking from "expo-linking";
+import * as Clipboard from "expo-clipboard";
 
-const ShareBottomSheet = ({ onClose }: { onClose: () => void }) => {
+const ShareBottomSheet = ({
+  isbn,
+  onClose,
+}: {
+  isbn: string;
+  onClose: () => void;
+}) => {
+  const generateDeepLink = () => {
+    return Linking.createURL(`/book/${isbn}`);
+  };
+
   const handleShareKakao = () => {
     // 카카오톡 공유 로직
     console.log("카카오톡 공유하기");
@@ -19,8 +31,8 @@ const ShareBottomSheet = ({ onClose }: { onClose: () => void }) => {
   };
 
   const handleCopyLink = () => {
-    // 링크 복사 로직
-    console.log("링크 복사하기");
+    const link = generateDeepLink();
+    Clipboard.setStringAsync(link);
   };
 
   return (

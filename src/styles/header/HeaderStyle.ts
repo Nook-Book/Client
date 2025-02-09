@@ -54,6 +54,14 @@ export const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
   },
+  centerText: {
+    ...Font.Paragraph.SemiMedium,
+    color: Color.Typo.Primary,
+    justifyContent: "center",
+    textAlign: "center",
+    flex: 1,
+    paddingHorizontal: 5,
+  },
   text1: {
     ...Font.Label.XMedium,
     color: Color.Typo.Primary,
@@ -65,8 +73,6 @@ export const styles = StyleSheet.create({
     color: Color.Typo.Primary,
     justifyContent: "center",
     textAlign: "center",
-    flex: 1,
-    paddingHorizontal: 5,
   },
   text2Blue: {
     ...Font.Paragraph.SemiMedium,
