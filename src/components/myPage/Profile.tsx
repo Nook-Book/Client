@@ -1,18 +1,22 @@
-import { View, Text, Button, TouchableOpacity } from "react-native";
-import ProfileImage from "../../assets/images/profile/ProfileImage.svg";
-import { styles } from "../../styles/myPage/Profile";
 import { useNavigation } from "@react-navigation/native";
+import { Text, TouchableOpacity, View } from "react-native";
+import ProfileImage from "../../assets/images/profile/ProfileImage.svg";
+import { useMyPage } from "../../hooks/mypage/useMyPage";
+import { styles } from "../../styles/myPage/Profile";
 import { NavigationProp } from "../../types/search";
 
 const Profile = () => {
   const navigation = useNavigation<NavigationProp>();
+
+  const { data } = useMyPage();
+  const myInfo = data.information;
 
   return (
     <View style={styles.container}>
       <ProfileImage style={styles.profileImage} />
       <View style={styles.profileContainer}>
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>민주피쉬</Text>
+          <Text style={styles.name}>{myInfo.nickname}</Text>
           <Text style={styles.email}>@minjufish</Text>
         </View>
         <View style={styles.friendContainer}>
@@ -22,7 +26,7 @@ const Profile = () => {
               navigation.navigate("FriendPage");
             }}
           >
-            <Text style={styles.friendNumber}>13</Text>
+            <Text style={styles.friendNumber}>{myInfo.friendsNum}</Text>
           </TouchableOpacity>
         </View>
       </View>
