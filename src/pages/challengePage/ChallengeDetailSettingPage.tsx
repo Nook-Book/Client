@@ -64,7 +64,11 @@ export default function ChallengeDetailSettingPage({
               </Pressable>
               <Pressable
                 style={styles.pressWrap}
-                onPress={() => navigation.navigate("EditParticipant")}
+                onPress={() =>
+                  navigation.navigate("EditParticipant", {
+                    challengeId: detail.challengeId,
+                  })
+                }
               >
                 <Text style={styles.pressText}>참여자 관리</Text>
                 <InterIcon />

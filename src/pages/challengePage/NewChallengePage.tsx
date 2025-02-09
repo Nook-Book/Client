@@ -393,7 +393,9 @@ export default function NewChallengePage({
           setIsParticipantModal(false);
         }}
         selectedParticipant={selectedParticipant}
-        isNew={true}
+        challengeId={isNew ? null : detail.challengeId}
+        isNew={isNew}
+        isAdd={false}
       />
     </View>
   );

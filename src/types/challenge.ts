@@ -81,3 +81,51 @@ export type TEditChallengeReq = {
   startTime: null | string;
   endTime: null | string;
 };
+
+export type TInviteRes = {
+  content: TInviteContentRes[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+};
+
+export type TInviteContentRes = {
+  userId: number;
+  nickname: string;
+  invitable: boolean;
+  imageUrl: string;
+};
+
+export type TFriendListRes = {
+  check: boolean;
+  information: [
+    {
+      userId: number;
+      friendId: number;
+      nickname: string;
+      imageUrl: string;
+    }
+  ];
+};

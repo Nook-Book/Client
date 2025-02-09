@@ -1,52 +1,100 @@
 import React, { useState, useCallback } from "react";
-import { FlatList, View, Text, TextInput, Modal } from "react-native";
+import { FlatList, View, Text, TextInput, Modal, Alert } from "react-native";
 import { styles } from "../../styles/challenge/AddParticipantModalStyle";
 import BackHeader from "../header/BackHeader";
-import { dummyListParticipant } from "../../assets/data/dummyChallengeList";
 import { Color } from "../../styles/Theme";
 import ParticipantItem from "../challenge/ParticipantItem";
 import BottomOneButton from "../bottomSheet/BottomOneButton";
+import { TInviteContentRes } from "../../types/challenge";
+import { getInviteList } from "../../api/challenge/getInviteList";
+import { useFocusEffect } from "@react-navigation/native";
+import { getFriendList } from "../../api/challenge/getFriendList";
 
 export default function AddParticipantModal({
   visible,
   onClose,
   onComplate,
   selectedParticipant,
+  challengeId,
   isNew,
+  isAdd,
 }: {
   visible: boolean;
   onClose: () => void;
   onComplate: (editParticipant: number[]) => void;
   selectedParticipant: number[];
+  challengeId: number | null;
   isNew: boolean;
+  isAdd: boolean;
 }) {
+  const [inviteList, setInviteList] = useState<TInviteContentRes[]>();
   const [editParticipant, setEditParticipant] = useState(selectedParticipant);
   const [search, setSearch] = useState("");
 
+  const fetchInviteList = async () => {
+    try {
+      if (!challengeId) return;
+
+      const response = await getInviteList(challengeId);
+      if (response?.content) {
+        setInviteList(response.content);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  const fetchFriendList = async () => {
+    try {
+      const response = await getFriendList(search);
+      if (response?.check) {
+        const newInviteList = response.information.map((friend) => ({
+          userId: friend.userId,
+          nickname: friend.nickname,
+          imageUrl: friend.imageUrl,
+          invitable: true,
+        }));
+        setInviteList(newInviteList);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      isNew ? fetchFriendList() : fetchInviteList();
+    }, [])
+  );
+
   const handleSelect = useCallback(
-    (id: number) => {
-      setEditParticipant((prevSelectedParticipant) =>
-        prevSelectedParticipant.includes(id)
-          ? prevSelectedParticipant.filter((item) => item !== id)
-          : [...prevSelectedParticipant, id]
+    (useId: number) => {
+      setEditParticipant((prev) =>
+        prev.includes(useId)
+          ? prev.filter((item) => item !== useId)
+          : [...prev, useId]
       );
     },
     [setEditParticipant]
   );
 
   const renderItem = useCallback(
-    ({ item }: { item: any }) => {
-      const isSelected = selectedParticipant.includes(item.id);
+    ({ item }: { item: TInviteContentRes }) => {
+      const isSelected = editParticipant.includes(item.userId);
       return (
         <ParticipantItem
           item={item}
           isSelected={isSelected}
-          onSelect={() => handleSelect(item.id)}
+          onSelect={() => item.invitable && handleSelect(item.userId)}
         />
       );
     },
-    [selectedParticipant, handleSelect]
+    [editParticipant, handleSelect]
   );
+
+  const handleSearchSubmit = () => {
+    isNew ? fetchFriendList() : fetchInviteList();
+  };
 
   return (
     <Modal
@@ -57,7 +105,7 @@ export default function AddParticipantModal({
     >
       <View style={styles.container}>
         <BackHeader
-          title={isNew ? "친구 선택" : "참여자 추가"}
+          title={isAdd ? "참여자 추가" : "친구 선택"}
           onPress={onClose}
         />
         <TextInput
@@ -66,20 +114,27 @@ export default function AddParticipantModal({
           value={search}
           placeholder="아이디 또는 닉네임을 검색하세요."
           placeholderTextColor={Color.Typo.Secondary}
+          onSubmitEditing={handleSearchSubmit}
         />
         <Text style={styles.lengthText}>
-          {selectedParticipant.length}명 선택
+          {isAdd || isNew ? editParticipant.length : editParticipant.length - 1}
+          명 선택
         </Text>
         <FlatList
-          data={dummyListParticipant}
+          data={inviteList}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.userId.toString()}
           showsVerticalScrollIndicator={false}
         />
         <BottomOneButton
           handleAccept={() => onComplate(editParticipant)}
           text="확인"
-          disabled={selectedParticipant.length === 0}
+          disabled={
+            (isAdd || isNew
+              ? editParticipant.length === 0
+              : editParticipant.length === 1) ||
+            selectedParticipant === editParticipant
+          }
         />
       </View>
     </Modal>

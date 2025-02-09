@@ -12,9 +12,13 @@ import AddParticipantModal from "../../components/modal/AddParticipantModal";
 
 export default function EditParticipantPage({
   navigation,
+  route,
 }: {
   navigation: any;
+  route: any;
 }) {
+  const challengeId = route?.params?.challengeId;
+
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [isParticipantDeleteModal, setIsParticipantDeleteModal] =
     useState(false);
@@ -102,12 +106,14 @@ export default function EditParticipantPage({
       <AddParticipantModal
         visible={isParticipantModal}
         onClose={() => setIsParticipantModal(false)}
-        onComplate={(editParticipant) => {
-          //setSelectedParticipant(editParticipant);
+        onComplate={() => {
+          //참여자 추가 api
           setIsParticipantModal(false);
         }}
         selectedParticipant={[]}
+        challengeId={challengeId}
         isNew={false}
+        isAdd={true}
       />
     </View>
   );

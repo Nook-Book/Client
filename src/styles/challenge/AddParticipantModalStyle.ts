@@ -26,7 +26,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
-    gap: 9,
   },
   participantImage: {
     width: 40.67,
@@ -36,5 +35,11 @@ export const styles = StyleSheet.create({
   participantText: {
     ...Font.Label.XMedium,
     color: Color.Typo.Primary,
+    marginLeft: 9,
+    marginRight: 3,
+  },
+  requestText: {
+    ...Font.Paragraph.SemiSmall,
+    color: Color.Contents.Click,
   },
 });
