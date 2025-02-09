@@ -151,6 +151,7 @@ export default function NewChallengePage({
     </View>
   );
 
+  //챌린지 작성, 수정 함수
   const handleAccept = async () => {
     try {
       const fileName = imageUri.split("/").pop() || "image.jpg";
@@ -206,7 +207,10 @@ export default function NewChallengePage({
           if (!editRes?.check) return;
         }
 
-        navigation.navigate("Challenge");
+        navigation.navigate("ChallengeDetail", {
+          ...route.params,
+          isInvite: false,
+        });
       }
     } catch (error) {
       console.error("오류:", error);
