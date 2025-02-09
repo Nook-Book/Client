@@ -194,7 +194,7 @@ export default function StatusCardDetailPage({
                       marginBottom: -10,
                       backgroundColor:
                         isMarked && isSameMonth
-                          ? Color.Click[400]
+                          ? Color.Click[300]
                           : "transparent",
                       paddingVertical: 4,
                       borderRadius: 1,

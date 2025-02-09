@@ -16,8 +16,7 @@ interface Props {
   initValue?: string;
 }
 
-const WheelPicker: React.FC<Props> = (props) => {
-  const { items, onItemChange, itemHeight, initValue } = props;
+const WheelPicker = ({ items, onItemChange, itemHeight, initValue }: Props) => {
   const flatListRef = useRef<Animated.FlatList<string>>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
   const initValueIndex = initValue ? items.indexOf(initValue) : 0;
@@ -72,15 +71,28 @@ const WheelPicker: React.FC<Props> = (props) => {
 
   const modifiedItems = ["", ...items, ""];
 
+  const onScrollEndDrag = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const y = event.nativeEvent.contentOffset.y;
+    const index = Math.round(y / itemHeight);
+    setSelectedIndex(items[index]);
+
+    flatListRef.current?.scrollToOffset({
+      offset: index * itemHeight,
+      animated: true,
+    });
+  };
+
   return (
     <View style={{ height: itemHeight * 3 }}>
       <Animated.FlatList
+        keyExtractor={(item, index) => `${item}-${index}`}
         ref={flatListRef}
         data={modifiedItems}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         snapToInterval={itemHeight}
         onMomentumScrollEnd={momentumScrollEnd}
+        onScrollEndDrag={onScrollEndDrag}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],

@@ -40,7 +40,6 @@ export default function ChallengeDetailSettingPage({
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackTitleHeader
         navigation={navigation}
         isTitleVisible={false}
@@ -64,7 +63,12 @@ export default function ChallengeDetailSettingPage({
               </Pressable>
               <Pressable
                 style={styles.pressWrap}
-                onPress={() => navigation.navigate("EditParticipant")}
+                onPress={() =>
+                  navigation.navigate("EditParticipant", {
+                    challengeId: detail.challengeId,
+                    challengeTitle: detail.title,
+                  })
+                }
               >
                 <Text style={styles.pressText}>참여자 관리</Text>
                 <InterIcon />

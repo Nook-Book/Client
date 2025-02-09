@@ -4,7 +4,9 @@ import api from "..";
 export const postChallenge = async (formData: FormData) => {
   try {
     const response = await api.post(`/api/v1/challenge`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        "Content-Type": 'multipart/form-data; boundary="boundary"',
+      },
     });
     return response.data;
   } catch (e) {

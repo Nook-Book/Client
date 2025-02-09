@@ -17,10 +17,11 @@ const GoalTimePicker = ({ onTimeChange, itemHeight, initValue }: Props) => {
   const minuteItems = Array.from({ length: 12 }, (_, i) =>
     String(i * 5).padStart(2, "0")
   );
-  const { hour, minute } = initValue || {};
 
-  const selectedHour = useRef("");
-  const selectedMinute = useRef("");
+  const { hour = "00", minute = "00" } = initValue || {};
+
+  const selectedHour = useRef(hour);
+  const selectedMinute = useRef(minute);
 
   const handleIndexChange = (category: string, item: string) => {
     switch (category) {

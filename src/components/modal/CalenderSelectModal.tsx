@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Modal } from "react-native";
+import { View, Text, Modal, Alert } from "react-native";
 import { CalendarList, LocaleConfig } from "react-native-calendars";
 import { styles } from "../../styles/challenge/CalenderSelectModalStyle";
 import { Color, Font } from "../../styles/Theme";
@@ -89,7 +89,7 @@ export default function CalenderSelectModal({
         setEditeditEndDate(dateString);
         setMarkedDates(calculateMarkedDates(editStartDate, dateString));
       } else {
-        alert("종료일은 시작일 이후의 날짜여야 합니다.");
+        Alert.alert("종료일은 시작일 이후의 날짜여야 합니다.");
       }
     } else {
       setEditStartDate(dateString);

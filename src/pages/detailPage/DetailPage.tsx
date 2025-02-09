@@ -183,7 +183,6 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
     <View style={styles.container}>
       {book && (
         <>
-          <View style={{ height: 50 }}></View>
           <BackShareHeader
             title={book?.item.title}
             isTitleVisible={isTitleVisible}
