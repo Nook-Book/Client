@@ -13,9 +13,8 @@ const ImagePickerModal = ({
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
     if (permissionResult.granted) {
       const result: any = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [5, 3],
+        mediaTypes: "images",
+        allowsEditing: false,
         quality: 1,
       });
 
@@ -33,9 +32,8 @@ const ImagePickerModal = ({
       await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted) {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [5, 3],
+        mediaTypes: "images",
+        allowsEditing: false,
         quality: 1,
       });
 

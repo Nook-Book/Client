@@ -46,7 +46,7 @@ const ShareBottomSheet = ({
   const handleCopyLink = () => {
     const link = generateDeepLink();
     Clipboard.setStringAsync(link);
-    Alert.alert("", "링크가 복사되었습니다!", [{ text: "확인" }]);
+    Alert.alert("링크가 복사되었습니다!");
   };
 
   return (

@@ -249,36 +249,28 @@ export default function NewChallengePage({
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>기간 설정</Text>
-          <View style={styles.periodWrap}>
-            <Pressable
-              style={styles.periodDateWrap}
-              onPress={() => setIsCalenderModal(true)}
-            >
+          <Pressable
+            style={styles.periodWrap}
+            onPress={() => setIsCalenderModal(true)}
+          >
+            <View style={styles.periodDateWrap}>
               <Text style={styles.periodHeadText}>시작일</Text>
               <Text style={styles.periodDateText}>
                 {startDate.replaceAll("-", ".")} ({getDayOfWeek(startDate)})
               </Text>
-            </Pressable>
+            </View>
             <Text style={styles.periodHeadText}>
               {startDate && endDate
                 ? `${calculateDaysDifference(startDate, endDate)}일`
                 : ""}
             </Text>
-            <Pressable
-              style={styles.periodDateWrap}
-              onPress={() =>
-                navigation.navigate("CalenderSelect", {
-                  currentStartDate: startDate,
-                  currentEndDate: endDate,
-                })
-              }
-            >
+            <View style={styles.periodDateWrap}>
               <Text style={styles.periodHeadText}>종료일</Text>
               <Text style={styles.periodDateText}>
                 {endDate.replaceAll("-", ".")} ({getDayOfWeek(endDate)})
               </Text>
-            </Pressable>
-          </View>
+            </View>
+          </Pressable>
         </View>
         <View style={styles.itemWrap}>
           <View style={styles.readTimeHeadWrap}>
