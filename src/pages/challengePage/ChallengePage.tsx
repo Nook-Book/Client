@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { styles } from "../../styles/challenge/ChallengePageStyle";
 import AllChallengeHeader from "../../components/header/RightTextHeader";
-import { dummyListInvite } from "../../assets/data/dummyChallengeList";
 import PlusIcon from "../../assets/images/icon/Plus.svg";
 import InterIcon from "../../assets/images/icon/Inter.svg";
 import { Color } from "../../styles/Theme";
@@ -85,14 +84,13 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <AllChallengeHeader
         onPress={() => navigation.navigate("AllChallenge", { list: list })}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <ChallengeHead text="초대된 챌린지" count={3} />
-          {dummyListInvite.map((data, index) => {
+          <ChallengeHead text="초대된 챌린지" count={list?.waitingCount} />
+          {list?.waitingInvitationList.map((data, index) => {
             return (
               <Pressable
                 key={index}
@@ -100,6 +98,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
                 onPress={() =>
                   navigation.navigate("ChallengeDetail", {
                     isInvite: true,
+                    challengeId: data.challengeId,
                   })
                 }
               >

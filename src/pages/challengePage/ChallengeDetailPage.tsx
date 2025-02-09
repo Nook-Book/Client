@@ -19,6 +19,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { TChallengeDetailInformationRes } from "../../types/challenge";
 import { getChallengeDetail } from "../../api/challenge/getChallengeDetail";
 import { dummyListCard } from "../../assets/data/dummyChallengeList";
+import { postAcceptChallenge } from "../../api/challenge/postAcceptChallenge";
+import { postRejectChallenge } from "../../api/challenge/postRejectChallenge";
 
 export default function ChallengeDetailPage({
   route,
@@ -62,6 +64,27 @@ export default function ChallengeDetailPage({
   const formatTime = (time: string) => {
     const [hour, minute] = time.split(":");
     return `${hour}시 ${minute === "00" ? "" : `${minute}분`}`;
+  };
+
+  //초대 수락 함수
+  const handleChallengeAccept = async () => {
+    const response = await postAcceptChallenge(challengeId);
+
+    if (response.check) {
+      navigation.navigate("ChallengeDetail", {
+        ...route.params,
+        isInvite: false,
+      });
+    }
+  };
+
+  //초대 거절 함수
+  const handleChallengeReject = async () => {
+    const response = await postRejectChallenge(challengeId);
+
+    if (response.check) {
+      navigation.goBack();
+    }
   };
 
   return (
@@ -168,8 +191,8 @@ export default function ChallengeDetailPage({
           )}
           {isInvite && (
             <BottomTwoButton
-              handleAccept={() => console.log("수락")}
-              handleReject={() => console.log("거절")}
+              handleAccept={handleChallengeAccept}
+              handleReject={handleChallengeReject}
             />
           )}
         </>

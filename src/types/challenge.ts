@@ -33,6 +33,8 @@ export type TChallengeListInformationRes = {
   progressList: TChallengeListInfoRes[];
   endCount: number;
   endList: TChallengeListInfoRes[];
+  waitingInvitationCount: number;
+  waitingInvitationList: TChallengeListInfoRes[];
 };
 
 export type TChallengeListInfoRes = {
