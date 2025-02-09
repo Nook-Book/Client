@@ -1,11 +1,18 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "../../styles/search/BestSellerBookStyle";
 import { BestBook } from "../../types/search/bestbook";
+import { useNavigation } from "@react-navigation/native";
+import { DetailNavigationProp } from "../../types/detail";
 
-const BestSellerBook = ({ id, title, image, name }: BestBook) => {
+const BestSellerBook = ({ id, title, image, name, isbn }: BestBook) => {
+  const navigation = useNavigation<DetailNavigationProp>();
+
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => navigation.navigate("Detail", { isbn })}
+    >
       <View style={styles.idContainer}>
         <Text style={styles.id}>{id}</Text>
       </View>
@@ -18,7 +25,7 @@ const BestSellerBook = ({ id, title, image, name }: BestBook) => {
       <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
         {name}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 

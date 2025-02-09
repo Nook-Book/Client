@@ -4,6 +4,11 @@ export type RootSearchStackParamList = {
   SearchPage: undefined;
   BestSellerPage: undefined;
   SearchResultPage: { query: string };
+  Detail: { query: string };
+  Timer: { query: string };
+  AllNote: { query: string };
+  Note: { query: string };
+  Write: { query: string };
   navigate: (screen: string) => void;
 };
 

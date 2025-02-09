@@ -3,6 +3,7 @@ export type BestBook = {
   image: any;
   title: string;
   name: string;
+  isbn: string;
 };
 export type BestBookCategory = {
   id: number;
