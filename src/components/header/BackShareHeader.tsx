@@ -27,7 +27,7 @@ export default function BackShareHeader({
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
         {isTitleVisible && (
-          <Text style={styles.text2} numberOfLines={1}>
+          <Text style={styles.centerText} numberOfLines={1}>
             {title}
           </Text>
         )}
