@@ -1,7 +1,5 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChallengePage from "../../pages/challengePage/ChallengePage";
-import MyPage from "../../pages/myPage/MyPage";
 import { SvgProps } from "react-native-svg";
 import LibraryIcon from "../../assets/images/icon/Library.svg";
 import SearchIcon from "../../assets/images/icon/Search.svg";
@@ -12,6 +10,8 @@ import LibraryStackScreen from "./LibraryStackNavigation";
 import SearchStackScreen from "./SearchStackNavigation";
 import MaPageStackScreen from "./MaPageStackNavigation.tsx";
 import ChallengeStackScreen from "./ChallengeStackNavigation";
+import { useNavigation } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 
 type RootTabParamList = {
   서재: undefined;
@@ -20,9 +20,42 @@ type RootTabParamList = {
   마이: undefined;
 };
 
+type NavigationProp = {
+  navigate: (screen: string, params?: { isbn: string }) => void;
+};
+
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function TabNavigation() {
+  const navigation = useNavigation<NavigationProp>();
+
+  React.useEffect(() => {
+    const handleDeepLink = async (event: { url: string }) => {
+      let { path } = Linking.parse(event.url);
+      if (path?.startsWith("book/")) {
+        const isbn = path.split("/")[1];
+        if (isbn) {
+          navigation.navigate("Detail", { isbn });
+        }
+      }
+    };
+
+    const initLinking = async () => {
+      const url = await Linking.getInitialURL();
+      if (url) {
+        handleDeepLink({ url });
+      }
+    };
+
+    const listener = Linking.addEventListener("url", handleDeepLink);
+
+    initLinking();
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

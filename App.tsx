@@ -8,8 +8,19 @@ import TabNavigation from "./src/components/navBar/TabNavigation";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import * as Linking from "expo-linking";
+
 export default function App() {
   const queryClient = new QueryClient();
+
+  const linking = {
+    prefixes: [Linking.createURL("/")],
+    config: {
+      screens: {
+        Detail: "book",
+      },
+    },
+  };
 
   //처음 방문 시 온보딩 화면 실행
   const [showOnboarding, setShowOnboarding] = React.useState(false);
@@ -40,7 +51,7 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <TabNavigation />
         {showOnboarding && (
           <OnboardingOverlay onDismiss={handleOnboardingDismiss} />

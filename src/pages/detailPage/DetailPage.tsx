@@ -276,7 +276,10 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
             </View>
           </ScrollView>
           {isShareVisible && (
-            <ShareBottomSheet onClose={() => setIsShareVisible(false)} />
+            <ShareBottomSheet
+              isbn={isbn}
+              onClose={() => setIsShareVisible(false)}
+            />
           )}
           {isCollectionVisible && (
             <CollectionBottomSheet
