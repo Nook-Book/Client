@@ -6,6 +6,11 @@ import SearchResultPage from "../../pages/searchPage/SearchResultPage";
 import { RootSearchStackParamList } from "../../types/navigation/navigation";
 import { Color } from "../../styles/Theme";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import DetailPage from "../../pages/detailPage/DetailPage";
+import TimerPage from "../../pages/detailPage/TimerPage";
+import AllNotePage from "../../pages/detailPage/AllNotePage";
+import NotePage from "../../pages/detailPage/NotePage";
+import WritePage from "../../pages/detailPage/WritePage";
 
 const SearchStack = createNativeStackNavigator<RootSearchStackParamList>();
 
@@ -18,7 +23,15 @@ export default function SearchStackScreen({
 }) {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
-    if (routeName === "BestSellerPage" || routeName === "SearchResultPage") {
+    if (
+      routeName === "BestSellerPage" ||
+      routeName === "SearchResultPage" ||
+      routeName === "Detail" ||
+      routeName === "Timer" ||
+      routeName === "AllNote" ||
+      routeName === "Note" ||
+      routeName === "Write"
+    ) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },
       });
@@ -41,6 +54,7 @@ export default function SearchStackScreen({
       });
     }
   }, [navigation, route]);
+
   return (
     <SearchStack.Navigator
       screenOptions={({ route }) => ({
@@ -52,6 +66,31 @@ export default function SearchStackScreen({
       <SearchStack.Screen
         name="SearchResultPage"
         component={SearchResultPage}
+      />
+      <SearchStack.Screen
+        name="Detail"
+        component={DetailPage}
+        options={{ headerShown: false }}
+      />
+      <SearchStack.Screen
+        name="Timer"
+        component={TimerPage}
+        options={{ headerShown: false }}
+      />
+      <SearchStack.Screen
+        name="AllNote"
+        component={AllNotePage}
+        options={{ headerShown: false }}
+      />
+      <SearchStack.Screen
+        name="Note"
+        component={NotePage}
+        options={{ headerShown: false }}
+      />
+      <SearchStack.Screen
+        name="Write"
+        component={WritePage}
+        options={{ headerShown: false }}
       />
     </SearchStack.Navigator>
   );

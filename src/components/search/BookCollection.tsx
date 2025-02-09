@@ -22,7 +22,8 @@ const BookCollection = () => {
               id={groupIndex * group.length + index + 1}
               image={book.cover}
               title={book.title}
-              name={book.title}
+              name={book.author}
+              isbn={book.isbn13}
             />
           ))}
         </View>

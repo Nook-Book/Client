@@ -116,6 +116,7 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
         if (prev) {
           return {
             ...prev,
+            storedCollection: selectedCollection.length > 0,
             collectionIds: selectedCollection,
           };
         }
@@ -278,6 +279,9 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
           {isShareVisible && (
             <ShareBottomSheet
               isbn={isbn}
+              cover={book.item.cover}
+              title={book.item.title}
+              author={book.item.author}
               onClose={() => setIsShareVisible(false)}
             />
           )}

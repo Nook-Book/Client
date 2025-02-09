@@ -26,6 +26,7 @@ const SearchResultPage: React.FC<Props> = ({ route }) => {
             title={book.title}
             artist={book.author}
             publisher={book.publisher}
+            isbn={book.isbn13}
           />
         ))}
       </ScrollView>

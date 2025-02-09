@@ -12,4 +12,5 @@ export type ResultBookProp = {
   title: string;
   artist: string;
   publisher: string;
+  isbn: string;
 };

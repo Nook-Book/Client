@@ -22,3 +22,7 @@ export type TBookDetailInformationRes = {
     categoryName: string;
   };
 };
+
+export type DetailNavigationProp = {
+  navigate: (screen: string, params?: { isbn: string }) => void;
+};

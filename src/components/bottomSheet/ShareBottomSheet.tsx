@@ -12,9 +12,15 @@ import * as Sharing from "expo-sharing";
 
 const ShareBottomSheet = ({
   isbn,
+  cover,
+  title,
+  author,
   onClose,
 }: {
   isbn: string;
+  cover: string;
+  title: string;
+  author: string;
   onClose: () => void;
 }) => {
   const generateDeepLink = () => {
@@ -45,7 +51,7 @@ const ShareBottomSheet = ({
 
   return (
     <View style={styles.container}>
-      <ShareCard />
+      <ShareCard cover={cover} title={title} author={author} />
       <View style={styles.bottom}>
         <BottomSheetTitle text="도서 공유" onClose={onClose} />
         <BottomSheetItem
