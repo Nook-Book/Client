@@ -1,8 +1,8 @@
 import React from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import Polygon from "../../assets/images/icon/Polygon.svg";
-import { styles } from "../../styles/myPage/BookStatisticsHeader";
 import useYear from "../../store/useYear";
+import { styles } from "../../styles/myPage/BookStatisticsHeader";
 
 const BookstatisticsHeader = () => {
   const { year, increaseYear, decreaseYear } = useYear();
