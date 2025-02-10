@@ -23,6 +23,7 @@ export const getStyles = (windowWidth: number) => {
     itemImage: {
       width: windowWidth / 3,
       height: (windowWidth / 3 / 13) * 17,
+      backgroundColor: "#FFE870",
     },
     itemText: {
       ...Font.Paragraph.LittleMedium,

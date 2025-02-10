@@ -350,15 +350,17 @@ export default function NewChallengePage({
             </View>
           </Pressable>
         </View>
-        <View style={styles.itemWrap}>
-          <Text style={styles.headText}>친구와 함께하기</Text>
-          <Pressable
-            style={styles.friendBtnWrap}
-            onPress={() => setIsParticipantModal(true)}
-          >
-            <Text style={styles.friendBtnText}>친구 초대하기</Text>
-          </Pressable>
-        </View>
+        {isNew && (
+          <View style={styles.itemWrap}>
+            <Text style={styles.headText}>친구와 함께하기</Text>
+            <Pressable
+              style={styles.friendBtnWrap}
+              onPress={() => setIsParticipantModal(true)}
+            >
+              <Text style={styles.friendBtnText}>친구 초대하기</Text>
+            </Pressable>
+          </View>
+        )}
       </ScrollView>
       <BottomOneButton
         handleAccept={handleAccept}
@@ -409,9 +411,8 @@ export default function NewChallengePage({
           setIsParticipantModal(false);
         }}
         selectedParticipant={selectedParticipant}
-        challengeId={isNew ? null : detail.challengeId}
-        isNew={isNew}
-        isAdd={false}
+        challengeId={null}
+        isNew={true}
       />
     </View>
   );

@@ -66,6 +66,7 @@ export default function EditParticipantPage({
     );
     if (response.check) {
       setIsParticipantDeleteModal(false);
+      setOpenId(null);
       fetchParticipantList();
     }
   };
@@ -84,7 +85,8 @@ export default function EditParticipantPage({
 
     if (response.check) {
       setIsParticipantOwnerModal(false);
-      fetchParticipantList();
+      setOpenId(null);
+      navigation.goBack();
     }
   };
 
@@ -129,6 +131,7 @@ export default function EditParticipantPage({
             );
           }}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 50 }}
         />
         <DeleteButton
           onPress={() => {
@@ -172,7 +175,6 @@ export default function EditParticipantPage({
         selectedParticipant={[]}
         challengeId={challengeId}
         isNew={false}
-        isAdd={true}
       />
     </View>
   );

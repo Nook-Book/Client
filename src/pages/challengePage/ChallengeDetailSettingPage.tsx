@@ -30,12 +30,8 @@ export default function ChallengeDetailSettingPage({
 
   //챌린지 나가기
   const handleExit = async () => {
-    //participantId 값 필요
-    const response = await deleteParticipant(detail.challengeId, 3);
-    if (response.check) {
-      setIsExitModal(false);
-      navigation.navigate("Challenge");
-    }
+    setIsExitModal(false);
+    navigation.navigate("Challenge");
   };
 
   return (

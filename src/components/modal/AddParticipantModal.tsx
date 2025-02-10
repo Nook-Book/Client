@@ -17,7 +17,6 @@ export default function AddParticipantModal({
   selectedParticipant,
   challengeId,
   isNew,
-  isAdd,
 }: {
   visible: boolean;
   onClose: () => void;
@@ -25,7 +24,6 @@ export default function AddParticipantModal({
   selectedParticipant: number[];
   challengeId: number | null;
   isNew: boolean;
-  isAdd: boolean;
 }) {
   const [inviteList, setInviteList] = useState<TInviteContentRes[]>();
   const [editParticipant, setEditParticipant] = useState(selectedParticipant);
@@ -48,7 +46,7 @@ export default function AddParticipantModal({
     try {
       const response = await getFriendList(search);
       if (response?.check) {
-        const newInviteList = response.information.map((friend) => ({
+        const newInviteList = response.information.content.map((friend) => ({
           userId: friend.userId,
           nickname: friend.nickname,
           imageUrl: friend.imageUrl,
@@ -105,7 +103,7 @@ export default function AddParticipantModal({
     >
       <View style={styles.container}>
         <BackHeader
-          title={isAdd ? "참여자 추가" : "친구 선택"}
+          title={isNew ? "친구 선택" : "참여자 추가"}
           onPress={onClose}
         />
         <TextInput
@@ -116,10 +114,7 @@ export default function AddParticipantModal({
           placeholderTextColor={Color.Typo.Secondary}
           onSubmitEditing={handleSearchSubmit}
         />
-        <Text style={styles.lengthText}>
-          {isAdd || isNew ? editParticipant.length : editParticipant.length - 1}
-          명 선택
-        </Text>
+        <Text style={styles.lengthText}>{editParticipant.length}명 선택</Text>
         <FlatList
           data={inviteList}
           renderItem={renderItem}
@@ -129,12 +124,7 @@ export default function AddParticipantModal({
         <BottomOneButton
           handleAccept={() => onComplate(editParticipant)}
           text="확인"
-          disabled={
-            (isAdd || isNew
-              ? editParticipant.length === 0
-              : editParticipant.length === 1) ||
-            selectedParticipant === editParticipant
-          }
+          disabled={editParticipant.length === 0}
         />
       </View>
     </Modal>
