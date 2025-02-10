@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
   Image,
-  TextInput,
   Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import { styles } from "../../styles/challenge/NewChallengePageStyle";
-import BackHeader from "../../components/header/BackHeader";
-import { Color } from "../../styles/Theme";
-import ImagePickerModal from "../../components/modal/ImageModal";
+import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
+import { patchImage } from "../../api/challenge/patchImage";
+import { postChallenge } from "../../api/challenge/postChallenge";
 import CheckBoxCheckIcon from "../../assets/images/challange/CheckBoxCheck.svg";
 import CheckBoxDefaultIcon from "../../assets/images/challange/CheckBoxDefault.svg";
 import BottomOneButton from "../../components/bottomSheet/BottomOneButton";
+import BackHeader from "../../components/header/BackHeader";
+import AddParticipantModal from "../../components/modal/AddParticipantModal";
+import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
+import ImagePickerModal from "../../components/modal/ImageModal";
 import TimePickerModal from "../../components/modal/TimePickerModal";
+import { styles } from "../../styles/challenge/NewChallengePageStyle";
+import { Color } from "../../styles/Theme";
 import { TTime } from "../../types/challenge";
 import {
   calculateDaysDifference,
   formatDateToString,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
-import { patchImage } from "../../api/challenge/patchImage";
-import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
-import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
-import AddParticipantModal from "../../components/modal/AddParticipantModal";
-import { postChallenge } from "../../api/challenge/postChallenge";
 
 export default function NewChallengePage({
   route,

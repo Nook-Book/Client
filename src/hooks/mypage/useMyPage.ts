@@ -5,7 +5,7 @@ import {
 import { getMyPage } from "../../api/user-Mypage/getMyPage";
 import { ResponseMyPage } from "../../types/mypage";
 
-// 베스트 셀러 조회
+// 내 정보 조회
 export function useMyPage(): UseSuspenseQueryResult<ResponseMyPage, Error> {
   return useSuspenseQuery({
     queryKey: ["GetMyPage"],
