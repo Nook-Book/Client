@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { getMyPage } from "../../api/user-Mypage/getMyPage";
 import { putId } from "../../api/user-Mypage/putId";
+import { putProfileImage } from "../../api/user-Mypage/putImage";
 import { putNickname } from "../../api/user-Mypage/putNickname";
 import { ResponseMyPage } from "../../types/mypage";
 
@@ -27,5 +28,12 @@ export const usePutNickname = () => {
 export const usePutId = () => {
   return useMutation({
     mutationFn: putId,
+  });
+};
+
+// 프로필 변경
+export const usePutProfileImage = () => {
+  return useMutation({
+    mutationFn: putProfileImage,
   });
 };
