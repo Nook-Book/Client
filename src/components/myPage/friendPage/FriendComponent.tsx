@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import Profile from "../../../assets/images/profile/FriendProfile.svg";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../../../styles/myPage/friendPage/FriendComponent";
 import { FriendComponentProps, FriendParamList } from "../../../types/friend";
 
@@ -23,10 +22,16 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   const handleClickComponent = () => {
     navigation.navigate("FriendSearchResultPage", { query: name });
   };
+
+  console.log(image, "test");
   return (
     <TouchableOpacity style={styles.container} onPress={handleClickComponent}>
       <View style={styles.item}>
-        <Profile />
+        <Image
+          source={{ uri: `${image}` }}
+          style={{ width: 100, height: 100 }}
+          resizeMode="cover"
+        />
         <Text style={styles.name}>{name}</Text>
       </View>
       {type === "RecieveFriend" && (
