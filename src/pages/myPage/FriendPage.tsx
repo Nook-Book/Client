@@ -15,6 +15,7 @@ import SendRequestFriend from "../../components/myPage/friendPage/SendRequestFri
 import {
   useGetFriend,
   useGetPendingFriend,
+  useGetSearchFriend,
 } from "../../hooks/mypage/useFriend";
 import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
@@ -32,10 +33,11 @@ const FriendPage = () => {
 
   const { data: friendData } = useGetFriend();
   const { data: pendingFriendData } = useGetPendingFriend();
+  const { data: searchFriendData, refetch } = useGetSearchFriend(searchText);
 
-  // const FriendsSearchResultList = FriendsList.filter(
-  //   (friend) => friend.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
-  // );
+  const FriendsSearchResultList = friendData.information.filter(
+    (friend) => friend.nickname.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
+  );
 
   const navigation = useNavigation<FriendParamList>();
 
@@ -57,6 +59,7 @@ const FriendPage = () => {
     if (searchText === "") {
       setUserList([]);
     }
+    refetch();
   }, [searchText]);
 
   return (
@@ -85,7 +88,7 @@ const FriendPage = () => {
       {friendNav === "친구 목록" ? (
         <ScrollView>
           <GestureHandlerRootView style={styles.friendContainer}>
-            {friendData.information.map((friend, index) => (
+            {FriendsSearchResultList.map((friend, index) => (
               <View key={index}>
                 <Swipeable
                   friction={1}
@@ -126,7 +129,10 @@ const FriendPage = () => {
             </>
           ) : (
             <>
-              {/* <SendRequestFriend userList={FriendDummyList} isRequest={false} /> */}
+              <SendRequestFriend
+                userList={searchFriendData.information}
+                isRequest={false}
+              />
             </>
           )}
         </View>

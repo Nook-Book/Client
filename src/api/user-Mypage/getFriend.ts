@@ -27,3 +27,20 @@ export const getPendingFriend = async (): Promise<
     return undefined;
   }
 };
+
+// 친구 추가 | 검색
+export const getSearchFriend = async (
+  keyword: string
+): Promise<FriendRequestResponse | undefined> => {
+  try {
+    const response = await api.get(`/api/v1/my-page/friend/all`, {
+      params: {
+        keyword: keyword,
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};

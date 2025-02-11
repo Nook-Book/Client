@@ -2,9 +2,14 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { getFriend, getPendingFriend } from "../../api/user-Mypage/getFriend";
+import {
+  getFriend,
+  getPendingFriend,
+  getSearchFriend,
+} from "../../api/user-Mypage/getFriend";
 import {
   FriendRequestResponse,
+  FriendSearchRequestResponse,
   ResponseFriend,
 } from "../../types/mypage/friend";
 
@@ -24,5 +29,15 @@ export function useGetPendingFriend(): UseSuspenseQueryResult<
   return useSuspenseQuery({
     queryKey: ["GetPendingFriend"],
     queryFn: () => getPendingFriend(),
+  });
+}
+
+// 친구 검색
+export function useGetSearchFriend(
+  keyword: string
+): UseSuspenseQueryResult<FriendSearchRequestResponse, Error> {
+  return useSuspenseQuery({
+    queryKey: ["GetSearchFriend"],
+    queryFn: () => getSearchFriend(keyword),
   });
 }

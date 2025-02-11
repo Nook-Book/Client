@@ -14,7 +14,7 @@ export interface ResponseFriend {
 
 export interface FriendRequest {
   userId: number;
-  friendId: number;
+  friendId?: number;
   nickname: string;
   imageUrl: string;
 }
@@ -25,4 +25,11 @@ export interface FriendRequestResponse {
     sentRequest: FriendRequest[];
     receivedRequest: FriendRequest[];
   };
+}
+
+// ----------------------------------
+
+export interface FriendSearchRequestResponse {
+  check: boolean;
+  information: FriendRequest[];
 }
