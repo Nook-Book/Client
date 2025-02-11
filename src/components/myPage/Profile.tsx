@@ -17,7 +17,7 @@ const Profile = () => {
       <View style={styles.profileContainer}>
         {/* <View style={styles.nameContainer}> */}
         <Text style={styles.name}>{myInfo.nickname}</Text>
-        <Text style={styles.email}>@minjufish</Text>
+        <Text style={styles.email}>@{myInfo.nicknameId}</Text>
         {/* </View> */}
         <View style={styles.friendContainer}>
           <Text style={styles.friendName}>친구</Text>
