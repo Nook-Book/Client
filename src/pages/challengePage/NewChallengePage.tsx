@@ -27,11 +27,6 @@ import {
   getDayOfWeek,
 } from "../../utils/calendarUtils";
 
-import { patchImage } from "../../api/challenge/patchImage";
-import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
-import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
-import AddParticipantModal from "../../components/modal/AddParticipantModal";
-import { postChallenge } from "../../api/challenge/postChallenge";
 import { postParticipant } from "../../api/challenge/postParticipant";
 
 export default function NewChallengePage({
