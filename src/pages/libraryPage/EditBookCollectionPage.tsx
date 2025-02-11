@@ -110,7 +110,6 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <EditHeader
         onCancel={() => {
           currentPrevId === currentId

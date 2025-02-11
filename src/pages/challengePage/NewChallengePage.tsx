@@ -27,6 +27,13 @@ import {
   getDayOfWeek,
 } from "../../utils/calendarUtils";
 
+import { patchImage } from "../../api/challenge/patchImage";
+import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
+import CalenderSelectModal from "../../components/modal/CalenderSelectModal";
+import AddParticipantModal from "../../components/modal/AddParticipantModal";
+import { postChallenge } from "../../api/challenge/postChallenge";
+import { postParticipant } from "../../api/challenge/postParticipant";
+
 export default function NewChallengePage({
   route,
   navigation,
@@ -151,6 +158,7 @@ export default function NewChallengePage({
     </View>
   );
 
+  //챌린지 작성, 수정 함수
   const handleAccept = async () => {
     try {
       const fileName = imageUri.split("/").pop() || "image.jpg";
@@ -180,6 +188,7 @@ export default function NewChallengePage({
 
         const newRes = await postChallenge(formData);
         //에러 수정 필요
+        handleParticipant(0); //challengeId 받아서 보내기
       } else {
         if (!imageUri.includes("https://")) {
           const imageRes = await patchImage(detail.challengeId, formData);
@@ -206,16 +215,33 @@ export default function NewChallengePage({
           if (!editRes?.check) return;
         }
 
-        navigation.navigate("Challenge");
+        handleParticipant();
+
+        navigation.navigate("ChallengeDetail", {
+          ...route.params,
+          isInvite: false,
+        });
       }
     } catch (error) {
       console.error("오류:", error);
     }
   };
 
+  //참여자 추가
+  const handleParticipant = async (challengeId?: number) => {
+    if (challengeId) {
+      for (const participantId of selectedParticipant) {
+        await postParticipant(challengeId, participantId);
+      }
+    } else {
+      for (const participantId of selectedParticipant) {
+        await postParticipant(detail.challengeId, participantId);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackHeader title={isNew ? "챌린지 생성" : "챌린지 수정"} />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
@@ -249,36 +275,28 @@ export default function NewChallengePage({
         </View>
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>기간 설정</Text>
-          <View style={styles.periodWrap}>
-            <Pressable
-              style={styles.periodDateWrap}
-              onPress={() => setIsCalenderModal(true)}
-            >
+          <Pressable
+            style={styles.periodWrap}
+            onPress={() => setIsCalenderModal(true)}
+          >
+            <View style={styles.periodDateWrap}>
               <Text style={styles.periodHeadText}>시작일</Text>
               <Text style={styles.periodDateText}>
                 {startDate.replaceAll("-", ".")} ({getDayOfWeek(startDate)})
               </Text>
-            </Pressable>
+            </View>
             <Text style={styles.periodHeadText}>
               {startDate && endDate
                 ? `${calculateDaysDifference(startDate, endDate)}일`
                 : ""}
             </Text>
-            <Pressable
-              style={styles.periodDateWrap}
-              onPress={() =>
-                navigation.navigate("CalenderSelect", {
-                  currentStartDate: startDate,
-                  currentEndDate: endDate,
-                })
-              }
-            >
+            <View style={styles.periodDateWrap}>
               <Text style={styles.periodHeadText}>종료일</Text>
               <Text style={styles.periodDateText}>
                 {endDate.replaceAll("-", ".")} ({getDayOfWeek(endDate)})
               </Text>
-            </Pressable>
-          </View>
+            </View>
+          </Pressable>
         </View>
         <View style={styles.itemWrap}>
           <View style={styles.readTimeHeadWrap}>
@@ -397,7 +415,9 @@ export default function NewChallengePage({
           setIsParticipantModal(false);
         }}
         selectedParticipant={selectedParticipant}
-        isNew={true}
+        challengeId={isNew ? null : detail.challengeId}
+        isNew={isNew}
+        isAdd={false}
       />
     </View>
   );

@@ -33,6 +33,8 @@ export type TChallengeListInformationRes = {
   progressList: TChallengeListInfoRes[];
   endCount: number;
   endList: TChallengeListInfoRes[];
+  waitingInvitationCount: number;
+  waitingInvitationList: TChallengeListInfoRes[];
 };
 
 export type TChallengeListInfoRes = {
@@ -78,4 +80,91 @@ export type TEditChallengeReq = {
   dailyGoal: number;
   startTime: null | string;
   endTime: null | string;
+};
+
+export type TInviteRes = {
+  content: TInviteContentRes[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+};
+
+export type TInviteContentRes = {
+  userId: number;
+  nickname: string;
+  invitable: boolean;
+  imageUrl: string;
+};
+
+export type TFriendListRes = {
+  check: true;
+  information: {
+    content: {
+      userId: number;
+      nickname: string;
+      imageUrl: string;
+    }[];
+    pageable: {
+      pageNumber: number;
+      pageSize: number;
+      sort: {
+        empty: boolean;
+        sorted: boolean;
+        unsorted: boolean;
+      };
+      offset: number;
+      paged: boolean;
+      unpaged: boolean;
+    };
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    size: number;
+    number: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    numberOfElements: number;
+    first: boolean;
+    empty: boolean;
+  };
+};
+
+export type TParticipantRes = {
+  check: boolean;
+  information: {
+    isOwner: boolean;
+    participantList: TParticipantListRes[];
+  };
+};
+
+export type TParticipantListRes = {
+  participantId: number;
+  participantNickname: string;
+  participantImage: string;
+  role: string;
 };

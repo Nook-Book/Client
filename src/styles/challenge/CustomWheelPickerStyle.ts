@@ -27,5 +27,6 @@ export const styles = StyleSheet.create({
     width: 270,
     backgroundColor: Color.Field.Primary,
     borderRadius: 2,
+    pointerEvents: "none",
   },
 });

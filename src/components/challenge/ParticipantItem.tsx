@@ -2,13 +2,14 @@ import React from "react";
 import { Text, Pressable, Image } from "react-native";
 import { styles } from "../../styles/challenge/AddParticipantModalStyle";
 import { Color } from "../../styles/Theme";
+import { TInviteContentRes } from "../../types/challenge";
 
 const ParticipantItem = ({
   item,
   isSelected,
   onSelect,
 }: {
-  item: { id: number; image: any; name: string };
+  item: TInviteContentRes;
   isSelected: boolean;
   onSelect: () => void;
 }) => {
@@ -22,8 +23,18 @@ const ParticipantItem = ({
       ]}
       onPress={onSelect}
     >
-      <Image source={item.image} style={styles.participantImage} />
-      <Text style={styles.participantText}>{item.name}</Text>
+      <Image source={{ uri: item.imageUrl }} style={styles.participantImage} />
+      <Text
+        style={
+          (styles.participantText,
+          {
+            color: item.invitable ? Color.Typo.Primary : Color.Contents.Default,
+          })
+        }
+      >
+        {item.nickname}
+      </Text>
+      {!item.invitable && <Text style={styles.requestText}>요청됨</Text>}
     </Pressable>
   );
 };

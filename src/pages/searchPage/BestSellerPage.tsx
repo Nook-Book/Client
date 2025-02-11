@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import BackHeader from "../../components/header/BackHeader";
 import { styles } from "../../styles/search/BestSellerPageStyle";
 import { BestSellerKeywordsList, BestSellerLabel } from "../../constans/search";

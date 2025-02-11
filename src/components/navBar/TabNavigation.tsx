@@ -12,6 +12,7 @@ import MaPageStackScreen from "./MaPageStackNavigation.tsx";
 import ChallengeStackScreen from "./ChallengeStackNavigation";
 import { useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
+import { DetailNavigationProp } from "../../types/detail";
 
 type RootTabParamList = {
   서재: undefined;
@@ -20,14 +21,10 @@ type RootTabParamList = {
   마이: undefined;
 };
 
-type NavigationProp = {
-  navigate: (screen: string, params?: { isbn: string }) => void;
-};
-
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function TabNavigation() {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation<DetailNavigationProp>();
 
   React.useEffect(() => {
     const handleDeepLink = async (event: { url: string }) => {
