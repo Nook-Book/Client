@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { FlatList, View, Text, TextInput, Modal } from "react-native";
 import { styles } from "../../styles/challenge/AddParticipantModalStyle";
 import BackHeader from "../header/BackHeader";
@@ -43,7 +43,7 @@ export default function AddParticipantModal({
 
   const fetchFriendList = async () => {
     try {
-      const response = await getFriendList(search);
+      const response = await getFriendList();
       if (response?.check) {
         const newInviteList = response.information.map((friend) => ({
           userId: friend.userId,
@@ -60,6 +60,7 @@ export default function AddParticipantModal({
 
   useEffect(() => {
     if (visible) {
+      setSearch("");
       setEditParticipant(selectedParticipant);
       isNew ? fetchFriendList() : fetchInviteList();
     }
@@ -90,9 +91,12 @@ export default function AddParticipantModal({
     [editParticipant, handleSelect]
   );
 
-  const handleSearchSubmit = () => {
-    isNew ? fetchFriendList() : fetchInviteList();
-  };
+  //필터링된 리스트 출력
+  const filteredInviteList = useMemo(() => {
+    return inviteList?.filter((item) =>
+      item.nickname.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [inviteList, search]);
 
   return (
     <Modal
@@ -112,11 +116,10 @@ export default function AddParticipantModal({
           value={search}
           placeholder="아이디 또는 닉네임을 검색하세요."
           placeholderTextColor={Color.Typo.Secondary}
-          onSubmitEditing={handleSearchSubmit}
         />
         <Text style={styles.lengthText}>{editParticipant.length}명 선택</Text>
         <FlatList
-          data={inviteList}
+          data={filteredInviteList}
           renderItem={renderItem}
           keyExtractor={(item) => item.userId.toString()}
           showsVerticalScrollIndicator={false}
