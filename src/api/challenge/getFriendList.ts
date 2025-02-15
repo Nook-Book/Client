@@ -6,9 +6,7 @@ export const getFriendList = async (
   keyword: string
 ): Promise<TFriendListRes | undefined> => {
   try {
-    const response = await api.get(
-      `/api/v1/my-page/friend?keyword=${keyword}&page=0&size=20`
-    );
+    const response = await api.get(`/api/v1/my-page/friend?keyword=${keyword}`);
     return response.data;
   } catch (e) {
     console.log(e);

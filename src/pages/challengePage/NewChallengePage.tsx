@@ -210,8 +210,6 @@ export default function NewChallengePage({
           if (!editRes?.check) return;
         }
 
-        handleParticipant();
-
         navigation.navigate("ChallengeDetail", {
           ...route.params,
           isInvite: false,
@@ -223,15 +221,9 @@ export default function NewChallengePage({
   };
 
   //참여자 추가
-  const handleParticipant = async (challengeId?: number) => {
-    if (challengeId) {
-      for (const participantId of selectedParticipant) {
-        await postParticipant(challengeId, participantId);
-      }
-    } else {
-      for (const participantId of selectedParticipant) {
-        await postParticipant(detail.challengeId, participantId);
-      }
+  const handleParticipant = async (challengeId: number) => {
+    for (const participantId of selectedParticipant) {
+      await postParticipant(challengeId, participantId);
     }
   };
 

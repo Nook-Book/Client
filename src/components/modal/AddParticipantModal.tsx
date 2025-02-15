@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { FlatList, View, Text, TextInput, Modal } from "react-native";
 import { styles } from "../../styles/challenge/AddParticipantModalStyle";
 import BackHeader from "../header/BackHeader";
@@ -7,7 +7,6 @@ import ParticipantItem from "../challenge/ParticipantItem";
 import BottomOneButton from "../bottomSheet/BottomOneButton";
 import { TInviteContentRes } from "../../types/challenge";
 import { getInviteList } from "../../api/challenge/getInviteList";
-import { useFocusEffect } from "@react-navigation/native";
 import { getFriendList } from "../../api/challenge/getFriendList";
 
 export default function AddParticipantModal({
@@ -59,11 +58,12 @@ export default function AddParticipantModal({
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
+  useEffect(() => {
+    if (visible) {
+      setEditParticipant(selectedParticipant);
       isNew ? fetchFriendList() : fetchInviteList();
-    }, [])
-  );
+    }
+  }, [visible]);
 
   const handleSelect = useCallback(
     (useId: number) => {
