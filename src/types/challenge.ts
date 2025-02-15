@@ -83,75 +83,24 @@ export type TEditChallengeReq = {
 };
 
 export type TInviteRes = {
-  content: TInviteContentRes[];
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    offset: number;
-    paged: boolean;
-    unpaged: boolean;
-  };
-  totalPages: number;
-  totalElements: number;
-  last: boolean;
-  size: number;
-  number: number;
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
-  numberOfElements: number;
-  first: boolean;
-  empty: boolean;
+  check: boolean;
+  information: TInviteContentRes[];
 };
 
 export type TInviteContentRes = {
   userId: number;
   nickname: string;
+  profileImage: string;
   invitable: boolean;
-  imageUrl: string;
 };
 
 export type TFriendListRes = {
   check: true;
   information: {
-    content: {
-      userId: number;
-      nickname: string;
-      imageUrl: string;
-    }[];
-    pageable: {
-      pageNumber: number;
-      pageSize: number;
-      sort: {
-        empty: boolean;
-        sorted: boolean;
-        unsorted: boolean;
-      };
-      offset: number;
-      paged: boolean;
-      unpaged: boolean;
-    };
-    totalPages: number;
-    totalElements: number;
-    last: boolean;
-    size: number;
-    number: number;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    numberOfElements: number;
-    first: boolean;
-    empty: boolean;
-  };
+    userId: number;
+    nickname: string;
+    imageUrl: string;
+  }[];
 };
 
 export type TParticipantRes = {

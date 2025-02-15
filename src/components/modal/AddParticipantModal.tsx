@@ -34,8 +34,8 @@ export default function AddParticipantModal({
       if (!challengeId) return;
 
       const response = await getInviteList(challengeId);
-      if (response?.content) {
-        setInviteList(response.content);
+      if (response?.check) {
+        setInviteList(response.information);
       }
     } catch (error) {
       console.error("오류:", error);
@@ -46,10 +46,10 @@ export default function AddParticipantModal({
     try {
       const response = await getFriendList(search);
       if (response?.check) {
-        const newInviteList = response.information.content.map((friend) => ({
+        const newInviteList = response.information.map((friend) => ({
           userId: friend.userId,
           nickname: friend.nickname,
-          imageUrl: friend.imageUrl,
+          profileImage: friend.imageUrl,
           invitable: true,
         }));
         setInviteList(newInviteList);
