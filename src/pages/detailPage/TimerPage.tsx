@@ -6,7 +6,8 @@ import { Color } from "../../styles/Theme";
 import { useFocusEffect } from "@react-navigation/native";
 import { getTimerList } from "../../api/book/getTimerList";
 import { TTimerListInformationRes } from "../../types/timer";
-import { postTimer } from "../../api/book/postTimer";
+import { postTimerStart } from "../../api/book/postTimerStart";
+import { postTimerEnd } from "../../api/book/postTimerEnd";
 
 const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
   const bookId = route?.params?.bookId;
@@ -70,15 +71,21 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
   //시작, 중지 버튼 클릭 핸들러
   const handleStartStop = async () => {
     if (isRunning) {
-      const response = await postTimer(bookId, time);
+      if (!timerList?.timerId) return;
+
+      const response = await postTimerEnd(bookId, timerList?.timerId, time);
       if (response.check) {
-        fetchTimerList();
+        setIsRunning(false);
         setTime(0);
+        fetchTimerList();
       }
     } else {
-      setTime(0);
+      const response = await postTimerStart(bookId);
+      if (response.check) {
+        setIsRunning(true);
+        setTime(0);
+      }
     }
-    setIsRunning(!isRunning);
   };
 
   return (
@@ -87,7 +94,7 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
       <BackTextHeader
         title="타이머"
         onBackPress={() => {
-          handleStartStop();
+          isRunning && handleStartStop();
           navigation.goBack();
         }}
       />
