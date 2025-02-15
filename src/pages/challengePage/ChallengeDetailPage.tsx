@@ -16,9 +16,11 @@ import { getDayOfWeek } from "../../utils/calendarUtils";
 import BottomTwoButton from "../../components/bottomSheet/BottomTwoButton";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
 import { useFocusEffect } from "@react-navigation/native";
-import { TChallengeDetailInformationRes } from "../../types/challenge";
+import {
+  TChallengeDetailInformationRes,
+  TChallengeDetailParticipantsRes,
+} from "../../types/challenge";
 import { getChallengeDetail } from "../../api/challenge/getChallengeDetail";
-import { dummyListCard } from "../../assets/data/dummyChallengeList";
 import { postAcceptChallenge } from "../../api/challenge/postAcceptChallenge";
 import { postRejectChallenge } from "../../api/challenge/postRejectChallenge";
 
@@ -32,6 +34,9 @@ export default function ChallengeDetailPage({
   const { isInvite, challengeId } = route.params;
 
   const [detail, setDetail] = useState<TChallengeDetailInformationRes>();
+
+  const [clickStatus, setClickStatus] =
+    useState<TChallengeDetailParticipantsRes | null>(null);
 
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -89,6 +94,7 @@ export default function ChallengeDetailPage({
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       {detail && (
         <>
           {isInvite ? (
@@ -176,15 +182,20 @@ export default function ChallengeDetailPage({
                 </Text>
               </View>
             )}
-            {/* 현황 API 연동 필요 */}
             <StatusList
-              cards={dummyListCard.cardList}
+              cards={detail.participants}
               setIsModalVisible={setIsModalVisible}
+              setClickStatus={setClickStatus}
             />
           </ScrollView>
           {isModalVisible && (
             <ChallengeCard
-              handleStatus={() => navigation.navigate("StatusCardDetail")}
+              clickStatus={clickStatus}
+              handleStatus={() =>
+                navigation.navigate("StatusCardDetail", {
+                  clickStatus: clickStatus,
+                })
+              }
               handleCancel={() => setIsModalVisible(false)}
             />
           )}
