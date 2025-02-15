@@ -7,6 +7,7 @@ import DeleteModal from "../../components/modal/DeleteModal";
 import DeleteButton from "../../components/challenge/DeleteButton";
 import { deleteChallenge } from "../../api/challenge/deleteChallenge";
 import { deleteParticipant } from "../../api/challenge/deleteParticipant";
+import { deleteChallengeExit } from "../../api/challenge/deleteChallengeExit";
 
 export default function ChallengeDetailSettingPage({
   navigation,
@@ -30,8 +31,11 @@ export default function ChallengeDetailSettingPage({
 
   //챌린지 나가기
   const handleExit = async () => {
-    setIsExitModal(false);
-    navigation.navigate("Challenge");
+    const response = await deleteChallengeExit(detail.challengeId);
+    if (response.check) {
+      setIsExitModal(false);
+      navigation.navigate("Challenge");
+    }
   };
 
   return (
