@@ -181,6 +181,7 @@ const DetailPage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       {book && (
         <>
           <BackShareHeader
