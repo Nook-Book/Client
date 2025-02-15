@@ -370,6 +370,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <WriteHeader
         isText={
           titleText.length > 0 &&

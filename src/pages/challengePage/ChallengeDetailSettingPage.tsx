@@ -40,6 +40,7 @@ export default function ChallengeDetailSettingPage({
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackTitleHeader
         navigation={navigation}
         isTitleVisible={false}

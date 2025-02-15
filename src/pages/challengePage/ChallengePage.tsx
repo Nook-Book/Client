@@ -84,6 +84,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <AllChallengeHeader
         onPress={() => navigation.navigate("AllChallenge", { list: list })}
       />
