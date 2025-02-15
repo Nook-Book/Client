@@ -1,16 +1,31 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import SetProfileNav from "../../components/myPage/editProfile/SetProfileNav";
-import { styles } from "../../styles/myPage/editProfilePage/SetProfile";
-import useProfile from "../../store/useProfile";
+import { TextInput, TouchableOpacity, View } from "react-native";
 import XMini from "../../assets/images/icon/XMini.svg";
+import SetProfileNav from "../../components/myPage/editProfile/SetProfileNav";
+import { useMyPage, usePutId } from "../../hooks/mypage/useMyPage";
+import { styles } from "../../styles/myPage/editProfilePage/SetProfile";
+import { NavigationProp } from "../../types/search";
 
 const SetIdPage = () => {
-  const { id } = useProfile();
-  const [newId, setNewId] = useState<string>(id);
+  const { data, refetch } = useMyPage();
+  const [newId, setNewId] = useState<string>(data.information.nicknameId);
+
+  const navigation = useNavigation<NavigationProp>();
+  const { mutate: changeId } = usePutId();
 
   const handleIdSubmit = () => {
-    // 아이디 수정
+    if (newId !== "") {
+      changeId(newId, {
+        onSuccess: () => {
+          navigation.navigate("EditProfilePage");
+          refetch();
+        },
+        onError: () => {
+          alert("Error");
+        },
+      });
+    }
   };
 
   const deleteInputValue = () => {
@@ -19,12 +34,7 @@ const SetIdPage = () => {
 
   return (
     <View style={styles.container}>
-      <SetProfileNav
-        title="아이디 편집"
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
+      <SetProfileNav title="아이디 편집" onClick={handleIdSubmit} />
       <View style={styles.inputContainer}>
         <TextInput
           value={newId}

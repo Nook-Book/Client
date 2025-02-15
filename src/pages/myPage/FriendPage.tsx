@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import {
   GestureHandlerRootView,
   Swipeable,
@@ -12,10 +12,15 @@ import FriendNav from "../../components/myPage/friendPage/FriendNav";
 import FriendRenderActions from "../../components/myPage/friendPage/FriendRenderActions";
 import ReceivedRequestFriend from "../../components/myPage/friendPage/ReceivedRequestFriend";
 import SendRequestFriend from "../../components/myPage/friendPage/SendRequestFriend";
-import { FriendsList } from "../../constans/myPage/friendPage/friends";
+import {
+  useGetFriend,
+  useGetPendingFriend,
+  useGetSearchFriend,
+} from "../../hooks/mypage/useFriend";
 import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
 import { FriendParamList } from "../../types/friend";
+import { FriendRequest } from "../../types/mypage/friend";
 
 const FriendPage = () => {
   const [friendNav, setFriendNav] = useState<"친구 목록" | "친구 추가">(
@@ -24,19 +29,20 @@ const FriendPage = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
-  const [userList, setUserList] = useState<string[]>([]);
-  const FriendsSearchResultList = FriendsList.filter(
-    (friend) => friend.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
+  const [userList, setUserList] = useState<FriendRequest[]>([]);
+
+  const { data: friendData } = useGetFriend();
+  const { data: pendingFriendData } = useGetPendingFriend();
+  const { data: searchFriendData, refetch } = useGetSearchFriend(searchText);
+
+  const FriendsSearchResultList = friendData.information.filter(
+    (friend) => friend.nickname.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
   );
 
   const navigation = useNavigation<FriendParamList>();
 
-  const FriendDummy = ["minjufish", "minjufish", "minjufish"];
-  const FriendDummyList = FriendDummy.filter(
-    (friend) => friend.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
-  );
   const handleSearchSubmit = () => {
-    setUserList(FriendDummyList.length > 0 ? FriendDummyList : []);
+    // setUserList(FriendDummyList.length > 0 ? FriendDummyList : []);
     // navigation.navigate("FriendSearchResultPage", { query: searchText });
   };
 
@@ -53,6 +59,7 @@ const FriendPage = () => {
     if (searchText === "") {
       setUserList([]);
     }
+    refetch();
   }, [searchText]);
 
   return (
@@ -79,39 +86,53 @@ const FriendPage = () => {
         autoCapitalize="none"
       />
       {friendNav === "친구 목록" ? (
-        <GestureHandlerRootView style={styles.friendContainer}>
-          {FriendsSearchResultList.map((name, index) => (
-            <>
-              <Swipeable
-                friction={1}
-                rightThreshold={80}
-                renderRightActions={() => (
-                  <FriendRenderActions
-                    name={name}
-                    onDelete={handleDeleteFriend}
+        <ScrollView>
+          <GestureHandlerRootView style={styles.friendContainer}>
+            {FriendsSearchResultList.map((friend, index) => (
+              <View key={index}>
+                <Swipeable
+                  friction={1}
+                  rightThreshold={80}
+                  renderRightActions={() => (
+                    <FriendRenderActions
+                      key={friend.userId}
+                      name={friend.nickname}
+                      onDelete={handleDeleteFriend}
+                    />
+                  )}
+                >
+                  <FriendComponent
+                    name={friend.nickname}
+                    image={friend.imageUrl}
+                    type="Friend"
                   />
-                )}
-                key={index}
-              >
-                <FriendComponent name={name} type="Friend" />
-              </Swipeable>
-            </>
-          ))}
-        </GestureHandlerRootView>
+                </Swipeable>
+              </View>
+            ))}
+          </GestureHandlerRootView>
+        </ScrollView>
       ) : (
         <View style={styles.addFriendContainer}>
           {searchText === "" ? (
             <>
               <View style={styles.border} />
               <Text style={styles.label}>받은 요청</Text>
-              <ReceivedRequestFriend />
+              <ReceivedRequestFriend
+                friends={pendingFriendData.information.receivedRequest}
+              />
               <View style={styles.border} />
               <Text style={styles.label}>보낸 요청</Text>
-              <SendRequestFriend userList={FriendDummy} isRequest={true} />
+              <SendRequestFriend
+                userList={pendingFriendData.information.sentRequest}
+                isRequest={true}
+              />
             </>
           ) : (
             <>
-              <SendRequestFriend userList={FriendDummyList} isRequest={false} />
+              <SendRequestFriend
+                userList={searchFriendData.information}
+                isRequest={false}
+              />
             </>
           )}
         </View>

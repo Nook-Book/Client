@@ -1,13 +1,28 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
+import { Dimensions, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import Svg, { Circle } from "react-native-svg";
+import { Color } from "../../styles/Theme";
 
-import { MyPageBookCategorydata } from "../../constans/myPage";
+import { useCategory } from "../../hooks/mypage/useCategory";
 
 const screenWidth = Dimensions.get("window").width;
 const CategoryReport = () => {
-  const data = MyPageBookCategorydata.filter((item) => item.book > 0);
+  const { data } = useCategory();
+
+  const colorKeys: (keyof typeof Color.Click)[] = [
+    200, 300, 400, 500, 600, 700,
+  ];
+
+  const MyPageBookCategorydata = data.information.map((item, index) => ({
+    name: item.category,
+    book: item.count,
+    color: Color.Click[colorKeys[index % colorKeys.length]],
+    legendFontColor: Color.Typo.Primary,
+    legendFontSize: 15,
+  }));
+
+  const filteredData = MyPageBookCategorydata.filter((item) => item.book > 0);
 
   return (
     <View
@@ -17,7 +32,7 @@ const CategoryReport = () => {
       }}
     >
       <PieChart
-        data={data}
+        data={filteredData}
         width={screenWidth} // 그래프의 너비
         height={157} // 그래프의 높이
         chartConfig={{

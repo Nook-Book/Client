@@ -1,21 +1,23 @@
 import React from "react";
 import { Text, View } from "react-native";
+import { FriendRequest } from "../../../types/mypage/friend";
 import FriendComponent from "./FriendComponent";
 
 const SendRequestFriend = ({
   userList,
   isRequest,
 }: {
-  userList: string[];
+  userList: FriendRequest[];
   isRequest: boolean;
 }) => {
   return (
     <View>
       {userList.length > 0 ? (
         <>
-          {userList.map((name, index) => (
+          {userList.map((user, index) => (
             <FriendComponent
-              name={name}
+              name={user.nickname}
+              image={user.imageUrl}
               key={index}
               type={"SendFriend"}
               isRequestProp={isRequest}

@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
-import ProfileImage from "../../assets/images/profile/ProfileImage.svg";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useMyPage } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/Profile";
 import { NavigationProp } from "../../types/search";
@@ -13,12 +12,16 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-      <ProfileImage style={styles.profileImage} />
+      {/* <ProfileImage style={styles.profileImage} /> */}
+      <Image
+        source={{ uri: data.information.imageUrl }}
+        style={styles.profileImage}
+      />
       <View style={styles.profileContainer}>
-        <View style={styles.nameContainer}>
-          <Text style={styles.name}>{myInfo.nickname}</Text>
-          <Text style={styles.email}>@minjufish</Text>
-        </View>
+        {/* <View style={styles.nameContainer}> */}
+        <Text style={styles.name}>{myInfo.nickname}</Text>
+        <Text style={styles.email}>@{myInfo.nicknameId}</Text>
+        {/* </View> */}
         <View style={styles.friendContainer}>
           <Text style={styles.friendName}>친구</Text>
           <TouchableOpacity
