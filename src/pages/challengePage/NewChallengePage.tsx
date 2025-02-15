@@ -210,8 +210,6 @@ export default function NewChallengePage({
           if (!editRes?.check) return;
         }
 
-        handleParticipant();
-
         navigation.navigate("ChallengeDetail", {
           ...route.params,
           isInvite: false,
@@ -223,20 +221,15 @@ export default function NewChallengePage({
   };
 
   //참여자 추가
-  const handleParticipant = async (challengeId?: number) => {
-    if (challengeId) {
-      for (const participantId of selectedParticipant) {
-        await postParticipant(challengeId, participantId);
-      }
-    } else {
-      for (const participantId of selectedParticipant) {
-        await postParticipant(detail.challengeId, participantId);
-      }
+  const handleParticipant = async (challengeId: number) => {
+    for (const participantId of selectedParticipant) {
+      await postParticipant(challengeId, participantId);
     }
   };
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackHeader title={isNew ? "챌린지 생성" : "챌린지 수정"} />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
@@ -351,15 +344,17 @@ export default function NewChallengePage({
             </View>
           </Pressable>
         </View>
-        <View style={styles.itemWrap}>
-          <Text style={styles.headText}>친구와 함께하기</Text>
-          <Pressable
-            style={styles.friendBtnWrap}
-            onPress={() => setIsParticipantModal(true)}
-          >
-            <Text style={styles.friendBtnText}>친구 초대하기</Text>
-          </Pressable>
-        </View>
+        {isNew && (
+          <View style={styles.itemWrap}>
+            <Text style={styles.headText}>친구와 함께하기</Text>
+            <Pressable
+              style={styles.friendBtnWrap}
+              onPress={() => setIsParticipantModal(true)}
+            >
+              <Text style={styles.friendBtnText}>친구 초대하기</Text>
+            </Pressable>
+          </View>
+        )}
       </ScrollView>
       <BottomOneButton
         handleAccept={handleAccept}
@@ -410,9 +405,8 @@ export default function NewChallengePage({
           setIsParticipantModal(false);
         }}
         selectedParticipant={selectedParticipant}
-        challengeId={isNew ? null : detail.challengeId}
-        isNew={isNew}
-        isAdd={false}
+        challengeId={null}
+        isNew={true}
       />
     </View>
   );

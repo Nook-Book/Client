@@ -52,6 +52,7 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <NoteHeader
         navigation={navigation}
         onDelete={() => setIsDeleteModal(true)}

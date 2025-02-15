@@ -23,7 +23,10 @@ const ParticipantItem = ({
       ]}
       onPress={onSelect}
     >
-      <Image source={{ uri: item.imageUrl }} style={styles.participantImage} />
+      <Image
+        source={{ uri: item.profileImage }}
+        style={styles.participantImage}
+      />
       <Text
         style={
           (styles.participantText,

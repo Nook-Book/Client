@@ -4,67 +4,75 @@ import ChallangeCardOffIcon from "../../assets/images/challange/ChallangeCardOff
 import ChallangeCardOnIcon from "../../assets/images/challange/ChallangeCardOn.svg";
 import { styles } from "../../styles/challenge/ChallengeDetailPageStyle";
 import { Color } from "../../styles/Theme";
+import { TChallengeDetailParticipantsRes } from "../../types/challenge";
 
 type CardItemProps = {
-  item: {
-    id: number;
-    isEnabled: boolean;
-    name: string;
-    time: string;
-  };
-  onPress: (id: number) => void;
+  item: TChallengeDetailParticipantsRes;
+  onPress: () => void;
 };
 
 const CardItem = ({ item, onPress }: CardItemProps) => (
-  <Pressable style={styles.statusCardWrap} onPress={() => onPress(item.id)}>
-    {item.isEnabled ? <ChallangeCardOnIcon /> : <ChallangeCardOffIcon />}
+  <Pressable style={styles.statusCardWrap} onPress={onPress}>
+    {item.participantStatus === "RESTING" ? (
+      <ChallangeCardOffIcon />
+    ) : (
+      <ChallangeCardOnIcon />
+    )}
     <Text
       style={[
         styles.statusCardText,
         {
-          color: item.isEnabled ? Color.Contents.Click : Color.Typo.Secondary,
+          color:
+            item.participantStatus === "RESTING"
+              ? Color.Typo.Secondary
+              : Color.Contents.Click,
         },
       ]}
     >
-      {item.name}
+      {item.nickname}
     </Text>
     <Text
       style={[
         styles.statusCardText,
         {
-          color: item.isEnabled ? Color.Contents.Click : Color.Typo.Secondary,
+          color:
+            item.participantStatus === "RESTING"
+              ? Color.Typo.Secondary
+              : Color.Contents.Click,
         },
       ]}
     >
-      {item.time}
+      {item.dailyReadingTime}
     </Text>
   </Pressable>
 );
 
 type StatusListProps = {
-  cards: {
-    id: number;
-    isEnabled: boolean;
-    name: string;
-    time: string;
-  }[];
-  setIsModalVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+  cards: TChallengeDetailParticipantsRes[];
+  setClickStatus: React.Dispatch<
+    React.SetStateAction<TChallengeDetailParticipantsRes | null>
+  >;
+  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const StatusList = ({ cards, setIsModalVisible }: StatusListProps) => {
-  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
-
-  const handleCardPress = (id: number) => {
-    setSelectedCardId(id);
-    setIsModalVisible && setIsModalVisible(true);
-  };
-
+const StatusList = ({
+  cards,
+  setClickStatus,
+  setIsModalVisible,
+}: StatusListProps) => {
   return (
     <View style={styles.statusWrap}>
       <Text style={styles.statusText}>현황</Text>
       <View style={styles.statusItemWrap}>
         {cards.map((card) => (
-          <CardItem key={card.id} item={card} onPress={handleCardPress} />
+          <CardItem
+            key={card.participantId}
+            item={card}
+            onPress={() => {
+              setClickStatus(card);
+              setIsModalVisible(true);
+            }}
+          />
         ))}
       </View>
     </View>

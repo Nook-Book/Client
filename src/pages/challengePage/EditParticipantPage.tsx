@@ -66,6 +66,7 @@ export default function EditParticipantPage({
     );
     if (response.check) {
       setIsParticipantDeleteModal(false);
+      setOpenId(null);
       fetchParticipantList();
     }
   };
@@ -84,12 +85,14 @@ export default function EditParticipantPage({
 
     if (response.check) {
       setIsParticipantOwnerModal(false);
-      fetchParticipantList();
+      setOpenId(null);
+      navigation.goBack();
     }
   };
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackTextHeader title="참여자 관리" />
       <View style={styles.betweenWrap}>
         <Text style={styles.headText}>참여자</Text>
@@ -129,6 +132,7 @@ export default function EditParticipantPage({
             );
           }}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 50 }}
         />
         <DeleteButton
           onPress={() => {
@@ -172,7 +176,6 @@ export default function EditParticipantPage({
         selectedParticipant={[]}
         challengeId={challengeId}
         isNew={false}
-        isAdd={true}
       />
     </View>
   );

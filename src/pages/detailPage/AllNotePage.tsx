@@ -37,6 +37,7 @@ const AllNotePage = ({
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <AllNoteHeader
         navigation={navigation}
         onWritePress={() =>

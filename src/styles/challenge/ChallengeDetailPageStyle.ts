@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 238,
+    backgroundColor: "#FFE870",
   },
   headWrap: {
     padding: 16,

@@ -53,9 +53,15 @@ LocaleConfig.defaultLocale = "ko";
 
 export default function StatusCardDetailPage({
   navigation,
+  route,
 }: {
   navigation: any;
+  route: any;
 }) {
+  const { clickStatus } = route.params;
+
+  //통계 api 연동 필요
+
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState<{
     year: number;
@@ -112,9 +118,10 @@ export default function StatusCardDetailPage({
 
   return (
     <View style={styles.container}>
+      <View style={{ height: 50 }}></View>
       <BackTitleHeader
         navigation={navigation}
-        title="피쉬벅"
+        title={clickStatus.nickname}
         isTitleVisible={true}
       />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
