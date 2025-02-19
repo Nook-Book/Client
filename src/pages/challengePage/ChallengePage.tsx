@@ -82,6 +82,7 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
     );
   };
 
+  console.log(list?.waitingCount);
   return (
     <View style={styles.container}>
       <View style={{ height: 50 }}></View>
@@ -90,7 +91,10 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <ChallengeHead text="초대된 챌린지" count={list?.waitingCount} />
+          <ChallengeHead
+            text="초대된 챌린지"
+            count={list?.waitingInvitationCount}
+          />
           {list?.waitingInvitationList.map((data, index) => {
             return (
               <Pressable
