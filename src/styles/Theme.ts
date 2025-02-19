@@ -59,6 +59,7 @@ export const Font = {
     XLInput: {
       fontFamily: "SCDream6",
       fontSize: 28.43,
+      lineHeight: 28.43 * 1.2,
     },
     Large: {
       fontFamily: "SCDream6",
