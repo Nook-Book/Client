@@ -13,7 +13,7 @@ export default function NoteHeader({
   onDelete: () => void;
 }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.betweenContainer}>
         <Pressable
           onPress={() => navigation.goBack()}

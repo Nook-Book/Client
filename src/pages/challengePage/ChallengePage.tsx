@@ -84,13 +84,15 @@ export default function ChallengePage({ navigation }: { navigation: any }) {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <AllChallengeHeader
         onPress={() => navigation.navigate("AllChallenge", { list: list })}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <ChallengeHead text="초대된 챌린지" count={list?.waitingCount} />
+          <ChallengeHead
+            text="초대된 챌린지"
+            count={list?.waitingInvitationCount}
+          />
           {list?.waitingInvitationList.map((data, index) => {
             return (
               <Pressable

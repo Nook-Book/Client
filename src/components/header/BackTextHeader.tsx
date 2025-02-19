@@ -15,7 +15,7 @@ export default function BackTextHeader({
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.centerContainer}>
         <Pressable
           onPress={() =>

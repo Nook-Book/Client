@@ -5,7 +5,6 @@ import {
   GestureHandlerRootView,
   Swipeable,
 } from "react-native-gesture-handler";
-import MyPageAtherNav from "../../components/myPage/MyPageAtherNav";
 import FriendComponent from "../../components/myPage/friendPage/FriendComponent";
 import FriendDeleteModal from "../../components/myPage/friendPage/FriendDeleteModal";
 import FriendNav from "../../components/myPage/friendPage/FriendNav";
@@ -21,6 +20,7 @@ import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
 import { FriendParamList } from "../../types/friend";
 import { FriendRequest } from "../../types/mypage/friend";
+import BackTextHeader from "../../components/header/BackTextHeader";
 
 const FriendPage = () => {
   const [friendNav, setFriendNav] = useState<"친구 목록" | "친구 추가">(
@@ -73,8 +73,7 @@ const FriendPage = () => {
           />
         </>
       )}
-
-      <MyPageAtherNav title="친구" />
+      <BackTextHeader title="친구" />
       <FriendNav state={friendNav} onClick={handleSetFriendNav} />
       <TextInput
         style={styles.input}

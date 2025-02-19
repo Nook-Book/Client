@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-import { Color, Font } from "../Theme";
+import { Platform, StatusBar, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,10 +6,12 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   settingContainer: {
-    paddingHorizontal: 16,
+    width: 56,
+    height: 56,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

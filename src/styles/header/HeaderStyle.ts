@@ -1,7 +1,10 @@
-import { StyleSheet } from "react-native";
+import { Platform, StatusBar, StyleSheet } from "react-native";
 import { Color, Font } from "../Theme";
 
 export const styles = StyleSheet.create({
+  safeAreaContainer: {
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   betweenContainer: {
     flexDirection: "row",
     justifyContent: "space-between",

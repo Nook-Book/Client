@@ -7,6 +7,7 @@ import NotePencelIcon from "../../assets/images/icon/NotePencel.svg";
 import { useFocusEffect } from "@react-navigation/native";
 import { getNoteList } from "../../api/note/getNoteList";
 import { TNoteListInformationRes } from "../../types/note";
+import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
 
 const AllNotePage = ({
   navigation,
@@ -17,6 +18,7 @@ const AllNotePage = ({
 }) => {
   const bookId = route?.params?.bookId;
   const [noteList, setNoteList] = useState<TNoteListInformationRes>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const fetchNoteList = async () => {
     try {
@@ -37,11 +39,12 @@ const AllNotePage = ({
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <AllNoteHeader
         navigation={navigation}
         onWritePress={() =>
-          navigation.navigate("Write", { bookId: bookId, isFirst: false })
+          (noteList?.noteListRes?.length || 0) >= 10
+            ? setIsModalVisible(true)
+            : navigation.navigate("Write", { bookId: bookId, isFirst: false })
         }
       />
       <View style={styles.contentContainer}>
@@ -83,6 +86,11 @@ const AllNotePage = ({
           })}
         </ScrollView>
       </View>
+      <MaxCollectionModal
+        visible={isModalVisible}
+        text="최대 기록 가능한 개수는 10개입니다."
+        onClose={() => setIsModalVisible(false)}
+      />
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -142,6 +142,36 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     end: 0,
   }); //선택된 텍스트 상태
   const [addImageList, setAddImageList] = useState<string[]>([]); //추가한 이미지 리스트
+
+  //키보드 이벤트
+  useEffect(() => {
+    //키보드가 나타날 때 호출되는 이벤트 리스너
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setIsKeybored(true);
+        if (selectedShapeMenu.TextColor) {
+          setSelectedShapeMenu((prev) => ({
+            ...prev,
+            TextColor: false,
+          }));
+        }
+      }
+    );
+
+    //키보드가 사라질 때 호출되는 이벤트 리스너
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setIsKeybored(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   //색상 변경 함수
   const handleColorChange = (color: string) => {
@@ -370,11 +400,9 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <WriteHeader
         isText={
           titleText.length > 0 &&
-          markdownText.length > 0 &&
           (title !== titleText || content !== markdownText)
         }
         onCheckPress={() =>
@@ -433,16 +461,18 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
       </View>
       <KeyboardAvoidingView
         style={styles.contentContainer}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <ScrollView
           style={{ marginHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="never"
+          keyboardDismissMode="none"
         >
           {isWriteView ? (
             <>
               <TextInput
-                style={styles.titleText}
+                style={styles.titleInputText}
                 placeholder="제목을 입력해주세요"
                 value={titleText}
                 onChangeText={setTitleText}
@@ -450,6 +480,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                 onFocus={() => setIsItemView(false)}
               />
               <TextInput
+                style={styles.contentText}
                 ref={markdownInputRef}
                 placeholder="탭하여 기록을 시작해보세요."
                 value={markdownText}
@@ -464,6 +495,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                 }}
                 onSelectionChange={handleSelectionChange}
                 multiline
+                scrollEnabled={false}
               />
             </>
           ) : (
@@ -493,14 +525,17 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                             if (data.type === "TextColor") {
                               if (!selectedShapeMenu.TextColor) {
                                 Keyboard.dismiss();
-                                setIsItemView(true);
                                 setIsKeybored(false);
+                                setIsItemView(true);
                               } else {
                                 markdownInputRef.current?.focus();
+                                setIsKeybored(true);
                               }
                             }
                             if (data.type === "Back") {
                               setSelectedMenu("");
+                              markdownInputRef.current?.focus();
+                              setIsKeybored(true);
                             }
                             if (data.type === "Bold") {
                               if (!selectedShapeMenu.Bold) {
@@ -558,6 +593,13 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                                 await AsyncStorage.setItem("isFirst", "true");
                               }
                               setSelectedMenu(data.type);
+                              Keyboard.dismiss();
+                              setIsItemView(true);
+                              setIsKeybored(false);
+                              setSelectedShapeMenu((prev) => ({
+                                ...prev,
+                                TextColor: true,
+                              }));
                             } else if (selectedMenu === data.type) {
                               setSelectedMenu("");
                               markdownInputRef.current?.focus();
@@ -617,7 +659,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
             ) : selectedMenu === "TextShape" ? (
               <TextShapeItem handleColorChange={handleColorChange} />
             ) : (
-              <TextShapeItem handleColorChange={handleColorChange} />
+              <View></View>
             ))}
         </View>
       </KeyboardAvoidingView>

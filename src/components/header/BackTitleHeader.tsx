@@ -14,7 +14,7 @@ export default function BackTitleHeader({
   navigation: any;
 }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.centerContainer}>
         <Pressable
           onPress={() => navigation.goBack()}

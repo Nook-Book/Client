@@ -13,6 +13,7 @@ import ChallengeStackScreen from "./ChallengeStackNavigation";
 import { useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 import { DetailNavigationProp } from "../../types/detail";
+import { Platform } from "react-native";
 
 type RootTabParamList = {
   서재: undefined;
@@ -98,6 +99,7 @@ export default function TabNavigation() {
         },
         tabBarLabelStyle: {
           ...Font.Paragraph.XS,
+          marginBottom: Platform.OS === "android" ? 15 : 0,
         },
         tabBarIconStyle: {
           marginTop: 30,
@@ -107,8 +109,8 @@ export default function TabNavigation() {
     >
       <Tab.Screen name="서재" component={LibraryStackScreen} />
       <Tab.Screen name="검색" component={SearchStackScreen} />
-      <Tab.Screen name="마이" component={MaPageStackScreen} />
       <Tab.Screen name="챌린지" component={ChallengeStackScreen} />
+      <Tab.Screen name="마이" component={MaPageStackScreen} />
     </Tab.Navigator>
   );
 }

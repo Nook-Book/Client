@@ -48,7 +48,6 @@ const EditBookPage = ({
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <EditHeader
         onCancel={() => navigation.navigate("Library")}
         onComplete={() => {

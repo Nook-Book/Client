@@ -30,7 +30,6 @@ const LibraryPage = ({ navigation }: { navigation: any }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <MainHeader navigation={navigation} />
       <BookList
         navigation={navigation}

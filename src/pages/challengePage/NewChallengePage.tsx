@@ -229,7 +229,6 @@ export default function NewChallengePage({
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackHeader title={isNew ? "챌린지 생성" : "챌린지 수정"} />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>

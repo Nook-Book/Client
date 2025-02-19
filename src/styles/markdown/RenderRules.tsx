@@ -1,5 +1,6 @@
 import { Text } from "react-native";
 import { markdownStyle } from "./MarkdownStyle";
+import FitImage from "react-native-fit-image";
 
 export const colorMap: { [key: string]: string } = {
   D: "#838383",
@@ -36,6 +37,14 @@ export const RenderRules = {
     <Text key={`heading3-${node.key}`} style={markdownStyle.heading3}>
       {children}
     </Text>
+  ),
+  image: (node: any) => (
+    <FitImage
+      indicator={true}
+      key={`image-${node.key}`}
+      source={{ uri: node.attributes.src }}
+      style={{ width: undefined, height: undefined }}
+    />
   ),
   text: (node: any) => {
     const { content } = node;
@@ -107,7 +116,11 @@ export const RenderRules = {
     }
 
     return (
-      <Text key={`text-container-${Math.random().toString(36).slice(2, 8)}`}>
+      <Text
+        key={`text-container-${uniqueId}-${Math.random()
+          .toString(36)
+          .slice(2, 8)}`}
+      >
         {parts}
       </Text>
     );

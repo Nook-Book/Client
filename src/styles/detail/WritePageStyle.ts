@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingVertical: 16,
   },
   tabViewWrap: {
     flexDirection: "row",
@@ -25,10 +24,16 @@ export const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 5,
   },
-  titleText: {
+  titleInputText: {
     ...Font.Heading.XLInput,
-    marginTop: 16,
     color: Color.Typo.Primary,
+    marginTop: 16,
+    height: 61,
+  },
+  titleText: {
+    ...Font.Heading.XL,
+    color: Color.Typo.Primary,
+    marginTop: 24,
   },
   contentText: {
     ...Font.Paragraph.SemiMedium,
