@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
   roleWrap: {
     position: "absolute",
     top: "-25%",
-    width: 55,
+    width: 56,
     borderRadius: 2,
     borderWidth: 0.5,
     borderColor: Color.Border.Primary,
