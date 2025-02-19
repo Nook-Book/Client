@@ -86,7 +86,9 @@ export default function EditParticipantPage({
     if (response.check) {
       setIsParticipantOwnerModal(false);
       setOpenId(null);
-      navigation.goBack();
+      navigation.navigate("ChallengeDetail", {
+        ...route.params,
+      });
     }
   };
 

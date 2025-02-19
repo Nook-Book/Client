@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, Pressable, Image, View } from "react-native";
 import { styles } from "../../styles/challenge/EditParticipantPageStyle";
 import { TParticipantListRes } from "../../types/challenge";

@@ -4,8 +4,10 @@ export type TTimerListRes = {
 };
 
 export type TTimerListInformationRes = {
+  timerId?: number;
   totalReadTime: string;
   recordResList: TTimerListRecordRes[];
+  isReading: boolean;
 };
 
 export type TTimerListRecordRes = {
