@@ -16,6 +16,7 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
   const [isRunning, setIsRunning] = useState(false); //타이머 작동 여부
   const [time, setTime] = useState(0); //현재 타이머 시간
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const [timerId, setTimerId] = useState<number | null>(null);
 
   const fetchTimerList = async () => {
     try {
@@ -71,9 +72,9 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
   //시작, 중지 버튼 클릭 핸들러
   const handleStartStop = async () => {
     if (isRunning) {
-      if (!timerList?.timerId) return;
+      if (!timerId) return;
 
-      const response = await postTimerEnd(bookId, timerList?.timerId, time);
+      const response = await postTimerEnd(bookId, timerId, time);
       if (response.check) {
         setIsRunning(false);
         setTime(0);
@@ -82,6 +83,7 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
     } else {
       const response = await postTimerStart(bookId);
       if (response.check) {
+        setTimerId(response.information.timerId);
         setIsRunning(true);
         setTime(0);
       }
@@ -106,7 +108,9 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
           <View>
             <Text style={styles.accumulatedHeadText}>누적 독서 시간</Text>
             <Text style={styles.accumulatedText}>
-              {timerList?.totalReadTime.replaceAll(":", " : ")}
+              {timerList?.totalReadTime
+                ? timerList.totalReadTime.replaceAll(":", " : ")
+                : "00 : 00 : 00"}
             </Text>
           </View>
           <Pressable
@@ -144,7 +148,9 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
                 </Text>
               </View>
               <Text style={styles.recordDurationText}>
-                {record.readTime.replaceAll(":", " : ")}
+                {record.readTime
+                  ? record.readTime.replaceAll(":", " : ")
+                  : "00 : 00 : 00"}
               </Text>
             </View>
           ))}
