@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ScrollView, View, Text, Pressable } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { styles } from "../../styles/detail/NotePageStyle";
 import NoteHeader from "../../components/header/NoteHeader";
 import TitleDesModal from "../../components/modal/TitleDesModal";
@@ -57,29 +57,18 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
         navigation={navigation}
         onDelete={() => setIsDeleteModal(true)}
       />
-      <Pressable
-        style={styles.contentContainer}
-        onLongPress={() =>
-          navigation.navigate("Write", {
-            noteId: noteId,
-            title: noteDetail?.title,
-            content: noteDetail?.content,
-          })
-        }
+      <ScrollView
+        style={{ marginHorizontal: 16 }}
+        showsVerticalScrollIndicator={false}
       >
-        <ScrollView
-          style={{ marginHorizontal: 16 }}
-          showsVerticalScrollIndicator={false}
-        >
-          <Text style={styles.dateText}>
-            {formatDate(noteDetail?.createdDate)}
-          </Text>
-          <Text style={styles.titleText}>{noteDetail?.title}</Text>
-          <Markdown style={markdownStyle} rules={RenderRules}>
-            {String(noteDetail?.content)}
-          </Markdown>
-        </ScrollView>
-      </Pressable>
+        <Text style={styles.dateText}>
+          {formatDate(noteDetail?.createdDate)}
+        </Text>
+        <Text style={styles.titleText}>{noteDetail?.title}</Text>
+        <Markdown style={markdownStyle} rules={RenderRules}>
+          {String(noteDetail?.content)}
+        </Markdown>
+      </ScrollView>
       <TitleDesModal
         visible={isDeleteModal}
         titleText="기록 삭제"
