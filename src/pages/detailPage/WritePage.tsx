@@ -374,7 +374,6 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
       <WriteHeader
         isText={
           titleText.length > 0 &&
-          markdownText.length > 0 &&
           (title !== titleText || content !== markdownText)
         }
         onCheckPress={() =>
