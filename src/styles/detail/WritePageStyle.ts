@@ -24,11 +24,16 @@ export const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 5,
   },
-  titleText: {
+  titleInputText: {
     ...Font.Heading.XLInput,
     color: Color.Typo.Primary,
     marginTop: 16,
     height: 61,
+  },
+  titleText: {
+    ...Font.Heading.XL,
+    color: Color.Typo.Primary,
+    marginTop: 24,
   },
   contentText: {
     ...Font.Paragraph.SemiMedium,

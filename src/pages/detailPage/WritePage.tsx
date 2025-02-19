@@ -473,7 +473,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
           {isWriteView ? (
             <>
               <TextInput
-                style={styles.titleText}
+                style={styles.titleInputText}
                 placeholder="제목을 입력해주세요"
                 value={titleText}
                 onChangeText={setTitleText}
