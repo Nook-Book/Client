@@ -107,8 +107,8 @@ export default function TabNavigation() {
     >
       <Tab.Screen name="서재" component={LibraryStackScreen} />
       <Tab.Screen name="검색" component={SearchStackScreen} />
-      <Tab.Screen name="마이" component={MaPageStackScreen} />
       <Tab.Screen name="챌린지" component={ChallengeStackScreen} />
+      <Tab.Screen name="마이" component={MaPageStackScreen} />
     </Tab.Navigator>
   );
 }
