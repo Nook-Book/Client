@@ -94,7 +94,6 @@ export default function ChallengeDetailPage({
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       {detail && (
         <>
           {isInvite ? (

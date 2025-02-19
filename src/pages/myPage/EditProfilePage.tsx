@@ -4,10 +4,10 @@ import { TouchableOpacity, View } from "react-native";
 import EditProfile from "../../assets/images/profile/EditProfile.svg";
 import ChangeProfileModal from "../../components/myPage/editProfile/ChangeProfileModal";
 import EditBox from "../../components/myPage/editProfile/EditBox";
-import MyPageAtherNav from "../../components/myPage/MyPageAtherNav";
 import { useMyPage } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/editProfilePage/EditProfilePage";
 import { NavigationProp } from "../../types/search";
+import BackTitleHeader from "../../components/header/BackTitleHeader";
 
 const EditProfilePage = () => {
   const { data } = useMyPage();
@@ -16,7 +16,11 @@ const EditProfilePage = () => {
   const navigation = useNavigation<NavigationProp>();
   return (
     <View style={styles.container}>
-      <MyPageAtherNav title="" />
+      <BackTitleHeader
+        title={""}
+        isTitleVisible={false}
+        navigation={navigation}
+      />
       <View style={styles.profileContainer}>
         <TouchableOpacity onPress={() => setIsShowModal(true)}>
           <EditProfile />

@@ -18,7 +18,7 @@ export default function BackShareHeader({
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.betweenContainer}>
         <Pressable
           onPress={() => navigation.goBack()}

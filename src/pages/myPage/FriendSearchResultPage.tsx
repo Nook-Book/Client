@@ -5,9 +5,9 @@ import AtherUserProfile from "../../components/myPage/AtherUserProfile";
 import Bookstatistics from "../../components/myPage/Bookstatistics";
 import CategoryReport from "../../components/myPage/CategoryReport";
 import FriendDeleteModal from "../../components/myPage/friendPage/FriendDeleteModal";
-import MyPageAtherNav from "../../components/myPage/MyPageAtherNav";
 import { styles } from "../../styles/myPage/friendPage/FriendSearchResultPage";
 import { SearchFriendResultRouteProp } from "../../types/navigation/navigation";
+import BackTextHeader from "../../components/header/BackTextHeader";
 
 const FriendSearchResultPage = ({
   route,
@@ -32,7 +32,7 @@ const FriendSearchResultPage = ({
         </>
       )}
       <ScrollView>
-        <MyPageAtherNav title={""} />
+        <BackTextHeader title={""} />
         <AtherUserProfile
           name={query}
           type={"Friend"}

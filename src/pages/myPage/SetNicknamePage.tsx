@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import XMini from "../../assets/images/icon/XMini.svg";
-import SetProfileNav from "../../components/myPage/editProfile/SetProfileNav";
 import { useMyPage, usePutNickname } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/editProfilePage/SetProfile";
 import { NavigationProp } from "../../types/search";
+import EditHeader from "../../components/header/EditHeader";
 
 const SetNicknamePage = () => {
   const { data, refetch } = useMyPage();
@@ -36,7 +36,12 @@ const SetNicknamePage = () => {
 
   return (
     <View style={styles.container}>
-      <SetProfileNav title="닉네임 편집" onClick={handleNicknameSubmit} />
+      <EditHeader
+        text={"닉네임 편집"}
+        isTextVisible={true}
+        onCancel={() => navigation.goBack()}
+        onComplete={handleNicknameSubmit}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           value={newNickname}

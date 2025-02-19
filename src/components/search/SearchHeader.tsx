@@ -24,7 +24,7 @@ export default function SearchHeader({ search }: Props) {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
         <BackIcon
           style={styles.button}

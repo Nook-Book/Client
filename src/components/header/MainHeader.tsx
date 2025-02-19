@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, SafeAreaView, Pressable } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Pressable,
+  Platform,
+  StatusBar,
+} from "react-native";
 import LogoIcon from "../../assets/images/icon/Logo.svg";
 import AlertIcon from "../../assets/images/icon/Alert.svg";
 import AlertVariantIcon from "../../assets/images/icon/AlertVariant.svg";
@@ -9,7 +15,7 @@ export default function MainHeader({ navigation }: { navigation: any }) {
   const [isAlert, setIsAlert] = useState(false);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.mainContainer}>
         <LogoIcon />
         {isAlert ? (

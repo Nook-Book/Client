@@ -12,7 +12,7 @@ export default function CalenderHeader({
   onPress: () => void;
 }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.centerContainer}>
         <Pressable onPress={onPress} style={styles.leftButtonWrap}>
           <CancelIcon color={Color.Contents.Icon} />

@@ -22,7 +22,6 @@ export default function AlertPage() {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 50 }}></View>
       <BackHeader title="알림" />
       <FlatList
         data={dummyList}

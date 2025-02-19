@@ -4,7 +4,7 @@ import { styles } from "../../styles/header/HeaderStyle";
 
 export default function RightTextHeader({ onPress }: { onPress: () => void }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View
         style={[
           styles.rightContainer,

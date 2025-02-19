@@ -17,7 +17,7 @@ export default function BackSettingHeader({
   onPress: () => void;
 }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.betweenContainer}>
         <Pressable
           onPress={() => navigation.goBack()}

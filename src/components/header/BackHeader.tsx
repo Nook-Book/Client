@@ -15,7 +15,7 @@ export default function BackHeader({
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.centerContainer}>
         <Pressable
           onPress={() => (onPress ? onPress() : navigation.goBack())}

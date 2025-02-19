@@ -2,10 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { TextInput, TouchableOpacity, View } from "react-native";
 import XMini from "../../assets/images/icon/XMini.svg";
-import SetProfileNav from "../../components/myPage/editProfile/SetProfileNav";
 import { useMyPage, usePutId } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/editProfilePage/SetProfile";
 import { NavigationProp } from "../../types/search";
+import EditHeader from "../../components/header/EditHeader";
 
 const SetIdPage = () => {
   const { data, refetch } = useMyPage();
@@ -34,7 +34,12 @@ const SetIdPage = () => {
 
   return (
     <View style={styles.container}>
-      <SetProfileNav title="아이디 편집" onClick={handleIdSubmit} />
+      <EditHeader
+        text={"아이디 편집"}
+        isTextVisible={true}
+        onCancel={() => navigation.goBack()}
+        onComplete={handleIdSubmit}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           value={newId}

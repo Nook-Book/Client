@@ -14,7 +14,7 @@ export default function WriteHeader({
   onCancelPress: () => void;
 }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.rightContainer}>
         {isText ? (
           <Pressable onPress={onCheckPress} style={styles.buttonWrap}>

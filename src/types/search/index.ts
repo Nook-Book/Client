@@ -1,5 +1,6 @@
 export type NavigationProp = {
   navigate: (screen: string) => void;
+  goBack(): void;
 };
 export type RootStackParamList = {
   goBack(): void;

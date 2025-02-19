@@ -13,7 +13,7 @@ export default function AllNoteHeader({
   onWritePress: () => void;
 }) {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.betweenContainer}>
         <Pressable
           onPress={() => navigation.goBack()}
