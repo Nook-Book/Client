@@ -6,8 +6,8 @@ import NumberIcon from "../../assets/images/write/Number.svg";
 import DividerIcon from "../../assets/images/write/Divider.svg";
 import CalloutIcon from "../../assets/images/write/Callout.svg";
 import { SvgProps } from "react-native-svg";
-import { View, Text, FlatList, Pressable } from "react-native";
-import { styles } from "../../styles/write/PlusItemStyle";
+import { View, Text, FlatList, Pressable, useWindowDimensions } from "react-native";
+import { getStyles } from "../../styles/write/PlusItemStyle";
 
 type PlusItemsType = {
   type: string;
@@ -20,6 +20,10 @@ const PlusItem = ({
 }: {
   handleTextInsert: (type: string) => void;
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const styles = getStyles(windowWidth);
+  
   const PlusItems: PlusItemsType[] = [
     {
       type: "# ",

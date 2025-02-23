@@ -1,5 +1,12 @@
-import { View, Text, FlatList, Pressable, Alert } from "react-native";
-import { styles } from "../../styles/write/ImageItemStyle";
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  Alert,
+  useWindowDimensions,
+} from "react-native";
+import { getStyles } from "../../styles/write/ImageItemStyle";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
@@ -17,6 +24,10 @@ const ImageItem = ({
   handleTextInsert: (type: string) => void;
   setAddImageList: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const styles = getStyles(windowWidth);
+
   const [hasCameraPermission, setHasCameraPermission] = useState<
     boolean | null
   >(null);
@@ -44,7 +55,7 @@ const ImageItem = ({
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: "images",
       allowsEditing: false,
       quality: 1,
     });
@@ -63,7 +74,7 @@ const ImageItem = ({
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: "images",
       allowsEditing: false,
       quality: 1,
     });
