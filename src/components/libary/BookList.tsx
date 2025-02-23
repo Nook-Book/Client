@@ -1,11 +1,10 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { FlatList, useWindowDimensions, Animated } from "react-native";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import {
+  FlatList,
+  useWindowDimensions,
+  Animated,
+  Platform,
+} from "react-native";
 import CarouselItem from "./CarouselItem";
 import { TMainCollectionListDetailRes } from "../../types/library";
 
@@ -13,33 +12,17 @@ const BookList = ({
   navigation,
   editType,
   data,
-  currentIndex,
   setCurrentIndex,
 }: {
   navigation: any;
   editType: boolean;
   data: TMainCollectionListDetailRes[];
-  currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const { width: windowWidth } = useWindowDimensions();
-  const itemWidth = windowWidth - 52;
   const flatListRef = useRef<FlatList>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const [snapToInterval, setSnapToInterval] = useState(0);
-
-  //현재 인덱스에 따른 스냅 간격 설정
-  useEffect(() => {
-    if (data.length === 4) {
-      if (currentIndex === 0 || currentIndex === 2) {
-        setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2 - 2.5);
-      } else if (currentIndex === 1 || currentIndex === 3) {
-        setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2 - 7.5);
-      }
-    } else {
-      setSnapToInterval(itemWidth + (windowWidth - itemWidth) / 2);
-    }
-  }, [currentIndex, windowWidth]);
+  const [snapToInterval, setSnapToInterval] = useState(windowWidth - 26 - 2.5);
 
   const viewabilityConfig = useMemo(
     () => ({
@@ -64,9 +47,22 @@ const BookList = ({
       if (viewableItems.length > 0) {
         const visibleIndex = viewableItems[0].index || 0;
         setCurrentIndex(visibleIndex);
+
+        if (data.length === 4) {
+          if (
+            (Platform.OS === "android" &&
+              (visibleIndex === 2 || visibleIndex === 4)) ||
+            (Platform.OS === "ios" &&
+              (visibleIndex === 1 || visibleIndex === 3))
+          ) {
+            setSnapToInterval(windowWidth - 26 - 7.5);
+          } else {
+            setSnapToInterval(windowWidth - 26 - 2.5);
+          }
+        }
       }
     },
-    []
+    [windowWidth]
   );
 
   return (
@@ -85,7 +81,6 @@ const BookList = ({
       )}
       keyExtractor={(item, index) => `${item.collectionId}_${index}`}
       horizontal
-      pagingEnabled
       showsHorizontalScrollIndicator={false}
       snapToAlignment="center"
       decelerationRate="fast"
@@ -93,6 +88,7 @@ const BookList = ({
       scrollEventThrottle={16}
       contentContainerStyle={{
         paddingHorizontal: 26,
+        gap: 10,
       }}
       onViewableItemsChanged={handleViewableItemsChanged}
       viewabilityConfig={viewabilityConfig}

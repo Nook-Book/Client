@@ -35,7 +35,6 @@ const LibraryPage = ({ navigation }: { navigation: any }) => {
         navigation={navigation}
         editType={false}
         data={list}
-        currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
     </View>

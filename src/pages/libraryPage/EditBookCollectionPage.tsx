@@ -117,6 +117,8 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
             : setEditModalVisible(!isEditModalVisible);
         }}
         onComplete={handleSaveCollection}
+        text={""}
+        isTextVisible={false}
       />
       <View style={styles.innerContainer}>
         <View style={styles.titleWrap}>

@@ -55,14 +55,15 @@ const EditBookPage = ({
             ? navigation.navigate("Library")
             : setEditModalVisible(true);
         }}
+        text={""}
+        isTextVisible={false}
       />
       <Text style={styles.numText}>{currentIndex + 1}번째</Text>
-      <View style={{ height: windowHeight / 1.5 }}>
+      <View style={{ height: windowHeight / 1.65 }}>
         <BookList
           navigation={navigation}
           editType={true}
           data={list}
-          currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
         />
       </View>
