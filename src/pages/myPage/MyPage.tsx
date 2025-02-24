@@ -1,13 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
-import Profile from "../../components/myPage/Profile";
-import MyPageNav from "../../components/myPage/MyPageNav";
-import { styles } from "../../styles/myPage/MyPageStyle";
-import CategoryReport from "../../components/myPage/CategoryReport";
 import Bookstatistics from "../../components/myPage/Bookstatistics";
+import CategoryReport from "../../components/myPage/CategoryReport";
+import MyPageNav from "../../components/myPage/MyPageNav";
+import Profile from "../../components/myPage/Profile";
+import { styles } from "../../styles/myPage/MyPageStyle";
+import { NavigationProp } from "../../types/search";
 
 export default function MyPage() {
+  const navigation = useNavigation<NavigationProp>();
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -18,7 +22,10 @@ export default function MyPage() {
             <Text style={styles.activityHeader}>독서활동</Text>
           </View>
           <View style={styles.linkIconContainer}>
-            <TouchableOpacity style={styles.linkIconContainerComponent}>
+            <TouchableOpacity
+              style={styles.linkIconContainerComponent}
+              onPress={() => navigation.navigate("MyCollectionPage")}
+            >
               <CollectionIcon />
               <Text style={styles.linkIconContainerComponentText}>
                 컬렉션 전체 보기
