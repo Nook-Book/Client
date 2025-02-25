@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../../styles/myPage/collectionPage/MyCollectionPageStyle";
 
-import MyPageAtherNav from "../../components/myPage/MyPageAtherNav";
+// import MyPageAtherNav from "../../components/msyPage/MyPageAtherNav";
 import { useGetCollection } from "../../hooks/mypage/useCollection";
 
 import MinusIcon from "../../assets/images/icon/Minus.svg";
@@ -11,7 +11,7 @@ const MyCollectionPage = () => {
   const { data: collections } = useGetCollection();
   return (
     <View style={styles.container}>
-      <MyPageAtherNav title="컬렉션 전체보기" />
+      {/* <MyPageAtherNav title="컬렉션 전체보기" /> */}
       <View style={styles.collectionNav}>
         <TouchableOpacity>
           <Text style={styles.buttonText}>추가</Text>
