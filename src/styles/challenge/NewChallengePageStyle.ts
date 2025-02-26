@@ -51,11 +51,9 @@ export const styles = StyleSheet.create({
   readTimeWrap: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
   },
   itemTextContainer: {
     flexDirection: "row",
-    backgroundColor: Color.Field.Primary,
     borderRadius: 2,
     gap: 51,
     paddingHorizontal: 26.5,

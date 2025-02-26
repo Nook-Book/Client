@@ -147,8 +147,22 @@ export default function NewChallengePage({
   }) => (
     <View>
       <Text style={styles.readTimeText}>{label}</Text>
-      <Pressable style={styles.readTimeWrap} onPress={onPress}>
-        <View style={styles.itemTextContainer}>{formatTimeText(time)}</View>
+      <Pressable
+        style={[styles.readTimeWrap, { marginVertical: 4 }]}
+        onPress={onPress}
+      >
+        <View
+          style={[
+            styles.itemTextContainer,
+            {
+              backgroundColor: isCheck
+                ? Color.Field.Background
+                : Color.Field.Primary,
+            },
+          ]}
+        >
+          {formatTimeText(time)}
+        </View>
       </Pressable>
     </View>
   );
@@ -320,7 +334,7 @@ export default function NewChallengePage({
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>하루 목표 시간량 설정</Text>
           <Pressable
-            style={styles.readTimeWrap}
+            style={[styles.readTimeWrap, { marginVertical: 12 }]}
             onPress={() => {
               setPickerType("GOAL");
               setIsPickerModal(true);
