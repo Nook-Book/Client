@@ -40,7 +40,7 @@ export const getStyles = (windowWidth: number) => {
       height: 19.36,
     },
     itemText: {
-      ...Font.Paragraph.Medium,
+      ...Font.Paragraph.SemiLittleMedium,
       color: Color.Typo.Primary,
     },
   });

@@ -20,7 +20,7 @@ export const getStyles = (windowWidth: number) => {
       width: windowWidth / 2 - 24,
     },
     itemText: {
-      ...Font.Paragraph.Medium,
+      ...Font.Paragraph.SemiLittleMedium,
       color: Color.Typo.Primary,
     },
   });
