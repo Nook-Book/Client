@@ -20,6 +20,7 @@ export type RootMyPageStackParamList = {
   SetNicknamePage: undefined;
   FriendPage: undefined;
   FriendSearchResultPage: { query: string };
+  MyCollectionPage: undefined;
   navigate: (screen: string) => void;
 };
 
