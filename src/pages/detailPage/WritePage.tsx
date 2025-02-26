@@ -142,6 +142,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     end: 0,
   }); //선택된 텍스트 상태
   const [addImageList, setAddImageList] = useState<string[]>([]); //추가한 이미지 리스트
+  const [inputHeight, setInputHeight] = useState(40);
 
   //키보드 이벤트
   useEffect(() => {
@@ -478,15 +479,19 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                 onChangeText={setTitleText}
                 placeholderTextColor={Color.Typo.Tertiary}
                 onFocus={() => setIsItemView(false)}
+                spellCheck={false}
               />
               <TextInput
-                style={styles.contentText}
+                style={[styles.contentText, { height: inputHeight }]}
                 ref={markdownInputRef}
                 placeholder="탭하여 기록을 시작해보세요."
                 value={markdownText}
                 onChangeText={(text) => {
                   saveHistoryState();
                   setMarkdownText(text);
+                }}
+                onContentSizeChange={(event) => {
+                  setInputHeight(event.nativeEvent.contentSize.height);
                 }}
                 placeholderTextColor={Color.Typo.Tertiary}
                 onFocus={() => {
@@ -495,7 +500,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                 }}
                 onSelectionChange={handleSelectionChange}
                 multiline
-                scrollEnabled={false}
+                spellCheck={false}
               />
             </>
           ) : (

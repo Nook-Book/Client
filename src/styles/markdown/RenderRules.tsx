@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { markdownStyle } from "./MarkdownStyle";
 import FitImage from "react-native-fit-image";
 
@@ -23,6 +23,11 @@ export const backgroundColorMap: { [key: string]: string } = {
 };
 
 export const RenderRules = {
+  body: (node: any, children: any) => (
+    <View key={`body-${node.key}`} style={markdownStyle.body}>
+      {children}
+    </View>
+  ),
   heading1: (node: any, children: any) => (
     <Text key={`heading1-${node.key}`} style={markdownStyle.heading1}>
       {children}
@@ -35,6 +40,11 @@ export const RenderRules = {
   ),
   heading3: (node: any, children: any) => (
     <Text key={`heading3-${node.key}`} style={markdownStyle.heading3}>
+      {children}
+    </Text>
+  ),
+  em: (node: any, children: any) => (
+    <Text key={`em-${node.key}`} style={markdownStyle.em}>
       {children}
     </Text>
   ),
@@ -108,6 +118,9 @@ export const RenderRules = {
       parts.push(
         <Text
           key={`text-${uniqueId}-${Math.random().toString(36).slice(2, 8)}`}
+          style={{
+            lineHeight: 25,
+          }}
         >
           {content.substring(lastIndex)}
         </Text>

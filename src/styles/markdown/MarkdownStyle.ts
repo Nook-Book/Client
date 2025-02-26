@@ -3,7 +3,8 @@ import { Color, Font } from "../Theme";
 
 export const markdownStyle = StyleSheet.create({
   body: {
-    color: Color.Typo.Primary,
+    paddingBottom: 10,
+    lineHeight: 25,
   },
   heading1: {
     ...Font.Label.Large,
@@ -42,8 +43,8 @@ export const markdownStyle = StyleSheet.create({
     fontWeight: "600",
   },
   em: {
-    //이탤릭체 폰트 추가 필요
     fontStyle: "italic",
+    fontFamily: "Oblique",
   },
   s: {
     textDecorationLine: "line-through",
