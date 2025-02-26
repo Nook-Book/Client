@@ -48,17 +48,14 @@ const BookList = ({
         const visibleIndex = viewableItems[0].index || 0;
         setCurrentIndex(visibleIndex);
 
-        if (data.length === 4) {
-          if (
-            (Platform.OS === "android" &&
-              (visibleIndex === 2 || visibleIndex === 4)) ||
-            (Platform.OS === "ios" &&
-              (visibleIndex === 1 || visibleIndex === 3))
-          ) {
-            setSnapToInterval(windowWidth - 26 - 7.5);
-          } else {
-            setSnapToInterval(windowWidth - 26 - 2.5);
-          }
+        if (
+          (Platform.OS === "android" &&
+            (visibleIndex === 2 || visibleIndex === 4)) ||
+          (Platform.OS === "ios" && (visibleIndex === 1 || visibleIndex === 3))
+        ) {
+          setSnapToInterval(windowWidth - 26 - 7.5);
+        } else {
+          setSnapToInterval(windowWidth - 26 - 2.5);
         }
       }
     },
