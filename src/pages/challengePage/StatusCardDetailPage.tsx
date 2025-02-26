@@ -169,7 +169,7 @@ export default function StatusCardDetailPage({
                 return (
                   <Pressable
                     style={{
-                      width: "100%",
+                      width: 44,
                       height: 44,
                       marginBottom: -10,
                       backgroundColor:
