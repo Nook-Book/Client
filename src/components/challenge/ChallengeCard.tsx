@@ -26,9 +26,9 @@ const ChallengeCard = ({
               <Text style={styles.profileText}>{clickStatus.nickname}</Text>
               <Pressable
                 style={styles.profileBtn}
-                onPress={() => console.log("찌르기", clickStatus.participantId)}
+                onPress={() => console.log("깨우기", clickStatus.participantId)}
               >
-                <Text style={styles.profileBtnText}>찌르기</Text>
+                <Text style={styles.profileBtnText}>깨우기</Text>
               </Pressable>
             </View>
             <Text style={styles.timeText}>
