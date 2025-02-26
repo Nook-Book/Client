@@ -91,6 +91,7 @@ const EditBookPage = ({
       <EditModal
         visible={isEditModalVisible}
         text={"변경된 편집 사항이 없습니다.\n편집을 완료하겠습니까?"}
+        leftText="돌아가기"
         rightText="완료"
         onClose={() => setEditModalVisible(false)}
         onComplate={() => navigation.navigate("Library")}

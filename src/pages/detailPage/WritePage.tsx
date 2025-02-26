@@ -679,6 +679,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
       <EditModal
         visible={isEditModal}
         text={"작성한 사항이 저장되지 않았습니다.\n취소하시겠습니까?"}
+        leftText="돌아가기"
         rightText="취소"
         onClose={() => setIsEditModal(false)}
         onComplate={() => {

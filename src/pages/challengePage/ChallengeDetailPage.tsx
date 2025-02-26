@@ -23,6 +23,7 @@ import {
 import { getChallengeDetail } from "../../api/challenge/getChallengeDetail";
 import { postAcceptChallenge } from "../../api/challenge/postAcceptChallenge";
 import { postRejectChallenge } from "../../api/challenge/postRejectChallenge";
+import EditModal from "../../components/modal/EditModal";
 
 export default function ChallengeDetailPage({
   route,
@@ -41,6 +42,7 @@ export default function ChallengeDetailPage({
   const [isTitleVisible, setIsTitleVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showAllProfiles, setShowAllProfiles] = useState(false);
+  const [isEditModalVisible, setEditModalVisible] = useState(false);
 
   const fetchChallengeDetail = async () => {
     try {
@@ -201,9 +203,17 @@ export default function ChallengeDetailPage({
           {isInvite && (
             <BottomTwoButton
               handleAccept={handleChallengeAccept}
-              handleReject={handleChallengeReject}
+              handleReject={() => setEditModalVisible(true)}
             />
           )}
+          <EditModal
+            visible={isEditModalVisible}
+            text={`‘${detail.title}’챌린지 초대를\n거절하시겠습니까?`}
+            leftText="돌아가기"
+            rightText="완료"
+            onClose={() => setEditModalVisible(false)}
+            onComplate={handleChallengeReject}
+          />
         </>
       )}
     </View>

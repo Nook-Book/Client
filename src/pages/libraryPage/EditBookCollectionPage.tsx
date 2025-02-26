@@ -189,6 +189,7 @@ const EditBookCollectionPage = ({ navigation }: { navigation: any }) => {
       <EditModal
         visible={isEditModalVisible}
         text={"변경된 편집 사항이 저장되지 않습니다.\n취소하시겠습니까?"}
+        leftText="돌아가기"
         rightText="취소"
         onClose={() => setEditModalVisible(false)}
         onComplate={() => navigation.navigate("Library")}
