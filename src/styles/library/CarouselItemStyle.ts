@@ -8,7 +8,6 @@ export const getStyles = (windowWidth: number) => {
       backgroundColor: Color.Field.Primary,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
-      marginHorizontal: 5,
     },
     inner: {
       flexDirection: "row",

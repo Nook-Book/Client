@@ -54,6 +54,13 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
     <View style={styles.container}>
       <NoteHeader
         navigation={navigation}
+        onEdit={() =>
+          navigation.navigate("Write", {
+            noteId: noteId,
+            title: noteDetail?.title,
+            content: noteDetail?.content,
+          })
+        }
         onDelete={() => setIsDeleteModal(true)}
       />
       <ScrollView

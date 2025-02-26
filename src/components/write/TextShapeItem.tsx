@@ -1,5 +1,5 @@
-import { View, Text, FlatList, Pressable } from "react-native";
-import { styles } from "../../styles/write/TextShapeItemStyle";
+import { View, Text, FlatList, Pressable, useWindowDimensions } from "react-native";
+import { getStyles } from "../../styles/write/TextShapeItemStyle";
 import { Font } from "../../styles/Theme";
 import {
   colorMap,
@@ -25,6 +25,10 @@ const TextShapeItem = ({
 }: {
   handleColorChange: (type: string) => void;
 }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const styles = getStyles(windowWidth);
+
   const items: TextShapeItemType[] = [
     { type: "color", style: "", text: "텍스트 색" },
     { type: "color", style: "", text: "" },

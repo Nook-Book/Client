@@ -37,6 +37,12 @@ export const styles = StyleSheet.create({
     height: 56,
     paddingLeft: 16,
   },
+  buttonSmallWrap: {
+    width: 38,
+    height: 56,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   buttonWrap: {
     width: 56,
     height: 56,

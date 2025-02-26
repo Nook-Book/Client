@@ -82,39 +82,10 @@ export default function StatusCardDetailPage({
     week: today.getDay(),
   });
 
-  const dummyDate = [
-    { id: 1, date: "2024-08-24", time: "00 : 12" },
-    { id: 2, date: "2024-08-23", time: "02 : 12" },
-    { id: 3, date: "2024-08-20", time: "05 : 12" },
-    { id: 3, date: "2024-08-25", time: "05 : 12" },
-    { id: 3, date: "2024-08-12", time: "05 : 12" },
-    { id: 3, date: "2024-08-19", time: "05 : 12" },
-    { id: 3, date: "2024-08-27", time: "05 : 12" },
-    { id: 3, date: "2024-08-28", time: "05 : 12" },
-  ];
-
   const getDayName = (dayNumber: number) => {
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     return days[dayNumber];
   };
-
-  const markedDates = dummyDate.reduce((acc: any, curr) => {
-    acc[curr.date] = {
-      customStyles: {
-        container: {
-          backgroundColor: Color.Click[400],
-          borderRadius: 1,
-        },
-        text: {
-          color: Color.Typo.Primary,
-        },
-      },
-      marked: true,
-      dotColor: Color.Typo.Primary,
-      activeOpacity: 0.5,
-    };
-    return acc;
-  }, {});
 
   return (
     <View style={styles.container}>
@@ -151,7 +122,7 @@ export default function StatusCardDetailPage({
                       marginBottom: 8,
                     }}
                   >
-                    {date.toString("yyyy년 MM월")}
+                    {date.toString("yyyy년 M월")}
                   </Text>
                 );
               }} //헤더 커스텀 렌더링
@@ -177,10 +148,7 @@ export default function StatusCardDetailPage({
                 }
               }} //화살표 커스텀 렌더링
               dayComponent={({ date }: { date: DateData }) => {
-                const dateString = date.dateString;
-                const isMarked = markedDates[dateString];
-
-                //선택된 달과 비교
+                //선택된 달에 관한 텍스트가 아니면 투명하게 처리
                 const isSameMonth =
                   date.month === currentMonth.month &&
                   date.year === currentMonth.year;
@@ -189,22 +157,28 @@ export default function StatusCardDetailPage({
                   ? Color.Typo.Primary
                   : "transparent";
 
+                //선택한 날짜 비교
+                const isMarked =
+                  date.month === selectedDate.month &&
+                  date.year === selectedDate.year &&
+                  date.day === selectedDate.day;
+
                 //요일 게산
                 const dayDate = new Date(date.year, date.month - 1, date.day);
 
                 return (
                   <Pressable
                     style={{
-                      width: "100%",
+                      width: 44,
                       height: 44,
                       marginBottom: -10,
                       backgroundColor:
-                        isMarked && isSameMonth
+                        isSameMonth && isMarked
                           ? Color.Click[300]
                           : "transparent",
-                      paddingVertical: 4,
                       borderRadius: 1,
                       alignItems: "center",
+                      justifyContent: "center",
                     }}
                     onPress={() => {
                       setSelectedDate({
@@ -214,6 +188,7 @@ export default function StatusCardDetailPage({
                         week: dayDate.getDay(),
                       });
                     }}
+                    disabled={!isSameMonth}
                   >
                     <Text
                       style={{
@@ -223,17 +198,6 @@ export default function StatusCardDetailPage({
                     >
                       {date.day}
                     </Text>
-                    {isMarked && (
-                      <Text
-                        style={{
-                          ...Font.Label.SemiMedium,
-                          color: textColor,
-                        }}
-                      >
-                        {dummyDate.find((d) => d.date === dateString)?.time ||
-                          ""}
-                      </Text>
-                    )}
                   </Pressable>
                 );
               }} //날짜 셀 커스텀 렌더링

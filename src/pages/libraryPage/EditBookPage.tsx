@@ -55,14 +55,15 @@ const EditBookPage = ({
             ? navigation.navigate("Library")
             : setEditModalVisible(true);
         }}
+        text={""}
+        isTextVisible={false}
       />
       <Text style={styles.numText}>{currentIndex + 1}번째</Text>
-      <View style={{ height: windowHeight / 1.5 }}>
+      <View style={{ height: windowHeight / 1.65 }}>
         <BookList
           navigation={navigation}
           editType={true}
           data={list}
-          currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
         />
       </View>
@@ -90,6 +91,7 @@ const EditBookPage = ({
       <EditModal
         visible={isEditModalVisible}
         text={"변경된 편집 사항이 없습니다.\n편집을 완료하겠습니까?"}
+        leftText="돌아가기"
         rightText="완료"
         onClose={() => setEditModalVisible(false)}
         onComplate={() => navigation.navigate("Library")}

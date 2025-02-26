@@ -4,12 +4,14 @@ import { styles } from "../../styles/modal/ModalStyle";
 const EditModal = ({
   visible,
   text,
+  leftText,
   rightText,
   onClose,
   onComplate,
 }: {
   visible: boolean;
   text: string;
+  leftText: string;
   rightText: string;
   onClose: () => void;
   onComplate: () => void;
@@ -26,7 +28,7 @@ const EditModal = ({
           <Text style={styles.contentText}>{text}</Text>
           <View style={styles.buttonWrap}>
             <TouchableOpacity onPress={onClose}>
-              <Text style={styles.blueText}>돌아가기</Text>
+              <Text style={styles.blueText}>{leftText}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onComplate}>
               <Text style={styles.grayText}>{rightText}</Text>

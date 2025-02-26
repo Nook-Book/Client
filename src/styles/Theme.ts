@@ -157,6 +157,11 @@ export const Font = {
       fontSize: 8,
       lineHeight: 8 * 1.6,
     },
+    SemiLittleMedium: {
+      fontFamily: "SCDream4",
+      fontSize: 13,
+      lineHeight: 13 * 1.6,
+    },
     SemiMedium: {
       fontFamily: "SCDream4",
       fontSize: 12,

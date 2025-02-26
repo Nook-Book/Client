@@ -8,8 +8,8 @@ import { getCurrentList } from "../../api/collection/getCurrentList";
 import { useFocusEffect } from "@react-navigation/native";
 
 const LibraryPage = ({ navigation }: { navigation: any }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [list, setList] = useState<TMainCollectionListDetailRes[]>([]);
+  const [_, setCurrentIndex] = useState(0);
 
   const fetchCollectionList = async () => {
     try {
@@ -35,7 +35,6 @@ const LibraryPage = ({ navigation }: { navigation: any }) => {
         navigation={navigation}
         editType={false}
         data={list}
-        currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
       />
     </View>
