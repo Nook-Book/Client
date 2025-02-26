@@ -543,6 +543,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                               setIsKeybored(true);
                             }
                             if (data.type === "Bold") {
+                              markdownInputRef.current?.focus();
                               if (!selectedShapeMenu.Bold) {
                                 handleTextType("**", true);
                               } else {
@@ -550,6 +551,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                               }
                             }
                             if (data.type === "Italic") {
+                              markdownInputRef.current?.focus();
                               if (!selectedShapeMenu.Italic) {
                                 handleTextType("_", true);
                               } else {
@@ -557,6 +559,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                               }
                             }
                             if (data.type === "Underline") {
+                              markdownInputRef.current?.focus();
                               if (!selectedShapeMenu.Underline) {
                                 handleTextType("`", true);
                               } else {
@@ -564,6 +567,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                               }
                             }
                             if (data.type === "Cancelline") {
+                              markdownInputRef.current?.focus();
                               if (!selectedShapeMenu.Cancelline) {
                                 handleTextType("~~", true);
                               } else {

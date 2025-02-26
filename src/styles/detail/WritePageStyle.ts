@@ -53,8 +53,7 @@ export const styles = StyleSheet.create({
   },
   menuView: {
     flexDirection: "row",
-    gap: 20,
-    marginRight: 10,
+    gap: 10,
   },
   keyboredWrap: {
     borderColor: Color.Border.Stroke,
