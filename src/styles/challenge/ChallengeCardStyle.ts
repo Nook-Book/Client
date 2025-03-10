@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
   modal: {
     backgroundColor: Color.Secondary,
     borderRadius: 10,
+    alignSelf: "center",
   },
   topWrap: {
     padding: 40,
@@ -48,7 +49,6 @@ export const styles = StyleSheet.create({
   },
   timeText: {
     ...Font.Heading.XXL,
-    color: Color.Typo.Primary,
     textAlign: "center",
   },
   bookWrap: {
