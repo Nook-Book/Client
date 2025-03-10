@@ -26,46 +26,41 @@ const TimePickerModal = ({
     ampm: initValue.ampm,
   });
 
+  if (!visible) return null;
+
   return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <View style={styles.container}>
-        <View style={styles.modal}>
-          <Text style={styles.headTimeText}>{text}</Text>
-          <View style={styles.timePickerWrap}>
-            {type === "GOAL" ? (
-              <GoalTimePicker
-                itemHeight={30}
-                initValue={initValue}
-                onTimeChange={(time) => {
-                  setTime(time);
-                }}
-              />
-            ) : (
-              <TimePicker
-                itemHeight={30}
-                initValue={initValue}
-                onTimeChange={(time) => {
-                  setTime(time);
-                }}
-              />
-            )}
-          </View>
-          <View style={styles.buttonWrap}>
-            <TouchableOpacity onPress={() => onComplate(type, time)}>
-              <Text style={styles.blueText}>완료</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onClose}>
-              <Text style={styles.grayText}>취소</Text>
-            </TouchableOpacity>
-          </View>
+    <View style={styles.container}>
+      <View style={styles.modal}>
+        <Text style={styles.headTimeText}>{text}</Text>
+        <View style={styles.timePickerWrap}>
+          {type === "GOAL" ? (
+            <GoalTimePicker
+              itemHeight={30}
+              initValue={initValue}
+              onTimeChange={(time) => {
+                setTime(time);
+              }}
+            />
+          ) : (
+            <TimePicker
+              itemHeight={30}
+              initValue={initValue}
+              onTimeChange={(time) => {
+                setTime(time);
+              }}
+            />
+          )}
+        </View>
+        <View style={styles.buttonWrap}>
+          <TouchableOpacity onPress={() => onComplate(type, time)}>
+            <Text style={styles.blueText}>완료</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onClose}>
+            <Text style={styles.grayText}>취소</Text>
+          </TouchableOpacity>
         </View>
       </View>
-    </Modal>
+    </View>
   );
 };
 
