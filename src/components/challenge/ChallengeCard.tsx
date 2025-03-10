@@ -32,40 +32,40 @@ const ChallengeCard = ({
               </Pressable>
             </View>
             <Text style={styles.timeText}>
-              {clickStatus.dailyReadingTime || " 00 : 00 : 00"}
+              {clickStatus.dailyReadingTime.replaceAll(":", " : ") ||
+                " 00 : 00 : 00"}
             </Text>
-            <View style={styles.bookWrap}>
-              <View
-                style={{
-                  ...Effect.ImageStandard,
-                }}
-              >
-                <Image
-                  source={{ uri: clickStatus.readingBookImage }}
-                  style={styles.bookImage}
-                />
-              </View>
-              <View style={styles.bookTextWrap}>
-                <Text style={styles.bookText}>
-                  {clickStatus.readingBookTitle}
-                </Text>
-                <Text
-                  style={[
-                    styles.bookStatusText,
-                    {
-                      color:
-                        clickStatus.participantStatus === "RESTING"
-                          ? Color.Typo.Secondary
-                          : Color.Click[400],
-                    },
-                  ]}
+            {clickStatus.readingBookTitle && clickStatus.readingBookImage && (
+              <View style={styles.bookWrap}>
+                <View
+                  style={{
+                    ...Effect.ImageStandard,
+                  }}
                 >
-                  {clickStatus.participantStatus === "RESTING"
-                    ? "최근 읽음"
-                    : "읽는 중"}
-                </Text>
+                  <Image
+                    source={{ uri: clickStatus.readingBookImage }}
+                    style={styles.bookImage}
+                  />
+                </View>
+                <View style={styles.bookTextWrap}>
+                  <Text style={styles.bookText}>
+                    {clickStatus.readingBookTitle}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.bookStatusText,
+                      {
+                        color: clickStatus.reading
+                          ? Color.Click[400]
+                          : Color.Typo.Secondary,
+                      },
+                    ]}
+                  >
+                    {clickStatus.reading ? "읽는 중" : "최근 읽음"}
+                  </Text>
+                </View>
               </View>
-            </View>
+            )}
           </View>
           <View style={styles.bottomWrap}>
             <Pressable style={styles.buttonWrap} onPress={handleStatus}>

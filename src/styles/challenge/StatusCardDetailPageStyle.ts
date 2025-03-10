@@ -57,11 +57,13 @@ export const styles = StyleSheet.create({
     gap: 4,
   },
   dateBookWrap: {
-    gap: 8,
+    gap: 6,
   },
   dateBookImage: {
     width: 60,
     height: 91.33,
+    borderRadius: 2,
+    marginTop: 2,
   },
   dateBookText: {
     ...Font.Paragraph.SemiMedium,

@@ -50,9 +50,9 @@ export const styles = StyleSheet.create({
     ...Font.Heading.XXL,
     color: Color.Typo.Primary,
     textAlign: "center",
-    marginBottom: 25,
   },
   bookWrap: {
+    marginTop: 25,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "flex-end",
@@ -61,6 +61,7 @@ export const styles = StyleSheet.create({
   bookImage: {
     width: 60,
     height: 91.33,
+    borderRadius: 2,
   },
   bookTextWrap: {
     gap: 4,
