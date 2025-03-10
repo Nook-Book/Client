@@ -13,19 +13,12 @@ type CardItemProps = {
 
 const CardItem = ({ item, onPress }: CardItemProps) => (
   <Pressable style={styles.statusCardWrap} onPress={onPress}>
-    {item.participantStatus === "RESTING" ? (
-      <ChallangeCardOffIcon />
-    ) : (
-      <ChallangeCardOnIcon />
-    )}
+    {item.reading ? <ChallangeCardOnIcon /> : <ChallangeCardOffIcon />}
     <Text
       style={[
         styles.statusCardText,
         {
-          color:
-            item.participantStatus === "RESTING"
-              ? Color.Typo.Secondary
-              : Color.Contents.Click,
+          color: item.reading ? Color.Contents.Click : Color.Typo.Secondary,
         },
       ]}
     >
@@ -35,14 +28,11 @@ const CardItem = ({ item, onPress }: CardItemProps) => (
       style={[
         styles.statusCardText,
         {
-          color:
-            item.participantStatus === "RESTING"
-              ? Color.Typo.Secondary
-              : Color.Contents.Click,
+          color: item.reading ? Color.Contents.Click : Color.Typo.Secondary,
         },
       ]}
     >
-      {item.dailyReadingTime}
+      {item.dailyReadingTime.replaceAll(":", " : ") || "00 : 00 : 00"}
     </Text>
   </Pressable>
 );
