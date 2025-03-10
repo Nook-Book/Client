@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
 import { patchImage } from "../../api/challenge/patchImage";
-import { postChallenge } from "../../api/challenge/postChallenge";
 import CheckBoxCheckIcon from "../../assets/images/challange/CheckBoxCheck.svg";
 import CheckBoxDefaultIcon from "../../assets/images/challange/CheckBoxDefault.svg";
 import BottomOneButton from "../../components/bottomSheet/BottomOneButton";
@@ -26,8 +25,8 @@ import {
   formatDateToString,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
-
 import { postParticipant } from "../../api/challenge/postParticipant";
+import * as FileSystem from "expo-file-system";
 
 export default function NewChallengePage({
   route,
@@ -174,11 +173,25 @@ export default function NewChallengePage({
       const type = `image/${fileName.split(".").pop()}` || "image/jpeg";
 
       const formData = new FormData();
-      formData.append("challengeCover", {
-        uri: imageUri,
-        name: fileName,
-        type,
-      } as unknown as Blob);
+      if (imageUri) {
+        formData.append("challengeCover", {
+          uri: imageUri,
+          name: fileName,
+          type,
+        } as unknown as Blob);
+      } else {
+        const jsonString = JSON.stringify(null);
+        const fileNames = "challengeCover.json";
+        const filePath = `${FileSystem.cacheDirectory}/${fileNames}`;
+        await FileSystem.writeAsStringAsync(filePath, jsonString, {
+          encoding: FileSystem.EncodingType.UTF8,
+        });
+        formData.append("challengeCover", {
+          uri: `file://${filePath}`,
+          name: fileName,
+          type: "application/json",
+        } as unknown as Blob);
+      }
 
       const data = {
         title,
@@ -190,14 +203,28 @@ export default function NewChallengePage({
       };
 
       if (isNew) {
-        formData.append(
-          "challengeCreateReq",
-          new Blob([JSON.stringify(data)], { type: "application/json" })
-        );
+        const jsonString = JSON.stringify(data);
+        const fileNames = "challengeCreateReq.json";
+        const filePath = `${FileSystem.cacheDirectory}/${fileNames}`;
+        await FileSystem.writeAsStringAsync(filePath, jsonString, {
+          encoding: FileSystem.EncodingType.UTF8,
+        });
 
-        const newRes = await postChallenge(formData);
-        //에러 수정 필요
-        handleParticipant(0); //challengeId 받아서 보내기
+        formData.append("challengeCreateReq", {
+          uri: `file://${filePath}`,
+          name: fileName,
+          type: "application/json",
+        } as unknown as Blob);
+
+        const response = await fetch(
+          "https://nookbook.p-e.kr/api/v1/challenge",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const responseData = await response.json();
+        handleParticipant(responseData.information);
       } else {
         if (!imageUri.includes("https://")) {
           const imageRes = await patchImage(detail.challengeId, formData);
@@ -239,6 +266,10 @@ export default function NewChallengePage({
     for (const participantId of selectedParticipant) {
       await postParticipant(challengeId, participantId);
     }
+    navigation.replace("ChallengeDetail", {
+      challengeId,
+      isInvite: false,
+    });
   };
 
   return (
