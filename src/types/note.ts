@@ -25,15 +25,18 @@ export type TNoteDetailInformationRes = {
   title: string;
   content: string;
   createdDate: string;
+  locked: boolean;
 };
 
 export type TSaveNoteReq = {
   bookId: number;
   title: string;
   content: string;
+  locked: boolean;
 };
 
 export type TEditNoteReq = {
   title: string;
   content: string;
+  locked: boolean;
 };

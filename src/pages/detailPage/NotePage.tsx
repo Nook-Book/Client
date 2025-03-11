@@ -68,7 +68,8 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
         showsVerticalScrollIndicator={false}
       >
         <Text style={styles.dateText}>
-          {formatDate(noteDetail?.createdDate)} • 공개
+          {formatDate(noteDetail?.createdDate)} •
+          {noteDetail?.locked ? " 비공개" : " 공개"}
         </Text>
         <Text style={styles.titleText}>{noteDetail?.title}</Text>
         <Markdown style={markdownStyle} rules={RenderRules}>
