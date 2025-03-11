@@ -367,7 +367,6 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   //독서 기록 저장 함수
   const handleSaveNote = async () => {
-    console.log(isLock);
     try {
       await deleteUnusedImages(markdownText);
 
@@ -375,6 +374,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
         bookId: bookId,
         title: titleText,
         content: markdownText,
+        locked: isLock,
       });
       if (response.check) {
         navigation.goBack();
@@ -386,13 +386,13 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   //독서 기록 수정 함수
   const handleEditNote = async () => {
-    console.log(isLock);
     try {
       await deleteUnusedImages(markdownText);
 
       const response = await putEditNote(noteId, {
         title: titleText,
         content: markdownText,
+        locked: isLock,
       });
       if (response.check) {
         navigation.goBack();
