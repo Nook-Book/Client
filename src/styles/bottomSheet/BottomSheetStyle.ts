@@ -14,9 +14,10 @@ export const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: Color.Secondary,
-    marginHorizontal: 54,
-    marginBottom: 54,
+    paddingHorizontal: 24,
     borderRadius: 5,
+    marginHorizontal: 50,
+    marginBottom: 50,
   },
   modal: {
     backgroundColor: Color.Secondary,
@@ -28,12 +29,12 @@ export const styles = StyleSheet.create({
   },
   logoWrap: {
     alignItems: "flex-end",
-    padding: 24,
+    paddingTop: 24,
   },
   centeredView: {
     alignItems: "center",
-    paddingVertical: 25,
-    paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingBottom: 40,
   },
   imageWrap: {
     ...Effect.ImageStandard,
@@ -41,15 +42,19 @@ export const styles = StyleSheet.create({
   bookImage: {
     width: 150,
     height: 228,
+    borderRadius: 2,
+    marginHorizontal: 35.5,
   },
   titleText: {
     ...Font.Heading.Medium,
     color: Color.Typo.Primary,
     marginTop: 26,
+    textAlign: "center",
   },
   authorText: {
     ...Font.Paragraph.Medium,
     color: Color.Typo.Primary,
+    textAlign: "center",
   },
   bottom: {
     borderTopLeftRadius: 10,
