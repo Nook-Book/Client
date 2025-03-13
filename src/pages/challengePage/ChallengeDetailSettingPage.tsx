@@ -6,7 +6,6 @@ import InterIcon from "../../assets/images/icon/Inter.svg";
 import DeleteModal from "../../components/modal/DeleteModal";
 import DeleteButton from "../../components/challenge/DeleteButton";
 import { deleteChallenge } from "../../api/challenge/deleteChallenge";
-import { deleteParticipant } from "../../api/challenge/deleteParticipant";
 import { deleteChallengeExit } from "../../api/challenge/deleteChallengeExit";
 
 export default function ChallengeDetailSettingPage({

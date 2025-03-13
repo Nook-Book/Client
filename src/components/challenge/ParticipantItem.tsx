@@ -28,12 +28,12 @@ const ParticipantItem = ({
         style={styles.participantImage}
       />
       <Text
-        style={
-          (styles.participantText,
+        style={[
+          styles.participantText,
           {
             color: item.invitable ? Color.Typo.Primary : Color.Contents.Default,
-          })
-        }
+          },
+        ]}
       >
         {item.nickname}
       </Text>

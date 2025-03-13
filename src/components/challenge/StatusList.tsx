@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import ChallangeCardOffIcon from "../../assets/images/challange/ChallangeCardOff.svg";
 import ChallangeCardOnIcon from "../../assets/images/challange/ChallangeCardOn.svg";
