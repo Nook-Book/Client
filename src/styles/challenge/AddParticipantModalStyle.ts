@@ -35,11 +35,11 @@ export const styles = StyleSheet.create({
   participantText: {
     ...Font.Label.XMedium,
     color: Color.Typo.Primary,
-    marginLeft: 9,
-    marginRight: 3,
+    paddingLeft: 9,
   },
   requestText: {
     ...Font.Paragraph.SemiSmall,
     color: Color.Contents.Click,
+    paddingLeft: 3,
   },
 });
