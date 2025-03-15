@@ -2,9 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Button, Modal, Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
-import GoogleLogo from "../../assets/images/icon/GoogleLogo.svg";
 import KakaoLogo from "../../assets/images/icon/KaKaoLogo.svg";
-import NaverLogo from "../../assets/images/icon/NaverLogo.svg";
 import Logo from "../../assets/images/icon/temporaryLogo.svg";
 import { useKakaoLogin } from "../../hooks/auth/useAuth";
 import { styles } from "../../styles/login/LoginPage";
@@ -50,6 +48,7 @@ const LoginPage = () => {
                   accessToken: response.information.accessToken,
                   refreshToken: response.information.refreshToken,
                 });
+                navigation.navigate("JoinPage");
               },
               onError: () => {
                 console.log("Error");
@@ -75,7 +74,7 @@ const LoginPage = () => {
             <KakaoLogo />
             <Text style={styles.kakaoButtonText}>카카오로 시작하기</Text>
           </TouchableOpacity>
-          <View style={styles.bottomButtonContainer}>
+          {/* <View style={styles.bottomButtonContainer}>
             <TouchableOpacity>
               <NaverLogo />
             </TouchableOpacity>
@@ -85,7 +84,7 @@ const LoginPage = () => {
             >
               <GoogleLogo />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
 

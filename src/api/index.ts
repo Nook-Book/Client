@@ -1,4 +1,5 @@
 import axios from "axios";
+import { storage } from "../utils/storage";
 
 const api = axios.create({
   baseURL: "https://nookbook.p-e.kr/",
@@ -11,7 +12,7 @@ const api = axios.create({
 // 요청 인터셉터
 api.interceptors.request.use(
   (config) => {
-    const token = "";
+    const token = storage.getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
