@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
 import CheckButton from "../../components/login/CheckButton";
+import { useAuth } from "../../context/AuthContext";
 import {
   useUserIdCheck,
   useUserInfo,
@@ -18,6 +19,10 @@ const JoinPage = () => {
   const [id, setId] = useState("");
   const [nickname, setNickname] = useState("");
 
+  // 입력값 Ref
+  const idInputRef = useRef<TextInput>(null);
+  const nicknameInputRef = useRef<TextInput>(null);
+
   // 중복 체크 상태
   const [isIdChecked, setIsIdChecked] = useState<
     "OK" | "Duplicate" | "OnlyNumber" | "No"
@@ -26,9 +31,13 @@ const JoinPage = () => {
     "OK" | "Duplicate" | "OverLength" | "No"
   >("No");
 
+  // 회원가입 훅
   const { mutate: checkId } = useUserIdCheck();
   const { mutate: checkNickname } = useUserNicknameCheck();
   const { mutate: join } = useUserInfo();
+
+  // 로그인 상태 업데이트
+  const { setIsLogin, isLogin } = useAuth();
 
   // 중복 체크 핸들러
   const handleIdCheck = () => {
@@ -50,6 +59,7 @@ const JoinPage = () => {
     );
   };
 
+  // 닉네임 중복 체크 핸들러
   const handleNicknameCheck = () => {
     if (nickname.length > 10) {
       setIsNicknameChecked("OverLength");
@@ -72,13 +82,14 @@ const JoinPage = () => {
     );
   };
 
+  // 가입하기 핸들러
   const handleJoin = () => {
     join(
       { nickname: nickname, nicknameId: id },
       {
         onSuccess: (data) => {
           console.log(data);
-          navigation.navigate("서재");
+          setIsLogin(true);
         },
         onError: (error) => {
           console.log(error);
@@ -86,9 +97,6 @@ const JoinPage = () => {
       }
     );
   };
-
-  const idInputRef = useRef<TextInput>(null);
-  const nicknameInputRef = useRef<TextInput>(null);
 
   return (
     <View style={styles.container}>
