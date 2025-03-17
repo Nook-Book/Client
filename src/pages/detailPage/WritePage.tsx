@@ -116,6 +116,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
   const [isWarningModal, setIsWarningModal] = useState(false); //색상 변경 주의 모달
   const [isEditModal, setIsEditModal] = useState(false); //작성 취소 시 경고 모달
+  const [isLock, setIsLock] = useState(true); //비공개 여부
 
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
   const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
@@ -373,6 +374,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
         bookId: bookId,
         title: titleText,
         content: markdownText,
+        locked: isLock,
       });
       if (response.check) {
         navigation.goBack();
@@ -390,6 +392,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
       const response = await putEditNote(noteId, {
         title: titleText,
         content: markdownText,
+        locked: isLock,
       });
       if (response.check) {
         navigation.goBack();
@@ -417,6 +420,8 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
 
           isEdit ? setIsEditModal(true) : navigation.goBack();
         }}
+        isLock={isLock}
+        onLockPress={() => setIsLock(!isLock)}
       />
       <View style={styles.tabViewWrap}>
         <Pressable

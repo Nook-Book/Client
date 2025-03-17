@@ -24,6 +24,13 @@ export const styles = StyleSheet.create({
     backgroundColor: Color.Secondary,
     height: 56,
   },
+  rightWriteContainer: {
+    marginRight: 9,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    backgroundColor: Color.Secondary,
+    height: 56,
+  },
   rightOneContainer: {
     padding: 16,
     alignItems: "flex-end",

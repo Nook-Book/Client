@@ -65,12 +65,12 @@ export type TChallengeDetailInformationRes = {
 
 export type TChallengeDetailParticipantsRes = {
   participantId: number;
-  nickname: null | string;
+  nickname: string;
   participantImage: string;
-  participantStatus: string;
   readingBookTitle: string;
   readingBookImage: string;
-  dailyReadingTime: null | number;
+  dailyReadingTime: string;
+  reading: boolean;
 };
 
 export type TEditChallengeReq = {
@@ -116,4 +116,17 @@ export type TParticipantListRes = {
   participantNickname: string;
   participantImage: string;
   role: string;
+};
+
+export type TCalendarRes = {
+  date: string;
+  dailyUserBookCalendar: {
+    totalReadTime: string;
+    startTime: null | string;
+    endTime: null | string;
+    bookList: {
+      title: string;
+      image: string;
+    }[];
+  };
 };

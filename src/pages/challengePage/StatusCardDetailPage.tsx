@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import { styles } from "../../styles/challenge/StatusCardDetailPageStyle";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
@@ -6,6 +6,9 @@ import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
 import ArrowLeftIcon from "../../assets/images/challange/ArrowLeft.svg";
 import ArrowRightIcon from "../../assets/images/challange/ArrowRight.svg";
 import { Color, Font } from "../../styles/Theme";
+import { getCalendar } from "../../api/challenge/getCalendar";
+import { TCalendarRes } from "../../types/challenge";
+import { useFocusEffect } from "@react-navigation/native";
 
 LocaleConfig.locales["ko"] = {
   monthNames: [
@@ -60,8 +63,6 @@ export default function StatusCardDetailPage({
 }) {
   const { clickStatus } = route.params;
 
-  //통계 api 연동 필요
-
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState<{
     year: number;
@@ -81,10 +82,45 @@ export default function StatusCardDetailPage({
     day: today.getDate(),
     week: today.getDay(),
   });
+  const [detail, setDetail] = useState<TCalendarRes[]>([]);
 
   const getDayName = (dayNumber: number) => {
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     return days[dayNumber];
+  };
+
+  const fetchChallengeDetail = async () => {
+    try {
+      const response = await getCalendar(
+        clickStatus.participantId,
+        `${selectedDate.year}-${selectedDate.month.toString().padStart(2, "0")}`
+      );
+      if (response) {
+        setDetail(response);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchChallengeDetail();
+    }, [selectedDate.year, selectedDate.month])
+  );
+
+  const selectedDateString = `${selectedDate.year}-${selectedDate.month
+    .toString()
+    .padStart(2, "0")}-${selectedDate.day.toString().padStart(2, "0")}`;
+
+  const selectedDetail = detail.find(
+    (item) => item.date === selectedDateString
+  );
+
+  const formatTime = (time: string | null) => {
+    if (!time) return "";
+    const [hour, minute] = time.split(":");
+    return `${hour}시 ${minute}분`;
   };
 
   return (
@@ -203,55 +239,57 @@ export default function StatusCardDetailPage({
               }} //날짜 셀 커스텀 렌더링
             />
           </View>
-          <View style={styles.dateWrap}>
-            <Text style={styles.dateText}>
-              {selectedDate.month}월 {selectedDate.day}일 (
-              {getDayName(selectedDate.week)})
-            </Text>
-            <View>
-              <Text style={styles.dateItemHeadText}>총 독서 시간</Text>
-              <Text style={styles.dateItemText}>00 : 50 : 31</Text>
-            </View>
-            <View style={styles.dateItemWrap}>
+          {selectedDetail && (
+            <View style={styles.dateWrap}>
+              <Text style={styles.dateText}>
+                {selectedDate.month}월 {selectedDate.day}일 (
+                {getDayName(selectedDate.week)})
+              </Text>
               <View>
-                <Text style={styles.dateItemHeadText}>시작 시간</Text>
-                <Text style={styles.dateItemText}>09시 21분</Text>
+                <Text style={styles.dateItemHeadText}>총 독서 시간</Text>
+                <Text style={styles.dateItemText}>
+                  {selectedDetail.dailyUserBookCalendar.totalReadTime.replaceAll(
+                    ":",
+                    " : "
+                  ) || "00 : 00 : 00"}
+                </Text>
               </View>
-              <View>
-                <Text style={styles.dateItemHeadText}>종료 시간</Text>
-                <Text style={styles.dateItemText}>23시 12분</Text>
-              </View>
-            </View>
-            <View>
-              <Text style={styles.dateItemHeadText}>읽은 책</Text>
-              <View style={styles.dateBookWrap}>
-                <View style={styles.dateBookItemWrap}>
-                  <View>
-                    <Image
-                      source={require("../../assets/images/dummy/book/2.png")}
-                      style={styles.dateBookImage}
-                    />
-                  </View>
-                  <Text style={styles.dateBookText}>
-                    몰입 : 인생을 바꾸는 자기혁명
+              <View style={styles.dateItemWrap}>
+                <View>
+                  <Text style={styles.dateItemHeadText}>시작 시간</Text>
+                  <Text style={styles.dateItemText}>
+                    {formatTime(selectedDetail.dailyUserBookCalendar.startTime)}
                   </Text>
                 </View>
-                <View style={styles.dateBookItemWrap}>
-                  <View>
-                    <Image
-                      source={require("../../assets/images/dummy/book/2.png")}
-                      style={styles.dateBookImage}
-                    />
-                  </View>
-                  <Text style={styles.dateBookText}>
-                    몰입 : 인생을 바꾸는 자기혁명 몰입 : 인생을 바꾸는dfsdfs
-                    자기혁명몰입 : 인생을 바꾸는 자기혁명 몰입 : 인생을
-                    바꾸sdfsdfdfsdfdf
+                <View>
+                  <Text style={styles.dateItemHeadText}>종료 시간</Text>
+                  <Text style={styles.dateItemText}>
+                    {formatTime(selectedDetail.dailyUserBookCalendar.endTime)}
                   </Text>
                 </View>
               </View>
+              <View>
+                <Text style={styles.dateItemHeadText}>읽은 책</Text>
+                <View style={styles.dateBookWrap}>
+                  {selectedDetail.dailyUserBookCalendar.bookList.map(
+                    (item, index) => {
+                      return (
+                        <View style={styles.dateBookItemWrap} key={index}>
+                          <View>
+                            <Image
+                              source={{ uri: item.image }}
+                              style={styles.dateBookImage}
+                            />
+                          </View>
+                          <Text style={styles.dateBookText}>{item.title}</Text>
+                        </View>
+                      );
+                    }
+                  )}
+                </View>
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </ScrollView>
     </View>
