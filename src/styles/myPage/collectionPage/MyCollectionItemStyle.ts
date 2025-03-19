@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
-import { Font } from "../../Theme";
+import { Color, Font } from "../../Theme";
 
 export const getStyles = (windowWidth: number) => {
   return StyleSheet.create({
     collectionMinusItem: {
-      width: 136,
+      width: 164,
       marginHorizontal: 3,
     },
     collectionPlusItem: {
@@ -14,6 +14,8 @@ export const getStyles = (windowWidth: number) => {
     },
     collectionImages: {
       position: "relative",
+      backgroundColor: Color.Field.Primary,
+      borderRadius: 3,
     },
     collectionCover: {
       position: "absolute",
@@ -39,14 +41,16 @@ export const getStyles = (windowWidth: number) => {
       zIndex: 0,
     },
     collectionMinusImage: {
-      width: 60,
-      height: 91.33,
+      width: 74,
+      height: 112,
       margin: 2,
     },
     collectionPlusImage: {
-      width: (windowWidth - 62) / 4 - 8,
-      height: (windowWidth - 62) * (137 / 360) - 8,
+      width: 74,
+      height: 112,
       margin: 2,
+      backgroundColor: "#C4C4C4",
+      borderRadius: 3,
     },
     textWrap: {
       marginVertical: 4,

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Image,
   Text,
@@ -30,14 +31,16 @@ const MyCollectionItem = ({
         onPress={onPress}
         activeOpacity={1}
       >
-        <View style={styles.collectionCover} />
         {isMinusItem && (
-          <IconComponent
-            style={styles.icon}
-            color={Color.Secondary}
-            width={69.13}
-            height={69.13}
-          />
+          <>
+            <View style={styles.collectionCover} />
+            <IconComponent
+              style={styles.icon}
+              color={Color.Secondary}
+              width={69.13}
+              height={69.13}
+            />
+          </>
         )}
         <View style={styles.imageGrid}>
           {Array.from({ length: 4 }).map((_, idx) => {
@@ -46,11 +49,7 @@ const MyCollectionItem = ({
               <Image
                 key={idx}
                 source={{ uri: data }}
-                style={
-                  !isMinusItem
-                    ? styles.collectionPlusImage
-                    : styles.collectionMinusImage
-                }
+                style={styles.collectionMinusImage}
               />
             ) : (
               <View key={idx} style={styles.collectionPlusImage} />

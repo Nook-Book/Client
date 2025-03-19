@@ -10,7 +10,7 @@ export const AuthConsumer = () => {
 
   return (
     <>
-      {!isLogin ? (
+      {isLogin ? (
         <LoginStackScreen />
       ) : (
         <>

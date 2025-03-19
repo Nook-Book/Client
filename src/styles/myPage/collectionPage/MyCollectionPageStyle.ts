@@ -29,4 +29,12 @@ export const styles = StyleSheet.create({
   lobel_Bold: {
     fontFamily: "SCDream6",
   },
+  collectionList: {
+    marginTop: 16,
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    gap: 16,
+  },
 });

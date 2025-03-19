@@ -52,4 +52,5 @@ export const PageLists = [
   "SetIdPage",
   "SetNicknamePage",
   "FriendPage",
+  "MyCollectionPage",
 ];
