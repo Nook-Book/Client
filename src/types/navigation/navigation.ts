@@ -21,6 +21,7 @@ export type RootMyPageStackParamList = {
   FriendPage: undefined;
   FriendSearchResultPage: { query: string };
   MyCollectionPage: undefined;
+  MyReportPage: undefined;
   navigate: (screen: string) => void;
 };
 

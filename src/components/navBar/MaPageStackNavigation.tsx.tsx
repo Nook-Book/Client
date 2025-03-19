@@ -7,12 +7,12 @@ import FriendPage from "../../pages/myPage/FriendPage";
 import FriendSearchResultPage from "../../pages/myPage/FriendSearchResultPage";
 import MyCollectionPage from "../../pages/myPage/MyCollectionPage";
 import MyPage from "../../pages/myPage/MyPage";
+import MyReportPage from "../../pages/myPage/MyReportPage";
 import SetIdPage from "../../pages/myPage/SetIdPage";
 import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
 import SettingPage from "../../pages/myPage/SettingPage";
 import { Color } from "../../styles/Theme";
 import { RootMyPageStackParamList } from "../../types/navigation/navigation";
-
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
 export default function MaPageStackScreen({
@@ -87,6 +87,11 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="MyCollectionPage"
         component={MyCollectionPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="MyReportPage"
+        component={MyReportPage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>

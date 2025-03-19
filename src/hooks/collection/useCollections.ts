@@ -7,3 +7,10 @@ export function useCreateCollection() {
     mutationFn: ({ title }) => postNew(title),
   });
 }
+
+// 컬렉션 삭제
+// export function useDeleteCollection() {
+//   return useMutation<{}, Error, { collectionId: number }>({
+//     mutationFn: ({ collectionId }) => deleteCollection(collectionId),
+//   });
+// }
