@@ -37,7 +37,7 @@ const JoinPage = () => {
   const { mutate: join } = useUserInfo();
 
   // 로그인 상태 업데이트
-  const { setIsLogin, isLogin } = useAuth();
+  const { setIsLogin } = useAuth();
 
   // 중복 체크 핸들러
   const handleIdCheck = () => {
