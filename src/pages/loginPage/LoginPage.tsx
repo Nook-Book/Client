@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Button, Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
 import KakaoLogo from "../../assets/images/icon/KaKaoLogo.svg";
 import Logo from "../../assets/images/icon/temporaryLogo.svg";
@@ -103,9 +103,6 @@ const LoginPage = () => {
       {/* WebView Modal */}
       <Modal visible={isWebViewVisible} animationType="slide">
         <View style={{ flex: 1, marginTop: 50 }}>
-          <View style={{ alignSelf: "flex-start", marginLeft: 10 }}>
-            <Button title="닫기" onPress={() => setIsWebViewVisible(false)} />
-          </View>
           <WebView
             source={{
               uri: `${KAKAO_AUTH_URL}?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`,

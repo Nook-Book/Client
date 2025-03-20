@@ -4,14 +4,10 @@ import { Color, Font } from "../../Theme";
 export const getStyles = (windowWidth: number) => {
   return StyleSheet.create({
     collectionMinusItem: {
-      width: 164,
+      width: "44%",
       marginHorizontal: 3,
     },
-    collectionPlusItem: {
-      width: (windowWidth - 62) / 2,
-      marginHorizontal: 16,
-      marginBottom: 6,
-    },
+
     collectionImages: {
       position: "relative",
       backgroundColor: Color.Field.Primary,
@@ -41,12 +37,12 @@ export const getStyles = (windowWidth: number) => {
       zIndex: 0,
     },
     collectionMinusImage: {
-      width: 74,
+      width: "45%",
       height: 112,
       margin: 2,
     },
     collectionPlusImage: {
-      width: 74,
+      width: "45%",
       height: 112,
       margin: 2,
       backgroundColor: "#C4C4C4",

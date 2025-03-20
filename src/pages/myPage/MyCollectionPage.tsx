@@ -6,8 +6,10 @@ import { styles } from "../../styles/myPage/collectionPage/MyCollectionPageStyle
 import { useGetCollection } from "../../hooks/mypage/useCollection";
 
 import { useNavigation } from "@react-navigation/native";
+import MinusIcon from "../../assets/images/icon/Minus.svg";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
 import AddCollectionModal from "../../components/modal/AddCollectionModal";
+import MyCollectionItem from "../../components/myPage/collection/MyCollectionItem";
 const MyCollectionPage = () => {
   // 컬렉션 데이터
   const { data: collections, refetch } = useGetCollection();
@@ -50,7 +52,7 @@ const MyCollectionPage = () => {
           </Text>
           개
         </Text>
-        {/* <View style={styles.collectionList}>
+        <View style={styles.collectionList}>
           {collections.information.collectionListDetailRes.map(
             (collection, index) => (
               <MyCollectionItem
@@ -62,7 +64,7 @@ const MyCollectionPage = () => {
               />
             )
           )}
-        </View> */}
+        </View>
       </ScrollView>
     </View>
   );

@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.Secondary,
+    height: "100%",
   },
   collectionNav: {
     display: "flex",
@@ -20,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   collectionContainer: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 16,
   },
   label: {
     ...Font.Paragraph.SemiMedium,
