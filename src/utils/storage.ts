@@ -28,7 +28,6 @@ export const storage = {
   getAccessToken: async () => {
     try {
       const token = await SecureStore.getItemAsync(STORAGE_KEY.ACCESS_TOKEN);
-      console.log("가져온 액세스 토큰:", token);
       return token;
     } catch (error) {
       console.error("액세스 토큰 조회 실패:", error);

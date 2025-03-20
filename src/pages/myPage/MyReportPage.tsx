@@ -1,12 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
-import { TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TextInput, View } from "react-native";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
+import { useNote } from "../../hooks/mypage/useNote";
 import { styles } from "../../styles/myPage/reportPage/MyReportPageStyle";
 const MyReportPage = () => {
   const navigation = useNavigation();
+  const [keyword, setKeyword] = useState("");
 
   // 도서 기록 데이터
-  //   const { data: bookRecords } = useGetBookRecord();
+  const { data: bookRecords, refetch } = useNote(keyword);
+
+  useEffect(() => {
+    refetch();
+    console.log("useEffect", keyword);
+  }, [keyword]);
 
   return (
     <View style={styles.container}>
@@ -18,7 +26,26 @@ const MyReportPage = () => {
       <TextInput
         placeholder="도서명을 검색하세요."
         style={styles.searchInput}
+        onChangeText={setKeyword}
+        value={keyword}
       />
+      <ScrollView style={styles.bookRecordContainer}>
+        {bookRecords?.information.map((book) => (
+          <View style={styles.bookRecordItem} key={book.bookId}>
+            <Image
+              source={{ uri: book.cover }}
+              style={styles.bookRecordImage}
+            />
+            <View style={styles.bookRecordInfo}>
+              <Text style={styles.bookRecordTitle}>{book.title}</Text>
+              <View>
+                <Text style={styles.bookRecordAuthor}>{book.author}</Text>
+                <Text style={styles.bookRecordPublisher}>{book.publisher}</Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
