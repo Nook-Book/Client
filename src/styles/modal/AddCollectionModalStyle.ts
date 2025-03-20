@@ -33,6 +33,10 @@ export const styles = StyleSheet.create({
     ...Font.Label.Medium,
     color: Color.Typo.Primary,
   },
+  modalText: {
+    ...Font.Paragraph.LittleMedium,
+    color: Color.Contents.Icon,
+  },
   input: {
     height: 40,
     borderWidth: 1,

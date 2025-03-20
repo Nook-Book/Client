@@ -13,22 +13,32 @@ import { TCollectionListDetailRes } from "../../../types/library";
 const MyCollectionItem = ({
   item,
   isMinusItem,
-  onPress,
   icon: IconComponent,
+  setCollection,
+  setIsShowDeleteModal,
 }: {
   item: TCollectionListDetailRes;
   isMinusItem: boolean;
-  onPress: () => void;
   icon: React.ElementType;
+  setCollection: (collection: TCollectionListDetailRes) => void;
+  setIsShowDeleteModal: (isShow: boolean) => void;
 }) => {
   const { width: windowWidth } = useWindowDimensions();
   const styles = getStyles(windowWidth);
+
+  // 컬렉션 삭제 핸들러
+  const handleDeleteCollection = () => {
+    if (isMinusItem) {
+      setCollection(item);
+      setIsShowDeleteModal(true);
+    }
+  };
 
   return (
     <View style={styles.collectionMinusItem}>
       <TouchableOpacity
         style={styles.collectionImages}
-        onPress={onPress}
+        onPress={handleDeleteCollection}
         activeOpacity={1}
       >
         {isMinusItem && (

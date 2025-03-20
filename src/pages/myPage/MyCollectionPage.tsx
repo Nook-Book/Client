@@ -9,7 +9,9 @@ import { useNavigation } from "@react-navigation/native";
 import MinusIcon from "../../assets/images/icon/Minus.svg";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
 import AddCollectionModal from "../../components/modal/AddCollectionModal";
+import DeleteCollectionModal from "../../components/modal/DeleteCollectionModal";
 import MyCollectionItem from "../../components/myPage/collection/MyCollectionItem";
+import { TCollectionListDetailRes } from "../../types/library";
 const MyCollectionPage = () => {
   // 컬렉션 데이터
   const { data: collections, refetch } = useGetCollection();
@@ -18,13 +20,25 @@ const MyCollectionPage = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   // 컬렉션 추가 모달 상태
   const [isShowAddModal, setIsShowAddModal] = useState(false);
-  console.log("collections", collections);
+  // 컬렉션 삭제 모달 상태
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
+  // 삭제할 컬렉션 ID
+  const [collection, setCollection] = useState<TCollectionListDetailRes | null>(
+    null
+  );
   return (
     <View style={styles.container}>
       {isShowAddModal && (
         <AddCollectionModal
           onExit={() => setIsShowAddModal(false)}
           refetch={refetch}
+        />
+      )}
+      {isShowDeleteModal && (
+        <DeleteCollectionModal
+          onExit={() => setIsShowDeleteModal(false)}
+          refetch={refetch}
+          collection={collection}
         />
       )}
       <BackTitleHeader
@@ -59,8 +73,9 @@ const MyCollectionPage = () => {
                 key={index}
                 item={collection}
                 isMinusItem={isDeleteMode}
-                onPress={() => {}}
                 icon={MinusIcon}
+                setCollection={setCollection}
+                setIsShowDeleteModal={setIsShowDeleteModal}
               />
             )
           )}
