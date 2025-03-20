@@ -39,6 +39,7 @@ const LoginPage = () => {
           const decoded = JSON.parse(atob(payload));
           const email = decoded.email;
           const accessToken = data.access_token;
+          console.log("kakao", accessToken);
 
           kakaoLogin(
             {
@@ -47,16 +48,19 @@ const LoginPage = () => {
             },
             {
               onSuccess: async (response) => {
-                await storage.setTokens({
-                  accessToken: response.information.accessToken,
-                  refreshToken: response.information.refreshToken,
-                });
-                console.log(getRegistered);
-                if (!getRegistered?.information.registered) {
-                  navigation.navigate("JoinPage");
-                } else {
-                  setIsLogin(true);
-                }
+                await storage
+                  .setTokens({
+                    accessToken: response.information.accessToken,
+                    refreshToken: response.information.refreshToken,
+                  })
+                  .then(async () => {
+                    // 저장 직후 토큰 확인
+                    if (!getRegistered?.information.registered) {
+                      navigation.navigate("JoinPage");
+                    } else {
+                      setIsLogin(true);
+                    }
+                  });
               },
               onError: () => {
                 console.log("Error");

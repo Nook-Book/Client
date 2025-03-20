@@ -11,8 +11,8 @@ const api = axios.create({
 
 // 요청 인터셉터
 api.interceptors.request.use(
-  (config) => {
-    const token = storage.getAccessToken();
+  async (config) => {
+    const token = await storage.getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
