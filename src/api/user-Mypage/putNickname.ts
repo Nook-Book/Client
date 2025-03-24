@@ -3,14 +3,13 @@ import api from "..";
 // 마이 프로필 닉네임 변경
 export const putNickname = async (
   nickname: string
-): Promise<{} | undefined> => {
-  try {
-    const response = await api.put(`/api/v1/my-page/nickname`, {
-      nickname: nickname,
-    });
-    return response.data;
-  } catch (e) {
-    console.log(e);
-    return undefined;
+): Promise<{ check: boolean } | undefined> => {
+  const response = await api.put(`/api/v1/my-page/nickname`, {
+    nickname: nickname,
+  });
+  if (response.status === 400) {
+    console.log("test");
+    throw new Error("닉네임 10자 이내");
   }
+  return response.data;
 };

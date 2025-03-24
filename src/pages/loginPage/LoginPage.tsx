@@ -18,7 +18,8 @@ const LoginPage = () => {
   const REDIRECT_URI = "https://auth.expo.io/";
   const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
   const { mutate: kakaoLogin } = useKakaoLogin();
-  const { data: getRegistered } = useGetRegistered();
+  const { data: getRegistered, refetch: refetchGetRegistered } =
+    useGetRegistered();
   const { setIsLogin } = useAuth();
 
   function KakaoLoginWebView(data: string) {
@@ -55,6 +56,7 @@ const LoginPage = () => {
                   })
                   .then(async () => {
                     // 저장 직후 토큰 확인
+                    refetchGetRegistered();
                     if (!getRegistered?.information.registered) {
                       navigation.navigate("JoinPage");
                     } else {

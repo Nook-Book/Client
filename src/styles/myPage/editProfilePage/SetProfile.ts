@@ -23,4 +23,9 @@ export const styles = StyleSheet.create({
     ...Font.Label.SemiMedium,
     color: Color.Typo.Primary,
   },
+  errorText: {
+    color: Color.Typo.Primary,
+    paddingHorizontal: 16,
+    ...Font.Label.SemiMedium,
+  },
 });

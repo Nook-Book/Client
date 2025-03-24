@@ -1,19 +1,17 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import XMini from "../../assets/images/icon/XMini.svg";
+import EditHeader from "../../components/header/EditHeader";
 import { useMyPage, usePutNickname } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/editProfilePage/SetProfile";
-import { NavigationProp } from "../../types/search";
-import EditHeader from "../../components/header/EditHeader";
 
-const SetNicknamePage = () => {
+const SetNicknamePage = ({ navigation }: { navigation: any }) => {
   const { data, refetch } = useMyPage();
+  const [isShowError, setIsShowError] = useState<boolean>(false);
   const [newNickname, setNewNickname] = useState<string>(
     data.information.nickname
   );
 
-  const navigation = useNavigation<NavigationProp>();
   const { mutate: changeNickname } = usePutNickname();
 
   const handleNicknameSubmit = () => {
@@ -23,8 +21,8 @@ const SetNicknamePage = () => {
           navigation.navigate("EditProfilePage");
           refetch();
         },
-        onError: () => {
-          alert("Error");
+        onError: (e) => {
+          setIsShowError(true);
         },
       });
     }
@@ -53,6 +51,7 @@ const SetNicknamePage = () => {
           <XMini />
         </TouchableOpacity>
       </View>
+      {isShowError && <Text style={styles.errorText}>닉네임 10자 이내</Text>}
     </View>
   );
 };
