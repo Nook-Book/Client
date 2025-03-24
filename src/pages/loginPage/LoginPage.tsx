@@ -56,12 +56,13 @@ const LoginPage = () => {
                   })
                   .then(async () => {
                     // 저장 직후 토큰 확인
-                    refetchGetRegistered();
-                    if (!getRegistered?.information.registered) {
-                      navigation.navigate("JoinPage");
-                    } else {
-                      setIsLogin(true);
-                    }
+                    refetchGetRegistered().then(() => {
+                      if (!getRegistered?.information.registered) {
+                        navigation.navigate("JoinPage");
+                      } else {
+                        setIsLogin(true);
+                      }
+                    });
                   });
               },
               onError: () => {
