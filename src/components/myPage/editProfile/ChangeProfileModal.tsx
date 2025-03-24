@@ -1,3 +1,4 @@
+import { Asset } from "expo-asset";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
@@ -19,6 +20,7 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
   const [image, setImage] = useState<any>(null);
   const { mutate: changeProfileImage } = usePutProfileImage();
 
+  // 이미지 선택
   const handleImagePicker = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
@@ -28,6 +30,7 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
     });
 
     if (!result.canceled) {
+      console.log(result.assets[0]);
       setImage(result.assets[0]); // 선택된 이미지 저장
       handleChangeProfileImage();
     }
@@ -47,6 +50,7 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
     }
   };
 
+  // 이미지 변경
   const handleChangeProfileImage = () => {
     if (image) {
       changeProfileImage(image, {
@@ -60,6 +64,31 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
     } else {
       Alert.alert("이미지를 선택해주세요.");
     }
+  };
+
+  // 기본 이미지 사용
+  const handleDefaultImage = async () => {
+    const fileUri = Asset.fromModule(
+      require("../../../assets/images/profile/ProfileImage.svg")
+    ).uri;
+
+    // fetch를 이용하여 Blob 변환
+    const response = await fetch(fileUri);
+    const blob = await response.blob();
+
+    // Blob을 사용하여 생성
+    const file = new File([blob], "ProfileImage.svg", {
+      type: "image/svg+xml",
+    });
+
+    changeProfileImage(file, {
+      onSuccess: () => {
+        onClose();
+      },
+      onError: () => {
+        Alert.alert("Error");
+      },
+    });
   };
 
   return (
@@ -88,7 +117,7 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
             styles.button,
             { borderBottomWidth: 1, borderBottomColor: Color.Border.Stroke },
           ]}
-          onPress={handleChangeProfileImage}
+          onPress={handleDefaultImage}
         >
           <Text style={styles.buttonText}>기본 이미지 사용</Text>
         </TouchableOpacity>

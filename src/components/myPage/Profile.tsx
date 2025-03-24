@@ -22,16 +22,16 @@ const Profile = () => {
         <Text style={styles.name}>{myInfo.nickname}</Text>
         <Text style={styles.email}>@{myInfo.nicknameId}</Text>
         {/* </View> */}
-        <View style={styles.friendContainer}>
+
+        <TouchableOpacity
+          style={styles.friendContainer}
+          onPress={() => {
+            navigation.navigate("FriendPage");
+          }}
+        >
           <Text style={styles.friendName}>친구</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("FriendPage");
-            }}
-          >
-            <Text style={styles.friendNumber}>{myInfo.friendsNum}</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.friendNumber}>{myInfo.friendsNum}</Text>
+        </TouchableOpacity>
       </View>
       <TouchableOpacity
         onPress={() => {

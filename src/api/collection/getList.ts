@@ -5,6 +5,7 @@ import { TCollectionListsRes } from "../../types/library";
 export const getList = async (): Promise<TCollectionListsRes | undefined> => {
   try {
     const response = await api.get(`/api/v1/collection/list`);
+    console.log("getList", response.data);
     return response.data;
   } catch (e) {
     console.log(e);
