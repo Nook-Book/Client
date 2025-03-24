@@ -1,10 +1,10 @@
 import api from "..";
-import { MyReportResponse } from "../../types/mypage/MyReport";
+import { MyNoteResponse } from "../../types/mypage/myReport";
 
 // 내 기록 전체 보기
 export const getNote = async (
   keyword: string
-): Promise<MyReportResponse | undefined> => {
+): Promise<MyNoteResponse | undefined> => {
   try {
     const response = await api.get(`/api/v1/my-page/note`, {
       params: {

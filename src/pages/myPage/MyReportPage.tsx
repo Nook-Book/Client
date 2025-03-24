@@ -1,11 +1,28 @@
-import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, Text, TextInput, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
 import { useNote } from "../../hooks/mypage/useNote";
 import { styles } from "../../styles/myPage/reportPage/MyReportPageStyle";
-const MyReportPage = () => {
-  const navigation = useNavigation();
+import { RootMyPageStackParamList } from "../../types/navigation/navigation";
+
+type MyReportPageNavigationProp = NativeStackNavigationProp<
+  RootMyPageStackParamList,
+  "MyReportPage"
+>;
+
+const MyReportPage = ({
+  navigation,
+}: {
+  navigation: MyReportPageNavigationProp;
+}) => {
   const [keyword, setKeyword] = useState("");
 
   // 도서 기록 데이터
@@ -13,7 +30,6 @@ const MyReportPage = () => {
 
   useEffect(() => {
     refetch();
-    console.log("useEffect", keyword);
   }, [keyword]);
 
   return (
@@ -31,7 +47,15 @@ const MyReportPage = () => {
       />
       <ScrollView style={styles.bookRecordContainer}>
         {bookRecords?.information.map((book) => (
-          <View style={styles.bookRecordItem} key={book.bookId}>
+          <TouchableOpacity
+            style={styles.bookRecordItem}
+            key={book.bookId}
+            onPress={() => {
+              navigation.navigate("NotePage", {
+                noteId: book.bookId.toString(),
+              });
+            }}
+          >
             <Image
               source={{ uri: book.cover }}
               style={styles.bookRecordImage}
@@ -43,7 +67,7 @@ const MyReportPage = () => {
                 <Text style={styles.bookRecordPublisher}>{book.publisher}</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
