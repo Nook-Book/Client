@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ReportIcon from "../../assets/images/icon/AllNotes.svg";
@@ -9,11 +8,14 @@ import CategoryReport from "../../components/myPage/CategoryReport";
 import MyPageNav from "../../components/myPage/MyPageNav";
 import Profile from "../../components/myPage/Profile";
 import { styles } from "../../styles/myPage/MyPageStyle";
-import { NavigationProp } from "../../types/search";
 
-export default function MyPage() {
-  const navigation = useNavigation<NavigationProp>();
-
+export default function MyPage({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -46,7 +48,11 @@ export default function MyPage() {
             <View style={styles.linkIconBorder} />
             <TouchableOpacity
               style={styles.linkIconContainerComponent}
-              onPress={() => navigation.navigate("CalendarPage")}
+              onPress={() =>
+                navigation.navigate("StatusCardDetail", {
+                  isCurrentUser: true,
+                })
+              }
             >
               <CalendarIcon />
               <Text style={styles.linkIconContainerComponentText}>

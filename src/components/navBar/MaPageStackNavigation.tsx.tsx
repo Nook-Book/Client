@@ -2,6 +2,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { PageLists } from "../../constans/myPage";
+import StatusCardDetailPage from "../../pages/challengePage/StatusCardDetailPage";
 import NotePage from "../../pages/detailPage/NotePage";
 import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import FriendPage from "../../pages/myPage/FriendPage";
@@ -98,6 +99,11 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="NotePage"
         component={NotePage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="StatusCardDetail"
+        component={StatusCardDetailPage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>
