@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import ReportIcon from "../../assets/images/icon/AllNotes.svg";
+import CalendarIcon from "../../assets/images/icon/CalenderIcon.svg";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
 import Bookstatistics from "../../components/myPage/Bookstatistics";
 import CategoryReport from "../../components/myPage/CategoryReport";
@@ -36,9 +38,19 @@ export default function MyPage() {
               style={styles.linkIconContainerComponent}
               onPress={() => navigation.navigate("MyReportPage")}
             >
-              <CollectionIcon />
+              <ReportIcon />
               <Text style={styles.linkIconContainerComponentText}>
                 기록 전체 보기
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.linkIconBorder} />
+            <TouchableOpacity
+              style={styles.linkIconContainerComponent}
+              onPress={() => navigation.navigate("CalendarPage")}
+            >
+              <CalendarIcon />
+              <Text style={styles.linkIconContainerComponentText}>
+                독서 캘린더
               </Text>
             </TouchableOpacity>
           </View>
