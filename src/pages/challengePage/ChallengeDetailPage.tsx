@@ -195,6 +195,7 @@ export default function ChallengeDetailPage({
               handleStatus={() =>
                 navigation.navigate("StatusCardDetail", {
                   clickStatus: clickStatus,
+                  isCurrentUser: false,
                 })
               }
               handleCancel={() => setIsModalVisible(false)}
