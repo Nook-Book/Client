@@ -1,4 +1,5 @@
 import {
+  useMutation,
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
@@ -7,10 +8,11 @@ import {
   getPendingFriend,
   getSearchFriend,
 } from "../../api/user-Mypage/getFriend";
+import { postPending } from "../../api/user-Mypage/postPending";
 import {
   FriendRequestResponse,
-  FriendSearchRequestResponse,
   ResponseFriend,
+  UserListResponse,
 } from "../../types/mypage/friend";
 
 // 친구 목록 조회
@@ -35,9 +37,16 @@ export function useGetPendingFriend(): UseSuspenseQueryResult<
 // 친구 검색
 export function useGetSearchFriend(
   keyword: string
-): UseSuspenseQueryResult<FriendSearchRequestResponse, Error> {
+): UseSuspenseQueryResult<UserListResponse, Error> {
   return useSuspenseQuery({
     queryKey: ["GetSearchFriend"],
     queryFn: () => getSearchFriend(keyword),
   });
 }
+
+// 친구 요청
+export const usePostPending = () => {
+  return useMutation({
+    mutationFn: postPending,
+  });
+};

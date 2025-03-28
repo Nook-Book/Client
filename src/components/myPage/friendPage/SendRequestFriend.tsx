@@ -16,8 +16,7 @@ const SendRequestFriend = ({
         <>
           {userList.map((user, index) => (
             <FriendComponent
-              name={user.nickname}
-              image={user.imageUrl}
+              user={user}
               key={index}
               type={"SendFriend"}
               isRequestProp={isRequest}

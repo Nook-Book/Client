@@ -5,6 +5,7 @@ import {
   GestureHandlerRootView,
   Swipeable,
 } from "react-native-gesture-handler";
+import BackTextHeader from "../../components/header/BackTextHeader";
 import FriendComponent from "../../components/myPage/friendPage/FriendComponent";
 import FriendDeleteModal from "../../components/myPage/friendPage/FriendDeleteModal";
 import FriendNav from "../../components/myPage/friendPage/FriendNav";
@@ -20,7 +21,6 @@ import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
 import { FriendParamList } from "../../types/friend";
 import { FriendRequest } from "../../types/mypage/friend";
-import BackTextHeader from "../../components/header/BackTextHeader";
 
 const FriendPage = () => {
   const [friendNav, setFriendNav] = useState<"친구 목록" | "친구 추가">(
@@ -100,11 +100,7 @@ const FriendPage = () => {
                     />
                   )}
                 >
-                  <FriendComponent
-                    name={friend.nickname}
-                    image={friend.imageUrl}
-                    type="Friend"
-                  />
+                  <FriendComponent user={friend} type="Friend" />
                 </Swipeable>
               </View>
             ))}
@@ -129,7 +125,7 @@ const FriendPage = () => {
           ) : (
             <>
               <SendRequestFriend
-                userList={searchFriendData.information}
+                userList={searchFriendData.information.content}
                 isRequest={false}
               />
             </>

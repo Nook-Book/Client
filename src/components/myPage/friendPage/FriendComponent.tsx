@@ -1,38 +1,39 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { usePostPending } from "../../../hooks/mypage/useFriend";
 import { styles } from "../../../styles/myPage/friendPage/FriendComponent";
 import { FriendComponentProps, FriendParamList } from "../../../types/friend";
 
 const FriendComponent: React.FC<FriendComponentProps> = ({
-  image,
-  name,
+  user,
   type,
   isRequestProp,
 }) => {
   const [isRequest, setIsRequest] = useState<boolean>(isRequestProp!);
   const navigation = useNavigation<FriendParamList>();
+  const { mutate: postPending } = usePostPending();
 
   const handleCancleRequest = () => {
     setIsRequest(false);
   };
   const handleRequestFriend = () => {
     setIsRequest(true);
+    postPending(user.userId);
   };
   const handleClickComponent = () => {
-    navigation.navigate("FriendSearchResultPage", { query: name });
+    navigation.navigate("FriendSearchResultPage", { query: user.nickname });
   };
 
-  console.log(image, "test");
   return (
     <TouchableOpacity style={styles.container} onPress={handleClickComponent}>
       <View style={styles.item}>
         <Image
-          source={{ uri: `${image}` }}
-          style={{ width: 100, height: 100 }}
+          source={{ uri: `${user.imageUrl}` }}
+          style={{ width: 40, height: 40 }}
           resizeMode="cover"
         />
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>{user.nickname}</Text>
       </View>
       {type === "RecieveFriend" && (
         <View style={styles.item}>
