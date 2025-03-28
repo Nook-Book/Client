@@ -55,4 +55,6 @@ export const PageLists = [
   "MyCollectionPage",
   "MyReportPage",
   "ChallengeDetailSetting",
+  "StatusCardDetail",
+  "NotePage",
 ];

@@ -27,6 +27,7 @@ import {
 } from "../../utils/calendarUtils";
 import { postParticipant } from "../../api/challenge/postParticipant";
 import * as FileSystem from "expo-file-system";
+import { storage } from "../../utils/storage";
 
 export default function NewChallengePage({
   route,
@@ -216,11 +217,16 @@ export default function NewChallengePage({
           type: "application/json",
         } as unknown as Blob);
 
+        const token = await storage.getAccessToken();
+
         const response = await fetch(
           "https://nookbook.p-e.kr/api/v1/challenge",
           {
             method: "POST",
             body: formData,
+            headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+            },
           }
         );
         const responseData = await response.json();

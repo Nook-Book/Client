@@ -9,6 +9,7 @@ import { Color, Font } from "../../styles/Theme";
 import { getCalendar } from "../../api/challenge/getCalendar";
 import { TCalendarRes } from "../../types/challenge";
 import { useFocusEffect } from "@react-navigation/native";
+import { getMyCalendar } from "../../api/challenge/getMyCalendar";
 
 LocaleConfig.locales["ko"] = {
   monthNames: [
@@ -61,7 +62,7 @@ export default function StatusCardDetailPage({
   navigation: any;
   route: any;
 }) {
-  const { clickStatus } = route.params;
+  const { clickStatus, isCurrentUser } = route.params;
 
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState<{
@@ -103,9 +104,26 @@ export default function StatusCardDetailPage({
     }
   };
 
+  const fetchMyChallengeDetail = async () => {
+    try {
+      const response = await getMyCalendar(
+        `${selectedDate.year}-${selectedDate.month.toString().padStart(2, "0")}`
+      );
+      if (response) {
+        setDetail(response);
+      }
+    } catch (error) {
+      console.error("오류:", error);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
-      fetchChallengeDetail();
+      if (isCurrentUser) {
+        fetchMyChallengeDetail();
+      } else {
+        fetchChallengeDetail();
+      }
     }, [selectedDate.year, selectedDate.month])
   );
 
@@ -127,7 +145,7 @@ export default function StatusCardDetailPage({
     <View style={styles.container}>
       <BackTitleHeader
         navigation={navigation}
-        title={clickStatus.nickname}
+        title={isCurrentUser ? "독서 캘린더" : clickStatus?.nickname}
         isTitleVisible={true}
       />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
