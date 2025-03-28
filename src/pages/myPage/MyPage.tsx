@@ -1,17 +1,21 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import ReportIcon from "../../assets/images/icon/AllNotes.svg";
+import CalendarIcon from "../../assets/images/icon/CalenderIcon.svg";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
 import Bookstatistics from "../../components/myPage/Bookstatistics";
 import CategoryReport from "../../components/myPage/CategoryReport";
 import MyPageNav from "../../components/myPage/MyPageNav";
 import Profile from "../../components/myPage/Profile";
 import { styles } from "../../styles/myPage/MyPageStyle";
-import { NavigationProp } from "../../types/search";
 
-export default function MyPage() {
-  const navigation = useNavigation<NavigationProp>();
-
+export default function MyPage({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}) {
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -36,9 +40,23 @@ export default function MyPage() {
               style={styles.linkIconContainerComponent}
               onPress={() => navigation.navigate("MyReportPage")}
             >
-              <CollectionIcon />
+              <ReportIcon />
               <Text style={styles.linkIconContainerComponentText}>
                 기록 전체 보기
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.linkIconBorder} />
+            <TouchableOpacity
+              style={styles.linkIconContainerComponent}
+              onPress={() =>
+                navigation.navigate("StatusCardDetail", {
+                  isCurrentUser: true,
+                })
+              }
+            >
+              <CalendarIcon />
+              <Text style={styles.linkIconContainerComponentText}>
+                독서 캘린더
               </Text>
             </TouchableOpacity>
           </View>

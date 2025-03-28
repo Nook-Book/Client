@@ -23,6 +23,7 @@ export type RootMyPageStackParamList = {
   MyCollectionPage: undefined;
   MyReportPage: undefined;
   NotePage: { noteId: string };
+  StatusCardDetail: undefined;
   navigate: (screen: string) => void;
 };
 
