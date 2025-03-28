@@ -12,6 +12,15 @@ export function useGetCollection(): UseSuspenseQueryResult<
 > {
   return useSuspenseQuery({
     queryKey: ["GetCollection"],
-    queryFn: () => getList(),
+    queryFn: async () => {
+      const response = await getList();
+      if (!response) {
+        // 빈 데이터 반환
+        return {
+          collections: [],
+        };
+      }
+      return response;
+    },
   });
 }

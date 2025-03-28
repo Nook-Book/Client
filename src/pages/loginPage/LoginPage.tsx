@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Button, Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
 import KakaoLogo from "../../assets/images/icon/KaKaoLogo.svg";
 import Logo from "../../assets/images/icon/temporaryLogo.svg";
-import { useKakaoLogin } from "../../hooks/auth/useAuth";
+import { useAuth } from "../../context/AuthContext";
+import { useGetRegistered, useKakaoLogin } from "../../hooks/auth/useAuth";
 import { styles } from "../../styles/login/LoginPage";
 import { NavigationProp } from "../../types/search";
 import { storage } from "../../utils/storage";
@@ -17,6 +18,9 @@ const LoginPage = () => {
   const REDIRECT_URI = "https://auth.expo.io/";
   const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
   const { mutate: kakaoLogin } = useKakaoLogin();
+  const { data: getRegistered, refetch: refetchGetRegistered } =
+    useGetRegistered();
+  const { setIsLogin } = useAuth();
 
   function KakaoLoginWebView(data: string) {
     const exp = "code=";
@@ -36,6 +40,7 @@ const LoginPage = () => {
           const decoded = JSON.parse(atob(payload));
           const email = decoded.email;
           const accessToken = data.access_token;
+          console.log("kakao", accessToken);
 
           kakaoLogin(
             {
@@ -44,11 +49,21 @@ const LoginPage = () => {
             },
             {
               onSuccess: async (response) => {
-                await storage.setTokens({
-                  accessToken: response.information.accessToken,
-                  refreshToken: response.information.refreshToken,
-                });
-                navigation.navigate("JoinPage");
+                await storage
+                  .setTokens({
+                    accessToken: response.information.accessToken,
+                    refreshToken: response.information.refreshToken,
+                  })
+                  .then(async () => {
+                    // 저장 직후 토큰 확인
+                    refetchGetRegistered().then(() => {
+                      if (!getRegistered?.information.registered) {
+                        navigation.navigate("JoinPage");
+                      } else {
+                        setIsLogin(true);
+                      }
+                    });
+                  });
               },
               onError: () => {
                 console.log("Error");
@@ -91,9 +106,6 @@ const LoginPage = () => {
       {/* WebView Modal */}
       <Modal visible={isWebViewVisible} animationType="slide">
         <View style={{ flex: 1, marginTop: 50 }}>
-          <View style={{ alignSelf: "flex-start", marginLeft: 10 }}>
-            <Button title="닫기" onPress={() => setIsWebViewVisible(false)} />
-          </View>
           <WebView
             source={{
               uri: `${KAKAO_AUTH_URL}?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`,

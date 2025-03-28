@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Image,
   Text,
@@ -11,36 +12,46 @@ import { TCollectionListDetailRes } from "../../../types/library";
 
 const MyCollectionItem = ({
   item,
-  isPlusItem,
-  onPress,
+  isMinusItem,
   icon: IconComponent,
+  setCollection,
+  setIsShowDeleteModal,
 }: {
   item: TCollectionListDetailRes;
-  isPlusItem: boolean;
-  onPress: () => void;
+  isMinusItem: boolean;
   icon: React.ElementType;
+  setCollection: (collection: TCollectionListDetailRes) => void;
+  setIsShowDeleteModal: (isShow: boolean) => void;
 }) => {
   const { width: windowWidth } = useWindowDimensions();
   const styles = getStyles(windowWidth);
 
+  // 컬렉션 삭제 핸들러
+  const handleDeleteCollection = () => {
+    if (isMinusItem) {
+      setCollection(item);
+      setIsShowDeleteModal(true);
+    }
+  };
+
   return (
-    <View
-      style={
-        isPlusItem ? styles.collectionPlusItem : styles.collectionMinusItem
-      }
-    >
+    <View style={styles.collectionMinusItem}>
       <TouchableOpacity
         style={styles.collectionImages}
-        onPress={onPress}
+        onPress={handleDeleteCollection}
         activeOpacity={1}
       >
-        <View style={styles.collectionCover} />
-        <IconComponent
-          style={styles.icon}
-          color={Color.Secondary}
-          width={69.13}
-          height={69.13}
-        />
+        {isMinusItem && (
+          <>
+            <View style={styles.collectionCover} />
+            <IconComponent
+              style={styles.icon}
+              color={Color.Secondary}
+              width={69.13}
+              height={69.13}
+            />
+          </>
+        )}
         <View style={styles.imageGrid}>
           {Array.from({ length: 4 }).map((_, idx) => {
             const data = item.collectionBooksCoverList[idx];
@@ -48,21 +59,10 @@ const MyCollectionItem = ({
               <Image
                 key={idx}
                 source={{ uri: data }}
-                style={
-                  isPlusItem
-                    ? styles.collectionPlusImage
-                    : styles.collectionMinusImage
-                }
+                style={styles.collectionMinusImage}
               />
             ) : (
-              <View
-                key={idx}
-                style={
-                  isPlusItem
-                    ? styles.collectionPlusImage
-                    : styles.collectionMinusImage
-                }
-              />
+              <View key={idx} style={styles.collectionPlusImage} />
             );
           })}
         </View>

@@ -32,7 +32,10 @@ export default function MyPage() {
               </Text>
             </TouchableOpacity>
             <View style={styles.linkIconBorder} />
-            <TouchableOpacity style={styles.linkIconContainerComponent}>
+            <TouchableOpacity
+              style={styles.linkIconContainerComponent}
+              onPress={() => navigation.navigate("MyReportPage")}
+            >
               <CollectionIcon />
               <Text style={styles.linkIconContainerComponentText}>
                 기록 전체 보기

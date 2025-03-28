@@ -2,17 +2,18 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { PageLists } from "../../constans/myPage";
+import NotePage from "../../pages/detailPage/NotePage";
 import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import FriendPage from "../../pages/myPage/FriendPage";
 import FriendSearchResultPage from "../../pages/myPage/FriendSearchResultPage";
 import MyCollectionPage from "../../pages/myPage/MyCollectionPage";
 import MyPage from "../../pages/myPage/MyPage";
+import MyReportPage from "../../pages/myPage/MyReportPage";
 import SetIdPage from "../../pages/myPage/SetIdPage";
 import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
 import SettingPage from "../../pages/myPage/SettingPage";
 import { Color } from "../../styles/Theme";
 import { RootMyPageStackParamList } from "../../types/navigation/navigation";
-
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
 export default function MaPageStackScreen({
@@ -87,6 +88,16 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="MyCollectionPage"
         component={MyCollectionPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="MyReportPage"
+        component={MyReportPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="NotePage"
+        component={NotePage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>

@@ -12,3 +12,10 @@ export interface KakaoAuthResponse {
   check: boolean;
   information: KaKaoAuthTokens;
 }
+
+export interface ExistsResponse {
+  check: boolean;
+  information: {
+    registered: boolean;
+  };
+}
