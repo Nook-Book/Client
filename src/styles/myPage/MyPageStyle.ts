@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: 195,
+    width: 130,
     height: 106,
   },
   linkIconContainerComponentText: {
