@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
   titleText: {
     ...Font.Label.LargeInput,
     color: Color.Typo.Primary,
+    padding: 16,
   },
   itemWrap: {
     padding: 16,

@@ -4,24 +4,30 @@ import { styles } from "../../styles/challenge/ChallengeCardStyle";
 import { Color, Effect } from "../../styles/Theme";
 import { TChallengeDetailParticipantsRes } from "../../types/challenge";
 import ChallengeToast from "./ChallengeToast";
+import { postWakeUp } from "../../api/challenge/postWakeUp";
 
 const ChallengeCard = ({
+  challengeId,
   clickStatus,
   handleStatus,
   handleCancel,
 }: {
+  challengeId: number;
   clickStatus: TChallengeDetailParticipantsRes | null;
   handleStatus: () => void;
   handleCancel: () => void;
 }) => {
   const [toastVisible, setToastVisible] = useState(false);
 
-  const handlePress = () => {
-    console.log("깨우기", clickStatus?.participantId);
-    setToastVisible(true);
-    setTimeout(() => {
-      setToastVisible(false);
-    }, 1200);
+  const handlePress = async () => {
+    if (!clickStatus?.participantId) return;
+    const response = await postWakeUp(challengeId, clickStatus.participantId);
+    if (response.check) {
+      setToastVisible(true);
+      setTimeout(() => {
+        setToastVisible(false);
+      }, 1200);
+    }
   };
 
   return (
