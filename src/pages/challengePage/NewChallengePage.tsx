@@ -302,15 +302,13 @@ export default function NewChallengePage({
             ></View>
           )}
         </View>
-        <View style={styles.headWrap}>
-          <TextInput
-            style={styles.titleText}
-            placeholder="챌린지 이름을 지정해주세요."
-            value={title}
-            onChangeText={setTitle}
-            placeholderTextColor={Color.Typo.Tertiary}
-          />
-        </View>
+        <TextInput
+          style={styles.titleText}
+          placeholder="챌린지 이름을 지정해주세요."
+          value={title}
+          onChangeText={setTitle}
+          placeholderTextColor={Color.Typo.Tertiary}
+        />
         <View style={styles.itemWrap}>
           <Text style={styles.headText}>기간 설정</Text>
           <Pressable
