@@ -191,6 +191,7 @@ export default function ChallengeDetailPage({
           </ScrollView>
           {isModalVisible && (
             <ChallengeCard
+              challengeId={detail.challengeId}
               clickStatus={clickStatus}
               handleStatus={() =>
                 navigation.navigate("StatusCardDetail", {
