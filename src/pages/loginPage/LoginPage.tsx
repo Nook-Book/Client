@@ -1,7 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
 import React, { useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import WebView from "react-native-webview";
+import { sendPushTokenToServer } from "../../api/auth/expoToken";
 import KakaoLogo from "../../assets/images/icon/KaKaoLogo.svg";
 import Logo from "../../assets/images/icon/temporaryLogo.svg";
 import { useAuth } from "../../context/AuthContext";
@@ -56,10 +59,16 @@ const LoginPage = () => {
                   })
                   .then(async () => {
                     // 저장 직후 토큰 확인
-                    refetchGetRegistered().then(() => {
+                    refetchGetRegistered().then(async () => {
                       if (!getRegistered?.information.registered) {
                         navigation.navigate("JoinPage");
                       } else {
+                        // 로그인 성공 시 푸시 토큰 등록
+                        const pushToken =
+                          await registerForPushNotificationsAsync();
+                        if (pushToken) {
+                          await sendPushTokenToServer(pushToken);
+                        }
                         setIsLogin(true);
                       }
                     });
@@ -75,6 +84,33 @@ const LoginPage = () => {
 
       setIsWebViewVisible(false);
     }
+  }
+
+  // 푸시 토큰 가져오는 함수
+  async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Device.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+
+      if (finalStatus !== "granted") {
+        console.log("푸시 알림 권한이 필요합니다!");
+        return;
+      }
+
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+    } else {
+      console.log("실제 기기에서만 푸시 알림을 사용할 수 있습니다.");
+    }
+
+    return token;
   }
 
   return (
