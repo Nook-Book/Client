@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     borderColor: Color.Typo.Primary,
     borderRadius: 5,
     paddingHorizontal: 10,
+    paddingBottom: 5,
     height: 50,
     position: "relative",
   },
