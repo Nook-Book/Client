@@ -10,4 +10,5 @@ export interface FriendComponentProps {
   user: User;
   type: "Friend" | "RecieveFriend" | "SendFriend";
   isRequestProp?: boolean;
+  refetch: () => void;
 }

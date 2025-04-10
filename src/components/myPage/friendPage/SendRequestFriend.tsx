@@ -6,9 +6,11 @@ import FriendComponent from "./FriendComponent";
 const SendRequestFriend = ({
   userList,
   isRequest,
+  refetch,
 }: {
   userList: FriendRequest[];
   isRequest: boolean;
+  refetch: () => void;
 }) => {
   return (
     <View>
@@ -20,6 +22,7 @@ const SendRequestFriend = ({
               key={index}
               type={"SendFriend"}
               isRequestProp={isRequest}
+              refetch={refetch}
             />
           ))}
         </>
