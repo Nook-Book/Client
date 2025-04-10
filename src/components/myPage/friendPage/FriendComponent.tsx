@@ -24,7 +24,10 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
     postPending(user.userId);
   };
   const handleClickComponent = () => {
-    navigation.navigate("FriendSearchResultPage", { query: user.nickname });
+    navigation.navigate("FriendSearchResultPage", {
+      query: user.nickname,
+      userId: user.friendId,
+    });
   };
 
   // 친구 요청 수락/거절

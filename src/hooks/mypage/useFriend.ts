@@ -3,6 +3,7 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
+import { deleteFriend } from "../../api/user-Mypage/deleteFriend";
 import {
   getFriend,
   getPendingFriend,
@@ -62,5 +63,12 @@ export const usePutPending = () => {
       friendId: string;
       isAccept: boolean;
     }) => putPending(friendId, isAccept),
+  });
+};
+
+// 친구 삭제
+export const useDeleteFriend = () => {
+  return useMutation({
+    mutationFn: (friendId: number) => deleteFriend(friendId),
   });
 };

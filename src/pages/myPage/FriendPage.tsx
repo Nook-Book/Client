@@ -70,6 +70,7 @@ const FriendPage = () => {
           <View style={styles.overlay} />
           <FriendDeleteModal
             title={modalText}
+            userId={Number(modalText)}
             onExit={() => setIsModalOpen(false)}
           />
         </>

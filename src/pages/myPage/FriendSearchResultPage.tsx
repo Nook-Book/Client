@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
+import BackTextHeader from "../../components/header/BackTextHeader";
 import AtherUserProfile from "../../components/myPage/AtherUserProfile";
 import Bookstatistics from "../../components/myPage/Bookstatistics";
 import CategoryReport from "../../components/myPage/CategoryReport";
 import FriendDeleteModal from "../../components/myPage/friendPage/FriendDeleteModal";
 import { styles } from "../../styles/myPage/friendPage/FriendSearchResultPage";
 import { SearchFriendResultRouteProp } from "../../types/navigation/navigation";
-import BackTextHeader from "../../components/header/BackTextHeader";
 
 const FriendSearchResultPage = ({
   route,
@@ -19,6 +19,7 @@ const FriendSearchResultPage = ({
     setIsModalOpen(true);
   };
   const { query } = route.params; // query
+  const { userId } = route.params; // userId
 
   return (
     <View style={styles.container}>
@@ -27,6 +28,7 @@ const FriendSearchResultPage = ({
           <View style={styles.overlay} />
           <FriendDeleteModal
             title={query}
+            userId={userId}
             onExit={() => setIsModalOpen(false)}
           />
         </>
