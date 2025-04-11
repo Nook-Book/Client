@@ -19,7 +19,7 @@ export type RootMyPageStackParamList = {
   SetIdPage: undefined;
   SetNicknamePage: undefined;
   FriendPage: undefined;
-  FriendSearchResultPage: { query: string };
+  FriendSearchResultPage: { query: string; userId: number };
   MyCollectionPage: undefined;
   MyReportPage: undefined;
   NotePage: { noteId: string };

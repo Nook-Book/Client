@@ -1,21 +1,31 @@
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useDeleteFriend } from "../../../hooks/mypage/useFriend";
 import { styles } from "../../../styles/myPage/friendPage/FriendDeleteModal";
 
 const FriendDeleteModal = ({
   title,
+  userId,
   onExit,
 }: {
   title: string;
+  userId: number;
   onExit: () => void;
 }) => {
+  const { mutate: deleteFriend } = useDeleteFriend();
+
+  // 친구 삭제
+  const handleDeleteFriend = () => {
+    deleteFriend(Number(userId));
+    onExit();
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.content}>
         {title}님을 {"\n"} 친구 삭제하시겠습니까?
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleDeleteFriend}>
           <Text style={styles.okButton}>삭제</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onExit}>

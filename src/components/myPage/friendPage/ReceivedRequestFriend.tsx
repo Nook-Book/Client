@@ -3,15 +3,22 @@ import { View } from "react-native";
 import { FriendRequest } from "../../../types/mypage/friend";
 import FriendComponent from "./FriendComponent";
 
-const ReceivedRequestFriend = ({ friends }: { friends: FriendRequest[] }) => {
+const ReceivedRequestFriend = ({
+  friends,
+  refetch,
+}: {
+  friends: FriendRequest[];
+  refetch: () => void;
+}) => {
+  console.log("friends", friends);
   return (
     <View>
       {friends.map((friend, index) => (
         <FriendComponent
           key={index}
-          image={friend.imageUrl}
-          name={friend.nickname}
+          user={friend}
           type={"RecieveFriend"}
+          refetch={refetch}
         />
       ))}
     </View>

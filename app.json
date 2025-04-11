@@ -16,6 +16,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.si14444.NookBook",
       "infoPlist": {
+        "UIBackgroundModes": ["remote-notification"],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -40,6 +41,15 @@
     "updates": {
       "url": "https://u.expo.dev/ac04f97a-9a39-4541-b1d6-e5b5c90a3073"
     },
-    "plugins": ["expo-secure-store"]
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ]
   }
 }

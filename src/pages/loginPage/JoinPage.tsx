@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import BackTitleHeader from "../../components/header/BackTitleHeader";
 import CheckButton from "../../components/login/CheckButton";
-import { useAuth } from "../../context/AuthContext";
 import {
   useUserIdCheck,
   useUserInfo,
@@ -35,9 +34,6 @@ const JoinPage = () => {
   const { mutate: checkId } = useUserIdCheck();
   const { mutate: checkNickname } = useUserNicknameCheck();
   const { mutate: join } = useUserInfo();
-
-  // 로그인 상태 업데이트
-  const { setIsLogin } = useAuth();
 
   // 중복 체크 핸들러
   const handleIdCheck = () => {
@@ -89,7 +85,7 @@ const JoinPage = () => {
       {
         onSuccess: (data) => {
           console.log(data);
-          setIsLogin(true);
+          navigation.navigate("LoginPage");
         },
         onError: (error) => {
           console.log(error);

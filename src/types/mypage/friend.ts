@@ -33,6 +33,7 @@ export interface User {
   userId: number;
   nickname: string;
   imageUrl: string;
+  friendId?: number;
 }
 
 // 정렬 정보 인터페이스

@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useMyPage } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/Profile";
@@ -7,8 +8,12 @@ import { NavigationProp } from "../../types/search";
 const Profile = () => {
   const navigation = useNavigation<NavigationProp>();
 
-  const { data } = useMyPage();
+  const { data, refetch } = useMyPage();
   const myInfo = data.information;
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <View style={styles.container}>

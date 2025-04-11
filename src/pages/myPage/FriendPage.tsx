@@ -31,8 +31,9 @@ const FriendPage = () => {
   const [modalText, setModalText] = useState<string>("");
   const [userList, setUserList] = useState<FriendRequest[]>([]);
 
-  const { data: friendData } = useGetFriend();
-  const { data: pendingFriendData } = useGetPendingFriend();
+  const { data: friendData, refetch: refetchFriend } = useGetFriend();
+  const { data: pendingFriendData, refetch: refetchPendingFriend } =
+    useGetPendingFriend();
   const { data: searchFriendData, refetch } = useGetSearchFriend(searchText);
 
   const FriendsSearchResultList = friendData.information.filter(
@@ -69,6 +70,7 @@ const FriendPage = () => {
           <View style={styles.overlay} />
           <FriendDeleteModal
             title={modalText}
+            userId={Number(modalText)}
             onExit={() => setIsModalOpen(false)}
           />
         </>
@@ -100,7 +102,11 @@ const FriendPage = () => {
                     />
                   )}
                 >
-                  <FriendComponent user={friend} type="Friend" />
+                  <FriendComponent
+                    user={friend}
+                    type="Friend"
+                    refetch={refetchFriend}
+                  />
                 </Swipeable>
               </View>
             ))}
@@ -114,12 +120,14 @@ const FriendPage = () => {
               <Text style={styles.label}>받은 요청</Text>
               <ReceivedRequestFriend
                 friends={pendingFriendData.information.receivedRequest}
+                refetch={refetchPendingFriend}
               />
               <View style={styles.border} />
               <Text style={styles.label}>보낸 요청</Text>
               <SendRequestFriend
                 userList={pendingFriendData.information.sentRequest}
                 isRequest={true}
+                refetch={refetchPendingFriend}
               />
             </>
           ) : (
@@ -127,6 +135,7 @@ const FriendPage = () => {
               <SendRequestFriend
                 userList={searchFriendData.information.content}
                 isRequest={false}
+                refetch={refetchPendingFriend}
               />
             </>
           )}
