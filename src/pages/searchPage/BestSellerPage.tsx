@@ -12,6 +12,8 @@ const BestSellerPage: React.FC = () => {
     BestSellerKeywordsList
   );
 
+  const currentKeyword = keywords.find((keyword) => keyword.checked);
+
   const handleKeywordFocus = (name: string) => {
     setKeywords((prevKeywords) =>
       prevKeywords.map((category) =>
@@ -41,7 +43,7 @@ const BestSellerPage: React.FC = () => {
           ))}
         </ScrollView>
       </View>
-      <BookCollection />
+      <BookCollection category={currentKeyword!.name} />
     </View>
   );
 };
