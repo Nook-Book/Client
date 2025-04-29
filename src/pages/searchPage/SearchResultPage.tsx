@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import ResultBookCard from "../../components/search/ResultBookCard";
 import SearchHeader from "../../components/search/SearchHeader";
@@ -12,8 +12,12 @@ type Props = {
 
 const SearchResultPage: React.FC<Props> = ({ route }) => {
   const { query } = route.params;
-  const { data } = useSearch(query);
+  const { data, refetch } = useSearch(query);
   const searchList = data.item;
+
+  useEffect(() => {
+    refetch();
+  }, [query]);
   return (
     <View style={styles.container}>
       <SearchHeader search={query} />
