@@ -1,22 +1,29 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import { styles } from "../../styles/search/RecentSearchCardStyle";
+import { Text, TouchableOpacity } from "react-native";
 import XMini from "../../assets/images/icon/XMini.svg";
+import { styles } from "../../styles/search/RecentSearchCardStyle";
+import { RootStackParamList } from "../../types/search";
+import { handleSearchSubmit } from "../../utils/search/handleSearch";
 
 const RecentSearchCard = ({
   text,
   onDelete,
+  navigation,
 }: {
   text: string;
   onDelete: (text: string) => void;
+  navigation: RootStackParamList;
 }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => handleSearchSubmit(text, navigation)}
+    >
       <Text>{text}</Text>
       <TouchableOpacity onPress={() => onDelete(text)}>
         <XMini style={styles.button} />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
