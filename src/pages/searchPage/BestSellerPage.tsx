@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import BackHeader from "../../components/header/BackHeader";
-import { styles } from "../../styles/search/BestSellerPageStyle";
-import { BestSellerKeywordsList, BestSellerLabel } from "../../constans/search";
 import BestSellerKeyword from "../../components/search/BestSellerKeyword";
-import { BestSellerKeywordsCategory } from "../../types/search/bestbook";
 import BookCollection from "../../components/search/BookCollection";
+import { BestSellerKeywordsList, BestSellerLabel } from "../../constans/search";
+import { styles } from "../../styles/search/BestSellerPageStyle";
+import { BestSellerKeywordsCategory } from "../../types/search/bestbook";
 
 const BestSellerPage: React.FC = () => {
   const [keywords, setKeywords] = useState<BestSellerKeywordsCategory[]>(
@@ -16,8 +16,8 @@ const BestSellerPage: React.FC = () => {
     setKeywords((prevKeywords) =>
       prevKeywords.map((category) =>
         category.name === name
-          ? { ...category, checked: !category.checked }
-          : category
+          ? { ...category, checked: true }
+          : { ...category, checked: false }
       )
     );
   };
