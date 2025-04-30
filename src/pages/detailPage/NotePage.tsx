@@ -59,6 +59,7 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
             noteId: noteId,
             title: noteDetail?.title,
             content: noteDetail?.content,
+            locked: noteDetail?.locked,
           })
         }
         onDelete={() => setIsDeleteModal(true)}

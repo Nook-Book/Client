@@ -112,11 +112,11 @@ const shapeMenuItem: ShapeMenuItemType[] = [
 
 const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
   const bookId = route?.params?.bookId;
-  const { noteId, title, content } = route.params;
+  const { noteId, title, content, locked } = route.params;
 
   const [isWarningModal, setIsWarningModal] = useState(false); //색상 변경 주의 모달
   const [isEditModal, setIsEditModal] = useState(false); //작성 취소 시 경고 모달
-  const [isLock, setIsLock] = useState(true); //비공개 여부
+  const [isLock, setIsLock] = useState(locked || true); //비공개 여부
 
   const markdownInputRef = useRef<TextInput>(null); //마크다운 입력 필드 참조
   const [isWriteView, setIsWriteView] = useState(true); //글쓰기 뷰
@@ -407,7 +407,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
       <WriteHeader
         isText={
           titleText.length > 0 &&
-          (title !== titleText || content !== markdownText)
+          (title !== titleText || content !== markdownText || locked !== isLock)
         }
         onCheckPress={() =>
           bookId === undefined ? handleEditNote() : handleSaveNote()
@@ -416,7 +416,9 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
           const isEdit =
             noteId === undefined
               ? titleText.length > 0 || markdownText.length > 0
-              : title !== titleText || content !== markdownText;
+              : title !== titleText ||
+                content !== markdownText ||
+                locked !== isLock;
 
           isEdit ? setIsEditModal(true) : navigation.goBack();
         }}
