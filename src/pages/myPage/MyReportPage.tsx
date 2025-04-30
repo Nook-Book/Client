@@ -51,8 +51,9 @@ const MyReportPage = ({
             style={styles.bookRecordItem}
             key={book.bookId}
             onPress={() => {
-              navigation.navigate("NotePage", {
-                noteId: book.bookId.toString(),
+              navigation.navigate("AllNote", {
+                userId: 33,
+                bookId: book.bookId,
               });
             }}
           >

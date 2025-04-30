@@ -22,7 +22,15 @@ export type RootMyPageStackParamList = {
   FriendSearchResultPage: { query: string; userId: number };
   MyCollectionPage: undefined;
   MyReportPage: undefined;
-  NotePage: { noteId: string };
+  Note: { noteId: number };
+  AllNote: { bookId: number; userId: number };
+  Write: {
+    bookId: number;
+    noteId: number;
+    title: string;
+    content: string;
+    locked: boolean;
+  };
   StatusCardDetail: undefined;
   navigate: (screen: string) => void;
 };

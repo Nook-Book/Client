@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getNoteList } from "../../api/note/getNoteList";
 import { TNoteListInformationRes } from "../../types/note";
 import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
+import { getMyPageNoteList } from "../../api/user-Mypage/getMyPageNoteList";
 
 const AllNotePage = ({
   navigation,
@@ -16,13 +17,16 @@ const AllNotePage = ({
   navigation: any;
   route: any;
 }) => {
-  const bookId = route?.params?.bookId;
+  const { bookId, userId } = route.params;
   const [noteList, setNoteList] = useState<TNoteListInformationRes>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const fetchNoteList = async () => {
+    let response;
+
     try {
-      const response = await getNoteList(bookId);
+      if (userId) response = await getMyPageNoteList(userId, bookId);
+      else response = await getNoteList(bookId);
       if (response?.check) {
         setNoteList(response.information);
       }
@@ -44,7 +48,7 @@ const AllNotePage = ({
         onWritePress={() =>
           (noteList?.noteListRes?.length || 0) >= 10
             ? setIsModalVisible(true)
-            : navigation.navigate("Write", { bookId: bookId, isFirst: false })
+            : navigation.navigate("Write", { bookId: bookId })
         }
       />
       <View style={styles.contentContainer}>

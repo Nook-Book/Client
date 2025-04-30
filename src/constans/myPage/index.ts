@@ -56,5 +56,7 @@ export const PageLists = [
   "MyReportPage",
   "ChallengeDetailSetting",
   "StatusCardDetail",
-  "NotePage",
+  "Note",
+  "AllNote",
+  "Write",
 ];
