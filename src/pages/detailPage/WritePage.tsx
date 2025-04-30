@@ -487,7 +487,12 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
                 spellCheck={false}
               />
               <TextInput
-                style={[styles.contentText, { height: inputHeight }]}
+                style={[
+                  styles.contentText,
+                  Platform.OS !== "ios"
+                    ? { height: inputHeight }
+                    : { paddingBottom: 30 },
+                ]}
                 ref={markdownInputRef}
                 placeholder="탭하여 기록을 시작해보세요."
                 value={markdownText}
