@@ -8,10 +8,12 @@ import { Color } from "../../styles/Theme";
 
 export default function NoteHeader({
   navigation,
+  isCurrentUser,
   onEdit,
   onDelete,
 }: {
   navigation: any;
+  isCurrentUser: boolean;
   onEdit: () => void;
   onDelete: () => void;
 }) {
@@ -24,14 +26,16 @@ export default function NoteHeader({
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        <View style={{ flexDirection: "row", marginRight: 9 }}>
-          <Pressable onPress={onEdit} style={styles.buttonSmallWrap}>
-            <EditIcon />
-          </Pressable>
-          <Pressable onPress={onDelete} style={styles.buttonSmallWrap}>
-            <DeleteIcon />
-          </Pressable>
-        </View>
+        {isCurrentUser && (
+          <View style={{ flexDirection: "row", marginRight: 9 }}>
+            <Pressable onPress={onEdit} style={styles.buttonSmallWrap}>
+              <EditIcon />
+            </Pressable>
+            <Pressable onPress={onDelete} style={styles.buttonSmallWrap}>
+              <DeleteIcon />
+            </Pressable>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

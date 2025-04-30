@@ -7,10 +7,11 @@ import { MyNoteResponse } from "../../types/mypage/myReport";
 
 // 내 기록 전체 조회
 export function useNote(
+  userId: number,
   keyword: string
 ): UseSuspenseQueryResult<MyNoteResponse, Error> {
   return useSuspenseQuery({
     queryKey: ["GetNote"],
-    queryFn: () => getNote(keyword),
+    queryFn: () => getNote(userId, keyword),
   });
 }

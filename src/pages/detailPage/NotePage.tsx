@@ -12,7 +12,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { deleteNote } from "../../api/note/deleteNote";
 
 const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
-  const noteId = route?.params?.noteId;
+  const { noteId, isCurrentUser } = route.params;
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [noteDetail, setNoteDetail] = useState<TNoteDetailInformationRes>();
 
@@ -63,6 +63,7 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
           })
         }
         onDelete={() => setIsDeleteModal(true)}
+        isCurrentUser={isCurrentUser}
       />
       <ScrollView
         style={{ marginHorizontal: 16 }}

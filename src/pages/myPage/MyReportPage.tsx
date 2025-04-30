@@ -19,14 +19,17 @@ type MyReportPageNavigationProp = NativeStackNavigationProp<
 >;
 
 const MyReportPage = ({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: MyReportPageNavigationProp;
 }) => {
+  const { userId } = route.params;
   const [keyword, setKeyword] = useState("");
 
   // 도서 기록 데이터
-  const { data: bookRecords, refetch } = useNote(keyword);
+  const { data: bookRecords, refetch } = useNote(userId, keyword);
 
   useEffect(() => {
     refetch();
@@ -52,7 +55,7 @@ const MyReportPage = ({
             key={book.bookId}
             onPress={() => {
               navigation.navigate("AllNote", {
-                userId: 33,
+                userId,
                 bookId: book.bookId,
               });
             }}

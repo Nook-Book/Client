@@ -50,6 +50,7 @@ const AllNotePage = ({
             ? setIsModalVisible(true)
             : navigation.navigate("Write", { bookId: bookId })
         }
+        isCurrentUser={!userId}
       />
       <View style={styles.contentContainer}>
         <View style={styles.bookWrap}>
@@ -73,7 +74,10 @@ const AllNotePage = ({
                 key={index}
                 style={styles.noteWrap}
                 onPress={() =>
-                  navigation.navigate("Note", { noteId: data.noteId })
+                  navigation.navigate("Note", {
+                    noteId: data.noteId,
+                    isCurrentUser: !userId,
+                  })
                 }
               >
                 <View style={styles.titleWrap}>
