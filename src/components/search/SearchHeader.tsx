@@ -15,6 +15,7 @@ type Props = {
 export default function SearchHeader({ search }: Props) {
   const [searchText, setSearchText] = useState<string>(search ? search : "");
   const navigation = useNavigation<RootStackParamList>();
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
