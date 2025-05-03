@@ -1,10 +1,10 @@
-import React from "react";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { BestSellerButton, BestSellerLabel } from "../../constans/search";
 import { styles } from "../../styles/search/BestSellerStyle";
-import BookCollection from "./BookCollection";
 import { NavigationProp } from "../../types/search";
+import BookCollection from "./BookCollection";
 
 const BestSeller: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -21,7 +21,7 @@ const BestSeller: React.FC = () => {
           <Text style={styles.button}>{BestSellerButton}</Text>
         </TouchableOpacity>
       </View>
-      <BookCollection />
+      <BookCollection category={"종합"} />
     </View>
   );
 };
