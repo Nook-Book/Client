@@ -1,10 +1,23 @@
+import { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import { useBestSeller } from "../../hooks/book/useBestSeller";
 import { styles } from "../../styles/search/BestSellerStyle";
+import {
+  CategoryName,
+  getCategoryCode,
+} from "../../utils/category/bookCategories";
 import BestSellerBook from "./BestSellerBook";
 
-const BookCollection = () => {
-  const { data } = useBestSeller({});
+const BookCollection = ({ category }: { category: string }) => {
+  const { data, refetch } = useBestSeller({
+    category: getCategoryCode(category as CategoryName),
+    size: 12,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [category]);
+
   const bestSellerList = data.item;
 
   // 3*4 배열을 만들기 위해 3개씩 푸시함.
