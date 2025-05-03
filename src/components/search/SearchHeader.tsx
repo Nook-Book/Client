@@ -30,7 +30,9 @@ export default function SearchHeader({ search }: Props) {
           value={searchText}
           onChangeText={setSearchText}
           placeholderTextColor={Color.Typo.Secondary}
-          onSubmitEditing={() => handleSearchSubmit(searchText, navigation)}
+          onSubmitEditing={() =>
+            handleSearchSubmit(searchText, navigation, setSearchText)
+          }
         />
       </View>
     </SafeAreaView>
