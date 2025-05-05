@@ -3,7 +3,7 @@ import { SafeAreaView, Switch, Text, View } from "react-native";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import SettingAuthComponent from "../../components/setting/SettingAuthComponent";
 import SettingModal from "../../components/setting/SettingModal";
-import { useLogout } from "../../hooks/auth/useAuth";
+import { useExit, useLogout } from "../../hooks/auth/useAuth";
 import { styles } from "../../styles/settingPage/SettingPage";
 import { Color } from "../../styles/Theme";
 
@@ -14,6 +14,7 @@ const SettingPage = ({ navigation }: { navigation: any }) => {
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
   const { mutate: logout } = useLogout();
+  const { mutate: exit } = useExit();
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
@@ -33,10 +34,17 @@ const SettingPage = ({ navigation }: { navigation: any }) => {
   };
   const handleExit = () => {
     //Exit Module
-
+    exit(undefined, {
+      onSuccess: () => {
+        console.log("탈퇴 성공");
+        navigation.navigate("LoginPage");
+      },
+      onError: (error: any) => {
+        console.error("탈퇴 실패:", error);
+      },
+    });
     setIsExitModalOpen(false);
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <BackTextHeader title="설정" />

@@ -3,6 +3,7 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
+import { exit } from "../../api/auth/exit";
 import { postIdTokenLogin } from "../../api/auth/idTokenLogin";
 import { logout } from "../../api/auth/logout";
 import { getRegistered } from "../../api/user/exists";
@@ -33,5 +34,12 @@ export function useGetRegistered(): UseSuspenseQueryResult<
 export function useLogout() {
   return useMutation<void, Error>({
     mutationFn: () => logout(),
+  });
+}
+
+// 회원 탈퇴
+export function useExit() {
+  return useMutation<void, Error>({
+    mutationFn: () => exit(),
   });
 }
