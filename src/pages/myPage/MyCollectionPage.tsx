@@ -12,10 +12,11 @@ import AddCollectionModal from "../../components/modal/AddCollectionModal";
 import DeleteCollectionModal from "../../components/modal/DeleteCollectionModal";
 import MyCollectionItem from "../../components/myPage/collection/MyCollectionItem";
 import { TCollectionListDetailRes } from "../../types/library";
+import { RootMyPageStackParamList } from "../../types/navigation/navigation";
 const MyCollectionPage = () => {
+  const navigation = useNavigation<RootMyPageStackParamList>();
   // 컬렉션 데이터
   const { data: collections, refetch } = useGetCollection();
-  const navigation = useNavigation();
   // 삭제 모드 상태
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   // 컬렉션 추가 모달 상태
@@ -76,6 +77,7 @@ const MyCollectionPage = () => {
                 icon={MinusIcon}
                 setCollection={setCollection}
                 setIsShowDeleteModal={setIsShowDeleteModal}
+                navigation={navigation}
               />
             )
           )}

@@ -21,6 +21,7 @@ export type RootMyPageStackParamList = {
   FriendPage: undefined;
   FriendSearchResultPage: { query: string; userId: number };
   MyCollectionPage: undefined;
+  MyCollectionDetailPage: { collectionId: number; collectionTitle: string };
   MyReportPage: undefined;
   NotePage: { noteId: string };
   StatusCardDetail: undefined;
@@ -41,4 +42,9 @@ export type BestSellerPageRouteProp = RouteProp<
 export type SearchFriendResultRouteProp = RouteProp<
   RootMyPageStackParamList,
   "FriendSearchResultPage"
+>;
+
+export type MyCollectionDetailRouteProp = RouteProp<
+  RootMyPageStackParamList,
+  "MyCollectionDetailPage"
 >;

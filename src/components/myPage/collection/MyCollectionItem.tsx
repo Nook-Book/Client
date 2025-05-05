@@ -16,12 +16,14 @@ const MyCollectionItem = ({
   icon: IconComponent,
   setCollection,
   setIsShowDeleteModal,
+  navigation,
 }: {
   item: TCollectionListDetailRes;
   isMinusItem: boolean;
   icon: React.ElementType;
   setCollection: (collection: TCollectionListDetailRes) => void;
   setIsShowDeleteModal: (isShow: boolean) => void;
+  navigation: any;
 }) => {
   const { width: windowWidth } = useWindowDimensions();
   const styles = getStyles(windowWidth);
@@ -31,6 +33,11 @@ const MyCollectionItem = ({
     if (isMinusItem) {
       setCollection(item);
       setIsShowDeleteModal(true);
+    } else {
+      navigation.navigate("MyCollectionDetailPage", {
+        collectionId: item.collectionId,
+        collectionTitle: item.collectionTitle,
+      });
     }
   };
 
