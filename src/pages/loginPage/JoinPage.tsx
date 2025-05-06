@@ -49,7 +49,11 @@ const JoinPage = () => {
         },
         onError: (error) => {
           console.log(error);
-          setIsIdChecked("OnlyNumber");
+          if (id.length > 10) {
+            setIsIdChecked("No");
+          } else {
+            setIsIdChecked("OnlyNumber");
+          }
         },
       }
     );
@@ -123,14 +127,25 @@ const JoinPage = () => {
             isActive={id.length > 0 && isIdChecked !== "OK"}
           />
         </View>
+        {/* 사용 가능한 경우  */}
         {isIdChecked === "OK" && (
           <Text style={styles.checkText}>사용 가능한 아이디입니다.</Text>
         )}
+        {/* 중복 체크 경우 */}
         {isIdChecked === "Duplicate" && (
           <Text style={styles.checkText}>이미 사용 중인 아이디입니다.</Text>
         )}
+        {/* 숫자만 입력 경우 */}
         {isIdChecked === "OnlyNumber" && (
-          <Text style={styles.checkText}>숫자만 입력해주세요.</Text>
+          <Text style={styles.checkText}>
+            아이디에 숫자만 포함할 수 없습니다.
+          </Text>
+        )}
+        {/* 길이 초과 경우 */}
+        {isIdChecked === "No" && (
+          <Text style={styles.checkText}>
+            영문,숫자를 사용한 10글자 이내입니다.
+          </Text>
         )}
       </View>
 

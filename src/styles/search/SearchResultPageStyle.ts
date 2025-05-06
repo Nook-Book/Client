@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     gap: 6,
     marginTop: 10,
     marginLeft: 30,
-    marginBottom: 100,
+    marginBottom: 10,
   },
   separator: {
     height: 1,

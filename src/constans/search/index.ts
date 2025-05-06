@@ -7,7 +7,7 @@ interface Category {
   checked: boolean;
 }
 export const BestSellerKeywordsList: Category[] = [
-  { name: "종합", checked: false },
+  { name: "종합", checked: true },
   { name: "소설", checked: false },
   { name: "경제/경영", checked: false },
   { name: "자기계발", checked: false },

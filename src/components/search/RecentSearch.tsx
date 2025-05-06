@@ -1,12 +1,14 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { RecentSearchText } from "../../constans/search";
 import { useDeleteKeyword, useGetKeyword } from "../../hooks/book/useKeyword";
 import { styles } from "../../styles/search/RecentSearchStyle";
+import { RootStackParamList } from "../../types/search";
 import RecentSearchCard from "./RecentSearchCard";
 
 const RecentSearch = () => {
+  const navigation = useNavigation<RootStackParamList>();
   const { data, refetch } = useGetKeyword();
   const searchList = data.information;
 
@@ -46,6 +48,7 @@ const RecentSearch = () => {
             key={search.keywordId}
             text={search.content}
             onDelete={() => handleDeleteKeyword(search.keywordId)}
+            navigation={navigation}
           />
         ))}
       </ScrollView>

@@ -10,7 +10,7 @@ export function useSearch(
   keyword: string
 ): UseSuspenseQueryResult<ResponseBookSearchResult, Error> {
   return useSuspenseQuery({
-    queryKey: ["GetSearch"],
+    queryKey: ["GetSearch", keyword],
     queryFn: () => getSearch(keyword),
   });
 }
