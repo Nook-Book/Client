@@ -38,13 +38,7 @@ export default function MyPage({
             <View style={styles.linkIconBorder} />
             <TouchableOpacity
               style={styles.linkIconContainerComponent}
-              onPress={
-                () =>
-                  navigation.navigate("MyReportPage", {
-                    userId: 33,
-                  })
-                //fix. 독서 기록 api 수정 후 변경
-              }
+              onPress={() => navigation.navigate("MyReportPage")}
             >
               <ReportIcon />
               <Text style={styles.linkIconContainerComponentText}>

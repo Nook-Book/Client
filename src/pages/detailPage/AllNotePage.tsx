@@ -5,10 +5,10 @@ import AllNoteHeader from "../../components/header/AllNoteHeader";
 import { Color } from "../../styles/Theme";
 import NotePencelIcon from "../../assets/images/icon/NotePencel.svg";
 import { useFocusEffect } from "@react-navigation/native";
-import { getNoteList } from "../../api/note/getNoteList";
 import { TNoteListInformationRes } from "../../types/note";
 import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
-import { getMyPageNoteList } from "../../api/user-Mypage/getMyPageNoteList";
+import { getFriendNoteList } from "../../api/friend/getFriendNoteList";
+import { getNoteList } from "../../api/note/getNoteList";
 
 const AllNotePage = ({
   navigation,
@@ -25,7 +25,7 @@ const AllNotePage = ({
     let response;
 
     try {
-      if (userId) response = await getMyPageNoteList(userId, bookId);
+      if (userId) response = await getFriendNoteList(userId, bookId);
       else response = await getNoteList(bookId);
       if (response?.check) {
         setNoteList(response.information);

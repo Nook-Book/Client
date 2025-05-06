@@ -27,7 +27,7 @@ export type RootMyPageStackParamList = {
   MyCollectionPage: undefined;
   MyReportPage: undefined;
   Note: { noteId: number };
-  AllNote: { bookId: number; userId: number };
+  AllNote: { bookId: number; userId?: number };
   Write: {
     bookId: number;
     noteId: number;

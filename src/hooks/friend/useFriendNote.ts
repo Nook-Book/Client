@@ -2,15 +2,16 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { getNote } from "../../api/user-Mypage/getNote";
 import { MyNoteResponse } from "../../types/mypage/myReport";
+import { getFriendNote } from "../../api/friend/getFriendNote";
 
-// 내 기록 전체 조회
-export function useNote(
+// 친구 기록 전체 조회
+export function useFriendNote(
+  userId: number,
   keyword: string
 ): UseSuspenseQueryResult<MyNoteResponse, Error> {
   return useSuspenseQuery({
-    queryKey: ["GetNote"],
-    queryFn: () => getNote(keyword),
+    queryKey: ["GetFriendNote"],
+    queryFn: () => getFriendNote(userId, keyword),
   });
 }
