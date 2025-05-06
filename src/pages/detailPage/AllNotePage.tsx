@@ -5,9 +5,10 @@ import AllNoteHeader from "../../components/header/AllNoteHeader";
 import { Color } from "../../styles/Theme";
 import NotePencelIcon from "../../assets/images/icon/NotePencel.svg";
 import { useFocusEffect } from "@react-navigation/native";
-import { getNoteList } from "../../api/note/getNoteList";
 import { TNoteListInformationRes } from "../../types/note";
 import MaxCollectionModal from "../../components/modal/MaxCollectionModal";
+import { getFriendNoteList } from "../../api/friend/getFriendNoteList";
+import { getNoteList } from "../../api/note/getNoteList";
 
 const AllNotePage = ({
   navigation,
@@ -16,13 +17,16 @@ const AllNotePage = ({
   navigation: any;
   route: any;
 }) => {
-  const bookId = route?.params?.bookId;
+  const { bookId, userId } = route.params;
   const [noteList, setNoteList] = useState<TNoteListInformationRes>();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const fetchNoteList = async () => {
+    let response;
+
     try {
-      const response = await getNoteList(bookId);
+      if (userId) response = await getFriendNoteList(userId, bookId);
+      else response = await getNoteList(bookId);
       if (response?.check) {
         setNoteList(response.information);
       }
@@ -44,8 +48,9 @@ const AllNotePage = ({
         onWritePress={() =>
           (noteList?.noteListRes?.length || 0) >= 10
             ? setIsModalVisible(true)
-            : navigation.navigate("Write", { bookId: bookId, isFirst: false })
+            : navigation.navigate("Write", { bookId: bookId })
         }
+        isCurrentUser={!userId}
       />
       <View style={styles.contentContainer}>
         <View style={styles.bookWrap}>
@@ -69,7 +74,10 @@ const AllNotePage = ({
                 key={index}
                 style={styles.noteWrap}
                 onPress={() =>
-                  navigation.navigate("Note", { noteId: data.noteId })
+                  navigation.navigate("Note", {
+                    noteId: data.noteId,
+                    isCurrentUser: !userId,
+                  })
                 }
               >
                 <View style={styles.titleWrap}>

@@ -25,8 +25,9 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   };
   const handleClickComponent = () => {
     navigation.navigate("FriendSearchResultPage", {
-      query: user.nickname,
-      userId: user.friendId,
+      nickname: user.nickname,
+      userId: user.userId,
+      friendId: user.friendId,
     });
   };
 

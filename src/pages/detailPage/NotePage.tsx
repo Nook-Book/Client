@@ -12,9 +12,10 @@ import { useFocusEffect } from "@react-navigation/native";
 import { deleteNote } from "../../api/note/deleteNote";
 
 const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
-  const noteId = route?.params?.noteId;
+  const { noteId, isCurrentUser } = route.params;
   const [isDeleteModal, setIsDeleteModal] = useState(false);
-  const [noteDetail, setNoteDetail] = useState<TNoteDetailInformationRes>();
+  const [noteDetail, setNoteDetail] =
+    useState<TNoteDetailInformationRes | null>(null);
 
   const fetchNoteDetail = async () => {
     try {
@@ -59,23 +60,27 @@ const NotePage = ({ navigation, route }: { navigation: any; route: any }) => {
             noteId: noteId,
             title: noteDetail?.title,
             content: noteDetail?.content,
+            locked: noteDetail?.locked,
           })
         }
         onDelete={() => setIsDeleteModal(true)}
+        isCurrentUser={noteDetail ? isCurrentUser : false}
       />
-      <ScrollView
-        style={{ marginHorizontal: 16 }}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={styles.dateText}>
-          {formatDate(noteDetail?.createdDate)} •
-          {noteDetail?.locked ? " 비공개" : " 공개"}
-        </Text>
-        <Text style={styles.titleText}>{noteDetail?.title}</Text>
-        <Markdown style={markdownStyle} rules={RenderRules}>
-          {String(noteDetail?.content)}
-        </Markdown>
-      </ScrollView>
+      {noteDetail && (
+        <ScrollView
+          style={{ marginHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <Text style={styles.dateText}>
+            {formatDate(noteDetail?.createdDate)} •
+            {noteDetail?.locked ? " 비공개" : " 공개"}
+          </Text>
+          <Text style={styles.titleText}>{noteDetail?.title}</Text>
+          <Markdown style={markdownStyle} rules={RenderRules}>
+            {String(noteDetail?.content)}
+          </Markdown>
+        </ScrollView>
+      )}
       <TitleDesModal
         visible={isDeleteModal}
         titleText="기록 삭제"

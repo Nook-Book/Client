@@ -11,15 +11,16 @@ import { SearchFriendResultRouteProp } from "../../types/navigation/navigation";
 
 const FriendSearchResultPage = ({
   route,
+  navigation,
 }: {
   route: SearchFriendResultRouteProp;
+  navigation: any;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  const { query } = route.params; // query
-  const { userId } = route.params; // userId
+  const { nickname, userId, friendId } = route.params;
 
   return (
     <View style={styles.container}>
@@ -27,8 +28,8 @@ const FriendSearchResultPage = ({
         <>
           <View style={styles.overlay} />
           <FriendDeleteModal
-            title={query}
-            userId={userId}
+            title={nickname}
+            userId={friendId}
             onExit={() => setIsModalOpen(false)}
           />
         </>
@@ -36,7 +37,7 @@ const FriendSearchResultPage = ({
       <ScrollView>
         <BackTextHeader title={""} />
         <AtherUserProfile
-          name={query}
+          name={nickname}
           type={"Friend"}
           onClick={handleOpenModal}
         />
@@ -52,7 +53,14 @@ const FriendSearchResultPage = ({
               </Text>
             </TouchableOpacity>
             <View style={styles.linkIconBorder} />
-            <TouchableOpacity style={styles.linkIconContainerComponent}>
+            <TouchableOpacity
+              style={styles.linkIconContainerComponent}
+              onPress={() =>
+                navigation.navigate("MyReportPage", {
+                  userId,
+                })
+              }
+            >
               <CollectionIcon />
               <Text style={styles.linkIconContainerComponentText}>
                 기록 전체 보기

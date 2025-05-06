@@ -12,6 +12,7 @@ import BackTitleHeader from "../../components/header/BackTitleHeader";
 import { useNote } from "../../hooks/mypage/useNote";
 import { styles } from "../../styles/myPage/reportPage/MyReportPageStyle";
 import { RootMyPageStackParamList } from "../../types/navigation/navigation";
+import { useFriendNote } from "../../hooks/friend/useFriendNote";
 
 type MyReportPageNavigationProp = NativeStackNavigationProp<
   RootMyPageStackParamList,
@@ -19,14 +20,19 @@ type MyReportPageNavigationProp = NativeStackNavigationProp<
 >;
 
 const MyReportPage = ({
+  route,
   navigation,
 }: {
+  route: any;
   navigation: MyReportPageNavigationProp;
 }) => {
+  const { userId } = route.params || {};
   const [keyword, setKeyword] = useState("");
 
   // 도서 기록 데이터
-  const { data: bookRecords, refetch } = useNote(keyword);
+  const { data: bookRecords, refetch } = userId
+    ? useFriendNote(userId, keyword)
+    : useNote(keyword);
 
   useEffect(() => {
     refetch();
@@ -51,9 +57,14 @@ const MyReportPage = ({
             style={styles.bookRecordItem}
             key={book.bookId}
             onPress={() => {
-              navigation.navigate("NotePage", {
-                noteId: book.bookId.toString(),
-              });
+              userId
+                ? navigation.navigate("AllNote", {
+                    userId,
+                    bookId: book.bookId,
+                  })
+                : navigation.navigate("AllNote", {
+                    bookId: book.bookId,
+                  });
             }}
           >
             <Image

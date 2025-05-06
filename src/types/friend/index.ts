@@ -2,9 +2,16 @@ import { User } from "../mypage/friend";
 
 export type FriendParamList = {
   goBack(): void;
-  navigate(arg0: string, arg1: { query: string; userId?: number }): unknown;
+  navigate(
+    arg0: string,
+    arg1: { nickname: string; userId?: number; friendId?: number }
+  ): unknown;
   SearchResultPage: { query: string };
-  FriendSearchResultPage: { query: string; userId: number };
+  FriendSearchResultPage: {
+    nickname: string;
+    userId: number;
+    friendId: number;
+  };
 };
 
 export interface FriendComponentProps {

@@ -15,6 +15,8 @@ import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
 import SettingPage from "../../pages/myPage/SettingPage";
 import { Color } from "../../styles/Theme";
 import { RootMyPageStackParamList } from "../../types/navigation/navigation";
+import AllNotePage from "../../pages/detailPage/AllNotePage";
+import WritePage from "../../pages/detailPage/WritePage";
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
 export default function MaPageStackScreen({
@@ -97,8 +99,18 @@ export default function MaPageStackScreen({
         options={{ headerShown: false }}
       />
       <MyPageStack.Screen
-        name="NotePage"
+        name="AllNote"
+        component={AllNotePage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="Note"
         component={NotePage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="Write"
+        component={WritePage}
         options={{ headerShown: false }}
       />
       <MyPageStack.Screen

@@ -7,9 +7,11 @@ import { Color } from "../../styles/Theme";
 
 export default function AllNoteHeader({
   navigation,
+  isCurrentUser,
   onWritePress,
 }: {
   navigation: any;
+  isCurrentUser: boolean;
   onWritePress: () => void;
 }) {
   return (
@@ -21,9 +23,11 @@ export default function AllNoteHeader({
         >
           <BackIcon color={Color.Contents.Icon} />
         </Pressable>
-        <Pressable onPress={onWritePress} style={styles.buttonWrap}>
-          <NoteIcon />
-        </Pressable>
+        {isCurrentUser && (
+          <Pressable onPress={onWritePress} style={styles.buttonWrap}>
+            <NoteIcon />
+          </Pressable>
+        )}
       </View>
     </SafeAreaView>
   );

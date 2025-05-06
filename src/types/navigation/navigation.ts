@@ -19,10 +19,22 @@ export type RootMyPageStackParamList = {
   SetIdPage: undefined;
   SetNicknamePage: undefined;
   FriendPage: undefined;
-  FriendSearchResultPage: { query: string; userId: number };
+  FriendSearchResultPage: {
+    nickname: string;
+    userId: number;
+    friendId: number;
+  };
   MyCollectionPage: undefined;
   MyReportPage: undefined;
-  NotePage: { noteId: string };
+  Note: { noteId: number };
+  AllNote: { bookId: number; userId?: number };
+  Write: {
+    bookId: number;
+    noteId: number;
+    title: string;
+    content: string;
+    locked: boolean;
+  };
   StatusCardDetail: undefined;
   navigate: (screen: string) => void;
 };
