@@ -16,6 +16,10 @@ const SetNicknamePage = ({ navigation }: { navigation: any }) => {
 
   const handleNicknameSubmit = () => {
     if (newNickname !== "") {
+      if (newNickname.length > 10) {
+        setIsShowError(true);
+        return;
+      }
       changeNickname(newNickname, {
         onSuccess: () => {
           navigation.navigate("EditProfilePage");
@@ -51,7 +55,9 @@ const SetNicknamePage = ({ navigation }: { navigation: any }) => {
           <XMini />
         </TouchableOpacity>
       </View>
-      {isShowError && <Text style={styles.errorText}>닉네임 10자 이내</Text>}
+      {isShowError && (
+        <Text style={styles.errorText}>닉네임 10자 이내입니다</Text>
+      )}
     </View>
   );
 };

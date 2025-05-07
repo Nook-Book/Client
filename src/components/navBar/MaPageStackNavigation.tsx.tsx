@@ -7,6 +7,7 @@ import NotePage from "../../pages/detailPage/NotePage";
 import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import FriendPage from "../../pages/myPage/FriendPage";
 import FriendSearchResultPage from "../../pages/myPage/FriendSearchResultPage";
+import MyCollectionDetailPage from "../../pages/myPage/MyCollectionDetailPage";
 import MyCollectionPage from "../../pages/myPage/MyCollectionPage";
 import MyPage from "../../pages/myPage/MyPage";
 import MyReportPage from "../../pages/myPage/MyReportPage";
@@ -116,6 +117,11 @@ export default function MaPageStackScreen({
       <MyPageStack.Screen
         name="StatusCardDetail"
         component={StatusCardDetailPage}
+        options={{ headerShown: false }}
+      />
+      <MyPageStack.Screen
+        name="MyCollectionDetailPage"
+        component={MyCollectionDetailPage}
         options={{ headerShown: false }}
       />
     </MyPageStack.Navigator>

@@ -1,30 +1,57 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, Switch } from "react-native";
-import { styles } from "../../styles/settingPage/SettingPage";
-import { Color } from "../../styles/Theme";
+import { SafeAreaView, Switch, Text, View } from "react-native";
+import BackTextHeader from "../../components/header/BackTextHeader";
 import SettingAuthComponent from "../../components/setting/SettingAuthComponent";
 import SettingModal from "../../components/setting/SettingModal";
-import BackTextHeader from "../../components/header/BackTextHeader";
+import { useAuth } from "../../context/AuthContext";
+import { useExit, useLogout } from "../../hooks/auth/useAuth";
+import { styles } from "../../styles/settingPage/SettingPage";
+import { Color } from "../../styles/Theme";
+import { storage } from "../../utils/storage";
 
-const SettingPage = () => {
+const SettingPage = ({ navigation }: { navigation: any }) => {
   // 상태를 관리하기 위한 상태 변수와 상태 변경 함수
   const [isEnabled, setIsEnabled] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
+  // 로그인 상태 관리
+  const { setIsLogin } = useAuth();
+
+  const { mutate: logout } = useLogout();
+  const { mutate: exit } = useExit();
+
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const handleLogout = () => {
     //Logout Module
+    logout(undefined, {
+      onSuccess: () => {
+        console.log("로그아웃 성공");
+        storage.clearTokens();
+        setIsLogin(false);
+      },
+      onError: (error: any) => {
+        console.error("로그아웃 실패:", error);
+      },
+    });
 
     setIsLogoutModalOpen(false);
   };
   const handleExit = () => {
     //Exit Module
-
+    exit(undefined, {
+      onSuccess: () => {
+        console.log("탈퇴 성공");
+        storage.clearTokens();
+        setIsLogin(false);
+      },
+      onError: (error: any) => {
+        console.error("탈퇴 실패:", error);
+      },
+    });
     setIsExitModalOpen(false);
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <BackTextHeader title="설정" />
