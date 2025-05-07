@@ -30,6 +30,7 @@ const LoginPage = () => {
     const condition = data.indexOf(exp);
     if (condition != -1) {
       const authorize_code = data.substring(condition + exp.length);
+      // 카카오 토큰 발급
       fetch("https://kauth.kakao.com/oauth/token", {
         method: "POST",
         headers: {
@@ -39,12 +40,14 @@ const LoginPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
+          // 토큰 파싱
           const payload = data.id_token.split(".")[1];
           const decoded = JSON.parse(atob(payload));
           const email = decoded.email;
           const accessToken = data.access_token;
           console.log("kakao", accessToken);
 
+          // 카카오 로그인
           kakaoLogin(
             {
               email,
@@ -52,6 +55,7 @@ const LoginPage = () => {
             },
             {
               onSuccess: async (response) => {
+                console.log("success");
                 await storage
                   .setTokens({
                     accessToken: response.information.accessToken,
@@ -60,6 +64,7 @@ const LoginPage = () => {
                   .then(async () => {
                     // 저장 직후 토큰 확인
                     refetchGetRegistered().then(async () => {
+                      console.log("getRegistered", getRegistered);
                       if (!getRegistered?.information.registered) {
                         navigation.navigate("JoinPage");
                       } else {
@@ -75,7 +80,7 @@ const LoginPage = () => {
                   });
               },
               onError: () => {
-                console.log("Error");
+                console.log("Kakao Login Error");
               },
             }
           );
