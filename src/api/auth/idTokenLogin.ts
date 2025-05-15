@@ -5,6 +5,6 @@ import { AuthRequest, KakaoAuthResponse } from "../../types/auth/auth";
 export const postIdTokenLogin = async (
   authRequest: AuthRequest
 ): Promise<KakaoAuthResponse> => {
-  const response = await api.post("/auth/idTokenLogin", authRequest);
+  const response = await api.post("/auth/login", authRequest);
   return response.data;
 };
