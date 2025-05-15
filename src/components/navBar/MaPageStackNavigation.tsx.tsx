@@ -3,7 +3,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { PageLists } from "../../constans/myPage";
 import StatusCardDetailPage from "../../pages/challengePage/StatusCardDetailPage";
+import AllNotePage from "../../pages/detailPage/AllNotePage";
 import NotePage from "../../pages/detailPage/NotePage";
+import WritePage from "../../pages/detailPage/WritePage";
 import EditProfilePage from "../../pages/myPage/EditProfilePage";
 import FriendPage from "../../pages/myPage/FriendPage";
 import FriendSearchResultPage from "../../pages/myPage/FriendSearchResultPage";
@@ -16,8 +18,6 @@ import SetNicknamePage from "../../pages/myPage/SetNicknamePage";
 import SettingPage from "../../pages/myPage/SettingPage";
 import { Color } from "../../styles/Theme";
 import { RootMyPageStackParamList } from "../../types/navigation/navigation";
-import AllNotePage from "../../pages/detailPage/AllNotePage";
-import WritePage from "../../pages/detailPage/WritePage";
 const MyPageStack = createNativeStackNavigator<RootMyPageStackParamList>();
 
 export default function MaPageStackScreen({
@@ -29,6 +29,7 @@ export default function MaPageStackScreen({
 }) {
   React.useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route);
+    // 탭바 숨김
     if (PageLists.includes(routeName!)) {
       navigation.setOptions({
         tabBarStyle: { display: "none" },

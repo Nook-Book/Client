@@ -10,4 +10,5 @@ export interface MyCollectionBookDetail {
   isbn: string;
   title: string;
   cover: string;
+  author: string;
 }

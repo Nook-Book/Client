@@ -1,9 +1,18 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import MyCollectionDetailItem from "../../components/myPage/collection/MyCollectionDetailItem";
 import { useGetCollectionDetail } from "../../hooks/mypage/useCollection";
 import { Color, Font } from "../../styles/Theme";
 import { MyCollectionDetailRouteProp } from "../../types/navigation/navigation";
+
 const MyCollectionDetailPage = ({
   route,
 }: {
@@ -11,6 +20,19 @@ const MyCollectionDetailPage = ({
 }) => {
   const { collectionId, collectionTitle } = route.params;
   const { data: collectionDetail } = useGetCollectionDetail(collectionId);
+
+  // 화면 너비 가져오기
+  const { width } = Dimensions.get("window");
+
+  // 아이템 사이 간격
+  const gap = 12;
+
+  // 패딩 (좌우)
+  const padding = 16;
+
+  // 아이템 너비 계산 (화면 너비 - 좌우 패딩 - 아이템 사이 간격) / 3
+  const itemWidth = (width - padding * 2 - gap * 2) / 3;
+
   return (
     <View style={styles.container}>
       <BackTextHeader title={collectionTitle} />
@@ -24,11 +46,16 @@ const MyCollectionDetailPage = ({
         </TouchableOpacity>
       </View>
       <View style={styles.collectionDetailContainer}>
-        {collectionDetail?.information.collectionBooksListDetailRes.map(
-          (item) => (
-            <MyCollectionDetailItem key={item.bookId} item={item} />
-          )
-        )}
+        <FlatList
+          data={collectionDetail?.information.collectionBooksListDetailRes}
+          renderItem={({ item }) => (
+            <MyCollectionDetailItem item={item} width={itemWidth} />
+          )}
+          keyExtractor={(item) => item.bookId.toString()}
+          numColumns={3}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={styles.list}
+        />
       </View>
     </View>
   );
@@ -64,9 +91,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     paddingHorizontal: 16,
-    display: "flex",
+    gap: 16,
     flex: 1,
     justifyContent: "space-between",
+  },
+  list: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  row: {
+    justifyContent: "space-between",
+    marginBottom: 12,
   },
 });
 
