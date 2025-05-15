@@ -4,7 +4,7 @@ import api from "..";
 export const patchOwner = async (challengeId: number, newOwnerId: number) => {
   try {
     const response = await api.patch(
-      `/api/v1/challenge/${challengeId}/owner/${newOwnerId}`
+      `/api/v1/challenges/${challengeId}/owner/${newOwnerId}`
     );
     return response.data;
   } catch (e) {

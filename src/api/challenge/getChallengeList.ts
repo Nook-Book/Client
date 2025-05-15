@@ -6,7 +6,7 @@ export const getChallengeList = async (): Promise<
   TChallengeListRes | undefined
 > => {
   try {
-    const response = await api.get(`/api/v1/challenge/list`);
+    const response = await api.get(`/api/v1/challenges`);
     return response.data;
   } catch (e) {
     console.log(e);

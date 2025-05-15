@@ -7,7 +7,7 @@ export const postWakeUp = async (
 ) => {
   try {
     const response = await api.post(
-      `/api/v1/challenge/${challengeId}/participants/${participantId}/wake-up`
+      `/api/v1/challenges/${challengeId}/participants/${participantId}/wake-up`
     );
     return response.data;
   } catch (e) {

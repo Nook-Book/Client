@@ -7,7 +7,7 @@ export const patchEditChallenge = async (
   data: TEditChallengeReq
 ) => {
   try {
-    const response = await api.patch(`/api/v1/challenge/${challengeId}`, data);
+    const response = await api.patch(`/api/v1/challenges/${challengeId}`, data);
     return response.data;
   } catch (e) {
     console.log(e);

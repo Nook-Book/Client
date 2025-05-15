@@ -6,7 +6,7 @@ export const getChallengeDetail = async (
   challengeId: number
 ): Promise<TChallengeDetailRes | undefined> => {
   try {
-    const response = await api.get(`/api/v1/challenge/${challengeId}`);
+    const response = await api.get(`/api/v1/challenges/${challengeId}`);
     return response.data;
   } catch (e) {
     console.log(e);

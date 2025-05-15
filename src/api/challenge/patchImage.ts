@@ -4,7 +4,7 @@ import api from "..";
 export const patchImage = async (challengeId: number, formData: FormData) => {
   try {
     const response = await api.patch(
-      `/api/v1/challenge/${challengeId}/image`,
+      `/api/v1/challenges/${challengeId}/image`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
