@@ -6,7 +6,7 @@ export const getCurrentList = async (): Promise<
   TCollectionListRes | undefined
 > => {
   try {
-    const response = await api.get(`/api/v1/collection/current`);
+    const response = await api.get(`/api/v1/collections/current`);
     return response.data;
   } catch (e) {
     console.log(e);
