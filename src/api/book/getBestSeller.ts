@@ -8,7 +8,7 @@ export const getBestSeller = async ({
   size = 12,
 }: RequestBestSeller): Promise<ResponseBookSearchResult | undefined> => {
   try {
-    const response = await api.get(`/api/v1/book/best-seller`, {
+    const response = await api.get(`/api/v1/books/best-sellers`, {
       params: {
         category,
         size,

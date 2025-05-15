@@ -7,7 +7,7 @@ export const postTimerEnd = async (
   time: number
 ) => {
   try {
-    const response = await api.post(`/api/v1/book/${bookId}/timer/${timerId}`, {
+    const response = await api.post(`/api/v1/timers/${timerId}`, {
       time: time,
     });
     return response.data;
