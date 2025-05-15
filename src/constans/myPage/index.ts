@@ -61,4 +61,5 @@ export const PageLists = [
   "Note",
   "AllNote",
   "Write",
+  "MyCollectionDetailPage",
 ];
