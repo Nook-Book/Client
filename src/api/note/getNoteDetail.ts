@@ -6,7 +6,7 @@ export const getNoteDetail = async (
   noteId: number
 ): Promise<TNoteDetailRes | undefined> => {
   try {
-    const response = await api.get(`/api/v1/note/${noteId}`);
+    const response = await api.get(`/api/v1/notes/${noteId}`);
     return response.data;
   } catch (e) {
     console.log(e);

@@ -4,7 +4,7 @@ import { TSaveNoteReq } from "../../types/note";
 //독서 노트 저장
 export const postNote = async (note: TSaveNoteReq) => {
   try {
-    const response = await api.post(`/api/v1/note`, note);
+    const response = await api.post(`/api/v1/books/${note.bookId}/notes`);
     return response.data;
   } catch (e) {
     console.log(e);

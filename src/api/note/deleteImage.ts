@@ -4,7 +4,7 @@ import api from "..";
 export const deleteImage = async (imageUrl: string) => {
   try {
     const response = await api.delete(
-      `/api/v1/note/image?imageUrl=${imageUrl}`
+      `/api/v1/notes/image?imageUrl=${imageUrl}`
     );
     return response.data;
   } catch (e) {
