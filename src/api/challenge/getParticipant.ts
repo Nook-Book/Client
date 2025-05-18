@@ -7,7 +7,7 @@ export const getParticipant = async (
 ): Promise<TParticipantRes | undefined> => {
   try {
     const response = await api.get(
-      `/api/v1/challenge/${challengeId}/participant`
+      `/api/v1/challenges/${challengeId}/participants`
     );
     return response.data;
   } catch (e) {

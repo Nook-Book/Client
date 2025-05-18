@@ -8,7 +8,7 @@ export const getCalendar = async (
 ): Promise<TCalendarRes[] | undefined> => {
   try {
     const response = await api.get(
-      `/api/v1/challenge/${participantId}/calendar/${date}`
+      `/api/v1/challenges/participants/${participantId}/calendar/${date}`
     );
     return response.data;
   } catch (e) {

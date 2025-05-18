@@ -4,7 +4,7 @@ import api from "..";
 export const postAddBook = async (collectionId: number, bookId: number) => {
   try {
     const response = await api.post(
-      `/api/v1/collection/${collectionId}/${bookId}`
+      `/api/v1/collections/${collectionId}/books/${bookId}`
     );
     return response.data;
   } catch (e) {

@@ -6,7 +6,7 @@ export const getInviteList = async (
   challengeId: number
 ): Promise<TInviteRes | undefined> => {
   try {
-    const response = await api.get(`/api/v1/challenge/${challengeId}/invite`);
+    const response = await api.get(`/api/v1/challenges/${challengeId}/friends`);
     return response.data;
   } catch (e) {
     console.log(e);

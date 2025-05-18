@@ -7,7 +7,7 @@ export const deleteParticipant = async (
 ) => {
   try {
     const response = await api.delete(
-      `/api/v1/challenge/${challengeId}/participant/${participantId}`
+      `/api/v1/challenges/${challengeId}/participants/${participantId}`
     );
     return response.data;
   } catch (e) {

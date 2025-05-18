@@ -6,7 +6,7 @@ export const getBookDetail = async (
   isbn: number
 ): Promise<TBookDetailRes | undefined> => {
   try {
-    const response = await api.get(`/api/v1/book?isbn=${isbn}`);
+    const response = await api.get(`/api/v1/books?isbn=${isbn}`);
     return response.data;
   } catch (e) {
     console.log(e);

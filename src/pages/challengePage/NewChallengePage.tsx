@@ -1,3 +1,4 @@
+import * as FileSystem from "expo-file-system";
 import React, { useState } from "react";
 import {
   Image,
@@ -9,6 +10,7 @@ import {
 } from "react-native";
 import { patchEditChallenge } from "../../api/challenge/patchEditChallenge";
 import { patchImage } from "../../api/challenge/patchImage";
+import { postParticipant } from "../../api/challenge/postParticipant";
 import CheckBoxCheckIcon from "../../assets/images/challange/CheckBoxCheck.svg";
 import CheckBoxDefaultIcon from "../../assets/images/challange/CheckBoxDefault.svg";
 import BottomOneButton from "../../components/bottomSheet/BottomOneButton";
@@ -25,8 +27,6 @@ import {
   formatDateToString,
   getDayOfWeek,
 } from "../../utils/calendarUtils";
-import { postParticipant } from "../../api/challenge/postParticipant";
-import * as FileSystem from "expo-file-system";
 import { storage } from "../../utils/storage";
 
 export default function NewChallengePage({
@@ -220,7 +220,7 @@ export default function NewChallengePage({
         const token = await storage.getAccessToken();
 
         const response = await fetch(
-          "https://nookbook.p-e.kr/api/v1/challenge",
+          "https://nookbook.p-e.kr/api/v1/challenges/new",
           {
             method: "POST",
             body: formData,

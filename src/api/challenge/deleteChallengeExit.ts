@@ -3,7 +3,7 @@ import api from "..";
 //챌린지 나가기
 export const deleteChallengeExit = async (challengeId: number) => {
   try {
-    const response = await api.delete(`/api/v1/challenge/exit/${challengeId}`);
+    const response = await api.delete(`/api/v1/challenges/${challengeId}/exit`);
     return response.data;
   } catch (e) {
     console.log(e);

@@ -11,7 +11,7 @@ export const patchBookDetailStatus = async (
   | undefined
 > => {
   try {
-    const response = await api.patch(`/api/v1/book/${bookId}`);
+    const response = await api.patch(`/api/v1/books/${bookId}/status`);
     return response.data;
   } catch (e) {
     console.log(e);

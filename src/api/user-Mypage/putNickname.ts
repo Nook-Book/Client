@@ -4,7 +4,7 @@ import api from "..";
 export const putNickname = async (
   nickname: string
 ): Promise<{ check: boolean } | undefined> => {
-  const response = await api.put(`/api/v1/my-page/nickname`, {
+  const response = await api.patch(`/api/v1/my-page/nickname`, {
     nickname: nickname,
   });
   if (response.status === 400) {

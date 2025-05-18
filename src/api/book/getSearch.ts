@@ -6,7 +6,7 @@ export const getSearch = async (
   keyword: string
 ): Promise<ResponseBookSearchResult | undefined> => {
   try {
-    const response = await api.get(`api/v1/book/search?keyword=${keyword}`);
+    const response = await api.get(`api/v1/books/search?keyword=${keyword}`);
     return response.data;
   } catch (e) {
     console.log(e);
