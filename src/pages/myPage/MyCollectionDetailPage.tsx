@@ -38,6 +38,14 @@ const MyCollectionDetailPage = ({
 
   const handleComplete = () => {};
 
+  const handleSelectBook = (book: MyCollectionBookDetail) => {
+    if (selectedBooks.includes(book)) {
+      setSelectedBooks(selectedBooks.filter((b) => b !== book));
+    } else {
+      setSelectedBooks([...selectedBooks, book]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {isEditMode ? (
@@ -71,7 +79,12 @@ const MyCollectionDetailPage = ({
         <FlatList
           data={collectionDetail?.information.collectionBooksListDetailRes}
           renderItem={({ item }) => (
-            <MyCollectionDetailItem item={item} isEditMode={isEditMode} />
+            <MyCollectionDetailItem
+              item={item}
+              isEditMode={isEditMode}
+              isSelected={selectedBooks.includes(item)}
+              onSelectBook={handleSelectBook}
+            />
           )}
           keyExtractor={(item) => item.bookId.toString()}
           numColumns={3}
