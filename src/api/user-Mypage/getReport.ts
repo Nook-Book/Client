@@ -6,7 +6,7 @@ export const getReport = async (): Promise<ResponseReport | undefined> => {
   const { year } = useYear();
 
   try {
-    const response = await api.get(`/api/v1/my-page/report`, {
+    const response = await api.get(`/api/v1/my-page/reports`, {
       params: {
         year,
       },

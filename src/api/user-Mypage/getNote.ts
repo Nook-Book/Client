@@ -6,7 +6,7 @@ export const getNote = async (
   keyword: string
 ): Promise<MyNoteResponse | undefined> => {
   try {
-    const response = await api.get(`/api/v1/my-page/note`, {
+    const response = await api.get(`/api/v1/my-page/books`, {
       params: {
         keyword,
       },
