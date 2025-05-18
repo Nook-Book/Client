@@ -4,7 +4,7 @@ import { ExistsResponse } from "../../types/auth/auth";
 // 기존 사용자 여부 조회
 export const getRegistered = async (): Promise<ExistsResponse | undefined> => {
   try {
-    const response = await api.get(`/api/v1/user/exists`);
+    const response = await api.get(`/api/v1/users/exists`);
     return response.data;
   } catch (e) {
     console.log("API 오류:", e);
