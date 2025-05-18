@@ -7,7 +7,7 @@ import {
 // 친구 조회
 export const getFriend = async (): Promise<ResponseFriend | undefined> => {
   try {
-    const response = await api.get(`/api/v1/my-page/friend`);
+    const response = await api.get(`/api/v1/friends`);
     return response.data;
   } catch (e) {
     console.log(e);
@@ -20,7 +20,7 @@ export const getPendingFriend = async (): Promise<
   FriendRequestResponse | undefined
 > => {
   try {
-    const response = await api.get(`/api/v1/my-page/friend/pending`);
+    const response = await api.get(`/api/v1/friends/requests`);
     return response.data;
   } catch (e) {
     console.log(e);

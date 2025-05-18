@@ -9,7 +9,7 @@ import { Color, Font } from "../../styles/Theme";
 import { getCalendar } from "../../api/challenge/getCalendar";
 import { TCalendarRes } from "../../types/challenge";
 import { useFocusEffect } from "@react-navigation/native";
-import { getMyCalendar } from "../../api/challenge/getMyCalendar";
+import { getMyCalendar } from "../../api/userBook/getMyCalendar";
 
 LocaleConfig.locales["ko"] = {
   monthNames: [

@@ -7,7 +7,7 @@ import ParticipantItem from "../challenge/ParticipantItem";
 import BottomOneButton from "../bottomSheet/BottomOneButton";
 import { TInviteContentRes } from "../../types/challenge";
 import { getInviteList } from "../../api/challenge/getInviteList";
-import { getFriendList } from "../../api/challenge/getFriendList";
+import { getFriendList } from "../../api/friend/getFriendList";
 
 export default function AddParticipantModal({
   visible,
