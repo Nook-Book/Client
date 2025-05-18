@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import DeleteCollectionButtonIcon from "../../assets/images/icon/DeleteCollectionButtonIcon.svg";
+import MoveCollectionButtonIcon from "../../assets/images/icon/MoveCollectionButtonIcon.svg";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import EditHeader from "../../components/header/EditHeader";
 import MyCollectionDetailItem from "../../components/myPage/collection/MyCollectionDetailItem";
@@ -13,7 +15,6 @@ import { useGetCollectionDetail } from "../../hooks/mypage/useCollection";
 import { Color, Font } from "../../styles/Theme";
 import { MyCollectionBookDetail } from "../../types/mypage/collection";
 import { MyCollectionDetailRouteProp } from "../../types/navigation/navigation";
-
 const MyCollectionDetailPage = ({
   route,
 }: {
@@ -69,13 +70,27 @@ const MyCollectionDetailPage = ({
       <View style={styles.collectionDetailContainer}>
         <FlatList
           data={collectionDetail?.information.collectionBooksListDetailRes}
-          renderItem={({ item }) => <MyCollectionDetailItem item={item} />}
+          renderItem={({ item }) => (
+            <MyCollectionDetailItem item={item} isEditMode={isEditMode} />
+          )}
           keyExtractor={(item) => item.bookId.toString()}
           numColumns={3}
           columnWrapperStyle={styles.row}
           contentContainerStyle={styles.list}
         />
       </View>
+      {isEditMode && (
+        <View style={styles.editModeContainer}>
+          <TouchableOpacity style={styles.moveCollectionButton}>
+            <MoveCollectionButtonIcon />
+            <Text style={styles.moveCollectionButtonText}>컬렉션 이동</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.deleteCollectionButton}>
+            <DeleteCollectionButtonIcon />
+            <Text style={styles.deleteCollectionButtonText}>삭제</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -123,6 +138,35 @@ const styles = StyleSheet.create({
   row: {
     marginBottom: 12,
     gap: 18,
+  },
+  editModeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: Color.Contents.Click,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  moveCollectionButton: {
+    backgroundColor: Color.Contents.Click,
+    padding: 16,
+    borderRadius: 16,
+    width: "50%",
+    alignItems: "center",
+  },
+  deleteCollectionButton: {
+    backgroundColor: Color.Contents.Click,
+    padding: 16,
+    borderRadius: 16,
+    width: "50%",
+    alignItems: "center",
+  },
+  moveCollectionButtonText: {
+    ...Font.Paragraph.Small,
+    color: "white",
+  },
+  deleteCollectionButtonText: {
+    ...Font.Paragraph.Small,
+    color: "white",
   },
 });
 

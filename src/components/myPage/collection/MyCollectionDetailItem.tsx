@@ -1,7 +1,13 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Color, Font } from "../../../styles/Theme";
 import { MyCollectionBookDetail } from "../../../types/mypage/collection";
-const MyCollectionDetailItem = ({ item }: { item: MyCollectionBookDetail }) => {
+const MyCollectionDetailItem = ({
+  item,
+  isEditMode,
+}: {
+  item: MyCollectionBookDetail;
+  isEditMode: boolean;
+}) => {
   const shortedTitle =
     item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
   return (
