@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -7,9 +7,11 @@ import {
   View,
 } from "react-native";
 import BackTextHeader from "../../components/header/BackTextHeader";
+import EditHeader from "../../components/header/EditHeader";
 import MyCollectionDetailItem from "../../components/myPage/collection/MyCollectionDetailItem";
 import { useGetCollectionDetail } from "../../hooks/mypage/useCollection";
 import { Color, Font } from "../../styles/Theme";
+import { MyCollectionBookDetail } from "../../types/mypage/collection";
 import { MyCollectionDetailRouteProp } from "../../types/navigation/navigation";
 
 const MyCollectionDetailPage = ({
@@ -17,20 +19,52 @@ const MyCollectionDetailPage = ({
 }: {
   route: MyCollectionDetailRouteProp;
 }) => {
+  // 편집 모드 여부
+  const [isEditMode, setIsEditMode] = useState(false);
+  // 선택된 도서
+  const [selectedBooks, setSelectedBooks] = useState<MyCollectionBookDetail[]>(
+    []
+  );
+
   const { collectionId, collectionTitle } = route.params;
   const { data: collectionDetail } = useGetCollectionDetail(collectionId);
+  const collectionBookCount =
+    collectionDetail?.information.collectionBooksListDetailRes.length;
+
+  const handleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
+
+  const handleComplete = () => {};
 
   return (
     <View style={styles.container}>
-      <BackTextHeader title={collectionTitle} />
+      {isEditMode ? (
+        <EditHeader
+          text="컬렉션 편집"
+          isTextVisible={true}
+          onCancel={() => setIsEditMode(false)}
+          onComplete={handleComplete}
+        />
+      ) : (
+        <BackTextHeader title={collectionTitle} />
+      )}
       <View style={styles.headerContainer}>
         <View style={styles.bookCountContainer}>
-          <Text style={styles.headerText}>6</Text>
+          {isEditMode ? (
+            <Text style={styles.headerText}>
+              {selectedBooks.length}/{collectionBookCount}
+            </Text>
+          ) : (
+            <Text style={styles.headerText}>{collectionBookCount}</Text>
+          )}
           <Text style={styles.bookCountText}>권</Text>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.headerText}>편집</Text>
-        </TouchableOpacity>
+        {!isEditMode && (
+          <TouchableOpacity onPress={handleEditMode}>
+            <Text style={styles.headerText}>편집</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.collectionDetailContainer}>
         <FlatList
@@ -67,6 +101,9 @@ const styles = StyleSheet.create({
   headerText: {
     ...Font.Paragraph.SemiMedium,
     color: Color.Typo.Primary,
+  },
+  editActiveText: {
+    color: Color.Contents.Click,
   },
   bookCountText: {
     ...Font.Paragraph.SemiMedium,
