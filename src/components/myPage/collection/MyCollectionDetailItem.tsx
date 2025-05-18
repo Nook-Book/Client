@@ -1,17 +1,11 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Color, Font } from "../../../styles/Theme";
 import { MyCollectionBookDetail } from "../../../types/mypage/collection";
-const MyCollectionDetailItem = ({
-  item,
-  width,
-}: {
-  item: MyCollectionBookDetail;
-  width: number;
-}) => {
+const MyCollectionDetailItem = ({ item }: { item: MyCollectionBookDetail }) => {
   const shortedTitle =
     item.title.length > 10 ? item.title.slice(0, 10) + "..." : item.title;
   return (
-    <View style={[styles.container, { width }]}>
+    <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           key={item.bookId}
@@ -27,7 +21,8 @@ const MyCollectionDetailItem = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: 108,
+    height: 164,
   },
   imageContainer: {
     shadowColor: "#000",
@@ -42,7 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   collectionImage: {
-    width: 100,
+    width: 108,
     height: 164,
     borderRadius: 5,
   },

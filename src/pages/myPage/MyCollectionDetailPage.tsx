@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Dimensions,
   FlatList,
   StyleSheet,
   Text,
@@ -21,18 +20,6 @@ const MyCollectionDetailPage = ({
   const { collectionId, collectionTitle } = route.params;
   const { data: collectionDetail } = useGetCollectionDetail(collectionId);
 
-  // 화면 너비 가져오기
-  const { width } = Dimensions.get("window");
-
-  // 아이템 사이 간격
-  const gap = 12;
-
-  // 패딩 (좌우)
-  const padding = 16;
-
-  // 아이템 너비 계산 (화면 너비 - 좌우 패딩 - 아이템 사이 간격) / 3
-  const itemWidth = (width - padding * 2 - gap * 2) / 3;
-
   return (
     <View style={styles.container}>
       <BackTextHeader title={collectionTitle} />
@@ -48,9 +35,7 @@ const MyCollectionDetailPage = ({
       <View style={styles.collectionDetailContainer}>
         <FlatList
           data={collectionDetail?.information.collectionBooksListDetailRes}
-          renderItem={({ item }) => (
-            <MyCollectionDetailItem item={item} width={itemWidth} />
-          )}
+          renderItem={({ item }) => <MyCollectionDetailItem item={item} />}
           keyExtractor={(item) => item.bookId.toString()}
           numColumns={3}
           columnWrapperStyle={styles.row}
@@ -96,12 +81,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   list: {
-    paddingHorizontal: 16,
     paddingTop: 16,
   },
   row: {
-    justifyContent: "space-between",
     marginBottom: 12,
+    gap: 18,
   },
 });
 
