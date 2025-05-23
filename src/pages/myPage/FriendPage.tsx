@@ -15,7 +15,6 @@ import SendRequestFriend from "../../components/myPage/friendPage/SendRequestFri
 import {
   useGetFriend,
   useGetPendingFriend,
-  useGetSearchFriend,
 } from "../../hooks/mypage/useFriend";
 import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
@@ -31,10 +30,9 @@ const FriendPage = () => {
   const [modalText, setModalText] = useState<string>("");
   const [userList, setUserList] = useState<FriendRequest[]>([]);
 
-  const { data: friendData, refetch: refetchFriend } = useGetFriend();
+  const { data: friendData, refetch: refetchFriend } = useGetFriend(searchText);
   const { data: pendingFriendData, refetch: refetchPendingFriend } =
     useGetPendingFriend();
-  const { data: searchFriendData, refetch } = useGetSearchFriend(searchText);
 
   const FriendsSearchResultList = friendData.information.filter(
     (friend) => friend.nickname.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
@@ -60,7 +58,7 @@ const FriendPage = () => {
     if (searchText === "") {
       setUserList([]);
     }
-    refetch();
+    refetchFriend();
   }, [searchText]);
 
   return (
@@ -133,7 +131,7 @@ const FriendPage = () => {
           ) : (
             <>
               <SendRequestFriend
-                userList={searchFriendData.information.content}
+                userList={friendData.information}
                 isRequest={false}
                 refetch={refetchPendingFriend}
               />

@@ -3,12 +3,12 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { deleteFriend } from "../../api/user-Mypage/deleteFriend";
 import {
   getFriend,
   getPendingFriend,
   getSearchFriend,
 } from "../../api/friend/getFriend";
+import { deleteFriend } from "../../api/user-Mypage/deleteFriend";
 import { postPending } from "../../api/user-Mypage/postPending";
 import { putPending } from "../../api/user-Mypage/putPending";
 import {
@@ -18,10 +18,12 @@ import {
 } from "../../types/mypage/friend";
 
 // 친구 목록 조회
-export function useGetFriend(): UseSuspenseQueryResult<ResponseFriend, Error> {
+export function useGetFriend(
+  keyword: string
+): UseSuspenseQueryResult<ResponseFriend, Error> {
   return useSuspenseQuery({
     queryKey: ["GetFriend"],
-    queryFn: () => getFriend(),
+    queryFn: () => getFriend(keyword),
   });
 }
 
