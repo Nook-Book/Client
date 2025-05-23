@@ -63,6 +63,7 @@ const MyCollectionDetailPage = ({
         onSuccess: () => {
           setIsDeleteCollectionModalVisible(false);
           refetch();
+          setSelectedBooks([]);
         },
         onError: (error) => {
           console.log(error);
