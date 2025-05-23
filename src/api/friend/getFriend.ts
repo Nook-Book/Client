@@ -5,9 +5,15 @@ import {
 } from "../../types/mypage/friend";
 
 // 친구 조회
-export const getFriend = async (): Promise<ResponseFriend | undefined> => {
+export const getFriend = async (
+  keyword: string
+): Promise<ResponseFriend | undefined> => {
   try {
-    const response = await api.get(`/api/v1/friends`);
+    const response = await api.get(`/api/v1/friends`, {
+      params: {
+        keyword: keyword,
+      },
+    });
     return response.data;
   } catch (e) {
     console.log(e);
