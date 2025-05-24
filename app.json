@@ -16,7 +16,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.si14444.NookBook",
       "infoPlist": {
-        "UIBackgroundModes": ["remote-notification"],
+        "UIBackgroundModes": [
+          "remote-notification"
+        ],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -24,7 +26,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.si14444.NookBook"
     },
     "web": {
       "favicon": "./assets/favicon.png"
