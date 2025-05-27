@@ -2,9 +2,9 @@ import api from "..";
 import { TSaveNoteReq } from "../../types/note";
 
 //독서 노트 저장
-export const postNote = async (note: TSaveNoteReq) => {
+export const postNote = async (bookId: number, note: TSaveNoteReq) => {
   try {
-    const response = await api.post(`/api/v1/books/${note.bookId}/notes`);
+    const response = await api.post(`/api/v1/books/${bookId}/notes`, note);
     return response.data;
   } catch (e) {
     console.log(e);
