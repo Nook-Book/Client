@@ -7,7 +7,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getTimerList } from "../../api/book/getTimerList";
 import { TTimerListInformationRes } from "../../types/timer";
 import { postTimerStart } from "../../api/book/postTimerStart";
-import { postTimerEnd } from "../../api/book/postTimerEnd";
+import { patchTimerEnd } from "../../api/book/patchTimerEnd";
 
 const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
   const bookId = route?.params?.bookId;
@@ -74,7 +74,7 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
     if (isRunning) {
       if (!timerId) return;
 
-      const response = await postTimerEnd(bookId, timerId, time);
+      const response = await patchTimerEnd(timerId, time);
       if (response.check) {
         setIsRunning(false);
         setTime(0);
