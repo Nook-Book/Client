@@ -3,8 +3,9 @@ import {
   useSuspenseQuery,
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { deleteKeyword } from "../../api/book/deleteKeyword";
-import { getKeyword } from "../../api/book/getKeyword";
+import { deleteKeyword } from "../../api/keyword/deleteKeyword";
+
+import { getKeyword } from "../../api/keyword/getKeyword";
 import { ResponseResentSearch } from "../../types/search/resentSearch";
 
 //최근 검색어 조회
