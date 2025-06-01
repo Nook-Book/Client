@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import {
@@ -16,34 +15,38 @@ import {
   useGetFriend,
   useGetPendingFriend,
 } from "../../hooks/mypage/useFriend";
+import { useGetUser } from "../../hooks/user/useUser";
 import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
-import { FriendParamList } from "../../types/friend";
-import { FriendRequest } from "../../types/mypage/friend";
+import { UserContent } from "../../types/user/user";
 
-const FriendPage = () => {
+const FriendPage = (navigation: any) => {
   const [friendNav, setFriendNav] = useState<"친구 목록" | "친구 추가">(
     "친구 목록"
   );
   const [searchText, setSearchText] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
-  const [userList, setUserList] = useState<FriendRequest[]>([]);
+  const [userList, setUserList] = useState<UserContent[]>([]);
 
   const { data: friendData, refetch: refetchFriend } = useGetFriend(searchText);
+  const { data: userData, refetch: refetchUser } = useGetUser(searchText);
   const { data: pendingFriendData, refetch: refetchPendingFriend } =
     useGetPendingFriend();
 
-  const FriendsSearchResultList = friendData.information.filter(
-    (friend) => friend.nickname.toLowerCase().includes(searchText.toLowerCase()) // 대소문자 구분 없이 검색
-  );
-
-  const navigation = useNavigation<FriendParamList>();
-
-  const handleSearchSubmit = () => {
-    // setUserList(FriendDummyList.length > 0 ? FriendDummyList : []);
-    // navigation.navigate("FriendSearchResultPage", { query: searchText });
+  const refetchData = () => {
+    refetchFriend();
+    refetchUser();
+    refetchPendingFriend();
   };
+
+  useEffect(() => {
+    if (searchText === "") {
+      setUserList([]);
+      return;
+    }
+    refetchData();
+  }, [searchText]);
 
   const handleSetFriendNav = (state: "친구 목록" | "친구 추가") => {
     setFriendNav(state);
@@ -58,7 +61,6 @@ const FriendPage = () => {
     if (searchText === "") {
       setUserList([]);
     }
-    refetchFriend();
   }, [searchText]);
 
   return (
@@ -81,13 +83,13 @@ const FriendPage = () => {
         value={searchText}
         onChangeText={setSearchText}
         placeholderTextColor={Color.Typo.Secondary}
-        onSubmitEditing={handleSearchSubmit}
         autoCapitalize="none"
       />
+      {/* 친구 목록 */}
       {friendNav === "친구 목록" ? (
         <ScrollView>
           <GestureHandlerRootView style={styles.friendContainer}>
-            {FriendsSearchResultList.map((friend, index) => (
+            {friendData.information.map((friend, index) => (
               <View key={index}>
                 <Swipeable
                   friction={1}
@@ -111,6 +113,7 @@ const FriendPage = () => {
           </GestureHandlerRootView>
         </ScrollView>
       ) : (
+        // 친구 추가
         <View style={styles.addFriendContainer}>
           {searchText === "" ? (
             <>
@@ -131,7 +134,7 @@ const FriendPage = () => {
           ) : (
             <>
               <SendRequestFriend
-                userList={friendData.information}
+                userList={userData.information.content}
                 isRequest={false}
                 refetch={refetchPendingFriend}
               />
