@@ -3,6 +3,7 @@ import { Color, Font } from "../../Theme";
 
 export const styles = StyleSheet.create({
   modal: {
+    flex: 1,
     justifyContent: "flex-end",
     margin: 0,
   },
