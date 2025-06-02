@@ -1,4 +1,3 @@
-import { Asset } from "expo-asset";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect, useState } from "react";
 import {
@@ -10,7 +9,10 @@ import {
   View,
 } from "react-native";
 import Cancel from "../../../assets/images/icon/Cancel.svg";
-import { usePutProfileImage } from "../../../hooks/mypage/useMyPage";
+import {
+  usePatchDefaultImage,
+  usePutProfileImage,
+} from "../../../hooks/mypage/useMyPage";
 import { styles } from "../../../styles/myPage/editProfilePage/EditProfileModalStyle";
 import { Color } from "../../../styles/Theme";
 
@@ -27,7 +29,7 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
 }) => {
   const [image, setImage] = useState<any>(null);
   const { mutate: changeProfileImage } = usePutProfileImage();
-
+  const { mutate: patchDefaultImage } = usePatchDefaultImage();
   useEffect(() => {
     if (image) {
       handleChangeProfileImage();
@@ -60,10 +62,22 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
   };
 
   const handleCamera = async () => {
-    const result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
+    let { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission not granted",
+        "Please grant permission to use this feature",
+        [
+          { text: "Open settings", onPress: () => Linking.openSettings() },
+          { text: "Cancel" },
+        ]
+      );
+      return;
+    }
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ["images", "livePhotos", "videos"],
+      allowsMultipleSelection: true,
+      selectionLimit: 5,
     });
 
     if (!result.canceled) {
@@ -91,25 +105,15 @@ const ChangeProfileModal: React.FC<ChangeProfileModalProps> = ({
 
   // 기본 이미지 사용
   const handleDefaultImage = async () => {
-    const fileUri = Asset.fromModule(
-      require("../../../assets/images/profile/ProfileImage.svg")
-    ).uri;
+    console.log("patchDefaultImage");
 
-    // fetch를 이용하여 Blob 변환
-    const response = await fetch(fileUri);
-    const blob = await response.blob();
-
-    // Blob을 사용하여 생성
-    const file = new File([blob], "ProfileImage.svg", {
-      type: "image/svg+xml",
-    });
-
-    changeProfileImage(file, {
+    patchDefaultImage(undefined, {
       onSuccess: () => {
+        refetch();
         onClose();
       },
       onError: () => {
-        Alert.alert("Error");
+        Alert.alert("Error.");
       },
     });
   };
