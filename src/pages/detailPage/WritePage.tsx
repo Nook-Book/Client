@@ -36,7 +36,7 @@ import EditModal from "../../components/modal/EditModal";
 import { postNote } from "../../api/note/postNote";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { deleteImage } from "../../api/note/deleteImage";
-import { putEditNote } from "../../api/note/putEditNote";
+import { patchEditNote } from "../../api/note/patchEditNote";
 
 type SelectedMenuType = "" | "Plus" | "Image" | "TextShape" | "Reset";
 
@@ -368,8 +368,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     try {
       await deleteUnusedImages(markdownText);
 
-      const response = await postNote({
-        bookId: bookId,
+      const response = await postNote(bookId, {
         title: titleText,
         content: markdownText,
         locked: isLock,
@@ -387,7 +386,7 @@ const WritePage = ({ navigation, route }: { navigation: any; route: any }) => {
     try {
       await deleteUnusedImages(markdownText);
 
-      const response = await putEditNote(noteId, {
+      const response = await patchEditNote(noteId, {
         title: titleText,
         content: markdownText,
         locked: isLock,

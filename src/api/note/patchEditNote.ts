@@ -1,8 +1,8 @@
 import api from "..";
-import { TEditNoteReq } from "../../types/note";
+import { TSaveNoteReq } from "../../types/note";
 
 //독서 노트 수정
-export const putEditNote = async (noteId: number, note: TEditNoteReq) => {
+export const patchEditNote = async (noteId: number, note: TSaveNoteReq) => {
   try {
     const response = await api.patch(`/api/v1/notes/${noteId}`, note);
     return response.data;

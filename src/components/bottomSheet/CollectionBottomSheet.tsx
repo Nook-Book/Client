@@ -127,7 +127,11 @@ const CollectionBottomSheet = ({
                 key={index}
                 Icon={
                   <Image
-                    source={{ uri: data.collectionBooksCoverList[0] }}
+                    source={
+                      data.collectionBooksCoverList[0]
+                        ? { uri: data.collectionBooksCoverList[0] }
+                        : require("../../assets/images/collection/CollectionDefault.png")
+                    }
                     style={styles.thumbnailImage}
                   />
                 }
