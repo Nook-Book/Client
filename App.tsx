@@ -13,6 +13,7 @@ export default function App() {
     SCDream6: require("./src/assets/fonts/SCDream6.otf"),
     SCDream5: require("./src/assets/fonts/SCDream5.otf"),
     SCDream4: require("./src/assets/fonts/SCDream4.otf"),
+    Oblique: require("./src/assets/fonts/Oblique.otf"),
   });
   if (!fontsLoaded) return null;
 

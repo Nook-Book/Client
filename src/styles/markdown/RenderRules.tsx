@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
 import { markdownStyle } from "./MarkdownStyle";
 import FitImage from "react-native-fit-image";
+import { JSX } from "react";
 
 export const colorMap: { [key: string]: string } = {
   D: "#838383",
