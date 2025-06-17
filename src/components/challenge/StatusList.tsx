@@ -1,7 +1,10 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, useWindowDimensions } from "react-native";
 import ChallangeCardOffIcon from "../../assets/images/challange/ChallangeCardOff.svg";
 import ChallangeCardOnIcon from "../../assets/images/challange/ChallangeCardOn.svg";
-import { styles } from "../../styles/challenge/ChallengeDetailPageStyle";
+import {
+  getStyles,
+  styles,
+} from "../../styles/challenge/ChallengeDetailPageStyle";
 import { Color } from "../../styles/Theme";
 import { TChallengeDetailParticipantsRes } from "../../types/challenge";
 
@@ -49,6 +52,10 @@ const StatusList = ({
   setClickStatus,
   setIsModalVisible,
 }: StatusListProps) => {
+  const { width: windowWidth } = useWindowDimensions();
+
+  const styles = getStyles(windowWidth);
+
   return (
     <View style={styles.statusWrap}>
       <Text style={styles.statusText}>현황</Text>
