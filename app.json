@@ -16,9 +16,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.si14444.NookBook",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "remote-notification"
-        ],
+        "UIBackgroundModes": ["remote-notification"],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -38,9 +36,7 @@
         "projectId": "ac04f97a-9a39-4541-b1d6-e5b5c90a3073"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/ac04f97a-9a39-4541-b1d6-e5b5c90a3073"
     },
@@ -60,7 +56,29 @@
           "cameraPermission": "The app needs access to your camera to let you share them with your friends."
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "extraMavenRepos": [
+              "https://devrepo.kakao.com/nexus/content/groups/public/"
+            ]
+          }
+        }
+      ],
+      [
+        "@react-native-kakao/core",
+        {
+          "nativeAppKey": "e35be76b8da899ecab850a40f979aa88",
+          "android": {
+            "authCodeHandlerActivity": true
+          },
+          "ios": {
+            "handleKakaoOpenUrl": true
+          }
+        }
+      ]
     ]
   }
 }
