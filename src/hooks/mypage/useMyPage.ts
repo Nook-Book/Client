@@ -4,6 +4,7 @@ import {
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import { getMyPage } from "../../api/user-Mypage/getMyPage";
+import patchDefaultImage from "../../api/user-Mypage/patchDefaultImage";
 import { putId } from "../../api/user-Mypage/putId";
 import { putProfileImage } from "../../api/user-Mypage/putImage";
 import { putNickname } from "../../api/user-Mypage/putNickname";
@@ -35,5 +36,12 @@ export const usePutId = () => {
 export const usePutProfileImage = () => {
   return useMutation({
     mutationFn: putProfileImage,
+  });
+};
+
+// 기본 프로필 이미지 변경
+export const usePatchDefaultImage = () => {
+  return useMutation({
+    mutationFn: patchDefaultImage,
   });
 };

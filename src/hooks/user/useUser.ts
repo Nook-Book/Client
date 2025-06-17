@@ -1,4 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import {
+  useMutation,
+  useSuspenseQuery,
+  UseSuspenseQueryResult,
+} from "@tanstack/react-query";
+import { getUser } from "../../api/user/getUser";
 import { postUserInfo } from "../../api/user/info";
 import { postUserNicknameCheck } from "../../api/user/nickname";
 import { postUserIdCheck } from "../../api/user/nickname_id";
@@ -8,6 +13,7 @@ import {
   UserNicknameRequest,
   UserRequest,
   UserResponse,
+  UserSearchResponse,
 } from "../../types/user/user";
 
 export function useUserIdCheck() {
@@ -25,5 +31,14 @@ export function useUserNicknameCheck() {
 export function useUserInfo() {
   return useMutation<UserInfoResponse, Error, UserInfoRequest>({
     mutationFn: (userRequest) => postUserInfo(userRequest),
+  });
+}
+
+export function useGetUser(
+  keyword: string
+): UseSuspenseQueryResult<UserSearchResponse, Error> {
+  return useSuspenseQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => getUser(keyword),
   });
 }

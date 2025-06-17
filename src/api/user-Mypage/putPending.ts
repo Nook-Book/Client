@@ -5,9 +5,9 @@ export const putPending = async (
   friendId: string,
   isAccept: boolean
 ): Promise<{ check: boolean } | undefined> => {
-  const response = await api.put(
-    `/api/v1/my-page/friend/pending/${friendId}?isAccept=${isAccept}`
-  );
+  const response = await api.patch(`/api/v1/friends/requests/${friendId}`, {
+    accept: isAccept,
+  });
   if (response.status === 400) {
     console.log("test");
     throw new Error("닉네임 10자 이내");

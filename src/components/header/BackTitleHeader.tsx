@@ -1,5 +1,5 @@
 import React from "react";
-import { View, SafeAreaView, Text, Pressable } from "react-native";
+import { Pressable, SafeAreaView, Text, View } from "react-native";
 import BackIcon from "../../assets/images/icon/Back.svg";
 import { styles } from "../../styles/header/HeaderStyle";
 import { Color } from "../../styles/Theme";

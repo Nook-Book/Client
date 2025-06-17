@@ -8,8 +8,8 @@ import {
   getPendingFriend,
   getSearchFriend,
 } from "../../api/friend/getFriend";
+import { postPending } from "../../api/friend/postPending";
 import { deleteFriend } from "../../api/user-Mypage/deleteFriend";
-import { postPending } from "../../api/user-Mypage/postPending";
 import { putPending } from "../../api/user-Mypage/putPending";
 import {
   FriendRequestResponse,

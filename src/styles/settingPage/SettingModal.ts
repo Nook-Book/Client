@@ -5,12 +5,12 @@ export const styles = StyleSheet.create({
   container: {
     position: "absolute",
     width: 340,
-    height: 170,
     left: "50%",
     top: "50%",
     display: "flex",
     alignItems: "center",
     paddingTop: 24,
+    paddingBottom: 24,
     zIndex: 2,
     backgroundColor: "#ffffff",
     transform: [{ translateX: -170 }, { translateY: -85 }],
