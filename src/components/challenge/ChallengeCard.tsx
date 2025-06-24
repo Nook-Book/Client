@@ -42,19 +42,21 @@ const ChallengeCard = ({
                   style={styles.profileImage}
                 />
                 <Text style={styles.profileText}>{clickStatus.nickname}</Text>
-                <Pressable
-                  style={[
-                    styles.profileBtn,
-                    {
-                      backgroundColor: toastVisible
-                        ? Color.Field[15]
-                        : Color.Secondary,
-                    },
-                  ]}
-                  onPress={handlePress}
-                >
-                  <Text style={styles.profileBtnText}>깨우기</Text>
-                </Pressable>
+                {!clickStatus.me && (
+                  <Pressable
+                    style={[
+                      styles.profileBtn,
+                      {
+                        backgroundColor: toastVisible
+                          ? Color.Field[15]
+                          : Color.Secondary,
+                      },
+                    ]}
+                    onPress={handlePress}
+                  >
+                    <Text style={styles.profileBtnText}>깨우기</Text>
+                  </Pressable>
+                )}
               </View>
               <Text
                 style={[

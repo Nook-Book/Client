@@ -71,6 +71,7 @@ export type TChallengeDetailParticipantsRes = {
   readingBookImage: string;
   dailyReadingTime: string;
   reading: boolean;
+  me: boolean;
 };
 
 export type TEditChallengeReq = {
