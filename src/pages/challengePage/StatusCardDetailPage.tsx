@@ -141,6 +141,48 @@ export default function StatusCardDetailPage({
     return `${hour}시 ${minute}분`;
   };
 
+  const CustomDayComponent = ({ date }: { date?: DateData }) => {
+    if (!date) return null;
+
+    const isSameMonth =
+      date.month === currentMonth.month && date.year === currentMonth.year;
+    const textColor = isSameMonth ? Color.Typo.Primary : "transparent";
+    const isMarked =
+      date.month === selectedDate.month &&
+      date.year === selectedDate.year &&
+      date.day === selectedDate.day;
+
+    const dayDate = new Date(date.year, date.month - 1, date.day);
+
+    return (
+      <Pressable
+        style={{
+          width: 44,
+          height: 44,
+          marginBottom: -10,
+          backgroundColor:
+            isSameMonth && isMarked ? Color.Click[300] : "transparent",
+          borderRadius: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onPress={() => {
+          setSelectedDate({
+            year: date.year,
+            month: date.month,
+            day: date.day,
+            week: dayDate.getDay(),
+          });
+        }}
+        disabled={!isSameMonth}
+      >
+        <Text style={{ ...Font.Label.SemiMedium, color: textColor }}>
+          {date.day}
+        </Text>
+      </Pressable>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <BackTitleHeader
@@ -201,60 +243,7 @@ export default function StatusCardDetailPage({
                   );
                 }
               }} //화살표 커스텀 렌더링
-              dayComponent={({ date }: { date: DateData }) => {
-                //선택된 달에 관한 텍스트가 아니면 투명하게 처리
-                const isSameMonth =
-                  date.month === currentMonth.month &&
-                  date.year === currentMonth.year;
-
-                const textColor = isSameMonth
-                  ? Color.Typo.Primary
-                  : "transparent";
-
-                //선택한 날짜 비교
-                const isMarked =
-                  date.month === selectedDate.month &&
-                  date.year === selectedDate.year &&
-                  date.day === selectedDate.day;
-
-                //요일 게산
-                const dayDate = new Date(date.year, date.month - 1, date.day);
-
-                return (
-                  <Pressable
-                    style={{
-                      width: 44,
-                      height: 44,
-                      marginBottom: -10,
-                      backgroundColor:
-                        isSameMonth && isMarked
-                          ? Color.Click[300]
-                          : "transparent",
-                      borderRadius: 1,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    onPress={() => {
-                      setSelectedDate({
-                        year: date.year,
-                        month: date.month,
-                        day: date.day,
-                        week: dayDate.getDay(),
-                      });
-                    }}
-                    disabled={!isSameMonth}
-                  >
-                    <Text
-                      style={{
-                        ...Font.Label.SemiMedium,
-                        color: textColor,
-                      }}
-                    >
-                      {date.day}
-                    </Text>
-                  </Pressable>
-                );
-              }} //날짜 셀 커스텀 렌더링
+              dayComponent={CustomDayComponent} //날짜 셀 커스텀 렌더링
             />
           </View>
           {selectedDetail && (

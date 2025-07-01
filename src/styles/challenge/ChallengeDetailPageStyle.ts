@@ -50,30 +50,21 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     height: 35,
   },
-  rightWrap: {
-    width: 230,
-  },
   leftText: {
-    ...Font.Label.Small,
+    ...Font.Label.SemiSmall,
     color: Color.Typo.Secondary,
     width: 50,
   },
-  profileWrap: {
-    flexDirection: "row",
-    width: 230,
-    columnGap: 15,
-    flexWrap: "wrap",
-  },
   lengthWrap: {
     position: "absolute",
-    right: 20,
+    right: 16,
     justifyContent: "center",
     height: 35,
   },
   lengthText: {
-    ...Font.Label.Small,
+    ...Font.Label.SemiSmall,
     color: Color.Typo.Primary,
-    padding: 10,
+    padding: 4,
   },
   profileItem: {
     flexDirection: "row",
@@ -87,38 +78,26 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "#C4C4C4",
   },
+  profileItemText: {
+    ...Font.Label.SemiSmall,
+    color: Color.Typo.Primary,
+  },
   itemText: {
-    ...Font.Label.Small,
+    ...Font.Label.SemiMedium,
     color: Color.Typo.Primary,
   },
   itemLightText: {
-    ...Font.Paragraph.Small,
+    ...Font.Paragraph.SemiSmall,
     color: Color.Typo.Primary,
   },
   itemBoldText: {
-    ...Font.Heading.Small,
+    ...Font.Label.SemiSmall,
     color: Color.Typo.Primary,
-  },
-  statusWrap: {
-    borderColor: Color.Border.Stroke,
-    borderTopWidth: 0.8,
-    paddingBottom: 100,
-  },
-  statusText: {
-    ...Font.Label.Medium,
-    color: Color.Typo.Primary,
-    padding: 16,
-  },
-  statusItemWrap: {
-    padding: 16,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 23,
   },
   statusCardWrap: {
     justifyContent: "center",
     alignItems: "center",
-    width: 72,
+    width: 74,
     height: 100,
   },
   statusCardText: {
@@ -126,3 +105,30 @@ export const styles = StyleSheet.create({
     paddingVertical: 2,
   },
 });
+
+export const getStyles = (windowWidth: number) => {
+  return StyleSheet.create({
+    profileWrap: {
+      flexDirection: "row",
+      width: windowWidth - 160,
+      columnGap: 15,
+      flexWrap: "wrap",
+    },
+    statusWrap: {
+      borderColor: Color.Border.Stroke,
+      borderTopWidth: 0.8,
+      paddingBottom: 100,
+    },
+    statusText: {
+      ...Font.Label.Medium,
+      color: Color.Typo.Primary,
+      padding: 16,
+    },
+    statusItemWrap: {
+      padding: 16,
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: (windowWidth - 328) / 3,
+    },
+  });
+};

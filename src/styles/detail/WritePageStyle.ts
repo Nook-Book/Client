@@ -37,6 +37,8 @@ export const styles = StyleSheet.create({
   },
   contentText: {
     ...Font.Paragraph.SemiMedium,
+    height: 2000,
+    marginBottom: 10,
   },
   fixedWrap: {
     backgroundColor: Color.Secondary,

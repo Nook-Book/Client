@@ -30,10 +30,20 @@ export const styles = StyleSheet.create({
   headWrap: {
     padding: 16,
   },
+  inputWrap: {
+    position: "relative",
+    width: "100%",
+  },
   titleText: {
     ...Font.Label.LargeInput,
     color: Color.Typo.Primary,
     padding: 16,
+  },
+  placeholder: {
+    ...Font.Label.LargeInput,
+    color: Color.Typo.Tertiary,
+    padding: 16,
+    position: "absolute",
   },
   itemWrap: {
     padding: 16,
