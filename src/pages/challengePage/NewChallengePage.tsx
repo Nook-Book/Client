@@ -297,7 +297,7 @@ export default function NewChallengePage({
             <View
               style={[
                 styles.image,
-                !imageUri && { backgroundColor: "#FFE870" },
+                !imageUri && { backgroundColor: Color.Click[200] },
               ]}
             ></View>
           )}

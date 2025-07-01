@@ -27,7 +27,7 @@ const SendRequestFriend = ({
           ))}
         </>
       ) : (
-        <Text>없음</Text>
+        <Text></Text>
       )}
     </View>
   );
