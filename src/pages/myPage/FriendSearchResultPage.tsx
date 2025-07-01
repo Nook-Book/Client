@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { getUserInfo } from "../../api/user/getUser";
+import CalendarIcon from "../../assets/images/icon/CalenderIcon.svg";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import AtherUserProfile from "../../components/myPage/AtherUserProfile";
@@ -70,6 +71,20 @@ const FriendSearchResultPage = ({
               <CollectionIcon />
               <Text style={styles.linkIconContainerComponentText}>
                 기록 전체 보기
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.linkIconBorder} />
+            <TouchableOpacity
+              style={styles.linkIconContainerComponent}
+              onPress={() =>
+                navigation.navigate("StatusCardDetail", {
+                  isCurrentUser: true,
+                })
+              }
+            >
+              <CalendarIcon />
+              <Text style={styles.linkIconContainerComponentText}>
+                독서 캘린더
               </Text>
             </TouchableOpacity>
           </View>
