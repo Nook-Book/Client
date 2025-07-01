@@ -8,7 +8,7 @@ export const getFriendNoteList = async (
 ): Promise<TNoteListRes | undefined> => {
   try {
     const response = await api.get(
-      `/api/v1/user/${userId}/note/book/${bookId}`
+      `/api/v1/users/${userId}/books/${bookId}/notes`
     );
     return response.data;
   } catch (e) {

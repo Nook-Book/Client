@@ -7,7 +7,7 @@ export const getFriendNote = async (
   keyword: string
 ): Promise<MyNoteResponse | undefined> => {
   try {
-    const response = await api.get(`/api/v1/user/${userId}/note`, {
+    const response = await api.get(`/api/v1/users/${userId}/books`, {
       params: {
         keyword,
       },
