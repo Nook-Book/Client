@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { getUserInfo } from "../../api/user/getUser";
 import CollectionIcon from "../../assets/images/icon/Colletion.svg";
 import BackTextHeader from "../../components/header/BackTextHeader";
 import AtherUserProfile from "../../components/myPage/AtherUserProfile";
@@ -21,6 +23,10 @@ const FriendSearchResultPage = ({
     setIsModalOpen(true);
   };
   const { nickname, userId, friendId } = route.params;
+  const { data: userInfo } = useQuery({
+    queryKey: ["userInfo", userId],
+    queryFn: () => getUserInfo(userId),
+  });
 
   return (
     <View style={styles.container}>
@@ -37,7 +43,7 @@ const FriendSearchResultPage = ({
       <ScrollView>
         <BackTextHeader title={""} />
         <AtherUserProfile
-          name={nickname}
+          userInfo={userInfo!}
           type={"Friend"}
           onClick={handleOpenModal}
         />

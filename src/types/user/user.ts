@@ -77,3 +77,18 @@ export interface UserSearchResponse {
   check: boolean;
   information: SearchInformation;
 }
+
+// -------------------------------------------------------
+
+export interface GetUserInfoResponse {
+  check: boolean;
+  information: UserFriendInfo;
+}
+
+export interface UserFriendInfo {
+  nicknameId: string;
+  nickname: string;
+  imageUrl: string;
+  friendsNum: number;
+  requestStatus: string;
+}
