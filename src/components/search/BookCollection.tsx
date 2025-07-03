@@ -8,7 +8,13 @@ import {
 } from "../../utils/category/bookCategories";
 import BestSellerBook from "./BestSellerBook";
 
-const BookCollection = ({ category }: { category: string }) => {
+const BookCollection = ({
+  isMarginBottom,
+  category,
+}: {
+  isMarginBottom: boolean;
+  category: string;
+}) => {
   const { data, refetch } = useBestSeller({
     category: getCategoryCode(category as CategoryName),
     size: 12,
@@ -26,9 +32,17 @@ const BookCollection = ({ category }: { category: string }) => {
     groupedBooks.push(bestSellerList.slice(i, i + 3));
   }
   return (
-    <ScrollView style={styles.bestSellerContainer}>
+    <ScrollView style={isMarginBottom && { marginBottom: 90 }}>
       {groupedBooks.map((group, groupIndex) => (
-        <View key={groupIndex} style={styles.row}>
+        <View
+          key={groupIndex}
+          style={[
+            styles.row,
+            !isMarginBottom && groupIndex === 0 && { marginTop: 16 },
+            !isMarginBottom &&
+              groupIndex === groupedBooks.length - 1 && { marginBottom: 16 },
+          ]}
+        >
           {group.map((book, index) => (
             <BestSellerBook
               key={index}

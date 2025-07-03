@@ -4,7 +4,8 @@ import { Color, Font } from "../../styles/Theme";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
+    marginHorizontal: 7,
+    marginBottom: 14,
     width: 110,
     height: 169,
     backgroundColor: Color.Field.Primary,

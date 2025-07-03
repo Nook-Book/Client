@@ -6,7 +6,9 @@ export const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
+    padding: 16,
+    borderTopColor: Color.Border.Stroke,
+    borderTopWidth: 0.8,
   },
   text: {
     ...Font.Label.SemiMedium,
@@ -17,12 +19,7 @@ export const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    gap: 14,
     justifyContent: "space-between",
-    paddingHorizontal: 16,
-    marginVertical: 10,
-  },
-  bestSellerContainer: {
-    marginBottom: 80,
+    paddingHorizontal: 9,
   },
 });

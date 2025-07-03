@@ -47,7 +47,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
         {user?.imageUrl ? (
           <Image
             source={{ uri: `${user.imageUrl}` }}
-            style={{ width: 40, height: 40 }}
+            style={{ width: 40, height: 40, borderRadius: 100 }}
             resizeMode="cover"
           />
         ) : (

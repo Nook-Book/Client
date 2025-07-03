@@ -137,7 +137,13 @@ const TimerPage = ({ navigation, route }: { navigation: any; route: any }) => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           {timerList?.recordResList.map((record, index) => (
-            <View key={index} style={styles.recordWrap}>
+            <View
+              key={index}
+              style={[
+                styles.recordWrap,
+                index === 0 && { borderTopWidth: 0.8 },
+              ]}
+            >
               <View>
                 <Text style={styles.recordDateText}>
                   {record.date.replaceAll("-", ".")}

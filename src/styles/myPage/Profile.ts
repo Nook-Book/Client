@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   profileImage: {
     width: 84,
     height: 84,
-    borderRadius: 30,
+    borderRadius: 100,
     marginRight: 12,
   },
   profileContainer: {
