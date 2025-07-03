@@ -27,7 +27,7 @@ const BestSellerPage: React.FC = () => {
   return (
     <View style={styles.container}>
       <BackHeader title={BestSellerLabel} />
-      <View>
+      <View style={styles.categoryContainer}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -43,7 +43,7 @@ const BestSellerPage: React.FC = () => {
           ))}
         </ScrollView>
       </View>
-      <BookCollection category={currentKeyword!.name} />
+      <BookCollection isMarginBottom={false} category={currentKeyword!.name} />
     </View>
   );
 };

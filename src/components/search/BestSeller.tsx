@@ -21,7 +21,7 @@ const BestSeller: React.FC = () => {
           <Text style={styles.button}>{BestSellerButton}</Text>
         </TouchableOpacity>
       </View>
-      <BookCollection category={"종합"} />
+      <BookCollection isMarginBottom={true} category={"종합"} />
     </View>
   );
 };

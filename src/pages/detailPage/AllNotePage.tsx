@@ -72,7 +72,10 @@ const AllNotePage = ({
             return (
               <Pressable
                 key={index}
-                style={styles.noteWrap}
+                style={[
+                  styles.noteWrap,
+                  index === 0 && { borderTopWidth: 0.8 },
+                ]}
                 onPress={() =>
                   navigation.navigate("Note", {
                     noteId: data.noteId,

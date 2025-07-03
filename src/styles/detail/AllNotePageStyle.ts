@@ -41,7 +41,6 @@ export const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     borderColor: Color.Border.Stroke,
-    borderTopWidth: 0.8,
     borderBottomWidth: 0.8,
     gap: 10,
   },
