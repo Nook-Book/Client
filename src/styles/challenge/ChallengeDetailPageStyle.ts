@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 238,
-    backgroundColor: "#FFE870",
+    backgroundColor: Color.Click[200],
   },
   headWrap: {
     padding: 16,
