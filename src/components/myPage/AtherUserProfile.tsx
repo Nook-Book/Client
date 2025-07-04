@@ -11,18 +11,20 @@ const AtherUserProfile = ({
   userInfo,
   type,
   onClick,
+  isRequest,
 }: {
   userInfo: GetUserInfoResponse;
-  type: "AtherUser" | "RequestUser" | "Friend";
+  type: "Friend" | "RecieveFriend" | "SendFriend";
+  isRequest: boolean;
   onClick: () => void;
 }) => {
-  const [isRequest, setIsRequest] = useState<boolean>(false);
+  const [isRequestState, setIsRequestState] = useState<boolean>(isRequest);
 
   const handleCancleRequest = () => {
-    setIsRequest(false);
+    setIsRequestState(false);
   };
   const handleRequestFriend = () => {
-    setIsRequest(true);
+    setIsRequestState(true);
   };
 
   const navigation = useNavigation<NavigationProp>();
@@ -77,19 +79,9 @@ const AtherUserProfile = ({
       </View>
       {/* 친구 수락, 거절 or 친구 요청 각 타입별로 구분 */}
       <View style={styles.buttonContainer}>
-        {type === "AtherUser" && (
+        {type === "SendFriend" && (
           <>
-            <TouchableOpacity style={styles.okButton}>
-              <Text style={styles.okButtonText}>수락</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.refuseButton}>
-              <Text style={styles.refuseButtonText}>거절</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        {type === "RequestUser" && (
-          <>
-            {isRequest ? (
+            {isRequestState ? (
               <TouchableOpacity
                 style={styles.requestButton}
                 onPress={handleCancleRequest}
@@ -104,6 +96,16 @@ const AtherUserProfile = ({
                 <Text style={styles.okButtonText}>친구 요청</Text>
               </TouchableOpacity>
             )}
+          </>
+        )}
+        {type === "RecieveFriend" && (
+          <>
+            <TouchableOpacity style={styles.okButton}>
+              <Text style={styles.okButtonText}>수락</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.refuseButton}>
+              <Text style={styles.refuseButtonText}>거절</Text>
+            </TouchableOpacity>
           </>
         )}
         {type === "Friend" && (

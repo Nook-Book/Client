@@ -23,7 +23,7 @@ const FriendSearchResultPage = ({
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  const { nickname, userId, friendId } = route.params;
+  const { nickname, userId, friendId, type, isRequest } = route.params;
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo", userId],
     queryFn: () => getUserInfo(userId),
@@ -45,8 +45,9 @@ const FriendSearchResultPage = ({
         <BackTextHeader title={""} />
         <AtherUserProfile
           userInfo={userInfo!}
-          type={"Friend"}
+          type={type}
           onClick={handleOpenModal}
+          isRequest={isRequest}
         />
         <View style={styles.readingActivityContainer}>
           <View style={styles.HeaderContainer}>

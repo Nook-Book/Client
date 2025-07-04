@@ -28,6 +28,8 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
       nickname: user.nickname,
       userId: user.userId,
       friendId: user.friendId,
+      type: type,
+      isRequest: isRequest,
     });
   };
 
