@@ -11,7 +11,10 @@ export default function AlertPage() {
     return (
       <View style={styles.alertItem} key={index}>
         <Text style={styles.alertText}>{item.message}</Text>
-        <Text style={styles.dateText}>{item.timeValue}</Text>
+        <Text style={styles.dateText}>
+          {item.timeValue}
+          {item.timeType === "HOUR" ? "시간" : "일"} 전
+        </Text>
       </View>
     );
   };
