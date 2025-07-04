@@ -11,6 +11,7 @@ export const getStyles = (windowWidth: number) => {
     image: {
       width: (windowWidth - 120) / 3,
       height: (windowWidth - 120) * (137 / 270),
+      borderRadius: 3,
     },
     titleText: {
       ...Font.Paragraph.XS,
