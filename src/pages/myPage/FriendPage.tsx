@@ -96,7 +96,7 @@ const FriendPage = (navigation: any) => {
                   <FriendComponent
                     user={friend}
                     type="Friend"
-                    refetch={refetchFriend}
+                    refetch={refetchData}
                   />
                 </Swipeable>
               </View>
