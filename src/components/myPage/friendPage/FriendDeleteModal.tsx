@@ -5,18 +5,21 @@ import { styles } from "../../../styles/myPage/friendPage/FriendDeleteModal";
 
 const FriendDeleteModal = ({
   title,
-  userId,
+  friendId,
   onExit,
+  refetch,
 }: {
   title: string;
-  userId: number;
+  friendId: number;
   onExit: () => void;
+  refetch: () => void;
 }) => {
   const { mutate: deleteFriend } = useDeleteFriend();
 
   // 친구 삭제
   const handleDeleteFriend = () => {
-    deleteFriend(Number(userId));
+    deleteFriend(friendId);
+    refetch();
     onExit();
   };
   return (

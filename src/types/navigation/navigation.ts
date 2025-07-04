@@ -23,6 +23,8 @@ export type RootMyPageStackParamList = {
     nickname: string;
     userId: number;
     friendId: number;
+    type: "Friend" | "RecieveFriend" | "SendFriend";
+    isRequest: boolean;
   };
   MyCollectionPage: undefined;
   MyCollectionDetailPage: { collectionId: number; collectionTitle: string };

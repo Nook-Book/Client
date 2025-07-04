@@ -1,21 +1,17 @@
 import React from "react";
-import { FlatList, View, Text } from "react-native";
-import { styles } from "../../styles/library/AlertPageStyle";
+import { FlatList, Text, View } from "react-native";
 import BackHeader from "../../components/header/BackHeader";
-import { dummyList } from "../../assets/data/dummyAlertList";
+import { useGetAlarm } from "../../hooks/alarm/useAlarm";
+import { styles } from "../../styles/library/AlertPageStyle";
+import { AlarmItem } from "../../types/alarm/alarm";
 
 export default function AlertPage() {
-  const AlertItem = ({
-    item,
-    index,
-  }: {
-    item: { id: number; content: string; date: string };
-    index: number;
-  }) => {
+  const { data, isLoading, error, refetch } = useGetAlarm();
+  const AlertItem = ({ item, index }: { item: AlarmItem; index: number }) => {
     return (
       <View style={styles.alertItem} key={index}>
-        <Text style={styles.alertText}>{item.content}</Text>
-        <Text style={styles.dateText}>{item.date}</Text>
+        <Text style={styles.alertText}>{item.message}</Text>
+        <Text style={styles.dateText}>{item.timeValue}</Text>
       </View>
     );
   };
@@ -24,7 +20,7 @@ export default function AlertPage() {
     <View style={styles.container}>
       <BackHeader title="알림" />
       <FlatList
-        data={dummyList}
+        data={data?.information.alarms}
         renderItem={({ item, index }) => (
           <AlertItem item={item} index={index} />
         )}

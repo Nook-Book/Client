@@ -1,4 +1,4 @@
-interface FriendInfo {
+export interface FriendInfo {
   userId: number;
   friendId: number;
   nickname: string;
