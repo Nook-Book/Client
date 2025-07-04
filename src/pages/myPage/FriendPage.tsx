@@ -18,6 +18,7 @@ import {
 import { useGetUser } from "../../hooks/user/useUser";
 import { Color } from "../../styles/Theme";
 import { styles } from "../../styles/myPage/friendPage/FriendPage";
+import { FriendInfo } from "../../types/mypage/friend";
 import { UserContent } from "../../types/user/user";
 
 const FriendPage = (navigation: any) => {
@@ -26,7 +27,7 @@ const FriendPage = (navigation: any) => {
   );
   const [searchText, setSearchText] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [modalText, setModalText] = useState<string>("");
+  const [selectedFriend, setSelectedFriend] = useState<FriendInfo | null>(null);
   const [userList, setUserList] = useState<UserContent[]>([]);
 
   const { data: friendData, refetch: refetchFriend } = useGetFriend(searchText);
@@ -52,8 +53,8 @@ const FriendPage = (navigation: any) => {
     setFriendNav(state);
   };
 
-  const handleDeleteFriend = (name: string) => {
-    setModalText(name);
+  const handleDeleteFriend = (friend: FriendInfo) => {
+    setSelectedFriend(friend);
     setIsModalOpen(true);
   };
 
@@ -65,16 +66,6 @@ const FriendPage = (navigation: any) => {
 
   return (
     <View style={styles.container}>
-      {isModalOpen && (
-        <>
-          <View style={styles.overlay} />
-          <FriendDeleteModal
-            title={modalText}
-            userId={Number(modalText)}
-            onExit={() => setIsModalOpen(false)}
-          />
-        </>
-      )}
       <BackTextHeader title="친구" />
       <FriendNav state={friendNav} onClick={handleSetFriendNav} />
       <TextInput
@@ -98,7 +89,7 @@ const FriendPage = (navigation: any) => {
                     <FriendRenderActions
                       key={friend.userId}
                       name={friend.nickname}
-                      onDelete={handleDeleteFriend}
+                      onDelete={() => handleDeleteFriend(friend)}
                     />
                   )}
                 >
@@ -141,6 +132,22 @@ const FriendPage = (navigation: any) => {
             </>
           )}
         </View>
+      )}
+
+      {/* 모달 컴포넌트를 최상위로 이동 */}
+      {isModalOpen && selectedFriend && (
+        <>
+          <View style={styles.overlay} />
+          <FriendDeleteModal
+            title={selectedFriend.nickname}
+            friendId={selectedFriend.friendId}
+            onExit={() => {
+              setIsModalOpen(false);
+              setSelectedFriend(null);
+            }}
+            refetch={refetchData}
+          />
+        </>
       )}
     </View>
   );
