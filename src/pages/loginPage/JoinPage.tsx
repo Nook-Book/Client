@@ -24,7 +24,13 @@ const JoinPage = () => {
 
   // 중복 체크 상태
   const [isIdChecked, setIsIdChecked] = useState<
-    "OK" | "Duplicate" | "OnlyNumber" | "OnlyAlpha" | "OverLength" | "No"
+    | "OK"
+    | "Duplicate"
+    | "OnlyNumber"
+    | "OnlyAlpha"
+    | "OverLength"
+    | "NeedCheck"
+    | "No"
   >("No");
   const [isNicknameChecked, setIsNicknameChecked] = useState<
     "OK" | "Duplicate" | "OverLength" | "No"
@@ -37,6 +43,10 @@ const JoinPage = () => {
 
   // 아이디 유효성 검증 함수
   const validateId = (idValue: string) => {
+    if (idValue.length === 0) {
+      return "No";
+    }
+
     if (idValue.length > 10) {
       return "OverLength";
     }
@@ -69,6 +79,7 @@ const JoinPage = () => {
       return;
     }
 
+    // NeedCheck 상태이거나 Valid한 경우에만 API 호출
     checkId(
       { nicknameId: id },
       {
@@ -81,10 +92,23 @@ const JoinPage = () => {
         },
         onError: (error) => {
           console.log(error);
-          setIsIdChecked("No");
+          setIsIdChecked("NeedCheck"); // 오류 발생 시 다시 체크할 수 있도록
         },
       }
     );
+  };
+
+  // 아이디 입력값 변경 핸들러
+  const handleIdChange = (text: string) => {
+    setId(text);
+    const validationResult = validateId(text);
+
+    // 유효한 형식이면 중복체크 필요 상태로, 아니면 해당 오류 상태로 설정
+    if (validationResult === "Valid") {
+      setIsIdChecked("NeedCheck"); // 중복체크 필요
+    } else {
+      setIsIdChecked(validationResult as any);
+    }
   };
 
   // 닉네임 중복 체크 핸들러
@@ -142,17 +166,17 @@ const JoinPage = () => {
             ref={idInputRef}
             style={styles.input}
             value={id}
-            onChangeText={(text) => {
-              setId(text);
-              setIsIdChecked("No");
-            }}
+            onChangeText={handleIdChange}
             placeholder="아이디를 입력해주세요."
             placeholderTextColor={Color.Typo.Secondary}
             {...Font.Paragraph.SemiMedium}
           />
           <CheckButton
             onPress={handleIdCheck}
-            isActive={id.length > 0 && isIdChecked !== "OK"}
+            isActive={
+              id.length > 0 &&
+              (isIdChecked === "NeedCheck" || isIdChecked === "Duplicate")
+            }
           />
         </View>
         {/* 사용 가능한 경우  */}
@@ -180,6 +204,10 @@ const JoinPage = () => {
           <Text style={styles.checkText}>
             영문,숫자를 사용한 10글자 이내입니다.
           </Text>
+        )}
+        {/* 중복체크 필요한 경우 */}
+        {isIdChecked === "NeedCheck" && (
+          <Text style={styles.checkText}>중복확인 버튼을 눌러주세요.</Text>
         )}
         {/* 기본 안내 메시지 */}
         {isIdChecked === "No" && (
