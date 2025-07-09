@@ -8,6 +8,13 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     height: 56,
   },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 100,
+    borderWidth: 0.8,
+    borderColor: Color.Field[20],
+  },
   name: {
     ...Font.Label.XMedium,
     color: Color.Typo.Primary,
