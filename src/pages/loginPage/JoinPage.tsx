@@ -24,7 +24,7 @@ const JoinPage = () => {
 
   // 중복 체크 상태
   const [isIdChecked, setIsIdChecked] = useState<
-    "OK" | "Duplicate" | "OnlyNumber" | "No"
+    "OK" | "Duplicate" | "OnlyNumber" | "OnlyAlpha" | "OverLength" | "No"
   >("No");
   const [isNicknameChecked, setIsNicknameChecked] = useState<
     "OK" | "Duplicate" | "OverLength" | "No"
@@ -35,8 +35,40 @@ const JoinPage = () => {
   const { mutate: checkNickname } = useUserNicknameCheck();
   const { mutate: join } = useUserInfo();
 
+  // 아이디 유효성 검증 함수
+  const validateId = (idValue: string) => {
+    if (idValue.length > 10) {
+      return "OverLength";
+    }
+
+    const hasAlpha = /[a-zA-Z]/.test(idValue);
+    const hasNumber = /[0-9]/.test(idValue);
+    const isAlphaNumOnly = /^[a-zA-Z0-9]+$/.test(idValue);
+
+    if (!isAlphaNumOnly) {
+      return "No"; // 영문, 숫자 이외의 문자가 포함된 경우
+    }
+
+    if (!hasAlpha && hasNumber) {
+      return "OnlyNumber"; // 숫자만 포함된 경우
+    }
+
+    if (hasAlpha && !hasNumber) {
+      return "OnlyAlpha"; // 영문만 포함된 경우
+    }
+
+    return "Valid"; // 영문과 숫자가 모두 포함된 유효한 경우
+  };
+
   // 중복 체크 핸들러
   const handleIdCheck = () => {
+    const validationResult = validateId(id);
+
+    if (validationResult !== "Valid") {
+      setIsIdChecked(validationResult as any);
+      return;
+    }
+
     checkId(
       { nicknameId: id },
       {
@@ -49,11 +81,7 @@ const JoinPage = () => {
         },
         onError: (error) => {
           console.log(error);
-          if (id.length > 10) {
-            setIsIdChecked("No");
-          } else {
-            setIsIdChecked("OnlyNumber");
-          }
+          setIsIdChecked("No");
         },
       }
     );
@@ -141,7 +169,19 @@ const JoinPage = () => {
             아이디에 숫자만 포함할 수 없습니다.
           </Text>
         )}
+        {/* 영문만 입력 경우 */}
+        {isIdChecked === "OnlyAlpha" && (
+          <Text style={styles.checkText}>
+            영문,숫자를 사용한 10글자 이내입니다.
+          </Text>
+        )}
         {/* 길이 초과 경우 */}
+        {isIdChecked === "OverLength" && (
+          <Text style={styles.checkText}>
+            영문,숫자를 사용한 10글자 이내입니다.
+          </Text>
+        )}
+        {/* 기본 안내 메시지 */}
         {isIdChecked === "No" && (
           <Text style={styles.checkText}>
             영문,숫자를 사용한 10글자 이내입니다.
