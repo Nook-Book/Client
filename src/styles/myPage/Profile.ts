@@ -15,6 +15,8 @@ export const styles = StyleSheet.create({
     height: 84,
     borderRadius: 100,
     marginRight: 12,
+    borderWidth: 0.8,
+    borderColor: Color.Field[20],
   },
   profileContainer: {
     flex: 1,
