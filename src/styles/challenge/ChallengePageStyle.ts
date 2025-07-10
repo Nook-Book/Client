@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     width: 130,
     height: 170,
     borderRadius: 4,
-    backgroundColor: "#FFE870",
+    backgroundColor: Color.Click[200],
   },
   challengeText: {
     ...Font.Paragraph.LittleMedium,

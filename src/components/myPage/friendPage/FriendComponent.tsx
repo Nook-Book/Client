@@ -49,13 +49,13 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
         {user?.imageUrl ? (
           <Image
             source={{ uri: `${user.imageUrl}` }}
-            style={{ width: 40, height: 40, borderRadius: 100 }}
+            style={styles.profileImage}
             resizeMode="cover"
           />
         ) : (
           <Image
             source={require("../../../assets/images/profile/ProfileImage.svg")}
-            style={{ width: 40, height: 40 }}
+            style={styles.profileImage}
             resizeMode="cover"
           />
         )}
