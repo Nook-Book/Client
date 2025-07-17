@@ -5,14 +5,18 @@ import { useMyPage } from "../../hooks/mypage/useMyPage";
 import { styles } from "../../styles/myPage/Profile";
 import { NavigationProp } from "../../types/search";
 
-const Profile = () => {
+const Profile = ({ refetch: externalRefetch }: { refetch?: () => void }) => {
   const navigation = useNavigation<NavigationProp>();
 
   const { data, refetch } = useMyPage();
   const myInfo = data.information;
 
   useEffect(() => {
-    refetch();
+    if (externalRefetch) {
+      externalRefetch();
+    } else {
+      refetch();
+    }
   }, []);
 
   return (

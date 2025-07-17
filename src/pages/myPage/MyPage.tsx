@@ -16,10 +16,12 @@ export default function MyPage({
   route: any;
   navigation: any;
 }) {
+  const profileRef = useRef<{ refetch: () => void }>(null);
   const bookstatisticsRef = useRef<{ refetch: () => void }>(null);
   const categoryReportRef = useRef<{ refetch: () => void }>(null);
 
   const handleRefetchAll = () => {
+    profileRef.current?.refetch();
     bookstatisticsRef.current?.refetch();
     categoryReportRef.current?.refetch();
   };
@@ -28,7 +30,7 @@ export default function MyPage({
     <View style={styles.container}>
       <ScrollView>
         <MyPageNav />
-        <Profile />
+        <Profile refetch={handleRefetchAll} />
         <View style={styles.readingActivityContainer}>
           <View style={styles.HeaderContainer}>
             <Text style={styles.activityHeader}>독서활동</Text>
