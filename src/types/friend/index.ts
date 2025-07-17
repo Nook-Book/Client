@@ -27,4 +27,5 @@ export interface FriendComponentProps {
   type: "Friend" | "RecieveFriend" | "SendFriend";
   isRequestProp?: boolean;
   refetch: () => void;
+  isSwipeableOpen?: boolean;
 }

@@ -10,6 +10,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   type,
   isRequestProp,
   refetch,
+  isSwipeableOpen,
 }) => {
   const [isRequest, setIsRequest] = useState<boolean>(isRequestProp!);
   const navigation = useNavigation<FriendParamList>();
@@ -35,16 +36,35 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
 
   // 친구 요청 수락/거절
   const handleAcceptRequest = () => {
-    putPending({ friendId: user.friendId?.toString()!, isAccept: true });
-    refetch();
+    putPending(
+      { friendId: user.friendId?.toString()!, isAccept: true },
+      {
+        onSuccess: () => {
+          refetch();
+        },
+      }
+    );
   };
   const handleRefuseRequest = () => {
-    putPending({ friendId: user.friendId?.toString()!, isAccept: false });
-    refetch();
+    putPending(
+      { friendId: user.friendId?.toString()!, isAccept: false },
+      {
+        onSuccess: () => {
+          refetch();
+        },
+      }
+    );
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleClickComponent}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        if (!isSwipeableOpen) {
+          handleClickComponent();
+        }
+      }}
+    >
       <View style={styles.item}>
         {user?.imageUrl ? (
           <Image
