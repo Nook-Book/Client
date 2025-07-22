@@ -84,7 +84,11 @@ const ChallengeCard = ({
                     />
                   </View>
                   <View style={styles.bookTextWrap}>
-                    <Text style={styles.bookText}>
+                    <Text
+                      style={styles.bookText}
+                      numberOfLines={2}
+                      ellipsizeMode="tail"
+                    >
                       {clickStatus.readingBookTitle}
                     </Text>
                     <Text
