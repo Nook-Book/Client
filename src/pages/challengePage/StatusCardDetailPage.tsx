@@ -6,7 +6,7 @@ import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
 import ArrowLeftIcon from "../../assets/images/challange/ArrowLeft.svg";
 import ArrowRightIcon from "../../assets/images/challange/ArrowRight.svg";
 import { Color, Font } from "../../styles/Theme";
-import { getCalendar } from "../../api/challenge/getCalendar";
+import { getCalendar } from "../../api/user/getCalendar";
 import { TCalendarRes } from "../../types/challenge";
 import { useFocusEffect } from "@react-navigation/native";
 import { getMyCalendar } from "../../api/userBook/getMyCalendar";
@@ -93,7 +93,7 @@ export default function StatusCardDetailPage({
   const fetchChallengeDetail = async () => {
     try {
       const response = await getCalendar(
-        clickStatus.participantId,
+        clickStatus.userId,
         `${selectedDate.year}-${selectedDate.month.toString().padStart(2, "0")}`
       );
       if (response) {
