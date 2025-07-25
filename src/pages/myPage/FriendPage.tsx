@@ -29,6 +29,7 @@ const FriendPage = (navigation: any) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedFriend, setSelectedFriend] = useState<FriendInfo | null>(null);
   const [userList, setUserList] = useState<UserContent[]>([]);
+  const [openSwipeIndex, setOpenSwipeIndex] = useState<number | null>(null);
 
   const { data: friendData, refetch: refetchFriend } = useGetFriend(searchText);
   const { data: userData, refetch: refetchUser } = useGetUser(searchText);
@@ -85,6 +86,10 @@ const FriendPage = (navigation: any) => {
                 <Swipeable
                   friction={1}
                   rightThreshold={80}
+                  onSwipeableOpen={() => setOpenSwipeIndex(index)}
+                  onSwipeableClose={() =>
+                    setOpenSwipeIndex((prev) => (prev === index ? null : prev))
+                  }
                   renderRightActions={() => (
                     <FriendRenderActions
                       key={friend.userId}
@@ -96,7 +101,8 @@ const FriendPage = (navigation: any) => {
                   <FriendComponent
                     user={friend}
                     type="Friend"
-                    refetch={refetchFriend}
+                    refetch={refetchData}
+                    isSwipeableOpen={openSwipeIndex === index}
                   />
                 </Swipeable>
               </View>

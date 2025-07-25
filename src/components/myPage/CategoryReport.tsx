@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Dimensions, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import Svg, { Circle } from "react-native-svg";
@@ -7,8 +7,19 @@ import { Color } from "../../styles/Theme";
 import { useCategory } from "../../hooks/mypage/useCategory";
 
 const screenWidth = Dimensions.get("window").width;
-const CategoryReport = () => {
-  const { data } = useCategory();
+const CategoryReport = ({
+  refetch: externalRefetch,
+}: {
+  refetch?: () => void;
+}) => {
+  const { data, refetch } = useCategory();
+  useEffect(() => {
+    if (externalRefetch) {
+      externalRefetch();
+    } else {
+      refetch();
+    }
+  }, []); // 필요시 year 등 의존성 추가
 
   const colorKeys: (keyof typeof Color.Click)[] = [
     200, 300, 400, 500, 600, 700,

@@ -100,10 +100,20 @@ const AtherUserProfile = ({
         )}
         {type === "RecieveFriend" && (
           <>
-            <TouchableOpacity style={styles.okButton}>
+            <TouchableOpacity
+              style={styles.okButton}
+              onPress={() => {
+                console.log("수락");
+              }}
+            >
               <Text style={styles.okButtonText}>수락</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.refuseButton}>
+            <TouchableOpacity
+              style={styles.refuseButton}
+              onPress={() => {
+                console.log("거절");
+              }}
+            >
               <Text style={styles.refuseButtonText}>거절</Text>
             </TouchableOpacity>
           </>

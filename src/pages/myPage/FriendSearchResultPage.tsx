@@ -80,8 +80,8 @@ const FriendSearchResultPage = ({
               onPress={() =>
                 navigation.navigate("StatusCardDetail", {
                   clickStatus: {
-                    participantId: userId,
-                    nickname: nickname,
+                    userId,
+                    nickname,
                   },
                   isCurrentUser: false,
                 })

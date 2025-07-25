@@ -18,9 +18,12 @@ const FriendDeleteModal = ({
 
   // 친구 삭제
   const handleDeleteFriend = () => {
-    deleteFriend(friendId);
-    refetch();
-    onExit();
+    deleteFriend(friendId, {
+      onSuccess: () => {
+        refetch();
+        onExit();
+      },
+    });
   };
   return (
     <View style={styles.container}>

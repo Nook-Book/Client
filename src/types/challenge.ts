@@ -64,6 +64,7 @@ export type TChallengeDetailInformationRes = {
 };
 
 export type TChallengeDetailParticipantsRes = {
+  userId: number;
   participantId: number;
   nickname: string;
   participantImage: string;

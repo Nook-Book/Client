@@ -196,7 +196,7 @@ export default function ChallengeDetailPage({
               handleStatus={() =>
                 navigation.navigate("StatusCardDetail", {
                   clickStatus: {
-                    participantId: clickStatus?.participantId,
+                    userId: clickStatus?.userId,
                     nickname: clickStatus?.nickname,
                   },
                   isCurrentUser: false,

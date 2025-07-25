@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ReportIcon from "../../assets/images/icon/AllNotes.svg";
 import CalendarIcon from "../../assets/images/icon/CalenderIcon.svg";
@@ -16,11 +16,21 @@ export default function MyPage({
   route: any;
   navigation: any;
 }) {
+  const profileRef = useRef<{ refetch: () => void }>(null);
+  const bookstatisticsRef = useRef<{ refetch: () => void }>(null);
+  const categoryReportRef = useRef<{ refetch: () => void }>(null);
+
+  const handleRefetchAll = () => {
+    profileRef.current?.refetch();
+    bookstatisticsRef.current?.refetch();
+    categoryReportRef.current?.refetch();
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <MyPageNav />
-        <Profile />
+        <Profile refetch={handleRefetchAll} />
         <View style={styles.readingActivityContainer}>
           <View style={styles.HeaderContainer}>
             <Text style={styles.activityHeader}>독서활동</Text>
@@ -68,11 +78,11 @@ export default function MyPage({
           <View style={styles.HeaderContainer}>
             <Text style={styles.categoryHeader}>많이 읽은 카테고리</Text>
           </View>
-          <CategoryReport />
+          <CategoryReport refetch={handleRefetchAll} />
           <View style={styles.HeaderContainer}>
             <Text style={styles.categoryHeader}>독서 통계</Text>
           </View>
-          <Bookstatistics />
+          <Bookstatistics refetch={handleRefetchAll} />
         </View>
       </ScrollView>
     </View>

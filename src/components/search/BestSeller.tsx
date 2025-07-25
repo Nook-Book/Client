@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { BestSellerButton, BestSellerLabel } from "../../constans/search";
 import { styles } from "../../styles/search/BestSellerStyle";
 import { NavigationProp } from "../../types/search";
 import BookCollection from "./BookCollection";
+import RecentSearch from "./RecentSearch";
 
 const BestSeller: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -14,7 +15,8 @@ const BestSeller: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ marginBottom: 90 }}>
+      <RecentSearch />
       <View style={styles.headerContainer}>
         <Text style={styles.text}>{BestSellerLabel}</Text>
         <TouchableOpacity onPress={handlePress}>
@@ -22,7 +24,7 @@ const BestSeller: React.FC = () => {
         </TouchableOpacity>
       </View>
       <BookCollection isMarginBottom={true} category={"종합"} />
-    </View>
+    </ScrollView>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { useBestSeller } from "../../hooks/book/useBestSeller";
 import { styles } from "../../styles/search/BestSellerStyle";
 import {
@@ -32,7 +32,7 @@ const BookCollection = ({
     groupedBooks.push(bestSellerList.slice(i, i + 3));
   }
   return (
-    <ScrollView style={isMarginBottom && { marginBottom: 90 }}>
+    <View style={isMarginBottom && { marginBottom: 90 }}>
       {groupedBooks.map((group, groupIndex) => (
         <View
           key={groupIndex}
@@ -55,7 +55,7 @@ const BookCollection = ({
           ))}
         </View>
       ))}
-    </ScrollView>
+    </View>
   );
 };
 

@@ -5,7 +5,11 @@ import { useReport } from "../../hooks/mypage/useReport";
 import useYear from "../../store/useYear";
 import { Color, Font } from "../../styles/Theme";
 import BookstatisticsHeader from "./BookstatisticsHeader";
-const Bookstatistics = () => {
+const Bookstatistics = ({
+  refetch: externalRefetch,
+}: {
+  refetch?: () => void;
+}) => {
   const screenWidth = Dimensions.get("window").width;
 
   const { year } = useYear();
@@ -15,7 +19,11 @@ const Bookstatistics = () => {
   const countList: number[] = new Array(12).fill(0);
 
   useEffect(() => {
-    refetch();
+    if (externalRefetch) {
+      externalRefetch();
+    } else {
+      refetch();
+    }
 
     data.information.forEach((item) => {
       if (item.month >= 1 && item.month <= 12) {

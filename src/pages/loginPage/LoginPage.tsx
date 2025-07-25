@@ -71,8 +71,11 @@ const LoginPage = () => {
                         // 로그인 성공 시 푸시 토큰 등록
                         const pushToken =
                           await registerForPushNotificationsAsync();
+                        console.log("pushToken", pushToken);
                         if (pushToken) {
                           await sendPushTokenToServer(pushToken);
+                        } else {
+                          console.log("푸시 토큰 등록 실패");
                         }
                         setIsLogin(true);
                       }
