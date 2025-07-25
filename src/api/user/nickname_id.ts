@@ -4,6 +4,6 @@ import { UserRequest, UserResponse } from "../../types/user/user";
 export const postUserIdCheck = async (
   userRequest: UserRequest
 ): Promise<UserResponse> => {
-  const response = await api.post("/api/v1/user/nickname-id", userRequest);
+  const response = await api.post("/api/v1/users/nickname-id", userRequest);
   return response.data;
 };

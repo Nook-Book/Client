@@ -4,6 +4,6 @@ import { UserInfoRequest, UserInfoResponse } from "../../types/user/user";
 export const postUserInfo = async (
   userRequest: UserInfoRequest
 ): Promise<UserInfoResponse> => {
-  const response = await api.post("/api/v1/user/info", userRequest);
+  const response = await api.post("/api/v1/users/info", userRequest);
   return response.data;
 };

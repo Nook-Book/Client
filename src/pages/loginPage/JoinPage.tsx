@@ -205,10 +205,7 @@ const JoinPage = () => {
             영문,숫자를 사용한 10글자 이내입니다.
           </Text>
         )}
-        {/* 중복체크 필요한 경우 */}
-        {isIdChecked === "NeedCheck" && (
-          <Text style={styles.checkText}>중복확인 버튼을 눌러주세요.</Text>
-        )}
+
         {/* 기본 안내 메시지 */}
         {isIdChecked === "No" && (
           <Text style={styles.checkText}>
