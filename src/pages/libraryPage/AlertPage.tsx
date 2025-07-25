@@ -20,6 +20,7 @@ function getTimeAgoText(timeValue: number, timeType: string) {
 
 export default function AlertPage() {
   const { data, isLoading, error, refetch } = useGetAlarm();
+  console.log("data", data?.information.alarms[0]);
   const AlertItem = ({ item, index }: { item: AlarmItem; index: number }) => {
     return (
       <View style={styles.alertItem} key={index}>
