@@ -71,6 +71,7 @@ export type TChallengeDetailParticipantsRes = {
   readingBookTitle: string;
   readingBookImage: string;
   dailyReadingTime: string;
+  lastWakeUpTime: string;
   reading: boolean;
   me: boolean;
 };

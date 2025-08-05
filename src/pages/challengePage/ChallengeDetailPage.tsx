@@ -49,6 +49,7 @@ export default function ChallengeDetailPage({
       const response = await getChallengeDetail(challengeId);
       if (response?.check) {
         setDetail(response.information);
+        console.log(detail);
       }
     } catch (error) {
       console.error("오류:", error);
@@ -199,10 +200,11 @@ export default function ChallengeDetailPage({
                     userId: clickStatus?.userId,
                     nickname: clickStatus?.nickname,
                   },
-                  isCurrentUser: false,
+                  isCurrentUser: clickStatus?.me,
                 })
               }
               handleCancel={() => setIsModalVisible(false)}
+              onSuccessRefresh={fetchChallengeDetail}
             />
           )}
           {isInvite && (

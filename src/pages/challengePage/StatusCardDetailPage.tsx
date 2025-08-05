@@ -187,7 +187,7 @@ export default function StatusCardDetailPage({
     <View style={styles.container}>
       <BackTitleHeader
         navigation={navigation}
-        title={isCurrentUser ? "독서 캘린더" : clickStatus?.nickname}
+        title={clickStatus?.nickname || "독서 캘린더"}
         isTitleVisible={true}
       />
       <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false}>

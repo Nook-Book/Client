@@ -11,23 +11,54 @@ const ChallengeCard = ({
   clickStatus,
   handleStatus,
   handleCancel,
+  onSuccessRefresh,
 }: {
   challengeId: number;
   clickStatus: TChallengeDetailParticipantsRes | null;
   handleStatus: () => void;
   handleCancel: () => void;
+  onSuccessRefresh: () => void;
 }) => {
   const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const handlePress = async () => {
     if (!clickStatus?.participantId) return;
+
+    const lastWakeUpTime = clickStatus.lastWakeUpTime;
+
+    if (lastWakeUpTime) {
+      const last = new Date(lastWakeUpTime).getTime();
+      const now = Date.now();
+      const threeHours = 3 * 60 * 60 * 1000;
+
+      if (now - last < threeHours) {
+        showCooldownToast();
+        return;
+      }
+    }
+
     const response = await postWakeUp(challengeId, clickStatus.participantId);
     if (response.check) {
-      setToastVisible(true);
-      setTimeout(() => {
-        setToastVisible(false);
-      }, 1200);
+      showSuccessToast();
+      onSuccessRefresh();
+    } else {
+      if (response.status === 400) {
+        showCooldownToast();
+      }
     }
+  };
+
+  const showSuccessToast = () => {
+    setToastMessage(`${clickStatus?.nickname}님을 깨웠습니다!`);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 1200);
+  };
+
+  const showCooldownToast = () => {
+    setToastMessage("3시간에 1회만 보낼 수 있습니다.");
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 1200);
   };
 
   return (
@@ -134,10 +165,7 @@ const ChallengeCard = ({
               </Pressable>
             </View>
           </View>
-          <ChallengeToast
-            message={`${clickStatus?.nickname}님을 깨웠습니다!`}
-            visible={toastVisible}
-          />
+          <ChallengeToast message={toastMessage} visible={toastVisible} />
         </View>
       )}
     </View>

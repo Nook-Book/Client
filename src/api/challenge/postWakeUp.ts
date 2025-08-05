@@ -10,8 +10,8 @@ export const postWakeUp = async (
       `/api/v1/challenges/${challengeId}/participants/${participantId}/wake-up`
     );
     return response.data;
-  } catch (e) {
+  } catch (e: any) {
     console.log(e);
-    return undefined;
+    return e;
   }
 };
