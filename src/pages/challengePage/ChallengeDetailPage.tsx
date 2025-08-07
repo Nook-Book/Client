@@ -49,7 +49,13 @@ export default function ChallengeDetailPage({
       const response = await getChallengeDetail(challengeId);
       if (response?.check) {
         setDetail(response.information);
-        console.log(detail);
+
+        if (clickStatus) {
+          const updatedStatus = response.information.participants.find(
+            (p) => p.participantId === clickStatus.participantId
+          );
+          setClickStatus(updatedStatus ?? null);
+        }
       }
     } catch (error) {
       console.error("오류:", error);
