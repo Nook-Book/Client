@@ -8,6 +8,7 @@ export interface AlarmItem {
   targetId: number;
   timeType: TimeType;
   timeValue: number;
+  read: boolean;
 }
 
 export interface AlarmResponse {

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { CompositeNavigationProp } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import BackHeader from "../../components/header/BackHeader";
-import { useGetAlarm } from "../../hooks/alarm/useAlarm";
+import { useGetAlarm, useMarkAllAlarmsAsRead } from "../../hooks/alarm/useAlarm";
 import { styles } from "../../styles/library/AlertPageStyle";
 import { AlarmItem } from "../../types/alarm/alarm";
 import { RootMyPageStackParamList } from "../../types/navigation/navigation";
@@ -44,8 +44,20 @@ function getTimeAgoText(timeValue: number, timeType: string) {
 
 export default function AlertPage() {
   const { data, isLoading, error, refetch } = useGetAlarm();
+  const markAllAsReadMutation = useMarkAllAlarmsAsRead();
   const navigation = useNavigation<AlertPageNavigationProp>();
   console.log("data", data?.information.alarms[0]);
+
+  // 페이지에 포커스될 때마다 모든 알림을 읽음 처리
+  useFocusEffect(
+    React.useCallback(() => {
+      // 읽지 않은 알림이 있을 때만 API 호출
+      const hasUnreadAlarms = data?.information.alarms?.some(alarm => !alarm.read);
+      if (hasUnreadAlarms) {
+        markAllAsReadMutation.mutate();
+      }
+    }, [data?.information.alarms, markAllAsReadMutation])
+  );
   
   const handleAlarmPress = (item: AlarmItem) => {
     if (item.alarmType === "FRIEND") {

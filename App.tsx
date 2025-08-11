@@ -38,7 +38,7 @@ export default function App() {
         if (data && data.alarmType && navigationRef.current) {
           if (data.alarmType === "FRIEND") {
             navigationRef.current.navigate("FriendPage");
-          } else if (data.alarmType === "CHALLENGE") {
+          } else if (data.alarmTypce === "CHALLENGE") {
             navigationRef.current.navigate("Challenge");
           }
         }
