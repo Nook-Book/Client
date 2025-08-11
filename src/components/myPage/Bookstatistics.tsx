@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import { useReport } from "../../hooks/mypage/useReport";
 import useYear from "../../store/useYear";
 import { Color, Font } from "../../styles/Theme";
 import BookstatisticsHeader from "./BookstatisticsHeader";
+
 const Bookstatistics = ({
   refetch: externalRefetch,
 }: {
@@ -14,29 +15,22 @@ const Bookstatistics = ({
 
   const { year } = useYear();
 
-  const { data, refetch } = useReport();
+  const { data, refetch } = useReport(year);
 
   const countList: number[] = new Array(12).fill(0);
-
-  useEffect(() => {
-    if (externalRefetch) {
-      externalRefetch();
-    } else {
-      refetch();
-    }
-
-    data.information.forEach((item) => {
-      if (item.month >= 1 && item.month <= 12) {
-        countList[item.month - 1] = item.count;
-      }
-    });
-  }, [year]);
 
   data.information.forEach((item) => {
     if (item.month >= 1 && item.month <= 12) {
       countList[item.month - 1] = item.count;
     }
   });
+
+  // 외부에서 refetch를 요청할 경우 처리
+  React.useEffect(() => {
+    if (externalRefetch) {
+      externalRefetch();
+    }
+  }, [externalRefetch]);
 
   console.log(countList);
 

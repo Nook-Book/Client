@@ -4,10 +4,10 @@ import {
 } from "@tanstack/react-query";
 import { getReport } from "../../api/user-Mypage/getReport";
 
-// 베스트 셀러 조회
-export function useReport(): UseSuspenseQueryResult<ResponseReport, Error> {
+// 독서 통계 조회
+export function useReport(year: number): UseSuspenseQueryResult<ResponseReport, Error> {
   return useSuspenseQuery({
-    queryKey: ["GetReport"],
-    queryFn: () => getReport(),
+    queryKey: ["GetReport", year],
+    queryFn: () => getReport(year),
   });
 }
