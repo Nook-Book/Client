@@ -5,7 +5,6 @@ import { BestSellerButton, BestSellerLabel } from "../../constans/search";
 import { styles } from "../../styles/search/BestSellerStyle";
 import { NavigationProp } from "../../types/search";
 import BookCollection from "./BookCollection";
-import RecentSearch from "./RecentSearch";
 
 const BestSeller: React.FC = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -16,7 +15,6 @@ const BestSeller: React.FC = () => {
 
   return (
     <ScrollView style={{ marginBottom: 90 }}>
-      <RecentSearch />
       <View style={styles.headerContainer}>
         <Text style={styles.text}>{BestSellerLabel}</Text>
         <TouchableOpacity onPress={handlePress}>

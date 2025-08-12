@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
-import { Font } from "../../styles/Theme";
+import { Color, Font } from "../../styles/Theme";
 
 export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingBottom: 16,
+    borderBottomColor: Color.Border.Stroke,
+    borderBottomWidth: 0.8,
   },
   text: {
     ...Font.Label.SemiMedium,

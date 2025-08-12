@@ -7,6 +7,7 @@ import { styles } from "../../styles/search/SearchHeaderStyle";
 import { Color } from "../../styles/Theme";
 import { RootStackParamList } from "../../types/search";
 import { handleSearchSubmit } from "../../utils/search/handleSearch";
+import RecentSearch from "./RecentSearch";
 
 type Props = {
   search?: string;
@@ -35,6 +36,7 @@ export default function SearchHeader({ search }: Props) {
           }
         />
       </View>
+      <RecentSearch />
     </SafeAreaView>
   );
 }

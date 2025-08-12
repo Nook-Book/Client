@@ -7,8 +7,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 16,
-    borderTopColor: Color.Border.Stroke,
-    borderTopWidth: 0.8,
   },
   text: {
     ...Font.Label.SemiMedium,
