@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import BackIcon from "../../assets/images/icon/Back.svg";
 import ProfileImage from "../../assets/images/profile/ProfileImage.svg";
+import {
+  useDeletePendingRequest,
+  usePostPending,
+  usePutPending,
+} from "../../hooks/mypage/useFriend";
 import { styles } from "../../styles/myPage/AtherUserProfile";
 import { NavigationProp } from "../../types/search";
 import { GetUserInfoResponse } from "../../types/user/user";
@@ -12,19 +17,93 @@ const AtherUserProfile = ({
   type,
   onClick,
   isRequest,
+  friendId,
+  refetch,
 }: {
   userInfo: GetUserInfoResponse;
   type: "Friend" | "RecieveFriend" | "SendFriend";
   isRequest: boolean;
   onClick: () => void;
+  friendId?: number;
+  refetch?: () => void;
 }) => {
   const [isRequestState, setIsRequestState] = useState<boolean>(isRequest);
+  const { mutate: postPending } = usePostPending();
+  const { mutate: deletePendingRequest } = useDeletePendingRequest();
+  const { mutate: putPending } = usePutPending();
+
+  console.log("user", userInfo);
 
   const handleCancleRequest = () => {
-    setIsRequestState(false);
+    if (!friendId) {
+      console.error("friendId가 없어서 친구 요청을 취소할 수 없습니다.");
+      return;
+    }
+
+    deletePendingRequest(friendId, {
+      onSuccess: () => {
+        setIsRequestState(false);
+        refetch?.();
+      },
+      onError: (error) => {
+        console.error("친구 요청 취소 실패:", error);
+      },
+    });
   };
+
   const handleRequestFriend = () => {
-    setIsRequestState(true);
+    if (!userInfo?.information?.userId) {
+      console.error("userId가 없어서 친구 요청을 보낼 수 없습니다.");
+      return;
+    }
+
+    postPending(userInfo.information.userId, {
+      onSuccess: () => {
+        setIsRequestState(true);
+        refetch?.();
+      },
+      onError: (error) => {
+        console.error("친구 요청 실패:", error);
+      },
+    });
+  };
+
+  const handleAcceptRequest = () => {
+    if (!friendId) {
+      console.error("friendId가 없어서 친구 요청을 수락할 수 없습니다.");
+      return;
+    }
+
+    putPending(
+      { friendId: friendId.toString(), isAccept: true },
+      {
+        onSuccess: () => {
+          refetch?.();
+        },
+        onError: (error) => {
+          console.error("친구 요청 수락 실패:", error);
+        },
+      }
+    );
+  };
+
+  const handleRefuseRequest = () => {
+    if (!friendId) {
+      console.error("friendId가 없어서 친구 요청을 거절할 수 없습니다.");
+      return;
+    }
+
+    putPending(
+      { friendId: friendId.toString(), isAccept: false },
+      {
+        onSuccess: () => {
+          refetch?.();
+        },
+        onError: (error) => {
+          console.error("친구 요청 거절 실패:", error);
+        },
+      }
+    );
   };
 
   const navigation = useNavigation<NavigationProp>();
@@ -102,17 +181,13 @@ const AtherUserProfile = ({
           <>
             <TouchableOpacity
               style={styles.okButton}
-              onPress={() => {
-                console.log("수락");
-              }}
+              onPress={handleAcceptRequest}
             >
               <Text style={styles.okButtonText}>수락</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.refuseButton}
-              onPress={() => {
-                console.log("거절");
-              }}
+              onPress={handleRefuseRequest}
             >
               <Text style={styles.refuseButtonText}>거절</Text>
             </TouchableOpacity>

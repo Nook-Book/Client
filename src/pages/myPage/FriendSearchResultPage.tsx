@@ -66,6 +66,12 @@ const FriendSearchResultPage = ({
           type={type}
           onClick={handleOpenModal}
           isRequest={isRequest}
+          friendId={friendId}
+          refetch={() => {
+            refetch();
+            queryClient.invalidateQueries({ queryKey: ["GetFriend"] });
+            queryClient.invalidateQueries({ queryKey: ["GetPendingFriend"] });
+          }}
         />
         <View style={styles.readingActivityContainer}>
           <View style={styles.HeaderContainer}>

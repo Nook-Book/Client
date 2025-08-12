@@ -133,7 +133,7 @@ const FriendPage = (navigation: any) => {
               <SendRequestFriend
                 userList={userData.information.content}
                 isRequest={false}
-                refetch={refetchPendingFriend}
+                refetch={refetchData}
               />
             </>
           )}

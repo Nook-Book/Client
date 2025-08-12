@@ -41,8 +41,15 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
     });
   };
   const handleRequestFriend = () => {
-    setIsRequest(true);
-    postPending(user.userId);
+    postPending(user.userId, {
+      onSuccess: () => {
+        setIsRequest(true);
+        refetch();
+      },
+      onError: (error) => {
+        console.error("친구 요청 실패:", error);
+      },
+    });
   };
   const handleClickComponent = () => {
     navigation.navigate("FriendSearchResultPage", {
