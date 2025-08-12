@@ -28,8 +28,8 @@ export default function MyPage({
 
   return (
     <View style={styles.container}>
+      <MyPageNav />
       <ScrollView>
-        <MyPageNav />
         <Profile refetch={handleRefetchAll} />
         <View style={styles.readingActivityContainer}>
           <View style={styles.HeaderContainer}>
