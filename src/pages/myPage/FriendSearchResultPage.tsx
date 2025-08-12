@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { getUserInfo } from "../../api/user/getUser";
@@ -20,14 +20,31 @@ const FriendSearchResultPage = ({
   navigation: any;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
+  
   const { nickname, userId, friendId, type, isRequest } = route.params;
-  const { data: userInfo } = useQuery({
+  const { data: userInfo, refetch } = useQuery({
     queryKey: ["userInfo", userId],
     queryFn: () => getUserInfo(userId),
   });
+
+  // 친구 삭제 후 처리 함수
+  const handleFriendDeleteSuccess = () => {
+    console.log("친구 삭제 성공 - 쿼리 무효화 및 페이지 이동");
+    // 친구 목록 관련 쿼리 무효화
+    queryClient.invalidateQueries({ queryKey: ["GetFriend"] });
+    queryClient.invalidateQueries({ queryKey: ["GetPendingFriend"] });
+    queryClient.invalidateQueries({ queryKey: ["userInfo", userId] });
+    
+    // 이전 페이지로 이동 (모달은 onExit에서 닫힘)
+    setTimeout(() => {
+      navigation.goBack();
+    }, 100); // 모달이 닫힌 후 페이지 이동
+  };
 
   return (
     <View style={styles.container}>
@@ -36,8 +53,9 @@ const FriendSearchResultPage = ({
           <View style={styles.overlay} />
           <FriendDeleteModal
             title={nickname}
-            userId={friendId}
+            friendId={friendId}
             onExit={() => setIsModalOpen(false)}
+            refetch={handleFriendDeleteSuccess}
           />
         </>
       )}

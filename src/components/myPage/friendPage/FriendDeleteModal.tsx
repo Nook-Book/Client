@@ -18,9 +18,23 @@ const FriendDeleteModal = ({
 
   // 친구 삭제
   const handleDeleteFriend = () => {
+    console.log("친구 삭제 시도 - friendId:", friendId);
+    
+    if (!friendId) {
+      console.error("friendId가 없습니다:", friendId);
+      onExit();
+      return;
+    }
+
     deleteFriend(friendId, {
       onSuccess: () => {
+        console.log("친구 삭제 성공 - friendId:", friendId);
         refetch();
+        onExit();
+      },
+      onError: (error) => {
+        console.error("친구 삭제 실패 - friendId:", friendId, "error:", error);
+        // 에러가 발생해도 모달은 닫지만 refetch는 하지 않음
         onExit();
       },
     });

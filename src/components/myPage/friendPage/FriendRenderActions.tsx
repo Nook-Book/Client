@@ -7,11 +7,11 @@ const FriendRenderActions = ({
   onDelete,
 }: {
   name: string;
-  onDelete: (name: string) => void;
+  onDelete: () => void;
 }) => {
   return (
     <>
-      <TouchableOpacity onPress={() => onDelete(name)} style={styles.delete}>
+      <TouchableOpacity onPress={onDelete} style={styles.delete}>
         <Text style={styles.text}>삭제하기</Text>
       </TouchableOpacity>
     </>

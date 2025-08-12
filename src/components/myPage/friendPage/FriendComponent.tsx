@@ -1,7 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { usePostPending, usePutPending, useDeletePendingRequest } from "../../../hooks/mypage/useFriend";
+import {
+  useDeletePendingRequest,
+  usePostPending,
+  usePutPending,
+} from "../../../hooks/mypage/useFriend";
 import { styles } from "../../../styles/myPage/friendPage/FriendComponent";
 import { FriendComponentProps, FriendParamList } from "../../../types/friend";
 
@@ -23,7 +27,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
       console.error("friendId가 없어서 친구 요청을 취소할 수 없습니다.");
       return;
     }
-    
+
     // API를 통해 친구 요청 취소
     deletePendingRequest(user.friendId, {
       onSuccess: () => {
@@ -33,7 +37,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
       },
       onError: (error) => {
         console.error("친구 요청 취소 실패:", error);
-      }
+      },
     });
   };
   const handleRequestFriend = () => {

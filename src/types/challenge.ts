@@ -101,6 +101,7 @@ export type TFriendListRes = {
   check: true;
   information: {
     userId: number;
+    friendId: number;
     nickname: string;
     imageUrl: string;
   }[];
