@@ -43,7 +43,12 @@ const BestSellerPage: React.FC = () => {
           ))}
         </ScrollView>
       </View>
-      <BookCollection isMarginBottom={false} category={currentKeyword!.name} />
+      <ScrollView>
+        <BookCollection
+          isMarginBottom={false}
+          category={currentKeyword!.name}
+        />
+      </ScrollView>
     </View>
   );
 };
