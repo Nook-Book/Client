@@ -18,6 +18,7 @@ const AtherUserProfile = ({
   onClick,
   isRequest,
   friendId,
+  userId,
   refetch,
 }: {
   userInfo: GetUserInfoResponse;
@@ -25,6 +26,7 @@ const AtherUserProfile = ({
   isRequest: boolean;
   onClick: () => void;
   friendId?: number;
+  userId?: number;
   refetch?: () => void;
 }) => {
   const [isRequestState, setIsRequestState] = useState<boolean>(isRequest);
@@ -52,12 +54,12 @@ const AtherUserProfile = ({
   };
 
   const handleRequestFriend = () => {
-    if (!userInfo?.information?.userId) {
+    if (!userId) {
       console.error("userId가 없어서 친구 요청을 보낼 수 없습니다.");
       return;
     }
 
-    postPending(userInfo.information.userId, {
+    postPending(userId, {
       onSuccess: () => {
         setIsRequestState(true);
         refetch?.();
@@ -69,13 +71,13 @@ const AtherUserProfile = ({
   };
 
   const handleAcceptRequest = () => {
-    if (!friendId) {
-      console.error("friendId가 없어서 친구 요청을 수락할 수 없습니다.");
+    if (!userId) {
+      console.error("userId가 없어서 친구 요청을 수락할 수 없습니다.");
       return;
     }
 
     putPending(
-      { friendId: friendId.toString(), isAccept: true },
+      { userId: userId, isAccept: true },
       {
         onSuccess: () => {
           refetch?.();
@@ -88,13 +90,13 @@ const AtherUserProfile = ({
   };
 
   const handleRefuseRequest = () => {
-    if (!friendId) {
-      console.error("friendId가 없어서 친구 요청을 거절할 수 없습니다.");
+    if (!userId) {
+      console.error("userId가 없어서 친구 요청을 거절할 수 없습니다.");
       return;
     }
 
     putPending(
-      { friendId: friendId.toString(), isAccept: false },
+      { userId: userId, isAccept: false },
       {
         onSuccess: () => {
           refetch?.();

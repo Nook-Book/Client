@@ -60,12 +60,12 @@ export const usePostPending = () => {
 export const usePutPending = () => {
   return useMutation({
     mutationFn: ({
-      friendId,
+      userId,
       isAccept,
     }: {
-      friendId: string;
+      userId: number;
       isAccept: boolean;
-    }) => putPending(friendId, isAccept),
+    }) => putPending(userId, isAccept),
   });
 };
 

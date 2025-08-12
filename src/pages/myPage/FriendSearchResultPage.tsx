@@ -67,6 +67,7 @@ const FriendSearchResultPage = ({
           onClick={handleOpenModal}
           isRequest={isRequest}
           friendId={friendId}
+          userId={userId}
           refetch={() => {
             refetch();
             queryClient.invalidateQueries({ queryKey: ["GetFriend"] });

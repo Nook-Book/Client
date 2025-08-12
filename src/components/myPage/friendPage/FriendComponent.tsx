@@ -64,7 +64,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   // 친구 요청 수락/거절
   const handleAcceptRequest = () => {
     putPending(
-      { friendId: user.friendId?.toString()!, isAccept: true },
+      { userId: user.userId, isAccept: true },
       {
         onSuccess: () => {
           refetch();
@@ -74,7 +74,7 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   };
   const handleRefuseRequest = () => {
     putPending(
-      { friendId: user.friendId?.toString()!, isAccept: false },
+      { userId: user.userId, isAccept: false },
       {
         onSuccess: () => {
           refetch();

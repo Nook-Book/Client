@@ -2,10 +2,11 @@ import api from "..";
 
 // 친구 요청 수락/거절
 export const putPending = async (
-  friendId: string,
+  userId: number,
   isAccept: boolean
 ): Promise<{ check: boolean } | undefined> => {
-  const response = await api.patch(`/api/v1/friends/requests/${friendId}`, {
+  const response = await api.patch(`/api/v1/friends/requests`, {
+    userId: userId,
     accept: isAccept,
   });
   if (response.status === 400) {
