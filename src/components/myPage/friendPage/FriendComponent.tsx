@@ -19,8 +19,13 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   const { mutate: deletePendingRequest } = useDeletePendingRequest();
 
   const handleCancleRequest = () => {
+    if (!user.friendId) {
+      console.error("friendId가 없어서 친구 요청을 취소할 수 없습니다.");
+      return;
+    }
+    
     // API를 통해 친구 요청 취소
-    deletePendingRequest(user.userId, {
+    deletePendingRequest(user.friendId, {
       onSuccess: () => {
         setIsRequest(false);
         // 보낸 요청 리스트를 새로고침하여 UI에서 해당 친구를 제거

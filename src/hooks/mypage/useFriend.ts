@@ -72,7 +72,7 @@ export const usePutPending = () => {
 // 친구 요청 취소
 export const useDeletePendingRequest = () => {
   return useMutation({
-    mutationFn: (userId: number) => deletePendingRequest(userId),
+    mutationFn: (friendId: number) => deletePendingRequest(friendId),
   });
 };
 
