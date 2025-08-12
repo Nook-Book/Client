@@ -9,6 +9,7 @@ import {
   getSearchFriend,
 } from "../../api/friend/getFriend";
 import { postPending } from "../../api/friend/postPending";
+import { deletePendingRequest } from "../../api/friend/deletePendingRequest";
 import { deleteFriend } from "../../api/user-Mypage/deleteFriend";
 import { putPending } from "../../api/user-Mypage/putPending";
 import {
@@ -65,6 +66,13 @@ export const usePutPending = () => {
       friendId: string;
       isAccept: boolean;
     }) => putPending(friendId, isAccept),
+  });
+};
+
+// 친구 요청 취소
+export const useDeletePendingRequest = () => {
+  return useMutation({
+    mutationFn: (userId: number) => deletePendingRequest(userId),
   });
 };
 

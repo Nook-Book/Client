@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { usePostPending, usePutPending } from "../../../hooks/mypage/useFriend";
+import { usePostPending, usePutPending, useDeletePendingRequest } from "../../../hooks/mypage/useFriend";
 import { styles } from "../../../styles/myPage/friendPage/FriendComponent";
 import { FriendComponentProps, FriendParamList } from "../../../types/friend";
 
@@ -16,9 +16,20 @@ const FriendComponent: React.FC<FriendComponentProps> = ({
   const navigation = useNavigation<FriendParamList>();
   const { mutate: postPending } = usePostPending();
   const { mutate: putPending } = usePutPending();
+  const { mutate: deletePendingRequest } = useDeletePendingRequest();
 
   const handleCancleRequest = () => {
-    setIsRequest(false);
+    // API를 통해 친구 요청 취소
+    deletePendingRequest(user.userId, {
+      onSuccess: () => {
+        setIsRequest(false);
+        // 보낸 요청 리스트를 새로고침하여 UI에서 해당 친구를 제거
+        refetch();
+      },
+      onError: (error) => {
+        console.error("친구 요청 취소 실패:", error);
+      }
+    });
   };
   const handleRequestFriend = () => {
     setIsRequest(true);
